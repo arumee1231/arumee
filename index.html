@@ -346,19 +346,19 @@
     @media (max-width: 768px) {
       .container { width: 90vw; }
       
-      /* Hero section */
-      header.hero { padding: 30px 0; }
-      .brand { flex-direction: column; gap: 20px; text-align: center; }
-      .brand img { width: 100px; height: 100px; }
-      .name { font-size: 40px; }
-      .tagline { font-size: 14px; }
-      .hero-cta { justify-content: center; gap: 12px; }
-      .btn { padding: 12px 24px; font-size: 14px; }
+      /* Hero section - Reduced height for mobile to show products */
+      header.hero { padding: 15px 0 20px; }
+      .brand { flex-direction: column; gap: 15px; text-align: center; }
+      .brand img { width: 80px; height: 80px; }
+      .name { font-size: 32px; line-height: 1.1; margin: 0; }
+      .tagline { font-size: 13px; margin: 5px 0 0; }
+      .hero-cta { justify-content: center; gap: 12px; margin-top: 15px; }
+      .btn { padding: 10px 20px; font-size: 13px; }
       
-      /* Sections */
-      section { padding: 15px 0; }
-      h2.section-title { font-size: 32px; margin-top: 0; }
-      p.lead { font-size: 16px; margin-bottom: 16px; }
+      /* Sections - Reduced padding to show products higher */
+      section { padding: 10px 0 20px; }
+      h2.section-title { font-size: 28px; margin-top: 0; margin-bottom: 8px; }
+      p.lead { font-size: 15px; margin-bottom: 12px; }
       
       /* Product grid */
       .grid { gap: 16px; grid-template-columns: 1fr; }
@@ -418,10 +418,13 @@
     }
 
     @media (max-width: 480px) {
-      .name { font-size: 32px; }
+      /* Even more compact hero for very small screens */
+      header.hero { padding: 10px 0 15px; }
+      .brand img { width: 70px; height: 70px; }
+      .name { font-size: 28px; }
       .tagline { font-size: 12px; }
-      h2.section-title { font-size: 28px; }
-      .btn { padding: 10px 20px; font-size: 13px; }
+      h2.section-title { font-size: 24px; margin-bottom: 6px; }
+      .btn { padding: 8px 16px; font-size: 12px; }
       .pic-wrap img { height: 160px; }
       .pic-wrap { min-height: 180px; }
       .title { font-size: 18px; }
