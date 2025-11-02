@@ -1045,6 +1045,26 @@
   }
 }
 
+
+/* --- Mobile FAB placement for Cart (prevents disappearing with collapsing top bars) --- */
+@media (max-width: 768px) {
+  .cart-tab {
+    position: fixed;
+    top: auto;
+    bottom: calc(env(safe-area-inset-bottom) + 20px);
+    right: 16px;
+    z-index: 10050;
+    transform: translateZ(0); /* create its own layer to avoid flicker */
+    backface-visibility: hidden;
+    will-change: transform;
+  }
+  /* Nudge scroll-to-top button above the cart FAB so they don't overlap */
+  #scrollTop {
+    bottom: calc(env(safe-area-inset-bottom) + 84px);
+    right: 20px;
+  }
+}
+
 </style>
 </head>
 <body>
