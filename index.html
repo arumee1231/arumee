@@ -403,14 +403,7 @@
     .add-to-order { width: 100%; margin-top: 10px; padding: 10px; background: linear-gradient(135deg, var(--green), #0d8f45); color: white; border: none; border-radius: 10px; font-weight: 700; font-size: 14px; cursor: pointer; transition: all .3s ease; }
     .add-to-order:hover { background: linear-gradient(135deg, #0d8f45, var(--green)); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(10,110,53,.3); }
     .add-to-order:active { transform: translateY(0); }
-    .benefits { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; min-height: 70px; align-content: flex-start; }
-    .benefit {
-      position: relative; padding: 6px 10px; border-radius: 10px; border: 2px solid var(--green);
-      background: linear-gradient(135deg, #ffffff, #f8fdf9);
-      font-weight: 700; color: var(--green); font-size: 11px;
-      transition: all .3s ease;
-    }
-    .benefit:hover { border-color: var(--gold); background: linear-gradient(135deg, #ffffff, #fffdf7); transform: scale(1.05); }
+
 
     /* ORDER FORM */
     form.card { padding: 40px; max-width: 800px; margin: 0 auto; }
@@ -529,41 +522,41 @@
     }
     .modal-content {
       background: white;
-      border-radius: 16px;
-      padding: 32px;
-      max-width: 440px;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 320px;
       width: 90%;
       animation: slideIn 0.3s ease;
       position: relative;
       border: 2px solid var(--green);
     }
     .modal-icon {
-      width: 64px;
-      height: 64px;
+      width: 48px;
+      height: 48px;
       background: linear-gradient(135deg, var(--green), var(--green-dark));
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 36px;
-      margin: 0 auto 20px;
+      font-size: 24px;
+      margin: 0 auto 12px;
       color: white;
       font-weight: 900;
     }
     .modal-title {
       font-family: 'Playfair Display', serif;
-      font-size: 24px;
+      font-size: 18px;
       font-weight: 700;
       color: var(--green);
       text-align: center;
-      margin: 0 0 16px;
+      margin: 0 0 10px;
     }
     .modal-message {
-      font-size: 15px;
-      line-height: 1.6;
+      font-size: 14px;
+      line-height: 1.4;
       color: #333;
       text-align: center;
-      margin-bottom: 24px;
+      margin-bottom: 16px;
     }
     .modal-message ul {
       list-style: none;
@@ -585,14 +578,14 @@
     }
     .modal-buttons {
       display: flex;
-      gap: 12px;
+      gap: 8px;
       justify-content: center;
     }
     .modal-btn {
-      padding: 12px 32px;
-      border-radius: 10px;
+      padding: 10px 20px;
+      border-radius: 8px;
       border: none;
-      font-size: 15px;
+      font-size: 13px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -1051,17 +1044,32 @@
   .cart-tab {
     position: fixed;
     top: auto;
-    bottom: calc(env(safe-area-inset-bottom) + 20px);
-    right: 16px;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 10050;
-    transform: translateZ(0); /* create its own layer to avoid flicker */
-    backface-visibility: hidden;
+    padding: 12px 24px;
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
     will-change: transform;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
-  /* Nudge scroll-to-top button above the cart FAB so they don't overlap */
+  .cart-tab:active {
+    transform: translateX(-50%) scale(0.95);
+  }
+  /* Adjust other floating buttons */
   #scrollTop {
-    bottom: calc(env(safe-area-inset-bottom) + 84px);
+    bottom: 90px;
     right: 20px;
+  }
+  #whatsappBtn {
+    bottom: 90px;
+    left: 20px;
   }
 }
 
@@ -1136,11 +1144,6 @@
                   <button type="button" onclick="increaseQty('coconut')">+</button>
                 </div>
               </div>
-              <div class="benefits">
-                <div class="benefit">Heart Healthy</div>
-                <div class="benefit">Great for Cooking</div>
-                <div class="benefit">Natural Beauty Care</div>
-              </div>
               <button class="add-to-order" onclick="addToOrder('coconut', 'Cold-Pressed Coconut Oil', getCurrentPrice('coconut'))">Add to Order</button>
             </div>
           </article>
@@ -1168,11 +1171,6 @@
                   <button type="button" onclick="increaseQty('groundnut')">+</button>
                 </div>
               </div>
-              <div class="benefits">
-                <div class="benefit">Good for Heart</div>
-                <div class="benefit">Rich in Protein</div>
-                <div class="benefit">High Smoking Point</div>
-              </div>
               <button class="add-to-order" onclick="addToOrder('groundnut', 'Wooden Cold-Pressed Groundnut Oil', getCurrentPrice('groundnut'))">Add to Order</button>
             </div>
           </article>
@@ -1199,11 +1197,6 @@
                   <input type="number" id="qty-gingelly" value="1" min="1" max="10" oninput="validateQty('gingelly')" />
                   <button type="button" onclick="increaseQty('gingelly')">+</button>
                 </div>
-              </div>
-              <div class="benefits">
-                <div class="benefit">Rich in Calcium</div>
-                <div class="benefit">High in Antioxidants</div>
-                <div class="benefit">Great for Hair</div>
               </div>
               <button class="add-to-order" onclick="addToOrder('gingelly', 'Wooden Cold-Pressed Gingelly Oil', getCurrentPrice('gingelly'))">Add to Order</button>
             </div>
@@ -1263,6 +1256,21 @@
       <button class="zoom-close" onclick="closeImageZoom()">&times;</button>
       <img id="zoomedImage" src="" alt="Zoomed Product Image" />
       <div class="zoom-caption"></div>
+    </div>
+  </div>
+
+  <!-- Add to Cart Confirmation Modal -->
+  <div id="addToCartModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-icon">🛒</div>
+      <h3 class="modal-title">Item Added to Cart</h3>
+      <div class="modal-message">
+        <p id="addToCartDetails"></p>
+      </div>
+      <div class="modal-buttons">
+        <button class="modal-btn secondary" onclick="continueShoppingFromModal()">Continue Shopping</button>
+        <button class="modal-btn primary" onclick="checkoutFromModal()">Proceed to Checkout</button>
+      </div>
     </div>
   </div>
 
@@ -1731,6 +1739,24 @@
       }, 3000);
     }
     
+    function showAddToCartModal(details) {
+      document.getElementById('addToCartDetails').textContent = details;
+      document.getElementById('addToCartModal').classList.add('show');
+    }
+
+    function hideAddToCartModal() {
+      document.getElementById('addToCartModal').classList.remove('show');
+    }
+
+    function continueShoppingFromModal() {
+      hideAddToCartModal();
+    }
+
+    function checkoutFromModal() {
+      hideAddToCartModal();
+      document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+    }
+
     function addToOrder(id, productName, price) {
       // Get selected size info
       const selectedSizeOption = document.querySelector(`.size-option.active[data-product="${id}"]`);
@@ -1749,7 +1775,8 @@
       if (existingIndex > -1) {
         orderItems[existingIndex].qty = qty;
         orderItems[existingIndex].total = total;
-        showToast(`Updated: ${fullProductName} × ${qty}`);
+        const message = `Updated: ${fullProductName} × ${qty} = ₹${total}`;
+        showAddToCartModal(message);
       } else {
         orderItems.push({ 
           id, 
@@ -1761,25 +1788,12 @@
           qty, 
           total 
         });
-        showToast(`Added to cart: ${fullProductName} × ${qty}`);
+        const message = `Added to cart: ${fullProductName} × ${qty} = ₹${total}`;
+        showAddToCartModal(message);
       }
-      
-      // Remember if cart was open before adding item
-      const wasCartOpen = isCartOpen;
-      
-      // Prevent cart from closing for a short time when adding items
-      preventCartClose = true;
-      setTimeout(() => {
-        preventCartClose = false;
-      }, 500);
       
       updateOrderDetails();
       toggleManualSelection(); // Hide manual selection when items added
-      
-      // Keep cart open if it was open before adding item
-      if (wasCartOpen && !isCartOpen) {
-        toggleCart();
-      }
     }
     
     function updateOrderDetails() {
