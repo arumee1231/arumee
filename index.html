@@ -127,8 +127,33 @@
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
       width: 350px;
       max-height: 500px;
-      z-index: 999;
+      z-index: 9999;
       overflow: hidden;
+      /* Animation defaults */
+      transform: translateX(110%);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform .35s cubic-bezier(.22,.9,.24,1), opacity .35s ease;
+      will-change: transform, opacity;
+    }
+    .cart-dropdown.open {
+      transform: translateX(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .cart-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.25);
+      backdrop-filter: blur(2px);
+      z-index: 9998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s ease;
+    }
+    .cart-backdrop.visible {
+      opacity: 1;
+      pointer-events: auto;
     }
     
     .cart-header {
@@ -759,15 +784,83 @@
       h2.section-title { font-size: 28px; margin-top: 0; margin-bottom: 8px; }
       p.lead { font-size: 15px; margin-bottom: 12px; }
       
-      /* Product grid */
-      .grid { gap: 16px; grid-template-columns: 1fr; }
-      .card { border-radius: 16px; }
-      .pic-wrap { min-height: 200px; padding: 20px; }
-      .pic-wrap img { height: 180px; }
+      /* Product grid -> mobile carousel (horizontal scroll snap) */
+      .grid {
+        display: flex;
+        gap: 16px;
+        overflow-x: auto;
+        overflow-y: visible; /* allow scaled cards to overflow vertically without being clipped */
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        padding: 12px 0 24px; /* add top/bottom space so active card has room to grow */
+        align-items: center; /* vertically center cards inside carousel */
+      }
+
+      /* Hide native scrollbar for a cleaner carousel look */
+      .grid::-webkit-scrollbar { display: none; }
+      .grid { -ms-overflow-style: none; scrollbar-width: none; }
+
+      /* Each card becomes a horizontally scrollable 'slide' */
+      .grid .card {
+        flex: 0 0 85%; /* show one card (mostly) centered */
+        min-width: 260px;
+        scroll-snap-align: center;
+        border-radius: 16px;
+      }
+
+      /* Disable hover transform on mobile to avoid layout shifts while scrolling */
+      .grid .card:hover { transform: none; }
+
+      /* Active slide styling (zoom + lift) */
+      /* Prepare smoother animations */
+      .grid .card {
+        transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s cubic-bezier(.2,.9,.2,1);
+        will-change: transform;
+      }
+
+      /* Active card: small lift only (so layout doesn't grow) */
+      .grid .card.active-slide {
+        transform: translateY(-6px);
+        border-color: var(--green);
+        box-shadow: 0 20px 48px rgba(30,77,50,0.18);
+        z-index: 4;
+      }
+
+      /* Scale the product image inside the active card for a clean zoom effect */
+      .pic-wrap img {
+        transition: transform .36s cubic-bezier(.2,.9,.2,1), box-shadow .36s ease;
+        will-change: transform;
+        transform-origin: 50% 50%;
+      }
+
+      .grid .card.active-slide .pic-wrap img {
+        transform: scale(1.08);
+        box-shadow: none; /* remove shadow so image edges stay clean on white */
+      }
+      /* Ensure product artwork visually merges with card and all bottles share same visible height */
+      .pic-wrap {
+        height: 200px; /* fixed height so all images occupy same box */
+        padding: 10px 12px;
+        overflow: hidden; /* crop image edges so white canvas doesn't show */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #ffffff; /* keep image area white on mobile so any translucent edges blend to white */
+      }
+      .pic-wrap img {
+        display: block;
+        width: auto;
+        /* force a consistent visible height for all product artboards */
+        height: 92%;
+        max-width: 120%; /* allow slight horizontal overflow to hide white edges */
+        object-fit: contain;
+        object-position: 50% 50%;
+        transform-origin: 50% 50%;
+      }
       .content { padding: 16px; }
-      .title { font-size: 20px; min-height: auto; }
+      .title { font-size: 20px; min-height: 52px; }
       .price { font-size: 26px; }
-      .benefits { min-height: auto; gap: 6px; }
+      .benefits { min-height: 70px; gap: 6px; }
       
       /* Form */
       form.card { padding: 24px; }
@@ -934,7 +1027,7 @@
   </div>
 
   <!-- Cart Dropdown -->
-  <div id="cartDropdown" class="cart-dropdown" style="display: none;">
+  <div id="cartDropdown" class="cart-dropdown">
     <div class="cart-header">
       <h3>Your Cart</h3>
       <button class="cart-close" onclick="toggleCart()">×</button>
@@ -947,6 +1040,7 @@
       <button class="btn fill" onclick="scrollToOrder()">Proceed to Order</button>
     </div>
   </div>
+  <div id="cartBackdrop" class="cart-backdrop"></div>
 
   <main>
     <section id="oils">
@@ -1306,8 +1400,16 @@
     // Cart Functions
     function toggleCart() {
       const cartDropdown = document.getElementById('cartDropdown');
+      const backdrop = document.getElementById('cartBackdrop');
       isCartOpen = !isCartOpen;
-      cartDropdown.style.display = isCartOpen ? 'block' : 'none';
+      if (isCartOpen) {
+        // Ensure element is laid out then animate
+        cartDropdown.classList.add('open');
+        backdrop.classList.add('visible');
+      } else {
+        cartDropdown.classList.remove('open');
+        backdrop.classList.remove('visible');
+      }
     }
 
     function updateCartDisplay() {
@@ -1903,15 +2005,127 @@
         input.addEventListener('input', saveFormDataToStorage);
       });
       
-      // Add image zoom functionality
+      // Helper: detect background color by sampling image corners and remove pixels similar to that color
+      // NOTE: This requires the image to be same-origin or served with CORS headers; otherwise canvas will be tainted.
+      // Improved background removal: higher default threshold + soft feathering
+      // Attempts to remove a uniform background color (estimated from image corners)
+      // and applies a gentle alpha ramp to avoid hard halos.
+      function removeWhiteBackground(img, threshold = 70, feather = 20) {
+        return new Promise((resolve) => {
+          try {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = img.naturalWidth || img.width;
+            canvas.height = img.naturalHeight || img.height;
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+            // helper: average color in a small rect
+            function avgColor(x, y, w, h) {
+              try {
+                const d = ctx.getImageData(x, y, w, h).data;
+                let r = 0, g = 0, b = 0, n = 0;
+                for (let i = 0; i < d.length; i += 4) {
+                  r += d[i]; g += d[i + 1]; b += d[i + 2]; n++;
+                }
+                return { r: Math.round(r / n), g: Math.round(g / n), b: Math.round(b / n) };
+              } catch (e) { return null; }
+            }
+
+            // Sample small areas in the four corners to estimate background color
+            const sample = Math.max(6, Math.floor(Math.min(canvas.width, canvas.height) * 0.03));
+            const corners = [];
+            corners.push(avgColor(0, 0, sample, sample));
+            corners.push(avgColor(canvas.width - sample, 0, sample, sample));
+            corners.push(avgColor(0, canvas.height - sample, sample, sample));
+            corners.push(avgColor(canvas.width - sample, canvas.height - sample, sample, sample));
+
+            // compute average of non-null corners
+            let br = 0, bg = 0, bb = 0, count = 0;
+            corners.forEach(c => { if (c) { br += c.r; bg += c.g; bb += c.b; count++; } });
+            if (count === 0) { resolve(null); return; }
+            const bgColor = { r: Math.round(br / count), g: Math.round(bg / count), b: Math.round(bb / count) };
+
+            try {
+              const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+              const data = imageData.data;
+              const inner = Math.max(0, threshold);
+              const outer = inner + Math.max(0, feather);
+
+              for (let i = 0; i < data.length; i += 4) {
+                const r = data[i], g = data[i + 1], b = data[i + 2];
+                const dr = r - bgColor.r, dg = g - bgColor.g, db = b - bgColor.b;
+                const distSq = dr * dr + dg * dg + db * db;
+                const dist = Math.sqrt(distSq);
+
+                if (dist <= inner) {
+                  // Fully background — make transparent
+                  data[i + 3] = 0;
+                } else if (dist <= outer) {
+                  // In the feather zone — set partial alpha to soften edges
+                  const t = (dist - inner) / (outer - inner); // 0..1
+                  // newAlpha scales from 0 (at inner) to 255 (at outer)
+                  const newAlpha = Math.round(255 * t);
+                  // Use the smaller of existing alpha and newAlpha to avoid increasing alpha
+                  data[i + 3] = Math.min(data[i + 3], newAlpha);
+                }
+                // else: leave opaque pixels alone
+              }
+
+              ctx.putImageData(imageData, 0, 0);
+
+              // Flatten transparency onto a white background so edges look white (no shading)
+              try {
+                const out = document.createElement('canvas');
+                out.width = canvas.width;
+                out.height = canvas.height;
+                const outCtx = out.getContext('2d');
+                // fill white
+                outCtx.fillStyle = '#ffffff';
+                outCtx.fillRect(0, 0, out.width, out.height);
+                // draw processed image on top
+                outCtx.drawImage(canvas, 0, 0);
+                const newSrc = out.toDataURL();
+                console.log('removeWhiteBackground: processed', img.src, 'bgColor=', bgColor, 'threshold=', threshold, 'feather=', feather);
+                resolve(newSrc);
+              } catch (err2) {
+                // if anything goes wrong, fall back to original canvas data
+                try { const newSrc = canvas.toDataURL(); resolve(newSrc); } catch (e) { resolve(null); }
+              }
+            } catch (err) {
+              console.warn('Could not process image (CORS?):', err);
+              resolve(null);
+            }
+          } catch (e) {
+            console.warn('Background removal failed:', e);
+            resolve(null);
+          }
+        });
+      }
+
+      // Add image zoom functionality and attempt background removal for product images
       const productImages = document.querySelectorAll('.pic-wrap img');
       productImages.forEach(img => {
-        img.parentElement.addEventListener('click', (e) => {
-          e.preventDefault();
-          const imageSrc = img.src;
-          const caption = img.alt || 'Product Image';
-          showImageZoom(imageSrc, caption);
-        });
+        // Ensure we process after the image has loaded
+        function processAndWire() {
+          removeWhiteBackground(img).then(newSrc => {
+            if (newSrc) {
+              img.src = newSrc; // replace with processed image (transparent background)
+            }
+            // wire zoom behavior
+            img.parentElement.addEventListener('click', (e) => {
+              e.preventDefault();
+              const imageSrc = img.src;
+              const caption = img.alt || 'Product Image';
+              showImageZoom(imageSrc, caption);
+            });
+          });
+        }
+
+        if (img.complete && img.naturalWidth) {
+          processAndWire();
+        } else {
+          img.addEventListener('load', processAndWire);
+        }
       });
       
       // Close zoom overlay when clicking outside image
@@ -1955,6 +2169,176 @@
         return message;
       }
     });
+
+    /* Carousel active-slide detection: find centered card and toggle class */
+    (function setupCarouselActiveSlide() {
+      const carousel = document.querySelector('.grid');
+      if (!carousel) return;
+
+      const cards = Array.from(carousel.querySelectorAll('.card'));
+      if (!cards.length) return;
+
+      // Throttle utility to avoid too many calculations while scrolling
+      function throttle(fn, wait) {
+        let last = 0;
+        let timeout = null;
+        return function(...args) {
+          const now = Date.now();
+          const remaining = wait - (now - last);
+          if (remaining <= 0) {
+            if (timeout) { clearTimeout(timeout); timeout = null; }
+            last = now;
+            fn.apply(this, args);
+          } else if (!timeout) {
+            timeout = setTimeout(() => {
+              last = Date.now();
+              timeout = null;
+              fn.apply(this, args);
+            }, remaining);
+          }
+        };
+      }
+
+      function updateActiveSlide() {
+        const carouselRect = carousel.getBoundingClientRect();
+        const carouselCenter = carouselRect.left + carouselRect.width / 2;
+
+        let closest = null;
+        let minDist = Infinity;
+
+        cards.forEach(card => {
+          const rect = card.getBoundingClientRect();
+          const cardCenter = rect.left + rect.width / 2;
+          const dist = Math.abs(carouselCenter - cardCenter);
+          if (dist < minDist) {
+            minDist = dist;
+            closest = card;
+          }
+        });
+
+        cards.forEach(c => c.classList.toggle('active-slide', c === closest));
+      }
+
+      // Run once to initialise
+      updateActiveSlide();
+
+      // Listen to scroll and resize events
+      const throttled = throttle(updateActiveSlide, 80);
+      carousel.addEventListener('scroll', throttled, { passive: true });
+      window.addEventListener('resize', throttled);
+
+      // Also update when dynamic content changes (images load)
+      cards.forEach(imgCard => {
+        const img = imgCard.querySelector('img');
+        if (img && !img.complete) img.addEventListener('load', throttled);
+      });
+    })();
   </script>
+
+<script>
+// --- Mobile carousel active-slide centering fix ---
+document.addEventListener("DOMContentLoaded", function () {
+  const carousel = document.querySelector("#oils .grid");
+  if (!carousel) return;
+
+  // Run only on mobile viewports (horizontal scroll)
+  if (window.innerWidth <= 768) {
+    const cards = Array.from(carousel.querySelectorAll(".card"));
+    if (!cards.length) return;
+
+    
+    // Robust centering of first card inside a scroll-snap container
+    const firstCard = cards[0];
+    const prevSnap = carousel.style.scrollSnapType;
+    // Temporarily disable snap so we can position precisely
+    carousel.style.scrollSnapType = 'none';
+    carousel.scrollLeft = 0; // reset
+    // Position so first card center aligns to container center
+    const centerIt = () => {
+      try {
+        // Use native snap-aware centering after restoring snap
+        carousel.style.scrollSnapType = prevSnap || 'x mandatory';
+        // Ensure it's exactly centered in the snap container
+        firstCard.scrollIntoView({ behavior: 'auto', inline: 'center', block: 'nearest' });
+      } catch(e) {
+        // Fallback: math positioning
+        const targetLeft = firstCard.offsetLeft - (carousel.clientWidth - firstCard.clientWidth) / 2;
+        carousel.scrollLeft = Math.max(0, targetLeft);
+      }
+      // Make it active immediately
+      cards.forEach((c, i) => c.classList.toggle("active-slide", i === 0));
+      updateActiveSlide();
+    };
+    // Wait a tick for layout (images/fonts) then center
+    requestAnimationFrame(() => requestAnimationFrame(centerIt));
+
+
+    function throttle(fn, wait) {
+      let ticking = false, lastArgs = null;
+      return function (...args) {
+        lastArgs = args;
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(() => {
+            fn.apply(this, lastArgs);
+            ticking = false;
+          });
+        }
+      };
+    }
+
+    function updateActiveSlide() {
+      const center = carousel.scrollLeft + carousel.clientWidth / 2;
+      let bestIdx = 0;
+      let bestDist = Infinity;
+
+      cards.forEach((card, idx) => {
+        const cardCenter = card.offsetLeft + card.clientWidth / 2;
+        const dist = Math.abs(cardCenter - center);
+        if (dist < bestDist) { bestDist = dist; bestIdx = idx; }
+      });
+
+      cards.forEach((card, idx) => {
+        card.classList.toggle("active-slide", idx === bestIdx);
+      });
+    }
+
+    const throttledUpdate = throttle(updateActiveSlide, 80);
+    carousel.addEventListener("scroll", throttledUpdate, { passive: true });
+    window.addEventListener("resize", throttledUpdate);
+    window.addEventListener("orientationchange", throttledUpdate);
+    cards.forEach((c) => {
+      const img = c.querySelector("img");
+      if (img && !img.complete) img.addEventListener("load", throttledUpdate);
+    });
+
+    // Initial activation after layout
+    updateActiveSlide();
+  }
+});
+</script>
+
+<script>
+// --- Cart animation helpers ---
+document.addEventListener('DOMContentLoaded', function(){
+  const cartDropdown = document.getElementById('cartDropdown');
+  const backdrop = document.getElementById('cartBackdrop');
+  // Ensure it's displayed for animation system; opacity/transform handle visibility
+  cartDropdown.style.display = 'block';
+
+  // Click outside closes (unless we're in the middle of quantity edits)
+  backdrop.addEventListener('click', function(){
+    if (preventCartClose) return;
+    if (isCartOpen) toggleCart();
+  });
+
+  // ESC to close
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && isCartOpen && !preventCartClose) {
+      toggleCart();
+    }
+  });
+});
+</script>
 </body>
 </html>
