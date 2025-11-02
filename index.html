@@ -1001,7 +1001,51 @@
         padding: 8px 12px !important;
       }
     }
-  </style>
+  
+/* --- Carousel inactive grayscale effect --- */
+
+
+.grid .card.active-slide {
+  filter: grayscale(0) brightness(1);
+  transform: translateY(-6px);
+  border-color: var(--green);
+  box-shadow: 0 20px 48px rgba(30,77,50,0.18);
+  z-index: 4;
+}
+
+
+/* --- Carousel inactive grayscale effect (mobile only) --- */
+@media (max-width: 768px) {
+  
+  .grid .card.active-slide {
+    filter: grayscale(0) brightness(1);
+    transform: translateY(-6px);
+    border-color: var(--green);
+    box-shadow: 0 20px 48px rgba(30,77,50,0.18);
+    z-index: 4;
+  }
+}
+
+
+/* --- Carousel inactive grayscale effect (STRICTLY mobile only) --- */
+@media screen and (max-width: 767px) {
+  #oils .grid .card {
+    filter: grayscale(0.8) brightness(0.85);
+    transition:
+      transform .28s cubic-bezier(.2,.9,.2,1),
+      box-shadow .28s cubic-bezier(.2,.9,.2,1),
+      filter .4s ease;
+  }
+  #oils .grid .card.active-slide {
+    filter: grayscale(0) brightness(1);
+    transform: translateY(-6px);
+    border-color: var(--green);
+    box-shadow: 0 20px 48px rgba(30,77,50,0.18);
+    z-index: 4;
+  }
+}
+
+</style>
 </head>
 <body>
   <header class="hero">
@@ -2340,5 +2384,19 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 });
 </script>
+
+<script>
+// --- Desktop safety: ensure no 'active-slide' class remains on desktop ---
+document.addEventListener('DOMContentLoaded', function(){
+  function cleanupActiveForDesktop(){
+    if (window.innerWidth > 768) {
+      document.querySelectorAll('#oils .grid .card.active-slide').forEach(el => el.classList.remove('active-slide'));
+    }
+  }
+  cleanupActiveForDesktop();
+  window.addEventListener('resize', cleanupActiveForDesktop);
+});
+</script>
+
 </body>
 </html>
