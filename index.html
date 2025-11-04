@@ -8,6 +8,10 @@
   <title>Arumee — Premium Cold‑Pressed Oils</title>
   <meta name="description" content="Arumee — Premium cold‑pressed oils. Pure, natural, and traditionally pressed coconut, groundnut, and gingelly oils." />
   <link rel="icon" type="image/png" href="arumee_assets/favicon.png" />
+  <!-- Preload critical hero assets to reduce flicker -->
+  <link rel="preload" as="image" href="arumee_assets/logo.png" fetchpriority="high" />
+  <link rel="preload" as="image" href="arumee_assets/Natural.png" />
+  <!-- Preconnect & use font-display swap already configured; ensure fast font load -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -26,6 +30,15 @@
       --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
     }
     * { box-sizing: border-box; }
+    /* Force form inputs to be editable - override any blocking */
+    input[name="name"],
+    input[name="phone"],
+    input[name="address"],
+    textarea[name="notes"] {
+      pointer-events: auto !important;
+      user-select: text !important;
+      -webkit-user-select: text !important;
+    }
     html {
       overflow-x: hidden;
       width: 100%;
@@ -42,6 +55,9 @@
       width: 100%;
       position: relative;
     }
+    /* Prevent initial flash: fade hero brand in after load */
+    header.hero .brand { opacity: 0; transform: translateY(10px); transition: opacity .4s ease, transform .4s ease; }
+    body.hero-ready header.hero .brand { opacity: 1; transform: translateY(0); }
     .container { width: min(1200px, 92vw); margin: 0 auto; }
 
     /* STICKY NAVIGATION BAR */
@@ -296,6 +312,8 @@
       max-height: 60px;
       line-height: 1;
       flex: none;
+      /* Prevent being covered by any future overlays */
+      pointer-events: auto;
     }
     
     /* Move cart down when sticky nav is visible */
@@ -545,6 +563,9 @@
       background: #f8f9fa;
       padding: 16px 20px;
       border-top: 1px solid #eee;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     
     .cart-total {
@@ -556,9 +577,11 @@
     }
     
     .cart-footer .btn {
-      width: 100%;
-      padding: 12px;
+      width: auto;
+      padding: 12px 24px;
       font-size: 14px;
+      margin: 0 auto;
+      display: inline-block;
     }
 
     /* SECTIONS */
@@ -636,6 +659,8 @@
       mask-composite: exclude;
       opacity: 0;
       transition: opacity 0.4s ease;
+      /* IMPORTANT: allow clicks to pass through overlay */
+      pointer-events: none;
     }
     .card:hover::before {
       opacity: 1;
@@ -804,6 +829,10 @@
       border-radius: 12px;
       border: 2px solid #e0e0e0;
       transition: border-color 0.3s ease;
+      position: relative;
+      z-index: 10;
+      user-select: none;
+      -webkit-user-select: none;
     }
     .quantity-stepper:hover {
       border-color: var(--gold);
@@ -823,6 +852,10 @@
       align-items: center; 
       justify-content: center;
       box-shadow: var(--shadow-sm);
+      position: relative;
+      z-index: 10;
+      user-select: none;
+      -webkit-user-select: none;
     }
     .quantity-stepper button:hover { 
       background: var(--green); 
@@ -841,6 +874,8 @@
       border-radius: 10px; 
       color: var(--green);
       background: white;
+      user-select: none;
+      -webkit-user-select: none;
     }
     .quantity-stepper input:focus { 
       outline: none; 
@@ -896,6 +931,8 @@
     }
     form.card::before {
       opacity: 0.5;
+      /* Ensure form inputs beneath are clickable */
+      pointer-events: none !important;
     }
     form input, form select, form textarea {
       width: 100%; 
@@ -1360,16 +1397,26 @@
       .cart-tab {
         top: auto !important;
         right: 16px;
-        bottom: 16px;
+        bottom: calc(16px + env(safe-area-inset-bottom));
         padding: 0;
-        width: 56px;
-        height: 56px;
+        width: 58px;
+        height: 58px;
         border-radius: 50%;
         font-size: 12px;
         justify-content: center;
-        box-shadow: 0 6px 16px rgba(30,77,50,.35);
+        box-shadow: 0 6px 18px rgba(30,77,50,.38);
         background: linear-gradient(135deg, var(--green), var(--green-dark));
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        border: 2px solid rgba(255,255,255,.25);
       }
+
+      /* Ensure cart button never gets overlapped by scrollTop / whatsapp */
+      #scrollTop { right: 84px; }
+      #whatsappBtn { right: 152px; }
+
+      /* Hide text label on very small screens to save space */
+  .cart-tab span:not(.cart-count):not(.cart-icon) { display: none; }
       
       .cart-dropdown {
         top: auto !important;
@@ -2003,7 +2050,7 @@
   <nav class="sticky-nav" id="stickyNav">
     <div class="nav-content">
       <div class="nav-brand">
-        <img src="arumee_assets/logo.png" alt="Arumee" />
+  <img src="arumee_assets/logo.png" alt="Arumee" width="40" height="40" decoding="async" fetchpriority="high" />
         <span>ARUMEE</span>
       </div>
       <div class="nav-actions">
@@ -2016,7 +2063,7 @@
   <header class="hero">
     <div class="container">      
       <div class="brand">
-        <img src="arumee_assets/logo.png" alt="Arumee logo" />
+  <img src="arumee_assets/logo.png" alt="Arumee logo" width="120" height="120" decoding="async" fetchpriority="high" style="aspect-ratio:1/1;" />
         <div>
           <div class="name">ARUMEE<sup style="font-size:0.4em; color:var(--gold); font-weight:800;">™</sup></div>
           <div class="tagline">Premium cold‑pressed oils</div>
@@ -2076,23 +2123,23 @@
             <div class="content">
               <span class="pill" id="coconut-pill">Coconut • 500ml</span>
               <div class="title">Cold‑Pressed Coconut Oil</div>
-              <div class="price" id="coconut-price">₹225 <span>/ 500ml</span></div>
+              <div class="price" id="coconut-price">₹200 <span>/ 500ml</span></div>
               
               <div class="size-selector">
                 <label>SIZE</label>
                 <div class="size-options">
-                  <div class="size-option active" data-product="coconut" data-size="500ml" data-price="225">500ml</div>
-                  <div class="size-option" data-product="coconut" data-size="1L" data-price="450">1L</div>
-                  <div class="size-option" data-product="coconut" data-size="5L" data-price="2250">5L</div>
+                  <div class="size-option active" data-product="coconut" data-size="500ml" data-price="200">500ml</div>
+                  <div class="size-option" data-product="coconut" data-size="1L" data-price="400">1L</div>
+                  <div class="size-option" data-product="coconut" data-size="5L" data-price="2000">5L</div>
                 </div>
               </div>
 
               <div class="quantity-selector">
                 <label for="qty-coconut">Quantity</label>
                 <div class="quantity-stepper">
-                  <button type="button" onclick="decreaseQty('coconut')">−</button>
-                  <input type="number" id="qty-coconut" value="1" min="1" max="10" oninput="validateQty('coconut')" />
-                  <button type="button" onclick="increaseQty('coconut')">+</button>
+                  <button type="button" onclick="decreaseQty('coconut', event)" aria-label="Decrease coconut quantity">−</button>
+                  <input type="number" id="qty-coconut" value="1" min="1" max="10" oninput="validateQty('coconut')" aria-label="Coconut quantity" />
+                  <button type="button" onclick="increaseQty('coconut', event)" aria-label="Increase coconut quantity">+</button>
                 </div>
               </div>
               <button class="add-to-order" onclick="addToOrder('coconut', 'Cold-Pressed Coconut Oil', getCurrentPrice('coconut'))">Add to Order</button>
@@ -2103,23 +2150,23 @@
             <div class="content">
               <span class="pill" id="groundnut-pill">Groundnut • 500ml</span>
               <div class="title">Wooden Cold‑Pressed Groundnut Oil</div>
-              <div class="price" id="groundnut-price">₹275 <span>/ 500ml</span></div>
+              <div class="price" id="groundnut-price">₹115 <span>/ 500ml</span></div>
               
               <div class="size-selector">
                 <label>SIZE</label>
                 <div class="size-options">
-                  <div class="size-option active" data-product="groundnut" data-size="500ml" data-price="275">500ml</div>
-                  <div class="size-option" data-product="groundnut" data-size="1L" data-price="550">1L</div>
-                  <div class="size-option" data-product="groundnut" data-size="5L" data-price="2750">5L</div>
+                  <div class="size-option active" data-product="groundnut" data-size="500ml" data-price="115">500ml</div>
+                  <div class="size-option" data-product="groundnut" data-size="1L" data-price="230">1L</div>
+                  <div class="size-option" data-product="groundnut" data-size="5L" data-price="1150">5L</div>
                 </div>
               </div>
 
               <div class="quantity-selector">
                 <label for="qty-groundnut">Quantity</label>
                 <div class="quantity-stepper">
-                  <button type="button" onclick="decreaseQty('groundnut')">−</button>
-                  <input type="number" id="qty-groundnut" value="1" min="1" max="10" oninput="validateQty('groundnut')" />
-                  <button type="button" onclick="increaseQty('groundnut')">+</button>
+                  <button type="button" onclick="decreaseQty('groundnut', event)" aria-label="Decrease groundnut quantity">−</button>
+                  <input type="number" id="qty-groundnut" value="1" min="1" max="10" oninput="validateQty('groundnut')" aria-label="Groundnut quantity" />
+                  <button type="button" onclick="increaseQty('groundnut', event)" aria-label="Increase groundnut quantity">+</button>
                 </div>
               </div>
               <button class="add-to-order" onclick="addToOrder('groundnut', 'Wooden Cold-Pressed Groundnut Oil', getCurrentPrice('groundnut'))">Add to Order</button>
@@ -2130,23 +2177,23 @@
             <div class="content">
               <span class="pill" id="gingelly-pill">Gingelly • 500ml</span>
               <div class="title">Wooden Cold‑Pressed Gingelly Oil</div>
-              <div class="price" id="gingelly-price">₹275 <span>/ 500ml</span></div>
+              <div class="price" id="gingelly-price">₹200 <span>/ 500ml</span></div>
               
               <div class="size-selector">
                 <label>SIZE</label>
                 <div class="size-options">
-                  <div class="size-option active" data-product="gingelly" data-size="500ml" data-price="275">500ml</div>
-                  <div class="size-option" data-product="gingelly" data-size="1L" data-price="550">1L</div>
-                  <div class="size-option" data-product="gingelly" data-size="5L" data-price="2750">5L</div>
+                  <div class="size-option active" data-product="gingelly" data-size="500ml" data-price="200">500ml</div>
+                  <div class="size-option" data-product="gingelly" data-size="1L" data-price="400">1L</div>
+                  <div class="size-option" data-product="gingelly" data-size="5L" data-price="2000">5L</div>
                 </div>
               </div>
 
               <div class="quantity-selector">
                 <label for="qty-gingelly">Quantity</label>
                 <div class="quantity-stepper">
-                  <button type="button" onclick="decreaseQty('gingelly')">−</button>
-                  <input type="number" id="qty-gingelly" value="1" min="1" max="10" oninput="validateQty('gingelly')" />
-                  <button type="button" onclick="increaseQty('gingelly')">+</button>
+                  <button type="button" onclick="decreaseQty('gingelly', event)" aria-label="Decrease gingelly quantity">−</button>
+                  <input type="number" id="qty-gingelly" value="1" min="1" max="10" oninput="validateQty('gingelly')" aria-label="Gingelly quantity" />
+                  <button type="button" onclick="increaseQty('gingelly', event)" aria-label="Increase gingelly quantity">+</button>
                 </div>
               </div>
               <button class="add-to-order" onclick="addToOrder('gingelly', 'Wooden Cold-Pressed Gingelly Oil', getCurrentPrice('gingelly'))">Add to Order</button>
@@ -2216,23 +2263,30 @@
       <div class="container">
         <h2 class="section-title">Place an Order (No Online Payment)</h2>
         <p class="lead">Submit your details — we’ll call you to confirm delivery & payment.</p>
-        <form class="card" onsubmit="handleSubmit(event)">
+  <form class="card" onsubmit="handleSubmit(event)" autocomplete="off" autocapitalize="none" spellcheck="false">
           <div class="form-row" style="display:grid; grid-template-columns: repeat(2, 1fr); gap:20px;">
-            <div><label>Full Name<br><input required name="name" type="text" placeholder="Your name" minlength="2" maxlength="50" pattern="[A-Za-z\s]+" title="Please enter a valid name (letters and spaces only)"></label></div>
-            <div><label>Phone / WhatsApp<br><input required name="phone" type="tel" placeholder="+91..." pattern="[\+]?[0-9\s\-]{10,15}" title="Please enter a valid phone number (10-15 digits)" maxlength="15"></label></div>
-            <div style="grid-column:1/-1"><label>Address<br><input required name="address" type="text" placeholder="Door no, street, area, pincode" minlength="10" maxlength="200" title="Please enter a complete address"></label></div>
-            
-            <!-- Manual oil selection (shown when cart is empty) -->
-            <div id="manualSelection" style="grid-column:1/-1; display:none;">
-              <div style="padding:16px; background:#f9f9f9; border-radius:12px; border:2px dashed var(--green);">
-                <div id="oilSelectors"></div>
-                <button type="button" class="btn" style="margin-top:12px; padding:8px 16px; font-size:14px;" onclick="addManualOil()">+ Add Another Oil</button>
-              </div>
+            <div>
+              <label for="input-name">Full Name</label><br>
+              <input id="input-name" required name="name" type="text" placeholder="Your name" minlength="2" maxlength="50" pattern="[A-Za-z\s]+" title="Please enter a valid name (letters and spaces only)" autocomplete="off" onfocus="this.readOnly=false;this.disabled=false;" onclick="this.readOnly=false;this.disabled=false;this.focus();">
+            </div>
+            <div>
+              <label for="input-phone">Phone / WhatsApp</label><br>
+              <input id="input-phone" required name="phone" type="tel" placeholder="+91..." pattern="[\+]?[0-9\s\-]{10,15}" title="Please enter a valid phone number (10-15 digits)" maxlength="15" autocomplete="off" inputmode="tel" onfocus="this.readOnly=false;this.disabled=false;" onclick="this.readOnly=false;this.disabled=false;this.focus();">
+            </div>
+            <div style="grid-column:1/-1">
+              <label for="input-address">Address</label><br>
+              <input id="input-address" required name="address" type="text" placeholder="Door no, street, area, pincode" minlength="10" maxlength="200" title="Please enter a complete address" autocomplete="off" onfocus="this.readOnly=false;this.disabled=false;" onclick="this.readOnly=false;this.disabled=false;this.focus();">
             </div>
             
-            <div style="grid-column:1/-1"><label>Order Summary<br><textarea id="orderDetails" name="orderDetails" rows="4" placeholder="Your selected items will appear here..." readonly style="background:#f5f5f5; resize:none; overflow:hidden; min-height:80px;"></textarea></label></div>
+            <div style="grid-column:1/-1">
+              <label for="orderDetails">Order Summary</label><br>
+              <textarea id="orderDetails" name="orderDetails" rows="4" placeholder="Your selected items will appear here..." readonly style="background:#f5f5f5; resize:none; overflow:hidden; min-height:80px;"></textarea>
+            </div>
             <input type="hidden" id="totalAmount" name="totalAmount" value="0">
-            <div style="grid-column:1/-1"><label>Additional Notes (optional)<br><textarea name="notes" rows="3" placeholder="Any special delivery instructions..."></textarea></label></div>
+            <div style="grid-column:1/-1">
+              <label for="input-notes">Additional Notes (optional)</label><br>
+              <textarea id="input-notes" name="notes" rows="3" placeholder="Any special delivery instructions..." autocomplete="off" onfocus="this.readOnly=false;this.disabled=false;" onclick="this.readOnly=false;this.disabled=false;this.focus();"></textarea>
+            </div>
           </div>
           <div class="form-buttons" style="display:flex;gap:16px;justify-content:flex-end;margin-top:20px;">
             <button class="btn" type="reset" onclick="clearOrder()">Clear</button>
@@ -2344,31 +2398,13 @@
       }
     }
     
-    function saveFormDataToStorage() {
-      const formData = {
-        name: document.querySelector('input[name="name"]')?.value || '',
-        phone: document.querySelector('input[name="phone"]')?.value || '',
-        address: document.querySelector('input[name="address"]')?.value || ''
-      };
-      localStorage.setItem('arumeeFormData', JSON.stringify(formData));
-    }
-    
-    function loadFormDataFromStorage() {
-      const savedFormData = localStorage.getItem('arumeeFormData');
-      if (savedFormData) {
-        try {
-          const formData = JSON.parse(savedFormData);
-          const nameField = document.querySelector('input[name="name"]');
-          const phoneField = document.querySelector('input[name="phone"]');
-          const addressField = document.querySelector('input[name="address"]');
-          
-          if (nameField && formData.name) nameField.value = formData.name;
-          if (phoneField && formData.phone) phoneField.value = formData.phone;
-          if (addressField && formData.address) addressField.value = formData.address;
-        } catch (e) {
-          console.log('Could not load form data from storage');
-        }
-      }
+    // Removed form data persistence to ensure fresh empty form on each page load.
+    function clearFormFields() {
+      const nameField = document.querySelector('input[name="name"]');
+      const phoneField = document.querySelector('input[name="phone"]');
+      const addressField = document.querySelector('input[name="address"]');
+      const notesField = document.querySelector('textarea[name="notes"]');
+      [nameField, phoneField, addressField, notesField].forEach(f => { if (f) f.value = ''; });
     }
     
     let pendingWhatsAppUrl = '';
@@ -2442,18 +2478,42 @@
     }
     
     // Quantity stepper functions
-    function increaseQty(id) {
+    function increaseQty(id, event) {
+      if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
+      console.log('increaseQty called for:', id);
       const input = document.getElementById('qty-' + id);
+      if (!input) {
+        console.error('Input not found for qty-' + id);
+        return;
+      }
       const currentVal = parseInt(input.value);
-      if (currentVal < parseInt(input.max)) {
+      const maxVal = parseInt(input.max);
+      console.log('Current:', currentVal, 'Max:', maxVal);
+      if (currentVal < maxVal) {
         input.value = currentVal + 1;
+        console.log('Increased to:', input.value);
       }
     }
-    function decreaseQty(id) {
+    function decreaseQty(id, event) {
+      if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
+      console.log('decreaseQty called for:', id);
       const input = document.getElementById('qty-' + id);
+      if (!input) {
+        console.error('Input not found for qty-' + id);
+        return;
+      }
       const currentVal = parseInt(input.value);
-      if (currentVal > parseInt(input.min)) {
+      const minVal = parseInt(input.min);
+      console.log('Current:', currentVal, 'Min:', minVal);
+      if (currentVal > minVal) {
         input.value = currentVal - 1;
+        console.log('Decreased to:', input.value);
       }
     }
     function validateQty(id) {
@@ -2622,22 +2682,25 @@
     }
     
     const oilOptions = [
-      { id: 'coconut-500ml', name: 'Cold-Pressed Coconut Oil (500ml)', price: 225 },
-      { id: 'coconut-1L', name: 'Cold-Pressed Coconut Oil (1L)', price: 450 },
-      { id: 'coconut-5L', name: 'Cold-Pressed Coconut Oil (5L)', price: 2250 },
-      { id: 'groundnut-500ml', name: 'Wooden Cold-Pressed Groundnut Oil (500ml)', price: 275 },
-      { id: 'groundnut-1L', name: 'Wooden Cold-Pressed Groundnut Oil (1L)', price: 550 },
-      { id: 'groundnut-5L', name: 'Wooden Cold-Pressed Groundnut Oil (5L)', price: 2750 },
-      { id: 'gingelly-500ml', name: 'Wooden Cold-Pressed Gingelly Oil (500ml)', price: 275 },
-      { id: 'gingelly-1L', name: 'Wooden Cold-Pressed Gingelly Oil (1L)', price: 550 },
-      { id: 'gingelly-5L', name: 'Wooden Cold-Pressed Gingelly Oil (5L)', price: 2750 }
+      { id: 'coconut-500ml', name: 'Cold-Pressed Coconut Oil (500ml)', price: 200 },
+      { id: 'coconut-1L', name: 'Cold-Pressed Coconut Oil (1L)', price: 400 },
+      { id: 'coconut-5L', name: 'Cold-Pressed Coconut Oil (5L)', price: 2000 },
+      { id: 'groundnut-500ml', name: 'Wooden Cold-Pressed Groundnut Oil (500ml)', price: 115 },
+      { id: 'groundnut-1L', name: 'Wooden Cold-Pressed Groundnut Oil (1L)', price: 230 },
+      { id: 'groundnut-5L', name: 'Wooden Cold-Pressed Groundnut Oil (5L)', price: 1150 },
+      { id: 'gingelly-500ml', name: 'Wooden Cold-Pressed Gingelly Oil (500ml)', price: 200 },
+      { id: 'gingelly-1L', name: 'Wooden Cold-Pressed Gingelly Oil (1L)', price: 400 },
+      { id: 'gingelly-5L', name: 'Wooden Cold-Pressed Gingelly Oil (5L)', price: 2000 }
     ];
     
     function getCurrentPrice(product) {
       const selectedSizeOption = document.querySelector(`.size-option.active[data-product="${product}"]`);
       return selectedSizeOption ? parseInt(selectedSizeOption.dataset.price) : 225;
     }
+    // Legacy calls safety: manual selection removed, keep no-op to avoid runtime errors
+    function toggleManualSelection() {}
     
+    /* Manual selection functions removed - no longer needed
     function toggleManualSelection() {
       const manualDiv = document.getElementById('manualSelection');
       if (orderItems.length === 0) {
@@ -2740,6 +2803,7 @@
       orderDetailsTextarea.style.height = 'auto';
       orderDetailsTextarea.style.height = Math.max(80, orderDetailsTextarea.scrollHeight) + 'px';
     }
+    */ // End of removed manual selection functions
     
     function showToast(message) {
       const toast = document.getElementById('toast');
@@ -2750,6 +2814,29 @@
         toast.classList.remove('show');
       }, 3000);
     }
+
+    // If user clicks the order form with an empty cart, redirect them to oils section
+    document.addEventListener('DOMContentLoaded', () => {
+      const orderSection = document.getElementById('order');
+      if (orderSection) {
+        orderSection.addEventListener('click', function(e) {
+          // Ignore clicks on buttons (Submit / Clear) – they already trigger validation
+          if (e.target.tagName === 'BUTTON') return;
+          // If cart/orderItems is empty, guide user back to product selection
+          if (Array.isArray(orderItems) && orderItems.length === 0) {
+            e.preventDefault();
+            e.stopPropagation();
+            showToast('Select oil then proceed to order');
+            const oilsSection = document.getElementById('oils');
+            if (oilsSection) {
+              oilsSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        }, true); // capture to intercept before inputs
+      }
+    });
+
+    // Form guard removed - all fields should be editable
     
     function showAddToCartModal(details) {
       document.getElementById('addToCartDetails').textContent = details;
@@ -3041,7 +3128,6 @@
     // Also on DOMContentLoaded for faster trigger
     document.addEventListener('DOMContentLoaded', () => {
       window.scrollTo(0, 0);
-      toggleManualSelection(); // Initialize manual selection visibility on page load
       
       // Cart items will be loaded from localStorage
       updateOrderDetails();
@@ -3076,6 +3162,30 @@
         let value = e.target.value.replace(/[^A-Za-z\s]/g, '');
         e.target.value = value;
       });
+      
+      // DEBUG: Test form editability
+      console.log('🟢 Form inputs found:', {
+        name: !!nameInput,
+        phone: !!phoneInput,
+        address: !!addressInput
+      });
+      console.log('🟢 Name input properties:', {
+        disabled: nameInput.disabled,
+        readOnly: nameInput.readOnly,
+        value: nameInput.value
+      });
+      
+      // Make all form fields always editable
+      const notesInput = document.querySelector('textarea[name="notes"]');
+      function ensureEditable() {
+        [nameInput, phoneInput, addressInput, notesInput].forEach(input => {
+          if (input && input.id !== 'orderDetails') {
+            input.disabled = false;
+            input.readOnly = false;
+          }
+        });
+      }
+      ensureEditable();
       
       // Add size option click handlers
       document.querySelectorAll('.size-option').forEach(option => {
@@ -3140,15 +3250,15 @@
     // Load saved data when page loads
     window.addEventListener('load', () => {
       loadCartFromStorage();
-      loadFormDataFromStorage();
+      // Ensure form fields are cleared on full page load
+      clearFormFields();
     });
     
-    // Save form data as user types
-    document.addEventListener('DOMContentLoaded', () => {
-      const formInputs = document.querySelectorAll('input[name="name"], input[name="phone"], input[name="address"]');
-      formInputs.forEach(input => {
-        input.addEventListener('input', saveFormDataToStorage);
-      });
+    // Also clear on pageshow (handles bfcache restore)
+    window.addEventListener('pageshow', (e) => {
+      if (e.persisted) {
+        clearFormFields();
+      }
       
       // Helper: detect background color by sampling image corners and remove pixels similar to that color
       // NOTE: This requires the image to be same-origin or served with CORS headers; otherwise canvas will be tainted.
@@ -3290,9 +3400,11 @@
     
     // Intercept refresh attempts if cart has items
     document.addEventListener('keydown', (e) => {
+      console.log('🔵 Global keydown:', e.key, 'target:', e.target.tagName, e.target.name);
       // Check for F5 or Ctrl+R (refresh shortcuts)
       if ((e.key === 'F5') || (e.ctrlKey && e.key === 'r') || (e.ctrlKey && e.key === 'R')) {
         if (orderItems.length > 0 && !pendingRefresh) {
+          console.log('🔴 Blocking F5/Ctrl+R');
           e.preventDefault();
           e.stopPropagation();
           e.stopImmediatePropagation();
@@ -3300,6 +3412,8 @@
           return false;
         }
       }
+      // Allow all other keys to pass through
+      console.log('✅ Allowing key:', e.key);
     }, true);
     
     // Handle browser refresh button and other navigation
@@ -3489,6 +3603,10 @@ document.addEventListener('DOMContentLoaded', function(){
 <script>
 // --- Desktop safety: ensure no 'active-slide' class remains on desktop ---
 document.addEventListener('DOMContentLoaded', function(){
+  // Mark body ready for hero fade-in once fonts + images have a chance to load
+  window.addEventListener('load', () => {
+    document.body.classList.add('hero-ready');
+  });
   function cleanupActiveForDesktop(){
     if (window.innerWidth > 768) {
       document.querySelectorAll('#oils .grid .card.active-slide').forEach(el => el.classList.remove('active-slide'));
