@@ -3465,7 +3465,8 @@
       const hasItemsInCart = orderItems && orderItems.length > 0;
       const oilsSection = document.getElementById('oils');
       const passedOils = oilsSection ? currentScroll > (oilsSection.offsetTop + oilsSection.offsetHeight - 200) : false;
-      const isMobile = window.innerWidth <= 768;
+      // Use matchMedia to match CSS media query behavior (works in DevTools mobile view)
+      const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
       // Desktop: always hide sticky nav to avoid duplicate cart controls
       if (!isMobile) {
