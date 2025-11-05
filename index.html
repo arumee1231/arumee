@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
   <meta name="theme-color" content="#ffffff" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://www.arumee.example/" />
+  <meta property="og:title" content="Arumee — Premium Cold‑Pressed Oils" />
+  <meta property="og:description" content="Pure, natural, traditionally pressed coconut, groundnut & gingelly oils. Fresh, authentic, nutrient-rich." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.arumee.example/" />
+  <meta property="og:image" content="https://www.arumee.example/arumee_assets/logo.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Arumee — Premium Cold‑Pressed Oils" />
+  <meta name="twitter:description" content="Pure, natural, traditionally pressed coconut, groundnut & gingelly oils." />
+  <meta name="twitter:image" content="https://www.arumee.example/arumee_assets/logo.png" />
   <title>Arumee — Premium Cold‑Pressed Oils</title>
   <meta name="description" content="Arumee — Premium cold‑pressed oils. Pure, natural, and traditionally pressed coconut, groundnut, and gingelly oils." />
   <link rel="icon" type="image/png" href="arumee_assets/favicon.png" />
@@ -14,6 +25,32 @@
   <!-- Preconnect & use font-display swap already configured; ensure fast font load -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Skip link for accessibility -->
+  <style>
+    .skip-link { position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden; }
+    .skip-link:focus { position:fixed; left:16px; top:16px; width:auto; height:auto; padding:10px 14px; background:#000; color:#fff; z-index:10001; border-radius:8px; }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Store",
+    "name": "Arumee",
+    "url": "https://www.arumee.example/",
+    "logo": "https://www.arumee.example/arumee_assets/logo.png",
+    "description": "Premium cold-pressed coconut, groundnut, and gingelly oils.",
+    "currenciesAccepted": "INR",
+    "areaServed": "IN",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Cold Pressed Oils",
+      "itemListElement": [
+        {"@type":"Offer","itemOffered":{"@type":"Product","name":"Cold‑Pressed Coconut Oil","category":"Grocery","image":"https://www.arumee.example/arumee_assets/mockup_coconut.png"}},
+        {"@type":"Offer","itemOffered":{"@type":"Product","name":"Cold‑Pressed Groundnut Oil","category":"Grocery","image":"https://www.arumee.example/arumee_assets/mockup_groundnut.png"}},
+        {"@type":"Offer","itemOffered":{"@type":"Product","name":"Cold‑Pressed Gingelly Oil","category":"Grocery","image":"https://www.arumee.example/arumee_assets/mockup_gingelly.png"}}
+      ]
+    }
+  }
+  </script>
   <style>
     :root {
       --green: #1e4d32;
@@ -2310,7 +2347,7 @@
   </div>
 
   <!-- Cart Slide-in Panel -->
-  <div id="cartDropdown" class="cart-dropdown" role="dialog" aria-labelledby="cartHeader">
+  <div id="cartDropdown" class="cart-dropdown" role="dialog" aria-labelledby="cartHeader" aria-modal="true" tabindex="-1">
     <div class="cart-header">
       <h3 id="cartHeader"><span>🛒</span> Your Cart</h3>
       <button class="cart-close" onclick="toggleCart()" aria-label="Close cart">×</button>
@@ -2337,17 +2374,18 @@
   </div>
   <div id="cartBackdrop" class="cart-backdrop" onclick="toggleCart()"></div>
 
-  <main>
+  <a href="#mainContent" class="skip-link">Skip to main content</a>
+  <main id="mainContent" role="main">
     <section id="oils">
       <div class="container">
         <h2 class="section-title">Our Signature Oils</h2>
         <p class="lead">Pure, natural, and traditionally pressed.</p>
         <div class="grid">
-          <article class="card">
-            <div class="pic-wrap"><img src="arumee_assets/mockup_coconut.png" alt="Coconut Oil" /></div>
+          <article class="card" aria-labelledby="prod-coconut-title">
+            <div class="pic-wrap"><img src="arumee_assets/mockup_coconut.png" alt="Cold‑Pressed Coconut Oil bottle" loading="lazy" decoding="async" width="240" height="240" /></div>
             <div class="content">
               <span class="pill" id="coconut-pill">Coconut • 500ml</span>
-              <div class="title">Cold‑Pressed Coconut Oil</div>
+              <div class="title" id="prod-coconut-title">Cold‑Pressed Coconut Oil</div>
               <div class="price" id="coconut-price">₹200 <span>/ 500ml</span></div>
               
               <div class="size-selector">
@@ -2362,19 +2400,19 @@
               <div class="quantity-selector">
                 <label for="qty-coconut">Quantity</label>
                 <div class="quantity-stepper">
-                  <button type="button" onclick="decreaseQty('coconut', event)" aria-label="Decrease coconut quantity">−</button>
-                  <input type="number" id="qty-coconut" value="1" min="1" max="10" oninput="validateQty('coconut')" aria-label="Coconut quantity" />
-                  <button type="button" onclick="increaseQty('coconut', event)" aria-label="Increase coconut quantity">+</button>
+                  <button type="button" class="qty-btn" data-action="dec" data-product="coconut" aria-label="Decrease coconut quantity">−</button>
+                  <input type="number" id="qty-coconut" value="1" min="1" max="10" aria-label="Coconut quantity" inputmode="numeric" pattern="[0-9]*" />
+                  <button type="button" class="qty-btn" data-action="inc" data-product="coconut" aria-label="Increase coconut quantity">+</button>
                 </div>
               </div>
-              <button class="add-to-order" onclick="addToOrder('coconut', 'Cold-Pressed Coconut Oil', getCurrentPrice('coconut'))">Add to Order</button>
+              <button class="add-to-order" data-product="coconut" data-name="Cold-Pressed Coconut Oil">Add to Order</button>
             </div>
           </article>
-                    <article class="card">
-            <div class="pic-wrap"><img src="arumee_assets/mockup_groundnut.png" alt="Groundnut Oil" /></div>
+                    <article class="card" aria-labelledby="prod-groundnut-title">
+            <div class="pic-wrap"><img src="arumee_assets/mockup_groundnut.png" alt="Cold‑Pressed Groundnut Oil bottle" loading="lazy" decoding="async" width="240" height="240" /></div>
             <div class="content">
               <span class="pill" id="groundnut-pill">Groundnut • 500ml</span>
-              <div class="title">Wooden Cold‑Pressed Groundnut Oil</div>
+              <div class="title" id="prod-groundnut-title">Wooden Cold‑Pressed Groundnut Oil</div>
               <div class="price" id="groundnut-price">₹115 <span>/ 500ml</span></div>
               
               <div class="size-selector">
@@ -2389,19 +2427,19 @@
               <div class="quantity-selector">
                 <label for="qty-groundnut">Quantity</label>
                 <div class="quantity-stepper">
-                  <button type="button" onclick="decreaseQty('groundnut', event)" aria-label="Decrease groundnut quantity">−</button>
-                  <input type="number" id="qty-groundnut" value="1" min="1" max="10" oninput="validateQty('groundnut')" aria-label="Groundnut quantity" />
-                  <button type="button" onclick="increaseQty('groundnut', event)" aria-label="Increase groundnut quantity">+</button>
+                  <button type="button" class="qty-btn" data-action="dec" data-product="groundnut" aria-label="Decrease groundnut quantity">−</button>
+                  <input type="number" id="qty-groundnut" value="1" min="1" max="10" aria-label="Groundnut quantity" inputmode="numeric" pattern="[0-9]*" />
+                  <button type="button" class="qty-btn" data-action="inc" data-product="groundnut" aria-label="Increase groundnut quantity">+</button>
                 </div>
               </div>
-              <button class="add-to-order" onclick="addToOrder('groundnut', 'Wooden Cold-Pressed Groundnut Oil', getCurrentPrice('groundnut'))">Add to Order</button>
+              <button class="add-to-order" data-product="groundnut" data-name="Wooden Cold-Pressed Groundnut Oil">Add to Order</button>
             </div>
           </article>
-          <article class="card">
-            <div class="pic-wrap"><img src="arumee_assets/mockup_gingelly.png" alt="Gingelly Oil" /></div>
+          <article class="card" aria-labelledby="prod-gingelly-title">
+            <div class="pic-wrap"><img src="arumee_assets/mockup_gingelly.png" alt="Cold‑Pressed Gingelly (Sesame) Oil bottle" loading="lazy" decoding="async" width="240" height="240" /></div>
             <div class="content">
               <span class="pill" id="gingelly-pill">Gingelly • 500ml</span>
-              <div class="title">Wooden Cold‑Pressed Gingelly Oil</div>
+              <div class="title" id="prod-gingelly-title">Wooden Cold‑Pressed Gingelly Oil</div>
               <div class="price" id="gingelly-price">₹200 <span>/ 500ml</span></div>
               
               <div class="size-selector">
@@ -2416,12 +2454,12 @@
               <div class="quantity-selector">
                 <label for="qty-gingelly">Quantity</label>
                 <div class="quantity-stepper">
-                  <button type="button" onclick="decreaseQty('gingelly', event)" aria-label="Decrease gingelly quantity">−</button>
-                  <input type="number" id="qty-gingelly" value="1" min="1" max="10" oninput="validateQty('gingelly')" aria-label="Gingelly quantity" />
-                  <button type="button" onclick="increaseQty('gingelly', event)" aria-label="Increase gingelly quantity">+</button>
+                  <button type="button" class="qty-btn" data-action="dec" data-product="gingelly" aria-label="Decrease gingelly quantity">−</button>
+                  <input type="number" id="qty-gingelly" value="1" min="1" max="10" aria-label="Gingelly quantity" inputmode="numeric" pattern="[0-9]*" />
+                  <button type="button" class="qty-btn" data-action="inc" data-product="gingelly" aria-label="Increase gingelly quantity">+</button>
                 </div>
               </div>
-              <button class="add-to-order" onclick="addToOrder('gingelly', 'Wooden Cold-Pressed Gingelly Oil', getCurrentPrice('gingelly'))">Add to Order</button>
+              <button class="add-to-order" data-product="gingelly" data-name="Wooden Cold-Pressed Gingelly Oil">Add to Order</button>
             </div>
           </article>
         </div>
@@ -2607,7 +2645,7 @@
       // Check if this was an intentional refresh
       if (sessionStorage.getItem('intentionalRefresh') === 'true') {
         sessionStorage.removeItem('intentionalRefresh');
-        console.log('Intentional refresh detected - not loading cart');
+  // intentional refresh: skip loading persisted cart
         return;
       }
       
@@ -2617,7 +2655,7 @@
           orderItems = JSON.parse(savedCart);
           updateOrderDetails();
         } catch (e) {
-          console.log('Could not load cart from storage');
+          // failed to parse stored cart
           orderItems = [];
         }
       }
@@ -2708,7 +2746,7 @@
         event.stopPropagation();
         event.preventDefault();
       }
-      console.log('increaseQty called for:', id);
+  // increase quantity interaction
       const input = document.getElementById('qty-' + id);
       if (!input) {
         console.error('Input not found for qty-' + id);
@@ -2716,10 +2754,10 @@
       }
       const currentVal = parseInt(input.value);
       const maxVal = parseInt(input.max);
-      console.log('Current:', currentVal, 'Max:', maxVal);
+  // enforce max
       if (currentVal < maxVal) {
         input.value = currentVal + 1;
-        console.log('Increased to:', input.value);
+  // updated quantity
       }
     }
     function decreaseQty(id, event) {
@@ -2727,7 +2765,7 @@
         event.stopPropagation();
         event.preventDefault();
       }
-      console.log('decreaseQty called for:', id);
+  // decrease quantity interaction
       const input = document.getElementById('qty-' + id);
       if (!input) {
         console.error('Input not found for qty-' + id);
@@ -2735,10 +2773,10 @@
       }
       const currentVal = parseInt(input.value);
       const minVal = parseInt(input.min);
-      console.log('Current:', currentVal, 'Min:', minVal);
+  // enforce min
       if (currentVal > minVal) {
         input.value = currentVal - 1;
-        console.log('Decreased to:', input.value);
+  // updated quantity
       }
     }
     function validateQty(id) {
@@ -2791,11 +2829,52 @@
       if (isCartOpen) {
         if (cartDropdown) cartDropdown.classList.add('open');
         if (backdrop) backdrop.classList.add('visible');
+        // Focus management for accessibility: focus first focusable element inside cart
+        if (cartDropdown) {
+          const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+          const focusables = cartDropdown.querySelectorAll(focusableSelectors);
+          if (focusables.length) {
+            // Delay focus slightly to allow CSS transition start without canceling it
+            setTimeout(() => { focusables[0].focus(); }, 30);
+          }
+        }
       } else {
         if (cartDropdown) cartDropdown.classList.remove('open');
         if (backdrop) backdrop.classList.remove('visible');
       }
     }
+
+    // Global keydown listener for cart focus trap & ESC close
+    document.addEventListener('keydown', function(e) {
+      if (!isCartOpen) return;
+      const cartDropdown = document.getElementById('cartDropdown');
+      if (!cartDropdown) return;
+
+      // ESC closes cart
+      if (e.key === 'Escape') {
+        toggleCart();
+        return;
+      }
+
+      if (e.key === 'Tab') {
+        const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+        const focusables = Array.from(cartDropdown.querySelectorAll(focusableSelectors)).filter(el => !el.disabled && el.offsetParent !== null);
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      }
+    });
 
     function updateCartDisplay() {
       const cartCount = document.getElementById('cartCount');
@@ -3386,6 +3465,17 @@
       const hasItemsInCart = orderItems && orderItems.length > 0;
       const oilsSection = document.getElementById('oils');
       const passedOils = oilsSection ? currentScroll > (oilsSection.offsetTop + oilsSection.offsetHeight - 200) : false;
+      const isMobile = window.innerWidth <= 768;
+
+      // Desktop: always hide sticky nav to avoid duplicate cart controls
+      if (!isMobile) {
+        stickyNav.classList.remove('visible');
+        if (navCartBtn) navCartBtn.style.display = 'none';
+        if (navOilsBtn) navOilsBtn.style.display = 'none';
+        if (cartTab) cartTab.style.display = 'flex'; // keep floating cart FAB on desktop
+        lastScroll = currentScroll;
+        return;
+      }
       
       // Show sticky nav only if there are items in cart
       if (hasItemsInCart) {
@@ -3402,26 +3492,22 @@
           navOilsBtn.style.display = 'none';
         }
         
-        // KEEP floating cart FAB visible - users can click either one
-        // The sticky nav provides quick access when scrolling, FAB is always there
-        if (cartTab) {
-          cartTab.style.display = 'flex';
-        }
+        // Mobile: hide floating cart FAB when sticky nav is visible to prevent duplication
+        if (cartTab) cartTab.style.display = 'none';
       } else {
         // No items in cart - hide sticky nav, show floating cart FAB
         stickyNav.classList.remove('visible');
         navCartBtn.style.display = 'none';
         navOilsBtn.style.display = 'none';
-        if (cartTab) {
-          cartTab.style.display = 'flex';
-        }
+        if (cartTab) cartTab.style.display = 'flex';
       }
       
       lastScroll = currentScroll;
     }
     
-    // Update on scroll
-    window.addEventListener('scroll', updateStickyNav);
+  // Update on scroll and resize (resize covers switching between mobile/desktop)
+  window.addEventListener('scroll', updateStickyNav);
+  window.addEventListener('resize', updateStickyNav);
     
     // Call initially and whenever cart changes
     updateStickyNav();
@@ -3453,6 +3539,38 @@
         navCartBtn.removeAttribute('onclick');
         navCartBtn.addEventListener('click', toggleCart);
       }
+
+      // Delegated handlers for quantity steppers & add-to-order buttons (accessibility-friendly, removes inline JS)
+      document.addEventListener('click', function(e) {
+        const target = e.target;
+        if (!target) return;
+
+        // Quantity buttons
+        if (target.classList && target.classList.contains('qty-btn')) {
+          const product = target.dataset.product;
+          const action = target.dataset.action;
+          if (product && action) {
+            if (action === 'inc') {
+              increaseQty(product, e);
+            } else if (action === 'dec') {
+              decreaseQty(product, e);
+            }
+          }
+          return; // Avoid triggering cart outside click logic
+        }
+
+        // Add to order buttons
+        if (target.classList && target.classList.contains('add-to-order')) {
+          const product = target.dataset.product;
+          const name = target.dataset.name || 'Selected Oil';
+          if (product) {
+            const price = getCurrentPrice(product);
+            addToOrder(product, name, price);
+            target.blur();
+          }
+          return; // Prevent close-cart handler from running
+        }
+      });
       
       // Add form validation listeners
       const nameInput = document.querySelector('input[name="name"]');
@@ -3488,16 +3606,8 @@
       });
       
       // DEBUG: Test form editability
-      console.log('🟢 Form inputs found:', {
-        name: !!nameInput,
-        phone: !!phoneInput,
-        address: !!addressInput
-      });
-      console.log('🟢 Name input properties:', {
-        disabled: nameInput.disabled,
-        readOnly: nameInput.readOnly,
-        value: nameInput.value
-      });
+  /* dev debug removed for production: form input presence */
+  /* dev debug removed for production: name input props */
       
       // Make all form fields always editable
       const notesInput = document.querySelector('textarea[name="notes"]');
@@ -3687,7 +3797,7 @@
               // Return transparent background version (PNG) to eliminate white halo
               try {
                 const newSrc = canvas.toDataURL('image/png');
-                console.log('removeWhiteBackground: processed (transparent)', img.src, 'bgColor=', bgColor, 'threshold=', threshold, 'feather=', feather);
+                // background processed
                 resolve(newSrc);
               } catch (err2) {
                 try { const fallbackSrc = canvas.toDataURL(); resolve(fallbackSrc); } catch (e) { resolve(null); }
@@ -3746,11 +3856,11 @@
     
     // Intercept refresh attempts if cart has items
     document.addEventListener('keydown', (e) => {
-      console.log('🔵 Global keydown:', e.key, 'target:', e.target.tagName, e.target.name);
+  // global keydown handler
       // Check for F5 or Ctrl+R (refresh shortcuts)
       if ((e.key === 'F5') || (e.ctrlKey && e.key === 'r') || (e.ctrlKey && e.key === 'R')) {
         if (orderItems.length > 0 && !pendingRefresh) {
-          console.log('🔴 Blocking F5/Ctrl+R');
+          // blocking refresh keys
           e.preventDefault();
           e.stopPropagation();
           e.stopImmediatePropagation();
@@ -3759,12 +3869,12 @@
         }
       }
       // Allow all other keys to pass through
-      console.log('✅ Allowing key:', e.key);
+  // allowed key
     }, true);
     
     // Handle browser refresh button and other navigation
     window.addEventListener('beforeunload', (e) => {
-      console.log('beforeunload triggered, orderItems.length:', orderItems.length, 'pendingRefresh:', pendingRefresh);
+  // before unload handler
       if (orderItems.length > 0 && !pendingRefresh) {
         // Mark that user is leaving/refreshing with items
         sessionStorage.setItem('intentionalRefresh', 'true');
@@ -3775,8 +3885,11 @@
       }
     });
 
-    /* Carousel active-slide detection: find centered card and toggle class */
+    /* Carousel active-slide detection: MOBILE ONLY - no border highlight on desktop */
     (function setupCarouselActiveSlide() {
+      // Only enable carousel active-slide logic on mobile
+      if (window.innerWidth > 768) return;
+
       const carousel = document.querySelector('.grid');
       if (!carousel) return;
 
@@ -3824,12 +3937,26 @@
         cards.forEach(c => c.classList.toggle('active-slide', c === closest));
       }
 
-      // Run once to initialise
-      updateActiveSlide();
+      // Do NOT initialize an active slide on load to prevent a default selected border.
+      // Active state will be applied only after user interaction (scroll/pointer).
+      let carouselActivated = false;
+      function activateCarouselIfNeeded() {
+        if (!carouselActivated) {
+          carouselActivated = true;
+          updateActiveSlide();
+        }
+      }
+      // First user scroll/pointer/resize will trigger activation
+      carousel.addEventListener('pointerdown', activateCarouselIfNeeded, { once: true });
+      carousel.addEventListener('wheel', activateCarouselIfNeeded, { once: true });
+      window.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') activateCarouselIfNeeded(); }, { once: true });
 
       // Listen to scroll and resize events
       const throttled = throttle(updateActiveSlide, 80);
-      carousel.addEventListener('scroll', throttled, { passive: true });
+      carousel.addEventListener('scroll', function(e){
+        if (!carouselActivated) activateCarouselIfNeeded();
+        throttled();
+      }, { passive: true });
       window.addEventListener('resize', throttled);
 
       // Also update when dynamic content changes (images load)
@@ -3870,9 +3997,17 @@ document.addEventListener("DOMContentLoaded", function () {
         const targetLeft = firstCard.offsetLeft - (carousel.clientWidth - firstCard.clientWidth) / 2;
         carousel.scrollLeft = Math.max(0, targetLeft);
       }
-      // Make it active immediately
-      cards.forEach((c, i) => c.classList.toggle("active-slide", i === 0));
-      updateActiveSlide();
+      // Skip initial activation – wait for interaction to avoid default border highlighting a middle card.
+      let mobileCarouselActivated = false;
+      function activateMobileCarousel() {
+        if (!mobileCarouselActivated) {
+          mobileCarouselActivated = true;
+          updateActiveSlide();
+        }
+      }
+      carousel.addEventListener('scroll', activateMobileCarousel, { once: true });
+      carousel.addEventListener('touchstart', activateMobileCarousel, { once: true });
+      window.addEventListener('keydown', (e) => { if (['ArrowRight','ArrowLeft'].includes(e.key)) activateMobileCarousel(); }, { once: true });
     };
     // Wait a tick for layout (images/fonts) then center
     requestAnimationFrame(() => requestAnimationFrame(centerIt));
@@ -3917,8 +4052,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (img && !img.complete) img.addEventListener("load", throttledUpdate);
     });
 
-    // Initial activation after layout
-    updateActiveSlide();
+  // No initial activation; classes applied only after user interaction.
   }
 });
 </script>
