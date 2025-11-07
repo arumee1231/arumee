@@ -1387,6 +1387,8 @@
         padding-right: 16px;
         margin: 0 auto;
       }
+      /* Mobile Cart: permanently hidden floating FAB; sticky nav replaces it */
+      .cart-tab { display: none !important; }
       
       /* Sticky Navigation Mobile */
       .sticky-nav .nav-content {
@@ -3264,34 +3266,30 @@
         stickyNav.classList.remove('visible');
         if (navCartBtn) navCartBtn.style.display = 'none';
         if (navOilsBtn) navOilsBtn.style.display = 'none';
-        if (cartTab) cartTab.style.display = 'flex'; // keep floating cart FAB on desktop
+        if (cartTab) cartTab.style.display = 'flex'; // unchanged desktop behavior
         lastScroll = currentScroll;
         return;
       }
       
-      // Show sticky nav only if there are items in cart
-      if (hasItemsInCart) {
+      // MOBILE BEHAVIOR (FINAL):
+      // - Floating cart removed entirely.
+      // - Sticky nav shows ONLY when cart has items.
+      // - Before any items added, no cart UI appears.
+      if (!hasItemsInCart) {
+        stickyNav.classList.remove('visible');
+        navCartBtn.style.display = 'none';
+        navOilsBtn.style.display = 'none';
+        if (cartTab) cartTab.style.display = 'none';
+      } else {
         stickyNav.classList.add('visible');
-        
-        // Always show View Cart button when nav is visible
         navCartBtn.style.display = 'inline-flex';
         navCartCount.textContent = orderItems.length;
-        
-        // Show "Our Oils" button only when scrolled past oils section
         if (passedOils) {
           navOilsBtn.style.display = 'inline-flex';
         } else {
           navOilsBtn.style.display = 'none';
         }
-        
-        // Mobile: hide floating cart FAB when sticky nav is visible to prevent duplication
         if (cartTab) cartTab.style.display = 'none';
-      } else {
-        // No items in cart - hide sticky nav, show floating cart FAB
-        stickyNav.classList.remove('visible');
-        navCartBtn.style.display = 'none';
-        navOilsBtn.style.display = 'none';
-        if (cartTab) cartTab.style.display = 'flex';
       }
       
       lastScroll = currentScroll;
