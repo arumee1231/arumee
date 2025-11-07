@@ -1,39 +1,40 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
-  <meta name="theme-color" content="#ffffff" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="robots" content="index,follow" />
-  <link rel="canonical" href="https://www.arumee.example/" />
-  <meta property="og:title" content="Arumee — Premium Cold‑Pressed Oils" />
-  <meta property="og:description" content="Pure, natural, traditionally pressed coconut, groundnut & gingelly oils. Fresh, authentic, nutrient-rich." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.arumee.example/" />
-  <meta property="og:image" content="https://www.arumee.example/arumee_assets/logo.png" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Arumee — Premium Cold‑Pressed Oils" />
-  <meta name="twitter:description" content="Pure, natural, traditionally pressed coconut, groundnut & gingelly oils." />
-  <meta name="twitter:image" content="https://www.arumee.example/arumee_assets/logo.png" />
-  <title>Arumee — Premium Cold‑Pressed Oils</title>
-  <meta name="description" content="Arumee — Premium cold‑pressed oils. Pure, natural, and traditionally pressed coconut, groundnut, and gingelly oils." />
-  <link rel="icon" type="image/png" href="arumee_assets/favicon.png" />
-  <!-- Preload critical hero assets to reduce flicker -->
-  <link rel="preload" as="image" href="arumee_assets/logo.png" fetchpriority="high" />
-  <link rel="preload" as="image" href="arumee_assets/Natural.png" />
-  <!-- Preconnect & use font-display swap already configured; ensure fast font load -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <!-- Shared unified cart styles -->
-  <link rel="stylesheet" href="arumee_assets/cart.css" />
-  <!-- Removed inline Our Oils cart overrides – unified in arumee_assets/cart.css -->
-  <!-- Skip link for accessibility -->
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" name="viewport"/>
+<meta content="#ffffff" name="theme-color"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="index,follow" name="robots"/>
+<link href="https://www.arumee.example/" rel="canonical"/>
+<meta content="Arumee — Premium Cold‑Pressed Oils" property="og:title"/>
+<meta content="Pure, natural, traditionally pressed coconut, groundnut &amp; gingelly oils. Fresh, authentic, nutrient-rich." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://www.arumee.example/" property="og:url"/>
+<meta content="https://www.arumee.example/arumee_assets/logo.png" property="og:image"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Arumee — Premium Cold‑Pressed Oils" name="twitter:title"/>
+<meta content="Pure, natural, traditionally pressed coconut, groundnut &amp; gingelly oils." name="twitter:description"/>
+<meta content="https://www.arumee.example/arumee_assets/logo.png" name="twitter:image"/>
+<title>Arumee — Premium Cold‑Pressed Oils</title>
+<meta content="Arumee — Premium cold‑pressed oils. Pure, natural, and traditionally pressed coconut, groundnut, and gingelly oils." name="description"/>
+<link href="arumee_assets/favicon.png" rel="icon" type="image/png"/>
+<!-- Preload critical hero assets to reduce flicker -->
+<link as="image" fetchpriority="high" href="arumee_assets/logo.png" rel="preload"/>
+<link as="image" href="arumee_assets/Natural.png" rel="preload"/>
+<!-- Preconnect & use font-display swap already configured; ensure fast font load -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Shared unified cart styles -->
+<link href="arumee_assets/cart.css" rel="stylesheet"/>
+<!-- Removed inline Our Oils cart overrides – unified in arumee_assets/cart.css -->
+<!-- Skip link for accessibility -->
+<style>
     .skip-link { position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden; }
     .skip-link:focus { position:fixed; left:16px; top:16px; width:auto; height:auto; padding:10px 14px; background:#000; color:#fff; z-index:10001; border-radius:8px; }
   </style>
-  <script type="application/ld+json">
+<script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Store",
@@ -54,7 +55,7 @@
     }
   }
   </script>
-  <style>
+<style>
     :root {
       --green: #1e4d32;
       --green-dark: #153d28;
@@ -2091,69 +2092,153 @@
 }
 
 </style>
-</head>
+<style id="toast-top-fix">
+/* Keep toast visible near the browser top */
+.toast.show { top: 20px !important; }
+</style><style id="disable-addtocart-modal">#addToCartModal{display:none !important;} .toast.show{top:20px !important;}</style><style id="tab-hover-fix">
+/* Prevent hover effect on active tab */
+.hero-nav-tab.active:hover {
+  color: #fff !important;
+  background-color: #184d36 !important;
+  cursor: default !important;
+}
+
+/* Keep hover effect only for non-active tabs */
+.hero-nav-tab:not(.active):hover {
+  color: #fff !important;
+  background-color: #184d36 !important;
+}
+
+/* Keep active underline consistent */
+.hero-nav-tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--gold-light), var(--gold));
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(157, 124, 42, 0.25);
+}
+</style><style id="toast-top-20">.toast.show{ top:20px !important; }</style><style id="cart-scrollbar-fix">
+/* Enable scrolling inside cart popup if content is long */
+#cartDropdown {
+  max-height: 70vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+/* Optional (nice scroll look for WebKit browsers) */
+#cartDropdown::-webkit-scrollbar {
+  width: 6px;
+}
+#cartDropdown::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.3);
+  border-radius: 4px;
+}
+</style><style id="mobile-underline-fix">
+/* Fix underline position for active tab in mobile view */
+@media (max-width: 768px) {
+  .hero-nav-tab.active::after {
+    bottom: -6px !important;
+  }
+}
+</style><style id="mobile-underline-strong-fix">
+/* Strong mobile fix: make underline render below the banner and not get clipped */
+@media (max-width: 768px) {
+  .hero-tabs-wrapper {
+    padding-bottom: 0 !important;
+    overflow: visible !important;   /* avoid clipping */
+    border-bottom: none !important; /* prevent masking the line */
+  }
+  .hero-nav-tab.active {
+    position: relative !important;
+    z-index: 2 !important;          /* keep above background */
+  }
+  .hero-nav-tab.active::after {
+    bottom: -10px !important;       /* push further down */
+    height: 4px !important;
+  }
+}
+</style><style id="mobile-underline-override">
+/* Highest-specificity mobile override for active underline */
+@media (max-width: 768px) {
+  .hero-tabs-wrapper .hero-nav-tab.active::after {
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    width: 60% !important;
+    bottom: -12px !important; /* push clearly below */
+    height: 4px !important;
+  }
+  .hero-tabs-wrapper {
+    padding-bottom: 0 !important;
+    border-bottom: none !important;
+    overflow: visible !important;
+  }
+}
+</style></head>
 <body class="page-our-oils">
-  <!-- Sticky Navigation -->
-  <nav class="sticky-nav" id="stickyNav">
-    <div class="nav-content">
-      <div class="nav-brand">
-  <img src="arumee_assets/logo.png" alt="Arumee" width="40" height="40" decoding="async" fetchpriority="high" />
-        <span>ARUMEE</span>
-      </div>
-      <div class="nav-actions">
-        <a href="#oils" class="nav-btn" id="navOilsBtn" style="display: none;">Our Oils</a>
-        <button class="nav-btn primary" id="navCartBtn" onclick="toggleCart()" style="display: none;">
-          <span>🛒</span>
-          <span>View Cart</span>
-          <span class="nav-cart-count" id="navCartCount">0</span>
-        </button>
-      </div>
-    </div>
-  </nav>
-
-  <header class="hero">
-    <div class="container">      
-      <div class="brand">
-  <img src="arumee_assets/logo.png" alt="Arumee logo" width="80" height="80" decoding="async" fetchpriority="high" style="aspect-ratio:1/1;" />
-        <div>
-          <div class="name">ARUMEE<sup style="font-size:0.4em; color:var(--gold); font-weight:800;">™</sup></div>
-          <div class="tagline">Premium cold‑pressed oils</div>
-          <div class="trust-badges">
-            <div class="trust-badge">
-              <span class="trust-badge-icon">✓</span>
-              <span>FSSAI Certified</span>
-            </div>
-            <div class="trust-badge">
-              <span class="trust-badge-icon">🌿</span>
-              <span>100% Natural</span>
-            </div>
-            <div class="trust-badge">
-              <span class="trust-badge-icon">🏆</span>
-              <span>Premium Quality</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-    </div>
-  </header>
-
-  <!-- Hero Tabs Below Banner -->
-  <div class="hero-tabs-wrapper" role="tablist" aria-label="Primary site sections">
-    <nav class="hero-nav">
-      <a href="index_pilot.html" class="hero-nav-tab active" role="tab" aria-selected="true">Our Oils</a>
-      <a href="benefits.html" class="hero-nav-tab" role="tab" aria-selected="false">Benefits</a>
-      <a href="about.html" class="hero-nav-tab" role="tab" aria-selected="false">About Us</a>
-      <a href="contact.html" class="hero-nav-tab" role="tab" aria-selected="false">Contact Us</a>
-    </nav>
-  </div>
-
-  <!-- Floating Cart Tab -->
-  <div id="cartTab" class="cart-tab" onclick="toggleCart()" role="button" aria-label="Shopping cart" aria-expanded="false">
-    <span class="cart-icon" aria-hidden="true">🛒</span>
-    <span class="cart-count" id="cartCount" aria-live="polite">0</span>
-  </div>
-  <script>
+<!-- Sticky Navigation -->
+<nav class="sticky-nav" id="stickyNav">
+<div class="nav-content">
+<div class="nav-brand">
+<img alt="Arumee" decoding="async" fetchpriority="high" height="40" src="arumee_assets/logo.png" width="40"/>
+<span>ARUMEE</span>
+</div>
+<div class="nav-actions">
+<a class="nav-btn" href="#oils" id="navOilsBtn" style="display: none;">Our Oils</a>
+<button class="nav-btn primary" id="navCartBtn" onclick="toggleCart()" style="display: none;">
+<span>🛒</span>
+<span>View Cart</span>
+<span class="nav-cart-count" id="navCartCount">0</span>
+</button>
+</div>
+</div>
+</nav>
+<header class="hero">
+<div class="container">
+<div class="brand">
+<img alt="Arumee logo" decoding="async" fetchpriority="high" height="80" src="arumee_assets/logo.png" style="aspect-ratio:1/1;" width="80"/>
+<div>
+<div class="name">ARUMEE<sup style="font-size:0.4em; color:var(--gold); font-weight:800;">™</sup></div>
+<div class="tagline">Premium cold‑pressed oils</div>
+<div class="trust-badges">
+<div class="trust-badge">
+<span class="trust-badge-icon">✓</span>
+<span>FSSAI Certified</span>
+</div>
+<div class="trust-badge">
+<span class="trust-badge-icon">🌿</span>
+<span>100% Natural</span>
+</div>
+<div class="trust-badge">
+<span class="trust-badge-icon">🏆</span>
+<span>Premium Quality</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Hero Tabs Below Banner -->
+<div aria-label="Primary site sections" class="hero-tabs-wrapper" role="tablist">
+<nav class="hero-nav">
+<a aria-selected="true" class="hero-nav-tab active" href="index_pilot.html" role="tab">Our Oils</a>
+<a aria-selected="false" class="hero-nav-tab" href="benefits.html" role="tab">Benefits</a>
+<a aria-selected="false" class="hero-nav-tab" href="about.html" role="tab">About Us</a>
+<a aria-selected="false" class="hero-nav-tab" href="contact.html" role="tab">Contact Us</a>
+</nav>
+</div>
+<!-- Floating Cart Tab -->
+<div aria-expanded="false" aria-label="Shopping cart" class="cart-tab" id="cartTab" onclick="toggleCart()" role="button">
+<span aria-hidden="true" class="cart-icon">🛒</span>
+<span aria-live="polite" class="cart-count" id="cartCount">0</span>
+</div>
+<script>
     // Initialize cart count immediately from localStorage to prevent flash of 0
     (function() {
       try {
@@ -2168,299 +2253,280 @@
       } catch(e) {}
     })();
   </script>
-
-  <!-- Removed Why Arumee section per request; tabs now route to dedicated pages. -->
-
-  <!-- Cart Slide-in Panel -->
-  <div id="cartDropdown" class="cart-dropdown" role="dialog" aria-labelledby="cartHeader" aria-modal="true" tabindex="-1">
-    <div class="cart-header">
-      <h3 id="cartHeader"><span>🛒</span> Your Cart</h3>
-      <button class="cart-close" onclick="toggleCart()" aria-label="Close cart">×</button>
-    </div>
-    <div class="cart-content" id="cartContent">
-      <p class="empty-cart">Your cart is empty</p>
-    </div>
-    <div class="cart-footer" id="cartFooter" style="display: none;">
-      <div class="cart-total-section">
-        <span class="cart-total-label">Total Amount</span>
-        <span class="cart-total-amount" id="cartTotal">₹0</span>
-      </div>
-      <div class="cart-actions">
-        <button class="cart-clear-btn" onclick="clearOrder()">
-          <span>🗑️</span>
-          <span>Clear All</span>
-        </button>
-        <button class="cart-proceed-btn" onclick="proceedToOrder()">
-          <span>Proceed to Order</span>
-          <span>→</span>
-        </button>
-      </div>
-    </div>
-  </div>
-  <div id="cartBackdrop" class="cart-backdrop" onclick="toggleCart()"></div>
-
-  <a href="#mainContent" class="skip-link">Skip to main content</a>
-  <main id="mainContent" role="main">
-    <section id="oils">
-      <div class="container">
-        <h2 class="section-title">Our Signature Oils</h2>
-        <p class="lead">Pure, natural, and traditionally pressed.</p>
-        <div class="grid">
-          <article class="card" aria-labelledby="prod-coconut-title">
-            <div class="pic-wrap"><img src="arumee_assets/mockup_coconut.png" alt="Cold‑Pressed Coconut Oil bottle" loading="lazy" decoding="async" width="240" height="240" /></div>
-            <div class="content">
-              <span class="pill" id="coconut-pill">Coconut • 500ml</span>
-              <div class="title" id="prod-coconut-title">Cold‑Pressed Coconut Oil</div>
-              <div class="price" id="coconut-price">₹200 <span>/ 500ml</span></div>
-              
-              <div class="size-selector">
-                <label>SIZE</label>
-                <div class="size-options">
-                  <div class="size-option active" data-product="coconut" data-size="500ml" data-price="200">500ml</div>
-                  <div class="size-option" data-product="coconut" data-size="1L" data-price="400">1L</div>
-                  <div class="size-option" data-product="coconut" data-size="5L" data-price="2000">5L</div>
-                </div>
-              </div>
-
-              <div class="quantity-selector">
-                <label for="qty-coconut">Quantity</label>
-                <div class="quantity-stepper">
-                  <button type="button" class="qty-btn" data-action="dec" data-product="coconut" aria-label="Decrease coconut quantity">−</button>
-                  <input type="number" id="qty-coconut" value="1" min="1" max="10" aria-label="Coconut quantity" inputmode="numeric" pattern="[0-9]*" />
-                  <button type="button" class="qty-btn" data-action="inc" data-product="coconut" aria-label="Increase coconut quantity">+</button>
-                </div>
-              </div>
-              <button class="add-to-order" data-product="coconut" data-name="Cold-Pressed Coconut Oil">Add to Order</button>
-            </div>
-          </article>
-                    <article class="card" aria-labelledby="prod-groundnut-title">
-            <div class="pic-wrap"><img src="arumee_assets/mockup_groundnut.png" alt="Cold‑Pressed Groundnut Oil bottle" loading="lazy" decoding="async" width="240" height="240" /></div>
-            <div class="content">
-              <span class="pill" id="groundnut-pill">Groundnut • 500ml</span>
-              <div class="title" id="prod-groundnut-title">Wooden Cold‑Pressed Groundnut Oil</div>
-              <div class="price" id="groundnut-price">₹115 <span>/ 500ml</span></div>
-              
-              <div class="size-selector">
-                <label>SIZE</label>
-                <div class="size-options">
-                  <div class="size-option active" data-product="groundnut" data-size="500ml" data-price="115">500ml</div>
-                  <div class="size-option" data-product="groundnut" data-size="1L" data-price="230">1L</div>
-                  <div class="size-option" data-product="groundnut" data-size="5L" data-price="1150">5L</div>
-                </div>
-              </div>
-
-              <div class="quantity-selector">
-                <label for="qty-groundnut">Quantity</label>
-                <div class="quantity-stepper">
-                  <button type="button" class="qty-btn" data-action="dec" data-product="groundnut" aria-label="Decrease groundnut quantity">−</button>
-                  <input type="number" id="qty-groundnut" value="1" min="1" max="10" aria-label="Groundnut quantity" inputmode="numeric" pattern="[0-9]*" />
-                  <button type="button" class="qty-btn" data-action="inc" data-product="groundnut" aria-label="Increase groundnut quantity">+</button>
-                </div>
-              </div>
-              <button class="add-to-order" data-product="groundnut" data-name="Wooden Cold-Pressed Groundnut Oil">Add to Order</button>
-            </div>
-          </article>
-          <article class="card" aria-labelledby="prod-gingelly-title">
-            <div class="pic-wrap"><img src="arumee_assets/mockup_gingelly.png" alt="Cold‑Pressed Gingelly (Sesame) Oil bottle" loading="lazy" decoding="async" width="240" height="240" /></div>
-            <div class="content">
-              <span class="pill" id="gingelly-pill">Gingelly • 500ml</span>
-              <div class="title" id="prod-gingelly-title">Wooden Cold‑Pressed Gingelly Oil</div>
-              <div class="price" id="gingelly-price">₹200 <span>/ 500ml</span></div>
-              
-              <div class="size-selector">
-                <label>SIZE</label>
-                <div class="size-options">
-                  <div class="size-option active" data-product="gingelly" data-size="500ml" data-price="200">500ml</div>
-                  <div class="size-option" data-product="gingelly" data-size="1L" data-price="400">1L</div>
-                  <div class="size-option" data-product="gingelly" data-size="5L" data-price="2000">5L</div>
-                </div>
-              </div>
-
-              <div class="quantity-selector">
-                <label for="qty-gingelly">Quantity</label>
-                <div class="quantity-stepper">
-                  <button type="button" class="qty-btn" data-action="dec" data-product="gingelly" aria-label="Decrease gingelly quantity">−</button>
-                  <input type="number" id="qty-gingelly" value="1" min="1" max="10" aria-label="Gingelly quantity" inputmode="numeric" pattern="[0-9]*" />
-                  <button type="button" class="qty-btn" data-action="inc" data-product="gingelly" aria-label="Increase gingelly quantity">+</button>
-                </div>
-              </div>
-              <button class="add-to-order" data-product="gingelly" data-name="Wooden Cold-Pressed Gingelly Oil">Add to Order</button>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="benefits" style="background: white; padding: 60px 0; border-top: 1px solid rgba(30, 77, 50, 0.1);">
-      <div class="container">
-        <h2 class="section-title">Why Choose Arumee?</h2>
-        <p class="lead">Crafted with tradition, delivered with care</p>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 32px; margin-top: 40px;">
-          <div style="text-align: center; padding: 24px; border-radius: 16px; transition: all 0.3s ease;" class="benefit-card">
-            <div style="width: 64px; height: 64px; margin: 0 auto 16px; background: linear-gradient(135deg, var(--green-dark), var(--green)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md);">
-              <!-- Natural.png icon asset -->
-              <img src="arumee_assets/Natural.png" alt="100% Pure & Natural" loading="lazy" style="width:44px;height:44px;display:block;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.25));" />
-            </div>
-            <h3 style="font-family: 'Playfair Display', serif; font-size: 22px; color: var(--green); margin: 0 0 12px;">100% Pure & Natural</h3>
-            <p style="color: #666; line-height: 1.6; margin: 0;">No chemicals, no preservatives. Just pure, cold-pressed goodness from farm to bottle.</p>
-          </div>
-          <div style="text-align: center; padding: 24px; border-radius: 16px; transition: all 0.3s ease;" class="benefit-card">
-            <div style="width: 64px; height: 64px; margin: 0 auto 16px; background: linear-gradient(135deg, var(--gold), var(--gold-light)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md);">
-              <!-- Traditional method icon (droplet + snowflake) -->
-              <svg role="img" aria-label="Traditional cold-pressed method" width="40" height="40" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
-                <!-- Outer droplet -->
-                <path d="M32 6C26 16 20 24 17 31c-2 4-3 8-3 12a18 18 0 0 0 36 0c0-4-1-8-3-12-3-7-9-15-15-25Z" stroke="#ffffff" stroke-width="2.6" fill="rgba(255,255,255,0.12)" stroke-linejoin="round" />
-                <!-- Inner contour -->
-                <path d="M32 15c-4.5 7-8.1 12.4-10.2 16.7-1.3 2.7-2 5.4-2 8.3a14.2 14.2 0 0 0 28.4 0c0-2.9-.7-5.6-2-8.3C40.1 27.4 36.5 22 32 15Z" stroke="#ffffff" stroke-width="2" stroke-linejoin="round" />
-                <!-- Snowflake center -->
-                <g stroke="#ffffff" stroke-width="2" stroke-linecap="round">
-                  <line x1="32" y1="24" x2="32" y2="40" />
-                  <line x1="24" y1="32" x2="40" y2="32" />
-                  <line x1="26.5" y1="26.5" x2="37.5" y2="37.5" />
-                  <line x1="37.5" y1="26.5" x2="26.5" y2="37.5" />
-                  <!-- Tips -->
-                  <line x1="32" y1="24" x2="29.5" y2="26" />
-                  <line x1="32" y1="24" x2="34.5" y2="26" />
-                  <line x1="32" y1="40" x2="29.5" y2="38" />
-                  <line x1="32" y1="40" x2="34.5" y2="38" />
-                  <line x1="24" y1="32" x2="26" y2="29.5" />
-                  <line x1="24" y1="32" x2="26" y2="34.5" />
-                  <line x1="40" y1="32" x2="38" y2="29.5" />
-                  <line x1="40" y1="32" x2="38" y2="34.5" />
-                </g>
-              </svg>
-            </div>
-            <h3 style="font-family: 'Playfair Display', serif; font-size: 22px; color: var(--green); margin: 0 0 12px;">Traditional Methods</h3>
-            <p style="color: #666; line-height: 1.6; margin: 0;">Wooden cold-pressed technique preserves nutrients and authentic flavor in every drop.</p>
-          </div>
-          <div style="text-align: center; padding: 24px; border-radius: 16px; transition: all 0.3s ease;" class="benefit-card">
-            <div style="width: 64px; height: 64px; margin: 0 auto 16px; background: linear-gradient(135deg, var(--green), var(--green-dark)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; box-shadow: var(--shadow-md);">✓</div>
-            <h3 style="font-family: 'Playfair Display', serif; font-size: 22px; color: var(--green); margin: 0 0 12px;">FSSAI Certified</h3>
-            <p style="color: #666; line-height: 1.6; margin: 0;">Quality you can trust. Licensed and certified for your peace of mind.</p>
-          </div>
-          <div style="text-align: center; padding: 24px; border-radius: 16px; transition: all 0.3s ease;" class="benefit-card">
-            <div style="width: 64px; height: 64px; margin: 0 auto 16px; background: linear-gradient(135deg, var(--gold), var(--gold-light)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; box-shadow: var(--shadow-md);">🚚</div>
-            <h3 style="font-family: 'Playfair Display', serif; font-size: 22px; color: var(--green); margin: 0 0 12px;">Fresh Delivery</h3>
-            <p style="color: #666; line-height: 1.6; margin: 0;">Direct from our mill to your doorstep. Fresh, sealed, and ready to use.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="order" style="scroll-margin-top:90px;">
-      <div class="container">
-        <h2 class="section-title">Place an Order</h2>
-        <p class="lead">Fill in your details — we confirm by WhatsApp / phone before dispatch (cash / UPI on delivery).</p>
-  <form class="card" onsubmit="handleSubmit(event)" autocomplete="off" autocapitalize="none" spellcheck="false">
-          <div class="form-row" style="display:grid; grid-template-columns: repeat(2, 1fr); gap:20px;">
-            <div>
-              <label for="input-name">Full Name</label><br>
-              <input id="input-name" required name="name" type="text" placeholder="Your name" minlength="2" maxlength="50" pattern="[A-Za-z\s]+" title="Please enter a valid name (letters and spaces only)" autocomplete="off" onfocus="this.readOnly=false;this.disabled=false;" onclick="this.readOnly=false;this.disabled=false;this.focus();">
-            </div>
-            <div>
-              <label for="input-phone">Phone / WhatsApp</label><br>
-              <input id="input-phone" required name="phone" type="tel" placeholder="+91..." pattern="[\+]?[0-9\s\-]{10,15}" title="Please enter a valid phone number (10-15 digits)" maxlength="15" autocomplete="off" inputmode="tel" onfocus="this.readOnly=false;this.disabled=false;" onclick="this.readOnly=false;this.disabled=false;this.focus();">
-            </div>
-            <div style="grid-column:1/-1">
-              <label for="input-address">Address</label><br>
-              <input id="input-address" required name="address" type="text" placeholder="Door no, street, area, pincode" minlength="10" maxlength="200" title="Please enter a complete address" autocomplete="off" onfocus="this.readOnly=false;this.disabled=false;" onclick="this.readOnly=false;this.disabled=false;this.focus();">
-            </div>
-            
-            <div style="grid-column:1/-1">
-              <label for="orderDetails">Order Summary</label><br>
-              <textarea id="orderDetails" name="orderDetails" rows="4" placeholder="Your selected items will appear here..." readonly style="background:#f5f5f5; resize:none; overflow:hidden; min-height:80px;"></textarea>
-            </div>
-            <input type="hidden" id="totalAmount" name="totalAmount" value="0">
-            <div style="grid-column:1/-1">
-              <label for="input-notes">Additional Notes (optional)</label><br>
-              <textarea id="input-notes" name="notes" rows="3" placeholder="Any special delivery instructions..." autocomplete="off" onfocus="this.readOnly=false;this.disabled=false;" onclick="this.readOnly=false;this.disabled=false;this.focus();"></textarea>
-            </div>
-          </div>
-          <div class="form-buttons" style="display:flex;gap:16px;justify-content:flex-end;margin-top:20px;">
-            <button class="btn outline" type="reset" onclick="clearOrder()">Clear</button>
-            <button class="btn fill" type="submit">Submit Order</button>
-          </div>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">
-      <div class="tag">Handcrafted with ❤️ in Namakkal</div>
-      <div>™ 2025 Arumee • Mani Flour & Oil Mill</div>
-      <div class="mini">FSSAI: 22425133000137 • Phone: 9751425598 / 9443342098</div>
-    </div>
-  </footer>
-
-  <button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">↑</button>
-  <a href="https://wa.me/918925295844" id="whatsappBtn" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" title="Chat on WhatsApp">
-    <img src="arumee_assets/whatsapp_icon.png" alt="WhatsApp" />
-  </a>
-  <div id="toast" class="toast" role="alert" aria-live="polite"></div>
-
-  <!-- Image Zoom Overlay -->
-  <div id="imageZoomOverlay" class="zoom-overlay">
-    <div class="zoom-container">
-      <button class="zoom-close" onclick="closeImageZoom()">&times;</button>
-      <img id="zoomedImage" src="" alt="Zoomed Product Image" />
-      <div class="zoom-caption"></div>
-    </div>
-  </div>
-
-  <!-- Add to Cart Confirmation Modal -->
-  <div id="addToCartModal" class="modal-overlay">
-    <div class="modal-content">
-      <div class="modal-icon">🛒</div>
-      <h3 class="modal-title">Item Added to Cart</h3>
-      <div class="modal-message">
-        <p id="addToCartDetails"></p>
-      </div>
-      <div class="modal-buttons">
-        <button class="modal-btn secondary" onclick="continueShoppingFromModal()">Continue Shopping</button>
-        <button class="modal-btn primary" onclick="checkoutFromModal()">Proceed to Checkout</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Custom Modal -->
-  <div id="successModal" class="modal-overlay">
-    <div class="modal-content">
-      <div class="modal-icon">✓</div>
-      <h3 class="modal-title">Order Submitted Successfully!</h3>
-      <div class="modal-message">
-        <p>We will contact you soon to confirm:</p>
-        <ul>
-          <li>Payment details</li>
-          <li>Delivery schedule</li>
-        </ul>
-        <p style="margin-top: 16px;">Click OK to open WhatsApp and send your order directly to us.</p>
-      </div>
-      <div class="modal-buttons">
-        <button class="modal-btn secondary" onclick="closeModal()">Cancel</button>
-        <button class="modal-btn primary" onclick="openWhatsApp()">OK</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Refresh Warning Modal -->
-  <div id="refreshWarningModal" class="modal-overlay">
-    <div class="modal-content">
-      <div class="modal-icon info">ℹ️</div>
-      <h3 class="modal-title">Just checking before you refresh</h3>
-      <div class="modal-message">
-        <p>You have <span id="cartItemCount">0</span> item(s) in your cart.</p>
-        <p>Refreshing will clear your current selection and you'll need to add items again.</p>
-        <p>Would you like to continue?</p>
-      </div>
-      <div class="modal-buttons">
-        <button class="modal-btn secondary" onclick="cancelRefresh()">Stay Here</button>
-        <button class="modal-btn soft-primary" onclick="confirmRefresh()">Refresh Page</button>
-      </div>
-    </div>
-  </div>
-
-  <script>
+<!-- Removed Why Arumee section per request; tabs now route to dedicated pages. -->
+<!-- Cart Slide-in Panel -->
+<div aria-labelledby="cartHeader" aria-modal="true" class="cart-dropdown" id="cartDropdown" role="dialog" tabindex="-1">
+<div class="cart-header">
+<h3 id="cartHeader"><span>🛒</span> Your Cart</h3>
+<button aria-label="Close cart" class="cart-close" onclick="toggleCart()">×</button>
+</div>
+<div class="cart-content" id="cartContent">
+<p class="empty-cart">Your cart is empty</p>
+</div>
+<div class="cart-footer" id="cartFooter" style="display: none;">
+<div class="cart-total-section">
+<span class="cart-total-label">Total Amount</span>
+<span class="cart-total-amount" id="cartTotal">₹0</span>
+</div>
+<div class="cart-actions">
+<button class="cart-clear-btn" onclick="clearOrder()">
+<span>🗑️</span>
+<span>Clear All</span>
+</button>
+<button class="cart-proceed-btn" onclick="proceedToOrder()">
+<span>Proceed to Order</span>
+<span>→</span>
+</button>
+</div>
+</div>
+</div>
+<div class="cart-backdrop" id="cartBackdrop" onclick="toggleCart()"></div>
+<a class="skip-link" href="#mainContent">Skip to main content</a>
+<main id="mainContent" role="main">
+<section id="oils">
+<div class="container">
+<h2 class="section-title">Our Signature Oils</h2>
+<p class="lead">Pure, natural, and traditionally pressed.</p>
+<div class="grid">
+<article aria-labelledby="prod-coconut-title" class="card">
+<div class="pic-wrap"><img alt="Cold‑Pressed Coconut Oil bottle" decoding="async" height="240" loading="lazy" src="arumee_assets/mockup_coconut.png" width="240"/></div>
+<div class="content">
+<span class="pill" id="coconut-pill">Coconut • 500ml</span>
+<div class="title" id="prod-coconut-title">Cold‑Pressed Coconut Oil</div>
+<div class="price" id="coconut-price">₹200 <span>/ 500ml</span></div>
+<div class="size-selector">
+<label>SIZE</label>
+<div class="size-options">
+<div class="size-option active" data-price="200" data-product="coconut" data-size="500ml">500ml</div>
+<div class="size-option" data-price="400" data-product="coconut" data-size="1L">1L</div>
+<div class="size-option" data-price="2000" data-product="coconut" data-size="5L">5L</div>
+</div>
+</div>
+<div class="quantity-selector">
+<label for="qty-coconut">Quantity</label>
+<div class="quantity-stepper">
+<button aria-label="Decrease coconut quantity" class="qty-btn" data-action="dec" data-product="coconut" type="button">−</button>
+<input aria-label="Coconut quantity" id="qty-coconut" inputmode="numeric" max="10" min="1" pattern="[0-9]*" type="number" value="1"/>
+<button aria-label="Increase coconut quantity" class="qty-btn" data-action="inc" data-product="coconut" type="button">+</button>
+</div>
+</div>
+<button class="add-to-order" data-name="Cold-Pressed Coconut Oil" data-product="coconut">Add to Order</button>
+</div>
+</article>
+<article aria-labelledby="prod-groundnut-title" class="card">
+<div class="pic-wrap"><img alt="Cold‑Pressed Groundnut Oil bottle" decoding="async" height="240" loading="lazy" src="arumee_assets/mockup_groundnut.png" width="240"/></div>
+<div class="content">
+<span class="pill" id="groundnut-pill">Groundnut • 500ml</span>
+<div class="title" id="prod-groundnut-title">Wooden Cold‑Pressed Groundnut Oil</div>
+<div class="price" id="groundnut-price">₹115 <span>/ 500ml</span></div>
+<div class="size-selector">
+<label>SIZE</label>
+<div class="size-options">
+<div class="size-option active" data-price="115" data-product="groundnut" data-size="500ml">500ml</div>
+<div class="size-option" data-price="230" data-product="groundnut" data-size="1L">1L</div>
+<div class="size-option" data-price="1150" data-product="groundnut" data-size="5L">5L</div>
+</div>
+</div>
+<div class="quantity-selector">
+<label for="qty-groundnut">Quantity</label>
+<div class="quantity-stepper">
+<button aria-label="Decrease groundnut quantity" class="qty-btn" data-action="dec" data-product="groundnut" type="button">−</button>
+<input aria-label="Groundnut quantity" id="qty-groundnut" inputmode="numeric" max="10" min="1" pattern="[0-9]*" type="number" value="1"/>
+<button aria-label="Increase groundnut quantity" class="qty-btn" data-action="inc" data-product="groundnut" type="button">+</button>
+</div>
+</div>
+<button class="add-to-order" data-name="Wooden Cold-Pressed Groundnut Oil" data-product="groundnut">Add to Order</button>
+</div>
+</article>
+<article aria-labelledby="prod-gingelly-title" class="card">
+<div class="pic-wrap"><img alt="Cold‑Pressed Gingelly (Sesame) Oil bottle" decoding="async" height="240" loading="lazy" src="arumee_assets/mockup_gingelly.png" width="240"/></div>
+<div class="content">
+<span class="pill" id="gingelly-pill">Gingelly • 500ml</span>
+<div class="title" id="prod-gingelly-title">Wooden Cold‑Pressed Gingelly Oil</div>
+<div class="price" id="gingelly-price">₹200 <span>/ 500ml</span></div>
+<div class="size-selector">
+<label>SIZE</label>
+<div class="size-options">
+<div class="size-option active" data-price="200" data-product="gingelly" data-size="500ml">500ml</div>
+<div class="size-option" data-price="400" data-product="gingelly" data-size="1L">1L</div>
+<div class="size-option" data-price="2000" data-product="gingelly" data-size="5L">5L</div>
+</div>
+</div>
+<div class="quantity-selector">
+<label for="qty-gingelly">Quantity</label>
+<div class="quantity-stepper">
+<button aria-label="Decrease gingelly quantity" class="qty-btn" data-action="dec" data-product="gingelly" type="button">−</button>
+<input aria-label="Gingelly quantity" id="qty-gingelly" inputmode="numeric" max="10" min="1" pattern="[0-9]*" type="number" value="1"/>
+<button aria-label="Increase gingelly quantity" class="qty-btn" data-action="inc" data-product="gingelly" type="button">+</button>
+</div>
+</div>
+<button class="add-to-order" data-name="Wooden Cold-Pressed Gingelly Oil" data-product="gingelly">Add to Order</button>
+</div>
+</article>
+</div>
+</div>
+</section>
+<section id="benefits" style="background: white; padding: 60px 0; border-top: 1px solid rgba(30, 77, 50, 0.1);">
+<div class="container">
+<h2 class="section-title">Why Choose Arumee?</h2>
+<p class="lead">Crafted with tradition, delivered with care</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 32px; margin-top: 40px;">
+<div class="benefit-card" style="text-align: center; padding: 24px; border-radius: 16px; transition: all 0.3s ease;">
+<div style="width: 64px; height: 64px; margin: 0 auto 16px; background: linear-gradient(135deg, var(--green-dark), var(--green)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md);">
+<!-- Natural.png icon asset -->
+<img alt="100% Pure &amp; Natural" loading="lazy" src="arumee_assets/Natural.png" style="width:44px;height:44px;display:block;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.25));"/>
+</div>
+<h3 style="font-family: 'Playfair Display', serif; font-size: 22px; color: var(--green); margin: 0 0 12px;">100% Pure &amp; Natural</h3>
+<p style="color: #666; line-height: 1.6; margin: 0;">No chemicals, no preservatives. Just pure, cold-pressed goodness from farm to bottle.</p>
+</div>
+<div class="benefit-card" style="text-align: center; padding: 24px; border-radius: 16px; transition: all 0.3s ease;">
+<div style="width: 64px; height: 64px; margin: 0 auto 16px; background: linear-gradient(135deg, var(--gold), var(--gold-light)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md);">
+<!-- Traditional method icon (droplet + snowflake) -->
+<svg aria-label="Traditional cold-pressed method" fill="none" height="40" role="img" style="display:block;" viewbox="0 0 64 64" width="40" xmlns="http://www.w3.org/2000/svg">
+<!-- Outer droplet -->
+<path d="M32 6C26 16 20 24 17 31c-2 4-3 8-3 12a18 18 0 0 0 36 0c0-4-1-8-3-12-3-7-9-15-15-25Z" fill="rgba(255,255,255,0.12)" stroke="#ffffff" stroke-linejoin="round" stroke-width="2.6"></path>
+<!-- Inner contour -->
+<path d="M32 15c-4.5 7-8.1 12.4-10.2 16.7-1.3 2.7-2 5.4-2 8.3a14.2 14.2 0 0 0 28.4 0c0-2.9-.7-5.6-2-8.3C40.1 27.4 36.5 22 32 15Z" stroke="#ffffff" stroke-linejoin="round" stroke-width="2"></path>
+<!-- Snowflake center -->
+<g stroke="#ffffff" stroke-linecap="round" stroke-width="2">
+<line x1="32" x2="32" y1="24" y2="40"></line>
+<line x1="24" x2="40" y1="32" y2="32"></line>
+<line x1="26.5" x2="37.5" y1="26.5" y2="37.5"></line>
+<line x1="37.5" x2="26.5" y1="26.5" y2="37.5"></line>
+<!-- Tips -->
+<line x1="32" x2="29.5" y1="24" y2="26"></line>
+<line x1="32" x2="34.5" y1="24" y2="26"></line>
+<line x1="32" x2="29.5" y1="40" y2="38"></line>
+<line x1="32" x2="34.5" y1="40" y2="38"></line>
+<line x1="24" x2="26" y1="32" y2="29.5"></line>
+<line x1="24" x2="26" y1="32" y2="34.5"></line>
+<line x1="40" x2="38" y1="32" y2="29.5"></line>
+<line x1="40" x2="38" y1="32" y2="34.5"></line>
+</g>
+</svg>
+</div>
+<h3 style="font-family: 'Playfair Display', serif; font-size: 22px; color: var(--green); margin: 0 0 12px;">Traditional Methods</h3>
+<p style="color: #666; line-height: 1.6; margin: 0;">Wooden cold-pressed technique preserves nutrients and authentic flavor in every drop.</p>
+</div>
+<div class="benefit-card" style="text-align: center; padding: 24px; border-radius: 16px; transition: all 0.3s ease;">
+<div style="width: 64px; height: 64px; margin: 0 auto 16px; background: linear-gradient(135deg, var(--green), var(--green-dark)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; box-shadow: var(--shadow-md);">✓</div>
+<h3 style="font-family: 'Playfair Display', serif; font-size: 22px; color: var(--green); margin: 0 0 12px;">FSSAI Certified</h3>
+<p style="color: #666; line-height: 1.6; margin: 0;">Quality you can trust. Licensed and certified for your peace of mind.</p>
+</div>
+<div class="benefit-card" style="text-align: center; padding: 24px; border-radius: 16px; transition: all 0.3s ease;">
+<div style="width: 64px; height: 64px; margin: 0 auto 16px; background: linear-gradient(135deg, var(--gold), var(--gold-light)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; box-shadow: var(--shadow-md);">🚚</div>
+<h3 style="font-family: 'Playfair Display', serif; font-size: 22px; color: var(--green); margin: 0 0 12px;">Fresh Delivery</h3>
+<p style="color: #666; line-height: 1.6; margin: 0;">Direct from our mill to your doorstep. Fresh, sealed, and ready to use.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="order" style="scroll-margin-top:90px;">
+<div class="container">
+<h2 class="section-title">Place an Order</h2>
+<p class="lead">Fill in your details — we confirm by WhatsApp / phone before dispatch (cash / UPI on delivery).</p>
+<form autocapitalize="none" autocomplete="off" class="card" onsubmit="handleSubmit(event)" spellcheck="false">
+<div class="form-row" style="display:grid; grid-template-columns: repeat(2, 1fr); gap:20px;">
+<div>
+<label for="input-name">Full Name</label><br/>
+<input autocomplete="off" id="input-name" maxlength="50" minlength="2" name="name" onclick="this.readOnly=false;this.disabled=false;this.focus();" onfocus="this.readOnly=false;this.disabled=false;" pattern="[A-Za-z\s]+" placeholder="Your name" required="" title="Please enter a valid name (letters and spaces only)" type="text"/>
+</div>
+<div>
+<label for="input-phone">Phone / WhatsApp</label><br/>
+<input autocomplete="off" id="input-phone" inputmode="tel" maxlength="15" name="phone" onclick="this.readOnly=false;this.disabled=false;this.focus();" onfocus="this.readOnly=false;this.disabled=false;" pattern="[\+]?[0-9\s\-]{10,15}" placeholder="+91..." required="" title="Please enter a valid phone number (10-15 digits)" type="tel"/>
+</div>
+<div style="grid-column:1/-1">
+<label for="input-address">Address</label><br/>
+<input autocomplete="off" id="input-address" maxlength="200" minlength="10" name="address" onclick="this.readOnly=false;this.disabled=false;this.focus();" onfocus="this.readOnly=false;this.disabled=false;" placeholder="Door no, street, area, pincode" required="" title="Please enter a complete address" type="text"/>
+</div>
+<div style="grid-column:1/-1">
+<label for="orderDetails">Order Summary</label><br/>
+<textarea id="orderDetails" name="orderDetails" placeholder="Your selected items will appear here..." readonly="" rows="4" style="background:#f5f5f5; resize:none; overflow:hidden; min-height:80px;"></textarea>
+</div>
+<input id="totalAmount" name="totalAmount" type="hidden" value="0"/>
+<div style="grid-column:1/-1">
+<label for="input-notes">Additional Notes (optional)</label><br/>
+<textarea autocomplete="off" id="input-notes" name="notes" onclick="this.readOnly=false;this.disabled=false;this.focus();" onfocus="this.readOnly=false;this.disabled=false;" placeholder="Any special delivery instructions..." rows="3"></textarea>
+</div>
+</div>
+<div class="form-buttons" style="display:flex;gap:16px;justify-content:flex-end;margin-top:20px;">
+<button class="btn outline" onclick="clearOrder()" type="reset">Clear</button>
+<button class="btn fill" type="submit">Submit Order</button>
+</div>
+</form>
+</div>
+</section>
+</main>
+<footer>
+<div class="container">
+<div class="tag">Handcrafted with ❤️ in Namakkal</div>
+<div>™ 2025 Arumee • Mani Flour &amp; Oil Mill</div>
+<div class="mini">FSSAI: 22425133000137 • Phone: 9751425598 / 9443342098</div>
+</div>
+</footer>
+<button aria-label="Scroll to top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<a aria-label="Chat on WhatsApp" href="https://wa.me/918925295844" id="whatsappBtn" rel="noopener noreferrer" target="_blank" title="Chat on WhatsApp">
+<img alt="WhatsApp" src="arumee_assets/whatsapp_icon.png"/>
+</a>
+<div aria-live="polite" class="toast" id="toast" role="alert"></div>
+<!-- Image Zoom Overlay -->
+<div class="zoom-overlay" id="imageZoomOverlay">
+<div class="zoom-container">
+<button class="zoom-close" onclick="closeImageZoom()">×</button>
+<img alt="Zoomed Product Image" id="zoomedImage" src=""/>
+<div class="zoom-caption"></div>
+</div>
+</div>
+<!-- Add to Cart Confirmation Modal -->
+<div class="modal-overlay" id="addToCartModal">
+<div class="modal-content">
+<div class="modal-icon">🛒</div>
+<h3 class="modal-title">Item Added to Cart</h3>
+<div class="modal-message">
+<p id="addToCartDetails"></p>
+</div>
+<div class="modal-buttons">
+<button class="modal-btn secondary" onclick="continueShoppingFromModal()">Continue Shopping</button>
+<button class="modal-btn primary" onclick="checkoutFromModal()">Proceed to Checkout</button>
+</div>
+</div>
+</div>
+<!-- Custom Modal -->
+<div class="modal-overlay" id="successModal">
+<div class="modal-content">
+<div class="modal-icon">✓</div>
+<h3 class="modal-title">Order Submitted Successfully!</h3>
+<div class="modal-message">
+<p>We will contact you soon to confirm:</p>
+<ul>
+<li>Payment details</li>
+<li>Delivery schedule</li>
+</ul>
+<p style="margin-top: 16px;">Click OK to open WhatsApp and send your order directly to us.</p>
+</div>
+<div class="modal-buttons">
+<button class="modal-btn secondary" onclick="closeModal()">Cancel</button>
+<button class="modal-btn primary" onclick="openWhatsApp()">OK</button>
+</div>
+</div>
+</div>
+<!-- Refresh Warning Modal -->
+<div class="modal-overlay" id="refreshWarningModal">
+<div class="modal-content">
+<div class="modal-icon info">ℹ️</div>
+<h3 class="modal-title">Just checking before you refresh</h3>
+<div class="modal-message">
+<p>You have <span id="cartItemCount">0</span> item(s) in your cart.</p>
+<p>Refreshing will clear your current selection and you'll need to add items again.</p>
+<p>Would you like to continue?</p>
+</div>
+<div class="modal-buttons">
+<button class="modal-btn secondary" onclick="cancelRefresh()">Stay Here</button>
+<button class="modal-btn soft-primary" onclick="confirmRefresh()">Refresh Page</button>
+</div>
+</div>
+</div>
+<script>
     // LocalStorage functions for cart persistence
     function saveCartToStorage() {
       localStorage.setItem('arumeeCart', JSON.stringify(orderItems));
@@ -3018,9 +3084,18 @@
     // Form guard removed - all fields should be editable
     
     function showAddToCartModal(details) {
-      document.getElementById('addToCartDetails').textContent = details;
-      document.getElementById('addToCartModal').classList.add('show');
-    }
+  // Use toast instead of modal
+  if (typeof showToast === 'function') {
+    showToast(details);
+  } else {
+    var t = document.querySelector('.toast') || (function(){ var el=document.createElement('div'); el.className='toast'; document.body.appendChild(el); return el; })();
+    t.textContent = details;
+    t.classList.add('show');
+    setTimeout(function(){ t.classList.remove('show'); }, 3000);
+  }
+  // Do NOT open the modal
+  return;
+}
 
     function hideAddToCartModal() {
       document.getElementById('addToCartModal').classList.remove('show');
@@ -3118,23 +3193,48 @@
     }
     
     function clearOrder() {
-      orderItems = [];
-      updateOrderDetails();
-      
-      // Reset all quantity inputs to 1
-      document.getElementById('qty-coconut').value = 1;
-      document.getElementById('qty-groundnut').value = 1;
-      document.getElementById('qty-gingelly').value = 1;
-      
-      // Clear manual selections
-      document.getElementById('oilSelectors').innerHTML = '';
-      manualSelectionCounter = 0;
-      
-      // Show manual selection since cart is empty
-      toggleManualSelection();
-      
-      showToast('Order cleared');
-    }
+  // Clear data & refresh UI
+  orderItems = [];
+  updateOrderDetails();
+
+  // Reset qty inputs
+  ['qty-coconut','qty-groundnut','qty-gingelly'].forEach(function(id){
+    var el=document.getElementById(id);
+    if (el) el.value=1;
+  });
+
+  // Clear manual selections
+  var oilSel=document.getElementById('oilSelectors');
+  if (oilSel) oilSel.innerHTML='';
+  if (typeof manualSelectionCounter!=='undefined') manualSelectionCounter=0;
+  if (typeof toggleManualSelection==='function') toggleManualSelection();
+
+  // ---- HARD CLOSE cart dropdown/popup and mark as closed ----
+  try { isCartOpen = false; } catch(e){}
+  var dd=document.getElementById('cartDropdown');
+  var bd=document.getElementById('cartBackdrop');
+  if (dd) dd.classList.remove('open');
+  if (bd) bd.classList.remove('visible');
+  document.body.classList.remove('cart-open');
+  // Also close any generic overlay classes
+  document.querySelectorAll('.cart, .cart-overlay, .cart-panel, .cart-popup, .cart-drawer')
+    .forEach(function(p){ p.classList.remove('open','show','visible','active'); p.style.display=''; });
+
+  // ---- Scroll to top & toast ----
+  try { window.scrollTo({top:0, behavior:'smooth'}); } catch(e) { window.scrollTo(0,0); }
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+
+  if (typeof showToast==='function') {
+    showToast('Cart cleared successfully!');
+  } else {
+    var toast=document.getElementById('toast');
+    if (!toast){ toast=document.createElement('div'); toast.id='toast'; toast.className='toast'; document.body.appendChild(toast); }
+    toast.textContent='Cart cleared successfully!';
+    toast.classList.add('show');
+    setTimeout(function(){ toast.classList.remove('show'); }, 3000);
+  }
+}
 
     // Form submission
     function handleSubmit(e) {
@@ -3792,7 +3892,6 @@
       });
     })();
   </script>
-
 <script>
 // --- Mobile carousel active-slide centering fix ---
 document.addEventListener("DOMContentLoaded", function () {
@@ -3882,7 +3981,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 </script>
-
 <script>
 // --- Cart animation helpers ---
 document.addEventListener('DOMContentLoaded', function(){
@@ -3905,7 +4003,6 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 });
 </script>
-
 <script>
 // --- Desktop safety: ensure no 'active-slide' class remains on desktop ---
 document.addEventListener('DOMContentLoaded', function(){
@@ -3922,6 +4019,51 @@ document.addEventListener('DOMContentLoaded', function(){
   window.addEventListener('resize', cleanupActiveForDesktop);
 });
 </script>
-
-</body>
+<script id="toast-normalize-guard">
+// Normalize text for Add/Update cart toasts and avoid modal
+(function(){
+  var lastToastAt = 0;
+  function showToastOnce(msg){
+    var now = Date.now();
+    if (now - lastToastAt < 350) return;
+    lastToastAt = now;
+    if (typeof showToast === 'function') return showToast(msg);
+    var t = document.getElementById('toast') || document.querySelector('.toast');
+    if (!t) {
+      t = document.createElement('div');
+      t.id = 'toast';
+      t.className = 'toast';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function(){ t.classList.remove('show'); }, 3000);
+  }
+  if (typeof window.showAddToCartModal === 'function' && !window.showAddToCartModal.__normalized) {
+    var orig = window.showAddToCartModal;
+    window.showAddToCartModal = function(details){
+      try{
+        var text = String(details || '');
+        var m = text.match(/:\s*(.+?)\s*\(\s*([^)]+)\s*\)\s*×\s*(\d+)/); // capture "Name (500ml) × 2"
+        if (m){
+          var name = m[1] + ' ' + m[2]; // "Coconut 500ml"
+          var qty = m[3];
+          if (text.indexOf('Updated') === 0){
+            text = 'Updated — ' + name + ' × ' + qty;
+          } else {
+            text = 'Added — ' + name + ' × ' + qty;
+          }
+        } else {
+          if (text.indexOf('Updated') === 0) text = 'Updated';
+          else if (text.indexOf('Added to cart') === 0) text = 'Added';
+        }
+        showToastOnce(text);
+      }catch(e){
+        showToastOnce('Added');
+      }
+      return; // never open modal
+    };
+    window.showAddToCartModal.__normalized = true;
+  }
+})();</script></body>
 </html>
