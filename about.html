@@ -161,10 +161,29 @@
     background: rgba(255, 255, 255, 0.12); 
     color: #ffffff; 
   }
-  .hero-nav-tab.active { 
-    background: rgba(255, 255, 255, 0.18); 
-    color: #ffffff; 
-    font-weight: 700;
+  /* stronger active tab styles for clear differentiation */
+  .hero-nav-tab.active {
+    background: linear-gradient(180deg, rgba(21,61,40,1), rgba(30,77,50,1));
+    color: #fff;
+    font-weight: 800;
+    position: relative;
+    box-shadow: 0 6px 18px rgba(16,45,33,0.18);
+  }
+  .hero-nav-tab.active::after {
+    content: '';
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: -8px;
+    height: 4px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--gold-light), var(--gold));
+    box-shadow: 0 4px 12px rgba(157,124,42,0.18);
+  }
+  .hero-nav-tab:focus {
+    outline: 3px solid rgba(157,124,42,0.18);
+    outline-offset: 4px;
+    border-radius: 6px;
   }
   h2 { 
     font-family: 'Playfair Display', serif; 
@@ -191,18 +210,55 @@
   }
   p { font-size: 16px; line-height: 1.7; margin: 0 0 20px; color: #2d4a3e; }
   .values { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 30px; }
-  .value { 
+  /* Remove persistent panel shadow; reveal on hover (pointer devices) and on keyboard focus */
+  .panel { 
     background: #fff; 
     border: 2px solid rgba(30,77,50,.1); 
-    padding: 24px; 
+    padding: 28px; 
     border-radius: 20px; 
-    box-shadow: 0 4px 16px rgba(30, 77, 50, 0.08); 
-    transition: all 0.4s ease; 
+    box-shadow: none; 
+    transition: box-shadow 0.25s ease, transform 0.25s ease; 
   }
-  .value:hover { 
-    transform: translateY(-6px); 
-    box-shadow: 0 16px 40px rgba(30, 77, 50, 0.15); 
-    border-color: var(--gold); 
+
+  @media (hover: hover) and (pointer: fine) {
+    .panel:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(30, 77, 50, 0.15);
+      border-color: var(--gold);
+    }
+  }
+
+  .panel:focus-within {
+    box-shadow: 0 10px 30px rgba(30,77,50,0.12);
+    transform: translateY(-2px);
+  }
+  /* Remove any decorative sheen/overlay that may appear via pseudo-elements */
+  .panel::before, .panel::after, .value::before, .value::after {
+    display: none !important;
+    content: none !important;
+  }
+  /* Ensure the value items display as boxed cards (white background + border)
+     while remaining free of the animated sheen. Shadows appear only on hover/focus. */
+  .value {
+    background: #fff;
+    border: 2px solid rgba(30,77,50,.08);
+    padding: 20px 22px;
+    border-radius: 16px;
+    box-shadow: none;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .value:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(30, 77, 50, 0.12);
+      border-color: var(--gold);
+    }
+  }
+
+  .value:focus-within {
+    box-shadow: 0 10px 30px rgba(30,77,50,0.12);
+    transform: translateY(-2px);
   }
   .value h3 { margin: 0 0 12px; font-size: 18px; color: var(--green); font-weight: 700; }
   footer { background:#0f2922; color:#eee; text-align:center; padding:32px 20px; font-size:13px; }
@@ -271,20 +327,20 @@
   <div id="cartBackdrop" class="cart-backdrop" onclick="toggleCart()"></div>
   <main class="container">
     <h2>About Arumee</h2>
-    <p class="lead">We started Arumee with one vision: make pure, authentic, small‑batch cold‑pressed oils accessible without the confusing marketing and industrial shortcuts common in mass refining.</p>
-    
-    <h2 class="section-subtitle">Our Story</h2>
-    <p style="max-width: 900px; margin-left: auto; margin-right: auto;">Arumee emerged from a simple observation—traditional wooden ghani and low‑rpm extraction methods produce oils that smell richer, retain natural antioxidants, and feel lighter in cooking. Modern refining strips those qualities. We committed to honoring the old techniques while applying hygienic, traceable processes.</p>
-    <p style="max-width: 900px; margin-left: auto; margin-right: auto;">Every batch is pressed fresh, never overheated, and bottled promptly to avoid nutrient degradation. We partner directly with trusted growers for groundnuts, coconuts, and gingelly seeds, rejecting chemically processed or prematurely harvested stock.</p>
+    <p class="lead">Welcome to Arumee — where purity meets tradition. We create natural, cold-pressed oils using the traditional wooden ghani (mara chekku) method to bring you the true taste and goodness of nature.</p>
 
-    <h2 class="section-subtitle">What Makes Us Different</h2>
+    <h2 class="section-subtitle">Our Journey</h2>
+    <p style="max-width: 900px; margin-left: auto; margin-right: auto;">Arumee started with one simple idea — to make pure, chemical-free oils easily available to every home. We noticed how modern refining removes the natural aroma and nutrients from oils, so we went back to our roots. By using slow, wooden pressing at low temperatures, we preserve everything good — flavor, freshness, and natural nutrition.</p>
+    <p style="max-width: 900px; margin-left: auto; margin-right: auto;">Every batch is pressed fresh, never overheated, and bottled promptly to avoid nutrient degradation. We partner directly with trusted farmers who grow naturally and process seeds carefully to keep impurities and moisture low.</p>
+
+    <h2 class="section-subtitle">Why Choose Arumee</h2>
     <div class="values">
-      <div class="value"><h3>Batch Freshness</h3><p>We avoid long warehouse cycles—rotation is fast, so oxidation is minimal.</p></div>
-      <div class="value"><h3>Traditional Pressing</h3><p>Low RPM + low heat extraction preserves bioactive compounds.</p></div>
-      <div class="value"><h3>Transparency</h3><p>Clear labeling, no vague blends or generic sourcing claims.</p></div>
-      <div class="value"><h3>Responsible Sourcing</h3><p>Partner farms with sustainable drying and cleaning practices.</p></div>
-      <div class="value"><h3>No Additives</h3><p>Zero artificial fragrance, color, anti-foaming or anti-oxidant chemicals.</p></div>
-      <div class="value"><h3>Quality Testing</h3><p>Randomized internal checks for moisture, FFA levels, and aroma retention.</p></div>
+      <div class="value"><h3>Freshly Pressed</h3><p>Oils are made in limited quantities so every bottle stays fresh and full of natural goodness.</p></div>
+      <div class="value"><h3>Traditional Method</h3><p>Extracted using a wooden chekku to retain the real aroma and nutrients.</p></div>
+      <div class="value"><h3>Pure & Natural</h3><p>No artificial colors, fragrances, or preservatives — just pure oil.</p></div>
+      <div class="value"><h3>Farm Fresh Seeds</h3><p>Sourced directly from trusted farmers who grow naturally and follow sustainable practices.</p></div>
+      <div class="value"><h3>Quality You Can Trust</h3><p>Every batch is checked for purity, taste, and freshness through careful quality checks.</p></div>
+      <div class="value"><h3>Our Promise</h3><p>We believe healthy food starts with honest ingredients. At Arumee, every drop of oil is made with care — so you can cook, serve, and live purely and naturally.</p></div>
     </div>
   </main>
   <footer>© <span id="year"></span> Arumee™ — Premium Cold‑Pressed Oils</footer>
