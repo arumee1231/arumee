@@ -273,75 +273,61 @@
     }
 
     /* HERO NAVIGATION TABS (separate bar below hero) */
-    .hero-tabs-wrapper {
-      position: sticky;
-      top: 0; /* stays at very top after hero scrolls out */
-      background: linear-gradient(90deg, rgba(14,40,31,0.85), rgba(30,77,50,0.85));
-      backdrop-filter: blur(14px) saturate(140%);
-      -webkit-backdrop-filter: blur(14px) saturate(140%);
-      border-top: 1px solid rgba(255,255,255,0.05);
-      border-bottom: 2px solid rgba(157, 124, 42, 0.4);
+    .hero-tabs-wrapper { 
+      position: sticky; 
+      top: 0; /* Back to top: 0 for desktop */
+      background: linear-gradient(90deg, rgba(14,40,31,0.85), rgba(30,77,50,0.85)); 
+      backdrop-filter: blur(14px) saturate(140%); 
+      -webkit-backdrop-filter: blur(14px) saturate(140%); 
+      border-bottom: 2px solid rgba(157, 124, 42, 0.4); 
       box-shadow: 0 4px 20px -4px rgba(0,0,0,0.35);
-      z-index: 1200;
+      z-index: 1200; 
     }
-    .hero-nav {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      padding: 12px 24px 0;
+    
+    /* Adjust tab position on mobile to sit below sticky nav */
+    @media (max-width: 768px) {
+      .hero-tabs-wrapper {
+        top: 44px;
+      }
+    }
+    
+    .hero-nav { 
+      display: flex; 
+      justify-content: center; 
+      gap: 0; 
+      padding: 0; 
       max-width: 1100px;
       margin: 0 auto;
-      position: relative;
-      z-index: 6;
-      animation: fade-in-up 0.5s ease 0.15s both;
     }
-    .hero-nav-tab {
-      padding: 10px 22px;
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 10px 10px 0 0;
-      color: rgba(255, 255, 255, 0.85);
-      font-size: 13px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.35s var(--transition-smooth);
-      cursor: pointer;
-      position: relative;
-      /* allow decorative underline to extend outside the tab box */
-      overflow: visible;
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
+    .hero-nav-tab { 
+      padding: 12px 24px; 
+      background: rgba(255, 255, 255, 0.07); 
+      border-right: 1px solid rgba(255, 255, 255, 0.1); 
+      color: rgba(255, 255, 255, 0.9); 
+      font-size: 13px; 
+      font-weight: 600; 
+      transition: all 0.3s ease; 
+      text-decoration: none; 
+      white-space: nowrap;
     }
-    .hero-nav-tab::before {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: var(--gold);
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
+    .hero-nav-tab:first-child {
+      border-radius: 0;
     }
-    .hero-nav-tab:hover {
-      background: rgba(255, 255, 255, 0.14);
-      border-color: rgba(157, 124, 42, 0.55);
-      color: #ffffff;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+    .hero-nav-tab:last-child {
+      border-right: none;
     }
-    .hero-nav-tab:hover::before {
-      transform: scaleX(1);
+    .hero-nav-tab:hover { 
+      background: rgba(255, 255, 255, 0.12); 
+      color: #ffffff; 
     }
-    /* stronger active tab styles for clear differentiation */
-    .hero-nav-tab.active {
+    .hero-nav-tab.active { 
+      /* stronger active tab styles for clear differentiation */
       background: linear-gradient(180deg, rgba(21,61,40,1), rgba(30,77,50,1));
       color: #fff;
       font-weight: 800;
       position: relative;
       box-shadow: 0 6px 18px rgba(16,45,33,0.18);
     }
-    /* gold underline accent for active tab (placed slightly below the tab) */
     .hero-nav-tab.active::after {
       content: '';
       position: absolute;
@@ -352,6 +338,27 @@
       border-radius: 4px;
       background: linear-gradient(90deg, var(--gold-light), var(--gold));
       box-shadow: 0 4px 12px rgba(157,124,42,0.18);
+    }
+    .hero-nav-tab:focus {
+      outline: 3px solid rgba(157,124,42,0.18);
+      outline-offset: 4px;
+      border-radius: 6px;
+    }
+    /* gold bar below tabs (instead of per-tab floating) for mobile */
+    @media (max-width: 768px) {
+      .hero-tabs-wrapper { 
+        position: sticky; 
+        top: 0;
+        overflow: visible; /* Allow active tab underline to extend below */
+        z-index: 10;
+      }
+      .hero-nav-tab { border-radius:8px 8px 0 0; }
+      .hero-nav-tab::before { bottom:-1px; height:3px; }
+      .hero-nav-tab.active { font-weight:800; }
+      .hero-nav-tab.active::after {
+        bottom: -8px; /* Push below the sticky wrapper */
+        z-index: 11;
+      }
     }
     /* keyboard focus styles for accessibility */
     .hero-nav-tab:focus {
@@ -1492,14 +1499,16 @@
         font-size: clamp(12px, 2.5vw, 14px);
       }
       .hero-nav {
-        gap: 6px;
-        padding: 0 12px 16px;
+        gap: 0;
+        padding: 0 12px;
         overflow-x: auto;
         scrollbar-width: none;
         -ms-overflow-style: none;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         position: relative;
+        padding-bottom: 12px;
+        margin-bottom: -12px;
       }
       .hero-nav::-webkit-scrollbar {
         display: none;
@@ -2098,29 +2107,29 @@
 </style><style id="disable-addtocart-modal">#addToCartModal{display:none !important;} .toast.show{top:20px !important;}</style><style id="tab-hover-fix">
 /* Prevent hover effect on active tab */
 .hero-nav-tab.active:hover {
+  background: linear-gradient(180deg, rgba(21,61,40,1), rgba(30,77,50,1)) !important;
   color: #fff !important;
-  background-color: #184d36 !important;
   cursor: default !important;
 }
 
 /* Keep hover effect only for non-active tabs */
 .hero-nav-tab:not(.active):hover {
-  color: #fff !important;
-  background-color: #184d36 !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
 }
 
 /* Keep active underline consistent */
 .hero-nav-tab.active::after {
   content: "";
   position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
+  left: 12px;
+  right: 12px;
+  bottom: -8px;
   height: 4px;
-  background: linear-gradient(90deg, var(--gold-light), var(--gold));
   border-radius: 4px;
-  box-shadow: 0 2px 6px rgba(157, 124, 42, 0.25);
+  background: linear-gradient(90deg, var(--gold-light), var(--gold));
+  box-shadow: 0 4px 12px rgba(157, 124, 42, 0.18);
+  z-index: 11;
 }
 </style><style id="toast-top-20">.toast.show{ top:20px !important; }</style><style id="cart-scrollbar-fix">
 /* Enable scrolling inside cart popup if content is long */
@@ -2138,47 +2147,6 @@
 #cartDropdown::-webkit-scrollbar-thumb {
   background-color: rgba(0,0,0,0.3);
   border-radius: 4px;
-}
-</style><style id="mobile-underline-fix">
-/* Fix underline position for active tab in mobile view */
-@media (max-width: 768px) {
-  .hero-nav-tab.active::after {
-    bottom: -6px !important;
-  }
-}
-</style><style id="mobile-underline-strong-fix">
-/* Strong mobile fix: make underline render below the banner and not get clipped */
-@media (max-width: 768px) {
-  .hero-tabs-wrapper {
-    padding-bottom: 0 !important;
-    overflow: visible !important;   /* avoid clipping */
-    border-bottom: none !important; /* prevent masking the line */
-  }
-  .hero-nav-tab.active {
-    position: relative !important;
-    z-index: 2 !important;          /* keep above background */
-  }
-  .hero-nav-tab.active::after {
-    bottom: -10px !important;       /* push further down */
-    height: 4px !important;
-  }
-}
-</style><style id="mobile-underline-override">
-/* Highest-specificity mobile override for active underline */
-@media (max-width: 768px) {
-  .hero-tabs-wrapper .hero-nav-tab.active::after {
-    left: 50% !important;
-    right: auto !important;
-    transform: translateX(-50%) !important;
-    width: 60% !important;
-    bottom: -12px !important; /* push clearly below */
-    height: 4px !important;
-  }
-  .hero-tabs-wrapper {
-    padding-bottom: 0 !important;
-    border-bottom: none !important;
-    overflow: visible !important;
-  }
 }
 </style></head>
 <body class="page-our-oils">
@@ -2227,7 +2195,7 @@
 <!-- Hero Tabs Below Banner -->
 <div aria-label="Primary site sections" class="hero-tabs-wrapper" role="tablist">
 <nav class="hero-nav">
-<a aria-selected="true" class="hero-nav-tab active" href="index_pilot.html" role="tab">Our Oils</a>
+<a aria-selected="true" class="hero-nav-tab active" href="index.html" role="tab">Our Oils</a>
 <a aria-selected="false" class="hero-nav-tab" href="benefits.html" role="tab">Benefits</a>
 <a aria-selected="false" class="hero-nav-tab" href="about.html" role="tab">About Us</a>
 <a aria-selected="false" class="hero-nav-tab" href="contact.html" role="tab">Contact Us</a>
