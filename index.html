@@ -1134,7 +1134,8 @@
       height: 100%;
       background: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(4px);
-      z-index: 9999;
+      /* Ensure modals float above the cart (cart uses z-index:10000) */
+      z-index: 10010;
       animation: fadeIn 0.3s ease;
     }
     .modal-overlay.show {
@@ -2468,6 +2469,8 @@
     function closeModal() {
       document.getElementById('successModal').classList.remove('show');
       pendingWhatsAppUrl = '';
+      // Also navigate to top of the page when user cancels from the success modal
+      try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) { window.scrollTo(0,0); }
     }
 
     function openWhatsApp() {
