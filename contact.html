@@ -161,10 +161,31 @@
     background: rgba(255, 255, 255, 0.12); 
     color: #ffffff; 
   }
-  .hero-nav-tab.active { 
-    background: rgba(255, 255, 255, 0.18); 
-    color: #ffffff; 
-    font-weight: 700;
+  /* stronger active tab styles for clear differentiation */
+  .hero-nav-tab.active {
+    background: linear-gradient(180deg, rgba(21,61,40,1), rgba(30,77,50,1));
+    color: #fff;
+    font-weight: 800;
+    position: relative;
+    box-shadow: 0 6px 18px rgba(16,45,33,0.18);
+  }
+  /* gold underline accent for active tab */
+  .hero-nav-tab.active::after {
+    content: '';
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: -8px;
+    height: 4px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--gold-light), var(--gold));
+    box-shadow: 0 4px 12px rgba(157,124,42,0.18);
+  }
+  /* keyboard focus styles for accessibility */
+  .hero-nav-tab:focus {
+    outline: 3px solid rgba(157,124,42,0.18);
+    outline-offset: 4px;
+    border-radius: 6px;
   }
   h2 { 
     font-family: 'Playfair Display', serif; 
@@ -411,19 +432,51 @@
         <h2>Get in Touch</h2>
         <p>Have questions about our oils or need help selecting the right product? We're here to assist.</p>
         <div class="contact-links">
-          <p>📞 <a href="tel:+919876543210">+91 98765 43210</a></p>
-          <p>📧 <a href="mailto:hello@arumee.com">hello@arumee.com</a></p>
+          <p>
+            <a href="https://wa.me/918925295844" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp +91 89252 95844" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:inherit;">
+              <!-- Full circular WhatsApp icon (20x20) -->
+              <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true" style="flex:0 0 20px;">
+                <circle cx="12" cy="12" r="11" fill="#25D366" />
+                <path d="M17.2 14.9c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.2-.8.8-1 .9-.2.1-.4.1-.6 0-.2-.1-.9-.4-1.8-1.3-.7-.6-1.2-1.4-1.4-1.7-.2-.3-.1-.4.1-.6.1-.1.3-.3.5-.4.2-.1.3-.2.5-.4.1-.2.1-.4 0-.5-.1-.2-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4l-.5 0c-.2 0-.5.1-.8.3-.3.2-1 .8-1 2 0 1.2.9 2.4 1 2.6.1.2 1.6 2.6 3.8 3.6 0.8.4 1.4.7 2 .9.8.3 1.5.2 2 .1.6-.1 1.2-.5 1.4-1 .2-.5.2-0.9.1-1-.1-.1-.2-.2-.4-.3z" fill="#fff"/>
+              </svg>
+              <span class="wa-number" style="font-weight:700;">+91 89252 95844</span>
+            </a>
+          </p>
+          <p>
+            <a href="mailto:info@arumee.co.in" target="_blank" rel="noopener noreferrer" aria-label="Email info@arumee.co.in" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:inherit;">
+              <!-- Crisp circular envelope (stroke-style) for small sizes -->
+              <svg width="22" height="22" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true" style="flex:0 0 22px;">
+                <defs>
+                  <style> .c { fill: var(--green); } .s { stroke: #fff; stroke-width:1.4; fill:none; stroke-linecap:round; stroke-linejoin:round; } </style>
+                </defs>
+                <circle cx="12" cy="12" r="11" class="c" />
+                <path class="s" d="M4 7.5h16v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9z" />
+                <path class="s" d="M4.5 7.7l7 5 7-5" />
+              </svg>
+              <span class="email-address" style="font-weight:700;">info@arumee.co.in</span>
+            </a>
+          </p>
           <p>📍 Namakkal, Tamil Nadu, India</p>
+          <div class="map-wrapper" style="margin-top:12px;border-radius:6px;">
+            <p style="margin:0;font-size:14px;color:#2d4a3e;">
+              <a href="https://maps.app.goo.gl/1WXZprZKP8zBf8MQ8" target="_blank" rel="noopener noreferrer" style="color:var(--green);font-weight:700;text-decoration:underline;">Click here to open map to our shop in Namakkal</a>
+            </p>
+          </div>
         </div>
       </div>
       <div class="panel">
         <h2>Send Us a Message</h2>
-        <form>
-          <input type="text" placeholder="Your Name" required>
-          <input type="email" placeholder="Your Email" required>
-          <textarea rows="4" placeholder="Your Message" required></textarea>
-          <button type="submit">Send Message</button>
+        <!-- In-page form: submissions will be forwarded to your Google Form (replace placeholders below) -->
+        <form id="contactForm" novalidate>
+          <input id="cf-name" name="name" type="text" placeholder="Your Name" required>
+          <input id="cf-email" name="email" type="email" placeholder="Your Email" required>
+          <textarea id="cf-message" name="message" rows="4" placeholder="Your Message" required></textarea>
+          <div style="display:flex;gap:12px;align-items:center;">
+            <button type="submit">Send Message</button>
+            <span id="cf-status" style="font-size:14px;color:var(--green);display:none;"></span>
+          </div>
         </form>
+  <small style="display:block;margin-top:10px;color:#666;">Submissions are forwarded to our Google Form. If you prefer, email us at <a href="mailto:info@arumee.co.in">info@arumee.co.in</a>.</small>
       </div>
       <div class="panel">
         <h2>Business Hours</h2>
@@ -434,5 +487,87 @@
   </main>
   <footer>© <span id="year"></span> Arumee™ — Premium Cold‑Pressed Oils</footer>
   <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+  <script>
+    // Forward in-page contact form to Google Forms (no server required)
+    // IMPORTANT: Replace the placeholders below with your Google Form details.
+    // 1) FORM_ACTION_URL: find it by opening your form, clicking Send -> Link or viewing source of the form
+    //    Example formResponse action: https://docs.google.com/forms/d/e/FORM_ID/formResponse
+    // 2) entry.XXXX: Each question has an entry ID (e.g., entry.123456789). Replace the mapping below.
+  // Updated to your provided form's formResponse endpoint (converted from viewform)
+  const FORM_ACTION_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdJlhY7hjv6o4B_2zKIPeU6RD7x18GDVgfA4KAO6kun2FvP4Q/formResponse';
+    const FIELD_MAP = {
+      // Mapped from your attachment
+      name: 'entry.843204700',
+      email: 'entry.1121659044',
+      message: 'entry.1078159799'
+    };
+
+    (function(){
+      const form = document.getElementById('contactForm');
+      const status = document.getElementById('cf-status');
+      if(!form) return;
+
+      // Create a hidden iframe to POST to Google Forms without leaving the page
+      const iframeName = 'cf-target-iframe';
+      let iframe = document.createElement('iframe');
+      iframe.name = iframeName;
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        status.style.display = 'none';
+
+        // Basic client-side validation
+        const name = document.getElementById('cf-name').value.trim();
+        const email = document.getElementById('cf-email').value.trim();
+        const message = document.getElementById('cf-message').value.trim();
+        if(!name || !email || !message){
+          alert('Please complete name, email and message.');
+          return;
+        }
+
+        // Build a plain <form> that posts to Google Forms formResponse endpoint
+        const postForm = document.createElement('form');
+        postForm.method = 'POST';
+        postForm.action = FORM_ACTION_URL;
+        postForm.target = iframeName;
+        postForm.style.display = 'none';
+
+        // Helper to append fields using FIELD_MAP
+        function appendField(name, value){
+          const key = FIELD_MAP[name];
+          if(!key) return; // skip unmapped fields
+          const inp = document.createElement('input');
+          inp.type = 'hidden';
+          inp.name = key;
+          inp.value = value;
+          postForm.appendChild(inp);
+        }
+
+        appendField('name', name);
+        appendField('email', email);
+        appendField('message', message);
+
+        document.body.appendChild(postForm);
+
+        // Show a working message
+        status.textContent = 'Sending…';
+        status.style.display = 'inline-block';
+
+        // Submit the form to the hidden iframe. If the Google Form accepts it, it'll record the entry.
+        postForm.submit();
+
+        // After a short delay, show success message and reset the form
+        setTimeout(function(){
+          status.textContent = 'Thanks — your message was sent.';
+          form.reset();
+        }, 1200);
+
+        // Clean up generated post form after some time
+        setTimeout(function(){ try{ document.body.removeChild(postForm); }catch(e){} }, 5000);
+      });
+    })();
+  </script>
 </body>
 </html>
