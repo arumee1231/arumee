@@ -8,39 +8,220 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="arumee_assets/cart.css">
 <style>
-  body { margin:0; font-family: 'Inter', system-ui, Arial, sans-serif; background:#faf8f5; color:#213529; opacity:0; animation:pageFadeUp .7s ease .05s forwards; }
-  a { text-decoration:none; }
-  :root { --green:#1e4d32; --gold:#9d7c2a; }
-  .hero-tabs-wrapper { position:sticky; top:0; background:linear-gradient(90deg, rgba(14,40,31,0.85), rgba(30,77,50,0.85)); backdrop-filter:blur(14px) saturate(140%); -webkit-backdrop-filter:blur(14px) saturate(140%); border-bottom:2px solid rgba(157,124,42,0.4); z-index:50; }
-  .hero-nav { display:flex; justify-content:center; gap:10px; padding:12px 24px 0; }
-  .hero-nav-tab { padding:10px 22px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.2); border-radius:10px 10px 0 0; color:rgba(255,255,255,0.85); font-size:13px; font-weight:600; transition:.3s; }
-  .hero-nav-tab:hover { background:rgba(255,255,255,0.14); border-color:rgba(157,124,42,0.55); color:#fff; transform:translateY(-3px); }
-  .hero-nav-tab.active { background:rgba(255,255,255,0.22); border-color:var(--gold); color:#fff; box-shadow:0 10px 26px -6px rgba(157,124,42,.55); }
-  /* Compact subpage header */
-  header { padding:26px 18px 18px; text-align:center; background:linear-gradient(135deg,#1e4d32,#2a5f42); color:#fff; border-bottom:2px solid rgba(157,124,42,0.35); }
-  header h1 { font-family:'Playfair Display',serif; font-size:38px; margin:0 0 6px; letter-spacing:-0.5px; }
-  header p { margin:0; font-size:15px; opacity:.85; }
-  .container { max-width:1100px; margin:0 auto; padding:50px 20px 70px; }
-  .grid { display:grid; gap:28px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); }
-  .card { background:#fff; border:1px solid rgba(30,77,50,.12); padding:22px 22px 26px; border-radius:18px; box-shadow:0 8px 26px -8px rgba(0,0,0,.12); position:relative; overflow:hidden; transition:.4s; opacity:0; transform:translateY(24px) scale(.96); animation:fadeScale .65s cubic-bezier(.16,.6,.3,1) forwards; }
-  .card:hover { transform:translateY(-6px); box-shadow:0 16px 40px -10px rgba(0,0,0,.18); border-color:rgba(157,124,42,.5); }
-  .card h3 { margin:0 0 10px; font-size:18px; color:var(--green); }
-  .card p { margin:0; font-size:14px; line-height:1.55; }
+  :root {
+    --green: #1e4d32;
+    --green-dark: #153d28;
+    --gold: #9d7c2a;
+    --gold-light: #b8941f;
+    --cream: #faf8f5;
+    --ink: #0a2817;
+  }
+  * { box-sizing: border-box; }
+  body { 
+    margin: 0; 
+    font-family: 'Inter', sans-serif; 
+    color: var(--ink); 
+    background: var(--cream); 
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 60px 4vw 80px; }
+  
+  /* STICKY NAVIGATION BAR */
+  .sticky-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(30, 77, 50, 0.08);
+    z-index: 9998;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    display: none; /* Hidden on desktop */
+  }
+  
+  /* Show sticky nav only on mobile */
+  @media (max-width: 768px) {
+    .sticky-nav {
+      display: block;
+    }
+  }
+  .sticky-nav .nav-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 4vw;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .sticky-nav .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--green);
+    text-decoration: none;
+  }
+  .sticky-nav .nav-brand img {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+  }
+  .sticky-nav .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sticky-nav .nav-btn {
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1.5px solid var(--green);
+    background: white;
+    color: var(--green);
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sticky-nav .nav-btn.primary {
+    background: var(--green);
+    color: white;
+    border-color: var(--green);
+  }
+  .sticky-nav .nav-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(30, 77, 50, 0.15);
+  }
+  .nav-cart-count {
+    background: var(--gold);
+    color: white;
+    border-radius: 50%;
+    min-width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 0 5px;
+  }
+  
+  /* NAVIGATION TABS */
+  .hero-tabs-wrapper { 
+    position: sticky; 
+    top: 0; /* Back to top: 0 for desktop */
+    background: linear-gradient(90deg, rgba(14,40,31,0.85), rgba(30,77,50,0.85)); 
+    backdrop-filter: blur(14px) saturate(140%); 
+    -webkit-backdrop-filter: blur(14px) saturate(140%); 
+    border-bottom: 2px solid rgba(157, 124, 42, 0.4); 
+    box-shadow: 0 4px 20px -4px rgba(0,0,0,0.35);
+    z-index: 1200; 
+  }
+  
+  /* Adjust tab position on mobile to sit below sticky nav */
+  @media (max-width: 768px) {
+    .hero-tabs-wrapper {
+      top: 44px;
+    }
+  }
+  
+  .hero-nav { 
+    display: flex; 
+    justify-content: center; 
+    gap: 0; 
+    padding: 0; 
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .hero-nav-tab { 
+    padding: 12px 24px; 
+    background: rgba(255, 255, 255, 0.07); 
+    border-right: 1px solid rgba(255, 255, 255, 0.1); 
+    color: rgba(255, 255, 255, 0.9); 
+    font-size: 13px; 
+    font-weight: 600; 
+    transition: all 0.3s ease; 
+    text-decoration: none; 
+    white-space: nowrap;
+  }
+  .hero-nav-tab:first-child {
+    border-radius: 0;
+  }
+  .hero-nav-tab:last-child {
+    border-right: none;
+  }
+  .hero-nav-tab:hover { 
+    background: rgba(255, 255, 255, 0.12); 
+    color: #ffffff; 
+  }
+  .hero-nav-tab.active { 
+    background: rgba(255, 255, 255, 0.18); 
+    color: #ffffff; 
+    font-weight: 700;
+  }
+  
+  h2 { 
+    font-family: 'Playfair Display', serif; 
+    font-size: 48px; 
+    margin: 0 0 12px; 
+    color: var(--green); 
+    text-align: center;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+  p.lead { 
+    font-size: 19px; 
+    line-height: 1.6; 
+    margin: 0 auto 48px; 
+    text-align: center;
+    max-width: 800px;
+    color: #1a4a2f;
+    font-weight: 500;
+  }
+  .grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .card { 
+    background: #fff; 
+    border: 2px solid rgba(30,77,50,.1); 
+    padding: 24px; 
+    border-radius: 20px; 
+    box-shadow: 0 4px 16px rgba(30, 77, 50, 0.08); 
+    transition: all 0.4s ease; 
+  }
+  .card:hover { 
+    transform: translateY(-6px); 
+    box-shadow: 0 16px 40px rgba(30, 77, 50, 0.15); 
+    border-color: var(--gold); 
+  }
+  .card h3 { margin: 0 0 12px; font-size: 18px; color: var(--green); font-weight: 700; }
+  .card p { margin: 0; font-size: 15px; line-height: 1.6; color: #2d4a3e; }
   footer { background:#0f2922; color:#eee; text-align:center; padding:32px 20px; font-size:13px; }
-  /* Removed legacy floating cart indicator styles */
-  /* Page & element animations */
-  @keyframes pageFadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
-  @keyframes fadeScale { 0% { opacity:0; transform:translateY(24px) scale(.96); } 100% { opacity:1; transform:translateY(0) scale(1); } }
-  .grid .card:nth-child(1){ animation-delay:.10s; }
-  .grid .card:nth-child(2){ animation-delay:.18s; }
-  .grid .card:nth-child(3){ animation-delay:.26s; }
-  .grid .card:nth-child(4){ animation-delay:.34s; }
-  .grid .card:nth-child(5){ animation-delay:.42s; }
-  .grid .card:nth-child(6){ animation-delay:.50s; }
-  @media (prefers-reduced-motion: reduce){ body, .card { animation:none!important; opacity:1!important; transform:none!important; } }
 </style>
 </head>
 <body>
+  <nav class="sticky-nav">
+    <div class="nav-content">
+      <div class="nav-brand">
+        <img src="arumee_assets/logo.png" alt="Arumee" width="40" height="40" />
+        <span>ARUMEE</span>
+      </div>
+      <div class="nav-actions">
+        <a href="index.html#oils" class="nav-btn">Our Oils</a>
+        <button class="nav-btn primary" onclick="console.log('Cart clicked!'); toggleCart();">
+          🛒
+          <span class="nav-cart-count" id="navCartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
   <div class="hero-tabs-wrapper" role="tablist" aria-label="Primary site sections">
     <nav class="hero-nav">
       <a href="index.html" class="hero-nav-tab" role="tab" aria-selected="false">Our Oils</a>
@@ -74,11 +255,10 @@
     </div>
   </div>
   <div id="cartBackdrop" class="cart-backdrop" onclick="toggleCart()"></div>
-  <header>
-    <h1>Benefits</h1>
-    <p>Why cold‑pressed nutrition matters for everyday wellness.</p>
-  </header>
   <main class="container">
+    <h2>Benefits</h2>
+    <p class="lead">Why cold‑pressed nutrition matters for everyday wellness.</p>
+    
     <div class="grid">
       <div class="card"><h3>Retained Nutrients</h3><p>Low‑heat extraction preserves vitamins, antioxidants, and natural aroma otherwise lost in refined oils.</p></div>
       <div class="card"><h3>No Chemicals</h3><p>Zero bleaching, deodorizing or solvent extraction—just pure mechanical pressing.</p></div>
@@ -90,7 +270,49 @@
   </main>
   <footer>© <span id="year"></span> Arumee™ — Premium Cold‑Pressed Oils</footer>
   <script>
+    console.log('Benefits page script starting...');
     document.getElementById('year').textContent=new Date().getFullYear();
+    
+    let isCartOpen = false;
+    let lastCartToggleTime = 0;
+    
+    // Cart toggle function - COPIED FROM index.html
+    window.toggleCart = function toggleCart(event) {
+      // Prevent double firing on mobile (touchend then click)
+      const now = Date.now();
+      if (now - lastCartToggleTime < 300) {
+        return; // ignore rapid second invocation
+      }
+      lastCartToggleTime = now;
+
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+      const cartDropdown = document.getElementById('cartDropdown');
+      const backdrop = document.getElementById('cartBackdrop');
+      const cartTab = document.getElementById('cartTab');
+
+      isCartOpen = !isCartOpen;
+
+      // Update ARIA attribute
+      if (cartTab) {
+        cartTab.setAttribute('aria-expanded', isCartOpen);
+      }
+
+      if (isCartOpen) {
+        if (cartDropdown) cartDropdown.classList.add('open');
+        if (backdrop) backdrop.classList.add('visible');
+        if (window.matchMedia('(max-width:768px)').matches) { document.body.classList.add('cart-open'); }
+        updateCartDisplay();
+      } else {
+        if (cartDropdown) cartDropdown.classList.remove('open');
+        if (backdrop) backdrop.classList.remove('visible');
+        if (window.matchMedia('(max-width:768px)').matches) { document.body.classList.remove('cart-open'); }
+      }
+    };
+    
   // Unified cart logic (mirrors main page) – legacy floating indicator removed
     let orderItems = [];
     function loadCart(){
@@ -102,12 +324,22 @@
     function updateCartDisplay(){
       loadCart();
       const cartCount = document.getElementById('cartCount');
+      const navCartCount = document.getElementById('navCartCount');
       const cartContent = document.getElementById('cartContent');
       const cartFooter = document.getElementById('cartFooter');
       const cartTotal = document.getElementById('cartTotal');
+      const cartTab = document.getElementById('cartTab');
       cartCount.textContent = orderItems.length;
+      if(navCartCount) navCartCount.textContent = orderItems.length;
       // Toggle body class so mobile cart button only appears when items exist
       document.body.classList.toggle('has-cart-items', orderItems.length > 0);
+      if(cartTab){
+        if(orderItems.length === 0 && window.matchMedia('(min-width:769px)').matches){
+          cartTab.classList.add('hidden');
+        } else {
+          cartTab.classList.remove('hidden');
+        }
+      }
       if(!orderItems.length){ cartContent.innerHTML='<p class="empty-cart">Your cart is empty</p>'; cartFooter.style.display='none'; return; }
       let html=''; let grand=0;
       orderItems.forEach((item,i)=>{
@@ -135,26 +367,15 @@
     }
     function changeQty(i,d){ if(i<0||i>=orderItems.length) return; const it=orderItems[i]; const q=Math.max(1,Math.min(10,it.qty+d)); if(q!==it.qty){ it.qty=q; it.total=it.price*q; saveCart(); updateCartDisplay(); } }
     function removeItem(i){ if(i<0||i>=orderItems.length) return; orderItems.splice(i,1); saveCart(); updateCartDisplay(); }
-    function clearSubCart(){ orderItems=[]; saveCart(); updateCartDisplay(); }
-    function toggleCart(e){ if(e){ e.preventDefault(); e.stopPropagation(); }
-      const panel=document.getElementById('cartDropdown'); const backdrop=document.getElementById('cartBackdrop'); const tab=document.getElementById('cartTab');
-      const isOpen = panel.classList.contains('open');
-      if(isOpen){
-        panel.classList.remove('open'); backdrop.classList.remove('visible'); tab.setAttribute('aria-expanded','false');
-        if(window.matchMedia('(max-width:768px)').matches){ document.body.classList.remove('cart-open'); }
-      } else {
-        panel.classList.add('open'); backdrop.classList.add('visible'); tab.setAttribute('aria-expanded','true'); updateCartDisplay();
-        if(window.matchMedia('(max-width:768px)').matches){ document.body.classList.add('cart-open'); }
-      }
-    }
-    function proceedToOrder(){ 
+    window.clearSubCart = function(){ orderItems=[]; saveCart(); updateCartDisplay(); };
+    window.proceedToOrder = function(){ 
       if(!orderItems.length){ return; } 
       toggleCart(); 
       // Navigate to Our Oils page with order hash and trigger scroll
       window.location.href='index.html#order';
       // Store flag in sessionStorage to trigger scroll on the target page
       sessionStorage.setItem('scrollToOrder', 'true');
-    }
+    };
     function escapeHtml(str){ return String(str).replace(/[&<>"]/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[s])); }
   /* Removed legacy subCartOverlay helpers (openSubCart/closeSubCart/goToOrderPage) */
     // Event delegation for cart quantity and remove buttons
@@ -199,7 +420,7 @@
     window.addEventListener('storage', function(e){ if(e.key==='arumeeCart'){ updateCartDisplay(); }});
     // Initial load
     updateCartDisplay();
-  
+    console.log('Benefits page script loaded. toggleCart is:', typeof window.toggleCart);
   </script>
 </body>
 </html>
