@@ -62,54 +62,61 @@
 /* Mobile bottom sheet */
 @media (max-width:768px){
   /* Mobile: hide cart tab completely - users access cart via order form */
-  .cart-tab { 
+  .cart-tab {
     display:none !important;
   }
-  .cart-dropdown { 
-    left:0; 
-    right:0; 
-    bottom:0; 
-    top:auto; 
-    width:100%; 
+  .cart-dropdown {
+    left:0;
+    right:0;
+    bottom:0;
+    top:auto;
+    width:100%;
     max-width:none;
-    height:70vh; 
-    border-radius:18px 18px 0 0; 
-    transform:translateY(100%); 
-    box-shadow:0 -4px 24px rgba(0,0,0,.25); 
+    height: auto;
+    max-height: 80vh;
+    min-height: 200px;
+    border-radius:18px 18px 0 0;
+    transform:translateY(100%);
+    box-shadow:0 -4px 24px rgba(0,0,0,.25);
     position:fixed;
   }
-  .cart-dropdown.open { 
-    transform:translateY(0); 
-    opacity:1; 
-    pointer-events:auto; 
+  .cart-dropdown.open {
+    transform:translateY(0);
+    opacity:1;
+    pointer-events:auto;
   }
-  .cart-dropdown::before { 
-    content:''; 
-    position:absolute; 
-    top:8px; 
-    left:50%; 
-    transform:translateX(-50%); 
-    width:54px; 
-    height:5px; 
-    background:rgba(0,0,0,.22); 
-    border-radius:3px; 
+  .cart-dropdown::before {
+    content:'';
+    position:absolute;
+    top:8px;
+    left:50%;
+    transform:translateX(-50%);
+    width:54px;
+    height:5px;
+    background:rgba(0,0,0,.22);
+    border-radius:3px;
   }
-  .cart-count { 
-    position:absolute; 
-    top:4px; 
-    right:6px; 
-    min-width:20px; 
-    height:20px; 
-    font-size:11px; 
-    box-shadow:0 2px 6px rgba(0,0,0,.25); 
+  .cart-count {
+    position:absolute;
+    top:4px;
+    right:6px;
+    min-width:20px;
+    height:20px;
+    font-size:11px;
+    box-shadow:0 2px 6px rgba(0,0,0,.25);
   }
-  body.cart-open .cart-tab { 
-    display:none !important; 
+  body.cart-open .cart-tab {
+    display:none !important;
   }
-  body.cart-open { 
-    overflow:hidden; 
-    height:100%; 
-    touch-action:none; 
+  body.cart-open {
+    overflow:hidden;
+    height:100%;
+    touch-action:none;
+  }
+  .cart-content {
+    max-height: 50vh;
+    min-height: 80px;
+    flex: 1 1 auto;
   }
 }
 
@@ -433,10 +440,6 @@
 }
 
 @media (max-width:768px){
-  .cart-content {
-    max-height: calc(70vh - 280px);
-    /* Maintain gradient fades on mobile (adjust height shorter) */
-  }
   .cart-footer {
     padding: 16px 20px;
   }
