@@ -231,7 +231,6 @@
     }
     .trust-badge:nth-child(1) { animation-delay: 0.6s; }
     .trust-badge:nth-child(2) { animation-delay: 0.7s; }
-    .trust-badge:nth-child(3) { animation-delay: 0.8s; }
     .trust-badge:hover {
       transform: translateY(-3px) scale(1.02);
       box-shadow: 0 8px 20px rgba(30, 77, 50, 0.15),
@@ -1465,7 +1464,7 @@
       /* Trust badges mobile */
       .trust-badges {
         gap: 8px;
-        margin-top: 12px;
+        margin-top: 8px;
         flex-wrap: wrap;
       }
       .trust-badge {
@@ -1486,7 +1485,7 @@
       }
       .brand {
         gap: 16px;
-        padding: 0 16px 16px;
+        padding: 0 16px 8px;
       }
       .brand img {
         width: 60px;
@@ -1570,7 +1569,7 @@
       }
       
       /* Hero section - Reduced height for mobile to show products */
-      header.hero { padding: 30px 0 40px; }
+      header.hero { padding: 30px 0 20px; }
       .brand { flex-direction: column; gap: 20px; text-align: center; }
       .brand img { 
         width: 100px; 
@@ -2182,10 +2181,6 @@
 <div class="trust-badge">
 <span class="trust-badge-icon">🌿</span>
 <span>100% Natural</span>
-</div>
-<div class="trust-badge">
-<span class="trust-badge-icon">🏆</span>
-<span>Premium Quality</span>
 </div>
 </div>
 </div>
@@ -3188,10 +3183,13 @@
   document.querySelectorAll('.cart, .cart-overlay, .cart-panel, .cart-popup, .cart-drawer')
     .forEach(function(p){ p.classList.remove('open','show','visible','active'); p.style.display=''; });
 
-  // ---- Scroll to top & toast ----
-  try { window.scrollTo({top:0, behavior:'smooth'}); } catch(e) { window.scrollTo(0,0); }
-  document.documentElement.scrollTop = 0;
-  document.body.scrollTop = 0;
+  // ---- Scroll to oils section & toast ----
+  const oilsSection = document.getElementById('oils');
+  if (oilsSection) {
+    oilsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    try { window.scrollTo({top:0, behavior:'smooth'}); } catch(e) { window.scrollTo(0,0); }
+  }
 
   if (typeof showToast==='function') {
     showToast('Cart cleared successfully!');
@@ -3438,6 +3436,35 @@
               }
             }, 600);
           }
+        }, 300);
+      }
+      
+      // Check if we need to show clear toast (when coming from benefits page)
+      if (sessionStorage.getItem('showClearToast') === 'true') {
+        sessionStorage.removeItem('showClearToast');
+        // Wait for page to fully render, then scroll to oils section and show toast
+        setTimeout(() => {
+          const oilsSection = document.getElementById('oils');
+          if (oilsSection) {
+            oilsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+          // Show toast after scroll
+          setTimeout(() => {
+            if (typeof showToast === 'function') {
+              showToast('Cart cleared successfully!');
+            } else {
+              var toast = document.getElementById('toast');
+              if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'toast';
+                toast.className = 'toast';
+                document.body.appendChild(toast);
+              }
+              toast.textContent = 'Cart cleared successfully!';
+              toast.classList.add('show');
+              setTimeout(function() { toast.classList.remove('show'); }, 3000);
+            }
+          }, 600);
         }, 300);
       }
       
