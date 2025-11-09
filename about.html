@@ -436,7 +436,14 @@
     }
     function changeQty(i,d){ if(i<0||i>=orderItems.length) return; const it=orderItems[i]; const q=Math.max(1,Math.min(10,it.qty+d)); if(q!==it.qty){ it.qty=q; it.total=it.price*q; saveCart(); updateCartDisplay(); }}
     function removeItem(i){ if(i<0||i>=orderItems.length) return; orderItems.splice(i,1); saveCart(); updateCartDisplay(); }
-    window.clearSubCart = function(){ orderItems=[]; saveCart(); updateCartDisplay(); };
+    window.clearSubCart = function(){ 
+      orderItems=[]; 
+      saveCart(); 
+      updateCartDisplay(); 
+      // Navigate to homepage oils section and show toast
+      sessionStorage.setItem('showClearToast', 'true');
+      window.location.href='index.html#oils';
+    };
     window.proceedToOrder = function(){ 
       if(!orderItems.length){ return; } 
       toggleCart(); 
