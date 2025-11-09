@@ -38,9 +38,25 @@
 
 /* Desktop: unified slide from right for all pages */
 @media (min-width:769px){
-  .cart-dropdown { top:0; right:0; left:auto; bottom:auto; width:100%; max-width:440px; max-height:90vh; transform:translateX(100%); box-shadow:-4px 0 24px rgba(0,0,0,.15); }
+  .cart-dropdown {
+    top: 0;
+    right: 0;
+    left: auto;
+    bottom: auto;
+    width: 100%;
+    max-width: 440px;
+    max-height: 90vh;
+    min-height: 200px;
+    transform: translateX(100%);
+    box-shadow: -4px 0 24px rgba(0,0,0,.15);
+    height: auto;
+  }
   .cart-dropdown.open { transform:translateX(0); opacity:1; pointer-events:auto; }
-  .cart-content { max-height:calc(90vh - 240px); }
+  .cart-content {
+    max-height: 60vh;
+    min-height: 100px;
+    flex: 1 1 auto;
+  }
 }
 
 /* Mobile bottom sheet */
