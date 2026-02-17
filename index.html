@@ -2229,14 +2229,13 @@
 <article aria-labelledby="prod-coconut-title" class="card">
 <div class="pic-wrap"><img alt="Cold‑Pressed Coconut Oil bottle" decoding="async" height="240" loading="lazy" src="arumee_assets/mockup_coconut.png" width="240"/></div>
 <div class="content">
-<span class="pill" id="coconut-pill">Coconut • 500ml</span>
+  <span class="pill" id="coconut-pill">Coconut • 1L</span>
 <div class="title" id="prod-coconut-title">Cold‑Pressed Coconut Oil</div>
-<div class="price" id="coconut-price">₹200 <span>/ 500ml</span></div>
+<div class="price" id="coconut-price">₹400 <span>/ 1L</span></div>
 <div class="size-selector">
 <label>SIZE</label>
 <div class="size-options">
-<div class="size-option active" data-price="200" data-product="coconut" data-size="500ml">500ml</div>
-<div class="size-option" data-price="400" data-product="coconut" data-size="1L">1L</div>
+<div class="size-option active" data-price="400" data-product="coconut" data-size="1L">1L</div>
 <div class="size-option" data-price="2000" data-product="coconut" data-size="5L">5L</div>
 </div>
 </div>
@@ -2254,14 +2253,13 @@
 <article aria-labelledby="prod-groundnut-title" class="card">
 <div class="pic-wrap"><img alt="Cold‑Pressed Groundnut Oil bottle" decoding="async" height="240" loading="lazy" src="arumee_assets/mockup_groundnut.png" width="240"/></div>
 <div class="content">
-<span class="pill" id="groundnut-pill">Groundnut • 500ml</span>
+<span class="pill" id="groundnut-pill">Groundnut • 1L</span>
 <div class="title" id="prod-groundnut-title">Wooden Cold‑Pressed Groundnut Oil</div>
-<div class="price" id="groundnut-price">₹115 <span>/ 500ml</span></div>
+<div class="price" id="groundnut-price">₹240 <span>/ 1L</span></div>
 <div class="size-selector">
 <label>SIZE</label>
 <div class="size-options">
-<div class="size-option active" data-price="120" data-product="groundnut" data-size="500ml">500ml</div>
-<div class="size-option" data-price="240" data-product="groundnut" data-size="1L">1L</div>
+<div class="size-option active" data-price="240" data-product="groundnut" data-size="1L">1L</div>
 <div class="size-option" data-price="1200" data-product="groundnut" data-size="5L">5L</div>
 </div>
 </div>
@@ -2279,14 +2277,13 @@
 <article aria-labelledby="prod-gingelly-title" class="card">
 <div class="pic-wrap"><img alt="Cold‑Pressed Gingelly (Sesame) Oil bottle" decoding="async" height="240" loading="lazy" src="arumee_assets/mockup_gingelly.png" width="240"/></div>
 <div class="content">
-<span class="pill" id="gingelly-pill">Gingelly • 500ml</span>
+<span class="pill" id="gingelly-pill">Gingelly • 1L</span>
 <div class="title" id="prod-gingelly-title">Wooden Cold‑Pressed Gingelly Oil</div>
-<div class="price" id="gingelly-price">₹200 <span>/ 500ml</span></div>
+<div class="price" id="gingelly-price">₹400 <span>/ 1L</span></div>
 <div class="size-selector">
 <label>SIZE</label>
 <div class="size-options">
-<div class="size-option active" data-price="200" data-product="gingelly" data-size="500ml">500ml</div>
-<div class="size-option" data-price="400" data-product="gingelly" data-size="1L">1L</div>
+<div class="size-option active" data-price="400" data-product="gingelly" data-size="1L">1L</div>
 <div class="size-option" data-price="2000" data-product="gingelly" data-size="5L">5L</div>
 </div>
 </div>
@@ -2865,13 +2862,10 @@
     }
     
     const oilOptions = [
-      { id: 'coconut-500ml', name: 'Cold-Pressed Coconut Oil (500ml)', price: 200 },
       { id: 'coconut-1L', name: 'Cold-Pressed Coconut Oil (1L)', price: 400 },
       { id: 'coconut-5L', name: 'Cold-Pressed Coconut Oil (5L)', price: 2000 },
-      { id: 'groundnut-500ml', name: 'Wooden Cold-Pressed Groundnut Oil (500ml)', price: 120 },
       { id: 'groundnut-1L', name: 'Wooden Cold-Pressed Groundnut Oil (1L)', price: 240 },
       { id: 'groundnut-5L', name: 'Wooden Cold-Pressed Groundnut Oil (5L)', price: 1200 },
-      { id: 'gingelly-500ml', name: 'Wooden Cold-Pressed Gingelly Oil (500ml)', price: 200 },
       { id: 'gingelly-1L', name: 'Wooden Cold-Pressed Gingelly Oil (1L)', price: 400 },
       { id: 'gingelly-5L', name: 'Wooden Cold-Pressed Gingelly Oil (5L)', price: 2000 }
     ];
@@ -3051,7 +3045,7 @@
     function addToOrder(id, productName, price) {
       // Get selected size info
       const selectedSizeOption = document.querySelector(`.size-option.active[data-product="${id}"]`);
-      const selectedSize = selectedSizeOption ? selectedSizeOption.dataset.size : '500ml';
+      const selectedSize = selectedSizeOption ? selectedSizeOption.dataset.size : '1L';
       const selectedPrice = selectedSizeOption ? parseInt(selectedSizeOption.dataset.price) : price;
       
       const qty = parseInt(document.getElementById('qty-' + id).value);
@@ -3597,7 +3591,7 @@
       function markInteraction() { userInteracted = true; window.removeEventListener('pointerdown', markInteraction, true); }
       window.addEventListener('pointerdown', markInteraction, true);
 
-      // Before user interacts, strip "active" visual class from size-options except default 500ml
+      // Before user interacts, strip "active" visual class from size-options except default 1L
       document.querySelectorAll('.size-options').forEach(group => {
         if (!userInteracted) {
           group.querySelectorAll('.size-option').forEach(opt => {
@@ -4014,9 +4008,9 @@ document.addEventListener('DOMContentLoaded', function(){
     window.showAddToCartModal = function(details){
       try{
         var text = String(details || '');
-        var m = text.match(/:\s*(.+?)\s*\(\s*([^)]+)\s*\)\s*×\s*(\d+)/); // capture "Name (500ml) × 2"
+        var m = text.match(/:\s*(.+?)\s*\(\s*([^)]+)\s*\)\s*×\s*(\d+)/); // capture "Name (1L) × 2"
         if (m){
-          var name = m[1] + ' ' + m[2]; // "Coconut 500ml"
+          var name = m[1] + ' ' + m[2]; // "Coconut 1L"
           var qty = m[3];
           if (text.indexOf('Updated') === 0){
             text = 'Updated — ' + name + ' × ' + qty;
