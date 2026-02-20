@@ -3,16 +3,35 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Contact Arumee — Premium Cold‑Pressed Oils</title>
+<link rel="icon" type="image/png" href="arumee_assets/favicon.png" />
+<title>Contact Arumee | Order Cold-Pressed Oils — WhatsApp &amp; Phone</title>
+<meta name="description" content="Order Arumee cold-pressed oils directly. Call or WhatsApp Mani Flour &amp; Oil Mill on 9751425598 / 9443342098. Free delivery. Coconut, groundnut &amp; gingelly oils across India."/>
+<meta name="keywords" content="contact arumee, order cold pressed oil india, buy arumee oil, mani flour oil mill phone, arumee whatsapp order, cold pressed oil delivery india"/>
+<meta name="robots" content="index,follow"/>
+<link rel="canonical" href="https://arumee.co.in/contact.html"/>
+<meta property="og:title" content="Contact Arumee | Order Cold-Pressed Oils"/>
+<meta property="og:description" content="Order Arumee cold-pressed oils via WhatsApp or call. Free delivery. FSSAI certified. Coconut, groundnut &amp; gingelly oils."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://arumee.co.in/contact.html"/>
+<meta property="og:image" content="https://arumee.co.in/arumee_assets/logo.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Contact Arumee | Order Cold-Pressed Oils"/>
+<meta name="twitter:description" content="Order Arumee oils via WhatsApp or call. Free delivery across India. FSSAI certified."/>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"LocalBusiness","name":"Arumee","url":"https://arumee.co.in","telephone":["+919751425598","+919443342098"],"description":"Traditional cold-pressed coconut, groundnut and gingelly oil. Free delivery. FSSAI: 22425133000137.","currenciesAccepted":"INR","areaServed":{"@type":"Country","name":"India"},"legalName":"Mani Flour & Oil Mill"}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="arumee_assets/cart.css">
 <style>
   :root {
     --green: #1e4d32;
+    /* unified header spacing for non-Oils pages */
+    --site-header-height: 56px;
+    --site-header-height-mobile: 90px;
     --green-dark: #153d28;
-    --gold: #9d7c2a;
-    --gold-light: #b8941f;
+    --gold: #c09b3a;
+    --gold-light: #d4af50;
     --cream: #faf8f5;
     --ink: #0a2817;
   }
@@ -24,8 +43,12 @@
     background: var(--cream); 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
-  .container { width: min(1200px, 92vw); margin: 0 auto; padding: 60px 4vw 90px; }
+  main.container { flex: 1; }
+  .container { width: min(1200px, 92vw); margin: 0 auto; padding: 60px 4vw 32px; }
   
   /* STICKY NAVIGATION BAR */
   .sticky-nav {
@@ -89,8 +112,7 @@
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-  }
+    gap: 6px;    white-space: nowrap;  }
   .sticky-nav .nav-btn.primary {
     background: var(--green);
     color: white;
@@ -126,23 +148,41 @@
     z-index: 1200; 
   }
   
-  /* Adjust tab position on mobile to sit below sticky nav */
+  /* Mobile: all 5 tabs horizontally scrollable */
   @media (max-width: 768px) {
     .hero-tabs-wrapper {
-      top: 44px;
+      top: calc(44px + env(safe-area-inset-top, 0px));
+      overflow: hidden;
+    }
+    .hero-nav {
+      justify-content: flex-start;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .hero-nav::-webkit-scrollbar { display: none; }
+    .hero-nav-tab {
+      padding: 11px 16px;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+    .hero-nav-tab.active::after {
+      bottom: 2px;
+      height: 3px;
+      left: 8px;
+      right: 8px;
     }
   }
-  .hero-nav { 
-    display: flex; 
-    justify-content: center; 
-    gap: 0; 
-    padding: 0; 
+  .hero-nav {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    padding: 0;
     max-width: 1100px;
     margin: 0 auto;
-    position: relative;
-    padding-bottom: 12px;
-    margin-bottom: -12px;
   }
+  /* Apply consistent top spacing so header area appears uniform across pages */
+  main.container { padding-top: var(--site-header-height,120px); }
   .hero-nav-tab { 
     padding: 12px 24px; 
     background: rgba(255, 255, 255, 0.07); 
@@ -226,12 +266,14 @@
   .panel p { margin: 0 0 14px; font-size: 15px; line-height: 1.6; color: #2d4a3e; }
   .contact-links a { color:var(--gold); text-decoration:none; font-weight:600; }
   form { display:grid; gap:14px; }
-  input, textarea { width:100%; padding:12px 14px; border:1px solid rgba(30,77,50,.25); border-radius:10px; font-family:inherit; font-size:14px; background:#fff; box-sizing:border-box; }
+  input, textarea { width:100%; padding:12px 14px; border:1px solid rgba(30,77,50,.25); border-radius:10px; font-family:inherit; font-size:16px; background:#fff; box-sizing:border-box; }
   input:focus, textarea:focus { outline:2px solid var(--gold); border-color:var(--gold); }
   textarea { resize:vertical; min-height:100px; }
-  button { padding:14px 26px; background:linear-gradient(135deg,var(--green),#2a5f42); color:#fff; border:none; border-radius:999px; font-weight:600; cursor:pointer; font-size:14px; box-shadow:0 8px 24px -8px rgba(0,0,0,.4); transition:.35s; }
+  button { padding:14px 26px; background:linear-gradient(135deg,var(--green),#2a5f42); color:#fff; border:none; border-radius:999px; font-weight:600; cursor:pointer; font-size:16px; min-height:44px; box-shadow:0 8px 24px -8px rgba(0,0,0,.4); transition:.35s; }
   button:hover { transform:translateY(-3px); box-shadow:0 14px 34px -10px rgba(0,0,0,.5); }
-  footer { background:#0f2922; color:#eee; text-align:center; padding:32px 20px; font-size:13px; }
+  /* Reset global button overrides for sticky nav buttons */
+  .sticky-nav .nav-btn { min-height: unset; padding: 6px 16px; font-size: 13px; background: white; color: var(--green); border: 1.5px solid var(--green); box-shadow: none; }
+  footer { background: linear-gradient(135deg,rgba(30,77,50,.08),rgba(157,124,42,.05)); border-top:1px solid rgba(30,77,50,0.15); text-align:center; padding:16px 20px; color:var(--green); font-size:13px; }
   /* Page & element animations */
   @keyframes pageFadeUp { from { opacity:0; transform:translateY(32px); } to { opacity:1; transform:translateY(0); } }
   @keyframes fadeScale { 0% { opacity:0; transform:translateY(28px) scale(.95); } 100% { opacity:1; transform:translateY(0) scale(1); } }
@@ -239,6 +281,34 @@
   .grid .panel:nth-child(2){ animation-delay:.22s; }
   .grid .panel:nth-child(3){ animation-delay:.32s; }
   @media (prefers-reduced-motion: reduce){ body, .panel { animation:none!important; opacity:1!important; transform:none!important; } }
+
+  /* ─── MOBILE-FIRST ────────────────────────────────── */
+  .sticky-nav { padding-top: env(safe-area-inset-top, 0px); }
+
+  @media (max-width: 768px) {
+    main.container { padding-top: var(--site-header-height-mobile,110px); }
+    .container { padding-top: 24px; padding-bottom: 24px; }
+
+    h2 { font-size: clamp(24px, 7.5vw, 36px); letter-spacing: -.5px; margin-bottom: 8px; }
+    p.lead { font-size: 15px; margin-bottom: 28px; }
+
+    .grid { grid-template-columns: 1fr; gap: 16px; }
+
+    /* Cards: disable fly-up on touch, keep subtle press */
+    .panel:hover { transform: none; }
+    .panel:active { transform: scale(.98); box-shadow: 0 4px 16px rgba(30,77,50,.12); }
+
+    footer { padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
+  }
+
+  @media (max-width: 480px) {
+    h2 { font-size: 22px; }
+    p.lead { font-size: 14px; }
+    .panel { padding: 20px 16px; }
+    .panel h2 { font-size: 18px; }
+    input, textarea, button { border-radius: 10px; }
+    button { width: 100%; }
+  }
 </style>
 </head>
 <body>
@@ -261,11 +331,41 @@
   <div class="hero-tabs-wrapper" role="tablist" aria-label="Primary site sections">
     <nav class="hero-nav">
       <a href="index.html" class="hero-nav-tab" aria-selected="false">Our Oils</a>
+      <a href="combo.html" class="hero-nav-tab" aria-selected="false">Combo Offers</a>
       <a href="benefits.html" class="hero-nav-tab" aria-selected="false">Benefits</a>
       <a href="about.html" class="hero-nav-tab" aria-selected="false">About Us</a>
       <a href="contact.html" class="hero-nav-tab active" aria-selected="true">Contact Us</a>
     </nav>
   </div>
+  <script>
+  (function(){
+    var stickyNav = document.querySelector('.sticky-nav');
+    var tabsWrapper = document.querySelector('.hero-tabs-wrapper');
+    var heroNav = document.querySelector('.hero-nav');
+    var activeTab = document.querySelector('.hero-nav-tab.active');
+    function setTop() {
+      if (stickyNav && tabsWrapper && window.innerWidth <= 768) {
+        tabsWrapper.style.top = stickyNav.offsetHeight + 'px';
+      }
+    }
+    function centerActive() {
+      if (heroNav && activeTab) {
+        var tabLeft = activeTab.offsetLeft;
+        var tabWidth = activeTab.offsetWidth;
+        var navWidth = heroNav.offsetWidth;
+        heroNav.scrollLeft = tabLeft - (navWidth / 2) + (tabWidth / 2);
+      }
+    }
+    setTop();
+    centerActive();
+    window.addEventListener('resize', function(){ setTop(); centerActive(); });
+    /* Re-measure after fonts finish loading — prevents jump from font-swap changing nav height */
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function(){ setTop(); });
+    }
+    window.addEventListener('load', function(){ setTop(); });
+  }());
+  </script>
   <!-- Unified Cart Components -->
   <div id="cartTab" class="cart-tab" role="button" aria-label="Shopping cart" aria-expanded="false" tabindex="0">
     <span class="cart-icon" aria-hidden="true">🛒</span>
@@ -495,7 +595,9 @@
         <p style="margin-top:20px;"><em>We typically respond within 24 hours on business days.</em></p>
       </div>
   </main>
-  <footer>© <span id="year"></span> Arumee™ — Premium Cold‑Pressed Oils</footer>
+  <footer style="border-top:1px solid rgba(30,77,50,0.12);padding:16px 20px;text-align:center;">
+    <p style="font-size:13px;color:rgba(10,40,23,0.5);margin:0;font-weight:500;">&copy; <span id="year"></span> Arumee&trade; &bull; Mani Flour &amp; Oil Mill &nbsp;&middot;&nbsp; FSSAI: 22425133000137 &nbsp;&middot;&nbsp; <a href="tel:9751425598" style="color:var(--green);text-decoration:none;font-weight:600;">9751425598</a> / <a href="tel:9443342098" style="color:var(--green);text-decoration:none;font-weight:600;">9443342098</a></p>
+  </footer>
   <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
   <script>
     // Forward in-page contact form to Google Forms (no server required)
