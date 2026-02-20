@@ -7,18 +7,20 @@
 <meta content="#ffffff" name="theme-color"/>
 <meta content="default" name="apple-mobile-web-app-status-bar-style"/>
 <meta content="index,follow" name="robots"/>
-<link href="https://www.arumee.example/" rel="canonical"/>
+<link href="https://arumee.co.in/" rel="canonical"/>
 <meta content="Arumee — Premium Cold‑Pressed Oils" property="og:title"/>
 <meta content="Pure, natural, traditionally pressed coconut, groundnut &amp; gingelly oils. Fresh, authentic, nutrient-rich." property="og:description"/>
 <meta content="website" property="og:type"/>
-<meta content="https://www.arumee.example/" property="og:url"/>
-<meta content="https://www.arumee.example/arumee_assets/logo.png" property="og:image"/>
-<meta content="summary" name="twitter:card"/>
+<meta content="https://arumee.co.in/" property="og:url"/>
+<meta content="https://arumee.co.in/arumee_assets/logo.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
 <meta content="Arumee — Premium Cold‑Pressed Oils" name="twitter:title"/>
 <meta content="Pure, natural, traditionally pressed coconut, groundnut &amp; gingelly oils." name="twitter:description"/>
-<meta content="https://www.arumee.example/arumee_assets/logo.png" name="twitter:image"/>
+<meta content="https://arumee.co.in/arumee_assets/logo.png" name="twitter:image"/>
 <title>Arumee — Premium Cold‑Pressed Oils</title>
 <meta content="Arumee — Premium cold‑pressed oils. Pure, natural, and traditionally pressed coconut, groundnut, and gingelly oils." name="description"/>
+<meta name="keywords" content="cold pressed coconut oil, buy cold pressed oil online india, groundnut oil wood pressed, gingelly oil, sesame oil, chekku oil, marachekku oil, ancestral wooden pressed oil, FSSAI certified oil, traditional cold pressed oil, arumee oil, mani flour oil mill"/>
+<meta name="geo.region" content="IN"/>
 <link href="arumee_assets/favicon.png" rel="icon" type="image/png"/>
 <!-- Preload critical hero assets to reduce flicker -->
 <link as="image" fetchpriority="high" href="arumee_assets/logo.png" rel="preload"/>
@@ -35,35 +37,68 @@
     .skip-link:focus { position:fixed; left:16px; top:16px; width:auto; height:auto; padding:10px 14px; background:#000; color:#fff; z-index:10001; border-radius:8px; }
   </style>
 <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Store",
-    "name": "Arumee",
-    "url": "https://www.arumee.example/",
-    "logo": "https://www.arumee.example/arumee_assets/logo.png",
-    "description": "Premium cold-pressed coconut, groundnut, and gingelly oils.",
-    "currenciesAccepted": "INR",
-    "areaServed": "IN",
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Cold Pressed Oils",
-      "itemListElement": [
-        {"@type":"Offer","itemOffered":{"@type":"Product","name":"Cold‑Pressed Coconut Oil","category":"Grocery","image":"https://www.arumee.example/arumee_assets/mockup_coconut.png"}},
-        {"@type":"Offer","itemOffered":{"@type":"Product","name":"Cold‑Pressed Groundnut Oil","category":"Grocery","image":"https://www.arumee.example/arumee_assets/mockup_groundnut.png"}},
-        {"@type":"Offer","itemOffered":{"@type":"Product","name":"Cold‑Pressed Gingelly Oil","category":"Grocery","image":"https://www.arumee.example/arumee_assets/mockup_gingelly.png"}}
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "FoodStore",
+      "@id": "https://arumee.co.in/#store",
+      "name": "Arumee",
+      "url": "https://arumee.co.in/",
+      "logo": "https://arumee.co.in/arumee_assets/logo.png",
+      "image": "https://arumee.co.in/arumee_assets/logo.png",
+      "description": "Premium traditionally cold-pressed coconut, groundnut and gingelly oils. Extracted using ancestral wooden pressed (marachekku) method. FSSAI certified. Free delivery across India.",
+      "telephone": ["+919751425598", "+919443342098"],
+      "currenciesAccepted": "INR",
+      "priceRange": "₹329 – ₹2299",
+      "areaServed": {"@type": "Country", "name": "India"},
+      "legalName": "Mani Flour & Oil Mill",
+      "identifier": {"@type": "PropertyValue", "name": "FSSAI", "value": "22425133000137"}
+    },
+    {
+      "@type": "Product",
+      "name": "Cold-Pressed Coconut Oil",
+      "image": "https://arumee.co.in/arumee_assets/mockup_coconut.png",
+      "description": "100% pure traditionally cold-pressed coconut oil. Extracted using ancestral wooden pressed (marachekku) method. Rich in lauric acid and natural nutrients. No heat, no chemicals.",
+      "brand": {"@type": "Brand", "name": "Arumee"},
+      "offers": [
+        {"@type":"Offer","name":"1L","price":"449","priceCurrency":"INR","itemCondition":"https://schema.org/NewCondition","availability":"https://schema.org/InStock","url":"https://arumee.co.in/#oils"},
+        {"@type":"Offer","name":"5L","price":"2199","priceCurrency":"INR","itemCondition":"https://schema.org/NewCondition","availability":"https://schema.org/InStock","url":"https://arumee.co.in/#oils"}
+      ]
+    },
+    {
+      "@type": "Product",
+      "name": "Wooden Cold-Pressed Groundnut Oil",
+      "image": "https://arumee.co.in/arumee_assets/mockup_groundnut.png",
+      "description": "100% pure wood-pressed groundnut oil. Ancestral wooden pressed (marachekku) extraction. Full flavour, natural aroma and nutrition retained. No refining.",
+      "brand": {"@type": "Brand", "name": "Arumee"},
+      "offers": [
+        {"@type":"Offer","name":"1L","price":"329","priceCurrency":"INR","itemCondition":"https://schema.org/NewCondition","availability":"https://schema.org/InStock","url":"https://arumee.co.in/#oils"},
+        {"@type":"Offer","name":"5L","price":"1549","priceCurrency":"INR","itemCondition":"https://schema.org/NewCondition","availability":"https://schema.org/InStock","url":"https://arumee.co.in/#oils"}
+      ]
+    },
+    {
+      "@type": "Product",
+      "name": "Wooden Cold-Pressed Gingelly Oil",
+      "image": "https://arumee.co.in/arumee_assets/mockup_gingelly.png",
+      "description": "100% pure cold-pressed gingelly (sesame) oil. Ancestral wooden pressed (marachekku) extraction. Rich in sesamol, antioxidants and vitamin E.",
+      "brand": {"@type": "Brand", "name": "Arumee"},
+      "offers": [
+        {"@type":"Offer","name":"1L","price":"499","priceCurrency":"INR","itemCondition":"https://schema.org/NewCondition","availability":"https://schema.org/InStock","url":"https://arumee.co.in/#oils"},
+        {"@type":"Offer","name":"5L","price":"2395","priceCurrency":"INR","itemCondition":"https://schema.org/NewCondition","availability":"https://schema.org/InStock","url":"https://arumee.co.in/#oils"}
       ]
     }
-  }
-  </script>
+  ]
+}
+</script>
 <style>
     :root {
       --green: #1e4d32;
       --green-dark: #153d28;
-      --gold: #9d7c2a;
-      --gold-light: #b8941f;
+      --gold: #c09b3a;
+      --gold-light: #d4af50;
       --cream: #faf8f5;
       --ink: #0a2817;
-      --accent: #8b4513;
       --shadow-sm: 0 2px 8px rgba(30, 77, 50, 0.08);
       --shadow-md: 0 4px 16px rgba(30, 77, 50, 0.12);
       --shadow-lg: 0 8px 32px rgba(30, 77, 50, 0.16);
@@ -164,6 +199,7 @@
       align-items: center;
       gap: 8px;
       position: relative;
+      white-space: nowrap;
     }
     .sticky-nav .nav-btn.primary {
       background: var(--green);
@@ -192,21 +228,21 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 24px;
-      margin-top: 24px;
+      gap: 10px;
+      margin-top: 14px;
       flex-wrap: wrap;
     }
     .trust-badge {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 12px 18px;
+      gap: 6px;
+      padding: 7px 12px;
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border-radius: 14px;
+      border-radius: 10px;
       border: 1px solid rgba(30, 77, 50, 0.2);
-      font-size: 13px;
+      font-size: 11.5px;
       font-weight: 600;
       color: var(--green);
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -239,12 +275,12 @@
       background: rgba(255, 255, 255, 1);
     }
     .trust-badge-icon {
-      font-size: 20px;
+      font-size: 15px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 28px;
-      height: 28px;
+      min-width: 20px;
+      height: 20px;
       transition: transform 0.3s ease;
     }
     .trust-badge:hover .trust-badge-icon {
@@ -257,14 +293,14 @@
       color: #ffffff !important;
       border-radius: 50% !important;
       font-weight: 900 !important;
-      font-size: 16px !important;
+      font-size: 11px !important;
       line-height: 1 !important;
-      padding: 4px !important;
+      padding: 3px !important;
       display: inline-flex !important;
       align-items: center !important;
       justify-content: center !important;
-      width: 24px !important;
-      height: 24px !important;
+      width: 18px !important;
+      height: 18px !important;
       box-shadow: 0 2px 6px rgba(30, 77, 50, 0.2);
     }
     .trust-badge:first-child:hover .trust-badge-icon {
@@ -283,10 +319,11 @@
       z-index: 1200; 
     }
     
-    /* Adjust tab position on mobile to sit below sticky nav */
+    /* Tab top offset on mobile is controlled dynamically by JS (setTop).
+       Default to 0 so there is no gap when the sticky nav is hidden. */
     @media (max-width: 768px) {
       .hero-tabs-wrapper {
-        top: 44px;
+        top: 0;
       }
     }
     
@@ -343,20 +380,34 @@
       outline-offset: 4px;
       border-radius: 6px;
     }
-    /* gold bar below tabs (instead of per-tab floating) for mobile */
+    /* Mobile: all 5 tabs horizontally scrollable */
     @media (max-width: 768px) {
-      .hero-tabs-wrapper { 
-        position: sticky; 
-        top: 0;
-        overflow: visible; /* Allow active tab underline to extend below */
-        z-index: 10;
+      .hero-tabs-wrapper {
+        position: sticky;
+        top: 0; /* JS (setTop + MutationObserver) handles the offset */
+        overflow: hidden;
+        z-index: 1200;
       }
-      .hero-nav-tab { border-radius:8px 8px 0 0; }
-      .hero-nav-tab::before { bottom:-1px; height:3px; }
-      .hero-nav-tab.active { font-weight:800; }
+      .hero-nav {
+        justify-content: flex-start;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 0;
+        margin-bottom: 0;
+      }
+      .hero-nav::-webkit-scrollbar { display: none; }
+      .hero-nav-tab {
+        padding: 11px 16px;
+        font-size: 12px;
+        flex-shrink: 0;
+        border-radius: 0;
+      }
       .hero-nav-tab.active::after {
-        bottom: -8px; /* Push below the sticky wrapper */
-        z-index: 11;
+        bottom: 2px;
+        height: 3px;
+        left: 8px;
+        right: 8px;
       }
     }
     /* keyboard focus styles for accessibility */
@@ -431,7 +482,7 @@
     .brand { 
       display: flex; 
       align-items: center; 
-      gap: 26px; 
+      gap: 20px; 
       position: relative; 
       z-index: 1;
       animation: fade-in-up 0.8s ease 0.2s both;
@@ -451,9 +502,9 @@
     
     /* Enhanced logo visibility */
     .brand img { 
-      width: 110px; 
-      height: 110px; 
-      border-radius: 24px; 
+      width: 92px; 
+      height: 92px; 
+      border-radius: 20px; 
       background: radial-gradient(circle at 50% 50%, #ffffff 0%, #fff8e6 50%, rgba(255,255,255,0) 70%);
       padding: 8px; /* halo padding */
       border: 2px solid var(--gold-light);
@@ -489,7 +540,7 @@
     
     .name { 
       font-family: 'Playfair Display', serif; 
-      font-size: clamp(36px, 5.2vw, 48px);
+      font-size: clamp(28px, 4.2vw, 38px);
       font-weight: 800; 
       color: #ffffff;
       line-height: 1.08;
@@ -502,7 +553,7 @@
     }
     
     .tagline { 
-      font-size: clamp(13px, 2vw, 16px);
+      font-size: clamp(11px, 1.4vw, 13px);
       color: rgba(255, 255, 255, 0.88);
       font-weight: 600;
       margin-top: 6px;
@@ -513,21 +564,21 @@
     
     /* Modern Hero CTAs */
     .hero-cta { 
-      margin-top: 30px; 
+      margin-top: 16px; 
       display: flex; 
-      gap: 18px; 
+      gap: 10px; 
       flex-wrap: wrap;
       animation: fade-in-up 0.8s ease 0.5s both;
     }
     /* Modern Button Styles with Micro-interactions */
     .btn {
-      padding: 16px 36px;
+      padding: 11px 26px;
       border-radius: 999px;
       border: none;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       text-decoration: none;
       position: relative;
       overflow: hidden;
@@ -662,7 +713,7 @@
     p.lead { 
       text-align: center; 
       font-size: 19px; 
-      color: #1a4a2f; 
+      color: var(--green); 
       margin-bottom: 48px; 
       margin-top: 20px;
       font-weight: 500;
@@ -671,6 +722,196 @@
 
     /* PRODUCTS */
     .grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+    /* PRICING SECTION */
+    .pricing-grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(260px, 1fr));
+      gap: 22px;
+      margin-top: 34px;
+    }
+    .pricing-card{
+      background: rgba(255,255,255,0.96);
+      border: 1px solid rgba(30,77,50,0.12);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow:hidden;
+      transition: all .35s var(--transition-smooth);
+    }
+    .pricing-card:hover{
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(157,124,42,0.35);
+    }
+    .pricing-card.featured{
+      border: 2px solid rgba(157,124,42,0.55);
+      box-shadow: var(--shadow-md);
+    }
+    .pricing-badge{
+      position:absolute;
+      top: 14px;
+      right: 14px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color:#fff;
+      font-weight:800;
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 10px;
+      box-shadow: var(--shadow-sm);
+    }
+    .pricing-top{ margin-top: 8px; }
+    .pricing-tag{
+      display:inline-block;
+      font-weight:800;
+      color: var(--green);
+      background: rgba(30,77,50,0.08);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing:.3px;
+    }
+    .pricing-title{
+      font-family:'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--green);
+      margin: 10px 0 6px;
+    }
+    .pricing-price{
+      font-size: 34px;
+      font-weight: 900;
+      color: var(--green);
+      line-height: 1.05;
+    }
+    .pricing-sub{
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(10,40,23,0.65);
+    }
+    .pricing-per{
+      margin-top: 8px;
+      font-weight: 800;
+      color: rgba(21,61,40,0.92);
+    }
+    .pricing-amazon{
+      margin-top: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(10,40,23,0.65);
+    }
+    .pricing-note{
+      margin-top: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(10,40,23,0.7);
+    }
+    .pricing-points{
+      list-style: none;
+      padding: 0;
+      margin: 16px 0 18px;
+      display: grid;
+      gap: 10px;
+    }
+    .pricing-points li{
+      position: relative;
+      padding-left: 22px;
+      color: rgba(10,40,23,0.85);
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .pricing-points li::before{
+      content:"✓";
+      position:absolute;
+      left:0;
+      top:0;
+      color: var(--green);
+      font-weight: 900;
+    }
+    .pricing-btn{
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 12px;
+      border: 2px solid var(--green);
+      background: #fff;
+      color: var(--green);
+      font-weight: 800;
+      cursor: pointer;
+      transition: all .3s ease;
+    }
+    .pricing-btn:hover{
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .pricing-btn.primary{
+      background: linear-gradient(135deg, var(--green), var(--green-dark));
+      color: #fff;
+      border-color: transparent;
+    }
+    .pricing-btn.primary:hover{
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color:#fff;
+    }
+
+    /* Bundles bar */
+    .bundle-bar{
+      margin-top: 26px;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.95);
+      border: 1px solid rgba(30,77,50,0.12);
+      box-shadow: var(--shadow-sm);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    .bundle-left .bundle-title{
+      font-family:'Playfair Display', serif;
+      font-weight: 800;
+      color: var(--green);
+      font-size: 20px;
+    }
+    .bundle-left .bundle-sub{
+      margin-top: 4px;
+      color: rgba(10,40,23,0.7);
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .bundle-cards{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(240px, 1fr));
+      gap: 14px;
+    }
+    .bundle-card{
+      border-radius: 16px;
+      border: 1px solid rgba(30,77,50,0.12);
+      padding: 14px;
+      background: linear-gradient(135deg, rgba(250,248,245,0.6), rgba(255,255,255,0.95));
+    }
+    .bundle-name{ font-weight: 900; color: var(--green); }
+    .bundle-desc{ margin-top:4px; font-weight: 700; color: rgba(10,40,23,0.75); font-size: 13px; }
+    .bundle-price{ margin-top: 10px; font-weight: 900; color: var(--green); font-size: 20px; }
+    .bundle-btn{
+      margin-top: 10px;
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 2px solid var(--gold);
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color:#fff;
+      font-weight: 900;
+      cursor:pointer;
+      transition: all .25s ease;
+    }
+    .bundle-btn:hover{ transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+    @media (max-width: 900px){
+      .pricing-grid{ grid-template-columns: 1fr; }
+      .bundle-cards{ grid-template-columns: 1fr; }
+    }
     .card {
       background: white;
       border-radius: 24px;
@@ -709,7 +950,7 @@
       opacity: 1;
     }
     .card:hover { 
-      transform: translateY(-8px) scale(1.02); 
+      transform: translateY(-5px) scale(1.01); 
       box-shadow: var(--shadow-xl);
     }
     
@@ -732,7 +973,7 @@
     
     .pic-wrap { 
       position: relative; 
-      background: linear-gradient(135deg, #ffffff, #fafafa);
+      background: linear-gradient(135deg, #fffdf8, #fff9ef);
       padding: 20px; 
       text-align: center; 
       min-height: 220px; 
@@ -781,7 +1022,7 @@
       display: inline-block; 
       font-weight: 800; 
       color: #fff; 
-      background: linear-gradient(135deg, var(--green), #0d8f45); 
+      background: linear-gradient(135deg, var(--green-dark), var(--green)); 
       border-radius: 999px; 
       padding: 6px 14px; 
       font-size: 12px;
@@ -810,11 +1051,30 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    .price span { 
+    .price .unit { 
       font-size: 14px; 
       color: #666; 
       font-weight: 500;
       -webkit-text-fill-color: #666;
+    }
+    /* Ensure old/new price in product and cart are legible and match main price sizing */
+    .order-price .old-price, .order-price .new-price, .cart-item-details .old-price, .cart-item-details .new-price {
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .free-delivery-badge{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+      padding: 6px 12px;
+      border-radius: 999px;
+      box-shadow: var(--shadow-sm);
+      letter-spacing: 0.2px;
+      margin: 0 0 8px;
     }
     .size-selector { margin: 12px 0; }
     .size-selector label { 
@@ -841,6 +1101,8 @@
       text-align: center;
       position: relative;
     }
+    .old-price { text-decoration: line-through; color: #777; margin-right:6px; font-size: inherit; font-weight: 700; }
+    .new-price { color: var(--green); font-weight:700; margin-right:6px; font-size: inherit; }
     .size-option.active { 
       background: linear-gradient(135deg, var(--green), var(--green-dark));
       color: white; 
@@ -928,7 +1190,7 @@
       width: 100%; 
       margin-top: 14px; 
       padding: 14px; 
-      background: linear-gradient(135deg, var(--green), #0d8f45); 
+      background: linear-gradient(135deg, var(--green-dark), var(--green)); 
       color: white; 
       border: none; 
       border-radius: 12px; 
@@ -1499,15 +1761,11 @@
       }
       .hero-nav {
         gap: 0;
-        padding: 0 12px;
         overflow-x: auto;
         scrollbar-width: none;
         -ms-overflow-style: none;
-        scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
-        position: relative;
-        padding-bottom: 12px;
-        margin-bottom: -12px;
+        justify-content: flex-start;
       }
       .hero-nav::-webkit-scrollbar {
         display: none;
@@ -1518,18 +1776,17 @@
         position: absolute;
         right: 0;
         top: 0;
-        bottom: 2px;
-        width: 40px;
-        background: linear-gradient(to right, transparent, rgba(14,40,31,0.85));
+        bottom: 0;
+        width: 32px;
+        background: linear-gradient(to right, transparent, rgba(14,40,31,0.9));
         pointer-events: none;
         z-index: 10;
       }
       .hero-nav-tab {
-        padding: 9px 18px;
+        padding: 11px 16px;
         font-size: 12px;
         white-space: nowrap;
         flex-shrink: 0;
-        scroll-snap-align: start;
         min-width: fit-content;
       }
       
@@ -1560,33 +1817,99 @@
         font-size: 12px;
       }
       
-      /* Hero section - Reduced height for mobile to show products */
-      header.hero { padding: 30px 0 20px; }
-      .brand { flex-direction: column; gap: 20px; text-align: center; }
-      .brand img { 
-        width: 100px; 
-        height: 100px;
-        margin: 0 auto;
+      /* ─── COMPACT HERO STRIP ───────────────────────────────────
+         Goal: hero ≤ 130px so products appear above the fold.
+         Logo + name/tagline go side-by-side; trust badges in one
+         scrollable row; two pill CTAs side by side.             */
+      header.hero {
+        padding: 10px 0 12px;
+        animation: none; /* save CPU/battery on mobile */
       }
-      .name { 
-        font-size: 36px; 
-        line-height: 1.1; 
+      header.hero::before { animation: none; }
+      .brand {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 12px;
+        text-align: left;
+        animation: none;
+      }
+      /* critical: without min-width:0, flex child overflows container */
+      .brand > div {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+      }
+      .brand img {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
         margin: 0;
+        flex-shrink: 0;
+        padding: 4px;
       }
-      .tagline { 
-        font-size: 15px; 
-        margin: 8px 0 0;
+      .name {
+        font-size: 20px;
+        line-height: 1.1;
+        margin: 0;
+        animation: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
-      .hero-cta { 
-        justify-content: center; 
-        gap: 12px; 
-        margin-top: 20px;
+      .tagline {
+        font-size: 10.5px;
+        margin: 3px 0 0;
+        letter-spacing: 0;
+        animation: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
-      .btn { 
-        padding: 12px 24px; 
-        font-size: 14px;
-        width: 100%;
-        max-width: 280px;
+      .trust-badges {
+        margin-top: 8px;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        gap: 6px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: none;
+        padding-bottom: 2px;
+      }
+      .trust-badges::-webkit-scrollbar { display: none; }
+      .trust-badge {
+        padding: 4px 8px;
+        font-size: 10px;
+        border-radius: 6px;
+        flex-shrink: 0;
+        white-space: nowrap;
+        animation: none;
+      }
+      .trust-badge-icon {
+        width: 14px !important;
+        height: 14px !important;
+        font-size: 10px !important;
+        box-shadow: none !important;
+      }
+      .hero-cta {
+        flex-direction: row;
+        gap: 8px;
+        margin-top: 10px;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        animation: none;
+      }
+      .btn {
+        padding: 9px 16px;
+        font-size: 13px;
+        width: auto;
+        max-width: none;
+        min-width: 0;
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       
       /* Sections - Better spacing for mobile */
@@ -1789,7 +2112,7 @@
       form.card { padding: 28px 20px; }
       form input, form select, form textarea { 
         padding: 14px 16px; 
-        font-size: 15px; 
+        font-size: 16px; /* 16px minimum prevents iOS auto-zoom */
         border-radius: 10px; 
         border-width: 2px;
       }
@@ -1969,7 +2292,7 @@
       form.card { padding: 20px 16px; }
       form input, form select, form textarea { 
         padding: 12px 14px; 
-        font-size: 14px; 
+        font-size: 16px; /* 16px minimum prevents iOS auto-zoom */
         border-radius: 8px; 
       }
       
@@ -2092,6 +2415,125 @@
 }
 
 </style>
+<style id="premium-polish">
+/* ── HERO CTA row ─────────────────────────────────────── */
+.hero-cta {
+  margin-top: 28px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  animation: fade-in-up 0.8s ease 0.55s both;
+}
+/* Make outline btn readable on dark hero (scoped to hero only) */
+.hero .btn.outline, .hero-cta .btn.outline {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(12px);
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.55);
+}
+.hero .btn.outline:hover, .hero-cta .btn.outline:hover {
+  background: rgba(255,255,255,0.22);
+  border-color: var(--gold-light);
+  color: #fff;
+}
+
+/* ── SAVINGS LABEL inside size-option ────────────────── */
+.size-option .save-label {
+  font-size: 10px;
+  font-weight: 900;
+  display: block;
+  line-height: 1.1;
+  margin-top: 2px;
+  color: var(--gold);
+  letter-spacing: 0.2px;
+}
+.size-option.active .save-label {
+  color: rgba(255,255,255,0.9);
+}
+
+/* ── PRODUCT BADGE ────────────────────────────────────── */
+.product-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: auto;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: white;
+  padding: 5px 11px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  z-index: 3;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.18);
+  pointer-events: none;
+}
+
+/* ── COMBO PROMO BANNER ───────────────────────────────── */
+.combo-promo-banner {
+  background: linear-gradient(135deg, #0f2922 0%, #1e4d32 50%, #2a5f42 100%);
+  padding: 28px 0;
+  border-top: 3px solid var(--gold);
+  border-bottom: 3px solid var(--gold);
+}
+@media (max-width: 600px) {
+  .hero-cta { gap: 8px; }
+  .hero-cta .btn { flex: 1; min-width: 0; text-align: center; padding: 9px 14px; font-size: 13px; }
+  .combo-promo-banner .container { flex-direction: column; text-align: center; }
+}
+
+/* ── CARD SIZE-OPTION – 5L badge text alignment ─────── */
+.size-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px;
+  min-height: 50px;
+}
+
+/* ── SECTION title decoration color on scroll ─────────  */
+h2.section-title {
+  scroll-margin-top: 100px;
+}
+
+/* ── ORDER FORM – subtle progress feel ───────────────── */
+.form-step-hint {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.form-step-hint .step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(30,77,50,0.5);
+}
+.form-step-hint .step.done {
+  color: var(--green);
+}
+.form-step-hint .step-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(30,77,50,0.12);
+  color: rgba(30,77,50,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 900;
+}
+.form-step-hint .step.done .step-num {
+  background: linear-gradient(135deg, var(--green), var(--green-dark));
+  color: #fff;
+}
+</style>
 <style id="toast-top-fix">
 /* Keep toast visible near the browser top */
 .toast.show { top: 20px !important; }
@@ -2122,7 +2564,316 @@
   box-shadow: 0 4px 12px rgba(157, 124, 42, 0.18);
   z-index: 11;
 }
-</style><style id="toast-top-20">.toast.show{ top:20px !important; }</style></head>
+</style><style id="toast-top-20">.toast.show{ top:20px !important; }</style>
+<style id="mobile-first">
+/* ═══════════════════════════════════════════════
+   MOBILE-FIRST SYSTEM LAYER
+   Safe-area, tap targets, carousel dots, iOS fixes
+   ═══════════════════════════════════════════════ */
+
+/* iOS safe-area: notch + home bar */
+.sticky-nav { padding-top: env(safe-area-inset-top, 0px); }
+
+@media (max-width: 768px) {
+  #whatsappBtn, #scrollTop {
+    bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  }
+  .cart-tab {
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  }
+  footer, .site-footer {
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+  /* Hero CTA: compact side-by-side pills */
+  .hero-cta {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .hero-cta .btn {
+    flex: 1 1 auto;
+    max-width: 160px;
+    min-height: 40px;
+    padding: 9px 14px;
+    font-size: 13px;
+  }
+  /* Left fade on nav tab bar (mirrors right fade) */
+  .hero-tabs-wrapper::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 2px;
+    width: 20px;
+    background: linear-gradient(to left, transparent, rgba(14,40,31,0.7));
+    pointer-events: none;
+    z-index: 10;
+  }
+  /* Enforce 44px minimum tap targets */
+  .sticky-nav .nav-btn,
+  .add-to-order, .offer-btn { min-height: 44px; }
+  .hero-nav-tab { min-height: 40px; }
+  .qty-btn { min-width: 44px; min-height: 44px; }
+  /* Scroll-hint that fades after 3s */
+  .grid-scroll-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(30,77,50,0.4);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: -14px;
+    padding-bottom: 4px;
+    pointer-events: none;
+    animation: hint-fade 3s ease 1.5s both;
+  }
+  @keyframes hint-fade {
+    0%,70% { opacity:1; } 100% { opacity:0; visibility:hidden; }
+  }
+}
+/* Carousel dot indicators */
+.carousel-dots { display: none; }
+@media (max-width: 768px) {
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    padding: 2px 0 8px;
+  }
+  .carousel-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: rgba(30,77,50,0.2);
+    border: none; padding: 0;
+    cursor: pointer;
+    transition: width .3s ease, background .3s ease, border-radius .3s ease;
+  }
+  .carousel-dot.active {
+    width: 22px;
+    border-radius: 999px;
+    background: var(--green);
+  }
+}
+</style>
+<style id="refined-cards">
+/* ════════════════════════════════════════════════════════
+   REFINED PRODUCT CARDS  –  compact, premium, 3-column
+   ════════════════════════════════════════════════════════ */
+
+/* Fixed 3-column grid – never collapses, max width contained */
+@media (min-width: 769px) {
+  #oils .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1020px;
+    margin: 0 auto;
+    overflow: visible;
+    padding: 4px 0 8px;
+  }
+}
+
+/* Base card reset */
+#oils .grid .card {
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1.5px solid rgba(30,77,50,0.10);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  transition: transform 0.32s cubic-bezier(.2,.9,.2,1), box-shadow 0.32s ease, border-color 0.32s ease;
+  position: relative;
+  background: #fff;
+}
+#oils .grid .card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(30,77,50,0.14);
+  border-color: rgba(157,124,42,0.4);
+}
+
+/* Per-oil top accent stripe */
+#oils .grid .card:nth-child(1)::after { /* Coconut – warm ivory */
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #c8a84b, #e8c96a);
+  border-radius: 20px 20px 0 0;
+  pointer-events: none;
+  z-index: 5;
+}
+#oils .grid .card:nth-child(2)::after { /* Groundnut – amber gold */
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), #f0d060);
+  border-radius: 20px 20px 0 0;
+  pointer-events: none;
+  z-index: 5;
+}
+#oils .grid .card:nth-child(3)::after { /* Gingelly – forest green */
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--green), #3a8f60);
+  border-radius: 20px 20px 0 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ── Image area ── */
+#oils .grid .pic-wrap {
+  min-height: unset;
+  height: 190px;
+  padding: 16px;
+  background: linear-gradient(160deg, #fafaf8 0%, #f0f2ee 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: zoom-in;
+  position: relative;
+  border-radius: 0;
+}
+/* subtle inner glow on hover */
+#oils .grid .card:hover .pic-wrap {
+  background: linear-gradient(160deg, #f5f3ee 0%, #e8ede8 100%);
+}
+#oils .grid .pic-wrap img {
+  height: 155px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.10));
+  transition: transform 0.4s cubic-bezier(.2,.9,.2,1);
+}
+#oils .grid .card:hover .pic-wrap img {
+  transform: scale(1.09) translateY(-4px);
+}
+/* Hide zoom hint – used elsewhere */
+#oils .grid .pic-wrap::after { display: none; }
+
+/* ── Content area ── */
+#oils .grid .content {
+  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+#oils .grid .pill {
+  font-size: 11px;
+  padding: 4px 10px;
+  align-self: flex-start;
+  margin-bottom: 0;
+}
+#oils .grid .title {
+  font-size: 15px;
+  font-weight: 700;
+  min-height: unset;
+  margin: 7px 0 4px;
+  line-height: 1.35;
+  color: var(--ink);
+}
+#oils .grid .price {
+  font-size: 24px;
+  font-weight: 900;
+  margin: 0 0 5px;
+  line-height: 1;
+}
+#oils .grid .price .unit {
+  font-size: 12px;
+}
+#oils .grid .free-delivery-badge {
+  font-size: 10px;
+  padding: 3px 9px;
+  gap: 5px;
+  margin: 0 0 8px;
+}
+
+/* ── Size selector ── */
+#oils .grid .size-selector {
+  margin: 0 0 8px;
+}
+#oils .grid .size-selector label {
+  font-size: 10px;
+  margin-bottom: 5px;
+}
+#oils .grid .size-options {
+  gap: 6px;
+}
+#oils .grid .size-option {
+  padding: 0;
+  height: 46px;
+  min-height: 46px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+}
+#oils .grid .size-option .save-label {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+/* ── Quantity stepper ── */
+#oils .grid .quantity-selector {
+  margin: 0 0 8px;
+}
+#oils .grid .quantity-selector label {
+  font-size: 10px;
+  margin-bottom: 5px;
+}
+#oils .grid .quantity-stepper {
+  padding: 4px;
+  gap: 6px;
+  border-radius: 10px;
+}
+#oils .grid .quantity-stepper button {
+  width: 30px;
+  height: 30px;
+  font-size: 18px;
+  border-radius: 8px;
+}
+#oils .grid .quantity-stepper input {
+  height: 30px;
+  font-size: 14px;
+}
+
+/* ── CTA button ── */
+#oils .grid .add-to-order {
+  margin-top: auto;
+  padding: 11px 14px;
+  font-size: 13px;
+  font-weight: 800;
+  border-radius: 10px;
+  letter-spacing: 0.2px;
+}
+
+/* ── Badge (top-left of image) ── */
+#oils .grid .card .product-badge {
+  top: 10px;
+  left: 10px;
+  right: auto;
+  font-size: 10px;
+  padding: 4px 9px;
+  border-radius: 7px;
+  letter-spacing: 0.3px;
+}
+
+/* ── Disable the gradient border ::before on this grid (already handled above) ── */
+#oils .grid .card::before {
+  display: none;
+}
+</style>
+</head>
 <body class="page-our-oils">
 <!-- Sticky Navigation -->
 <nav class="sticky-nav" id="stickyNav">
@@ -2144,10 +2895,10 @@
 <header class="hero">
 <div class="container">
 <div class="brand">
-<img alt="Arumee logo" decoding="async" fetchpriority="high" height="80" src="arumee_assets/logo.png" style="aspect-ratio:1/1;" width="80"/>
+<img alt="Arumee logo" decoding="async" fetchpriority="high" height="76" src="arumee_assets/logo.png" style="aspect-ratio:1/1;" width="76"/>
 <div>
 <div class="name">ARUMEE<sup style="font-size:0.4em; color:var(--gold); font-weight:800;">™</sup></div>
-<div class="tagline">Premium cold‑pressed oils</div>
+<div class="tagline">Traditionally Cold-Pressed &middot; Unmatched Purity</div>
 <div class="trust-badges">
 <div class="trust-badge">
 <span class="trust-badge-icon">✓</span>
@@ -2157,6 +2908,14 @@
 <span class="trust-badge-icon">🌿</span>
 <span>100% Natural</span>
 </div>
+<div class="trust-badge">
+<span class="trust-badge-icon">🚚</span>
+<span>Free Delivery</span>
+</div>
+</div>
+<div class="hero-cta">
+<a class="btn fill" href="#oils">Shop Now &rarr;</a>
+<a class="btn outline" href="combo.html">View Combos</a>
 </div>
 </div>
 </div>
@@ -2166,11 +2925,51 @@
 <div aria-label="Primary site sections" class="hero-tabs-wrapper" role="tablist">
 <nav class="hero-nav">
 <a aria-selected="true" class="hero-nav-tab active" href="index.html" role="tab">Our Oils</a>
+<a aria-selected="false" class="hero-nav-tab" href="combo.html" role="tab">Combo Offers</a>
 <a aria-selected="false" class="hero-nav-tab" href="benefits.html" role="tab">Benefits</a>
 <a aria-selected="false" class="hero-nav-tab" href="about.html" role="tab">About Us</a>
 <a aria-selected="false" class="hero-nav-tab" href="contact.html" role="tab">Contact Us</a>
 </nav>
 </div>
+<script>
+(function(){
+  var stickyNav = document.getElementById('stickyNav');
+  var tabsWrapper = document.querySelector('.hero-tabs-wrapper');
+  var heroNav = document.querySelector('.hero-nav');
+  var activeTab = document.querySelector('.hero-nav-tab.active');
+
+  function setTop() {
+    if (!tabsWrapper || window.innerWidth > 768) return;
+    /* Only account for the sticky nav height when it is actually visible */
+    var navH = (stickyNav && stickyNav.classList.contains('visible'))
+               ? stickyNav.offsetHeight
+               : 0;
+    tabsWrapper.style.top = navH + 'px';
+  }
+
+  function centerActive() {
+    if (heroNav && activeTab) {
+      var tabLeft = activeTab.offsetLeft;
+      var tabWidth = activeTab.offsetWidth;
+      var navWidth = heroNav.offsetWidth;
+      heroNav.scrollLeft = tabLeft - (navWidth / 2) + (tabWidth / 2);
+    }
+  }
+
+  setTop();
+  centerActive();
+  window.addEventListener('resize', function(){ setTop(); centerActive(); });
+
+  /* Re-run setTop whenever the sticky nav gains/loses the 'visible' class */
+  if (stickyNav && window.MutationObserver) {
+    new MutationObserver(function(mutations) {
+      mutations.forEach(function(m) {
+        if (m.attributeName === 'class') setTop();
+      });
+    }).observe(stickyNav, { attributes: true });
+  }
+}());
+</script>
 <!-- Floating Cart Tab -->
 <div aria-expanded="false" aria-label="Shopping cart" class="cart-tab" id="cartTab" onclick="toggleCart()" role="button">
 <span aria-hidden="true" class="cart-icon">🛒</span>
@@ -2224,20 +3023,22 @@
 <section id="oils">
 <div class="container">
 <h2 class="section-title">Our Signature Oils</h2>
-<p class="lead">Pure, natural, and traditionally pressed.</p>
+<p class="lead">Cold-pressed using the ancestral wooden pressed (marachekku) technique &mdash; every drop retains full nutrients, aroma, and authentic flavour. Delivered fresh to your door.</p>
 <div class="grid">
 <article aria-labelledby="prod-coconut-title" class="card">
+<div class="product-badge" style="background:linear-gradient(135deg,#2a7d4f,#1e6040);">Cold Pressed</div>
 <div class="pic-wrap"><img alt="Cold‑Pressed Coconut Oil bottle" decoding="async" height="240" loading="lazy" src="arumee_assets/mockup_coconut.png" width="240"/></div>
 <div class="content">
   <span class="pill" id="coconut-pill">Coconut • 1L</span>
 <div class="title" id="prod-coconut-title">Cold‑Pressed Coconut Oil</div>
-<div class="price" id="coconut-price">₹400 <span>/ 1L</span></div>
+<div class="price" id="coconut-price">₹449 <span>/ 1L</span></div>
+<div class="free-delivery-badge">🚚 Free Delivery Included</div>
 <div class="size-selector">
 <label>SIZE</label>
-<div class="size-options">
-<div class="size-option active" data-price="400" data-product="coconut" data-size="1L">1L</div>
-<div class="size-option" data-price="2000" data-product="coconut" data-size="5L">5L</div>
-</div>
+  <div class="size-options">
+    <div class="size-option active" data-price="449" data-original-price="449" data-product="coconut" data-size="1L">1L</div>
+    <div class="size-option" data-price="2199" data-original-price="2285" data-product="coconut" data-size="5L">5L<span class="save-label">Save ₹86</span></div>
+  </div>
 </div>
 <div class="quantity-selector">
 <label for="qty-coconut">Quantity</label>
@@ -2251,16 +3052,18 @@
 </div>
 </article>
 <article aria-labelledby="prod-groundnut-title" class="card">
+<div class="product-badge">★ Best Seller</div>
 <div class="pic-wrap"><img alt="Cold‑Pressed Groundnut Oil bottle" decoding="async" height="240" loading="lazy" src="arumee_assets/mockup_groundnut.png" width="240"/></div>
 <div class="content">
 <span class="pill" id="groundnut-pill">Groundnut • 1L</span>
 <div class="title" id="prod-groundnut-title">Wooden Cold‑Pressed Groundnut Oil</div>
-<div class="price" id="groundnut-price">₹240 <span>/ 1L</span></div>
+  <div class="price" id="groundnut-price">₹329 <span>/ 1L</span></div>
+<div class="free-delivery-badge">🚚 Free Delivery Included</div>
 <div class="size-selector">
 <label>SIZE</label>
 <div class="size-options">
-<div class="size-option active" data-price="240" data-product="groundnut" data-size="1L">1L</div>
-<div class="size-option" data-price="1200" data-product="groundnut" data-size="5L">5L</div>
+  <div class="size-option active" data-price="329" data-original-price="329" data-product="groundnut" data-size="1L">1L</div>
+  <div class="size-option" data-price="1549" data-original-price="1645" data-product="groundnut" data-size="5L">5L<span class="save-label">Save ₹96</span></div>
 </div>
 </div>
 <div class="quantity-selector">
@@ -2275,16 +3078,18 @@
 </div>
 </article>
 <article aria-labelledby="prod-gingelly-title" class="card">
+<div class="product-badge" style="background:linear-gradient(135deg,#2a7d4f,#1e6040);">Wooden Press</div>
 <div class="pic-wrap"><img alt="Cold‑Pressed Gingelly (Sesame) Oil bottle" decoding="async" height="240" loading="lazy" src="arumee_assets/mockup_gingelly.png" width="240"/></div>
 <div class="content">
 <span class="pill" id="gingelly-pill">Gingelly • 1L</span>
 <div class="title" id="prod-gingelly-title">Wooden Cold‑Pressed Gingelly Oil</div>
-<div class="price" id="gingelly-price">₹400 <span>/ 1L</span></div>
+<div class="price" id="gingelly-price">₹499 <span class="unit">/ 1L</span></div>
+<div class="free-delivery-badge">🚚 Free Delivery Included</div>
 <div class="size-selector">
 <label>SIZE</label>
 <div class="size-options">
-<div class="size-option active" data-price="400" data-product="gingelly" data-size="1L">1L</div>
-<div class="size-option" data-price="2000" data-product="gingelly" data-size="5L">5L</div>
+  <div class="size-option active" data-price="499" data-original-price="499" data-product="gingelly" data-size="1L">1L</div>
+  <div class="size-option" data-price="2395" data-original-price="2495" data-product="gingelly" data-size="5L">5L<span class="save-label">Save ₹100</span></div>
 </div>
 </div>
 <div class="quantity-selector">
@@ -2301,10 +3106,22 @@
 </div>
 </div>
 </section>
+
+<!-- Combo Promo Banner -->
+<div style="background: linear-gradient(135deg, #0f2922 0%, #1e4d32 50%, #2a5f42 100%); padding: 28px 0; border-top: 3px solid var(--gold); border-bottom: 3px solid var(--gold);">
+  <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;">
+    <div style="color:#fff;">
+      <div style="font-family:'Playfair Display',serif; font-size:clamp(18px,2.5vw,24px); font-weight:800; line-height:1.2;">Mix &amp; Save with Combo Offers</div>
+      <div style="font-size:clamp(13px,1.5vw,15px); color:rgba(255,255,255,0.8); margin-top:6px;">Get up to 6L mixed-oil combos at special bundled prices.</div>
+    </div>
+    <a href="combo.html" style="background:linear-gradient(135deg,var(--gold),var(--gold-light)); color:#fff; font-weight:800; font-size:15px; padding:14px 30px; border-radius:999px; text-decoration:none; white-space:nowrap; box-shadow:0 6px 20px rgba(157,124,42,0.4); transition:all .3s ease;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 10px 28px rgba(157,124,42,0.55)'" onmouseout="this.style.transform='';this.style.boxShadow='0 6px 20px rgba(157,124,42,0.4)'">See Combo Offers &rarr;</a>
+  </div>
+</div>
+
 <section id="benefits" style="background: white; padding: 60px 0; border-top: 1px solid rgba(30, 77, 50, 0.1);">
 <div class="container">
 <h2 class="section-title">Why Choose Arumee?</h2>
-<p class="lead">Crafted with tradition, delivered with care</p>
+<p class="lead">Every bottle is crafted with care, pressed using time-honoured wooden techniques, and certified safe &mdash; so you never have to compromise on quality.</p>
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 32px; margin-top: 40px;">
 <div class="benefit-card" style="text-align: center; padding: 24px; border-radius: 16px; transition: all 0.3s ease;">
 <div style="width: 64px; height: 64px; margin: 0 auto 16px; background: linear-gradient(135deg, var(--green-dark), var(--green)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md);">
@@ -2359,7 +3176,14 @@
 <section id="order" style="scroll-margin-top:90px;">
 <div class="container">
 <h2 class="section-title">Place an Order</h2>
-<p class="lead">Fill in your details — we confirm by WhatsApp / phone before dispatch (cash / UPI on delivery).</p>
+<p class="lead">Add oils to your cart, fill in your details below, and we&rsquo;ll confirm via WhatsApp before dispatch. Pay cash or UPI on delivery &mdash; no prepayment needed.</p>
+<div class="form-step-hint">
+  <div class="step done"><span class="step-num">&#10003;</span> Select Oils</div>
+  <div style="color:rgba(30,77,50,0.25);font-weight:900;font-size:18px;line-height:1;">&rsaquo;</div>
+  <div class="step done"><span class="step-num">2</span> Fill Details</div>
+  <div style="color:rgba(30,77,50,0.25);font-weight:900;font-size:18px;line-height:1;">&rsaquo;</div>
+  <div class="step"><span class="step-num">3</span> Confirm on WhatsApp</div>
+</div>
 <form autocapitalize="none" autocomplete="off" class="card" onsubmit="handleSubmit(event)" spellcheck="false">
 <div class="form-row" style="display:grid; grid-template-columns: repeat(2, 1fr); gap:20px;">
 <div>
@@ -2392,12 +3216,8 @@
 </div>
 </section>
 </main>
-<footer>
-<div class="container">
-<div class="tag">Handcrafted with ❤️ in Namakkal</div>
-<div>™ 2025 Arumee • Mani Flour &amp; Oil Mill</div>
-<div class="mini">FSSAI: 22425133000137 • Phone: 9751425598 / 9443342098</div>
-</div>
+<footer style="border-top:1px solid rgba(30,77,50,0.12);padding:16px 20px;text-align:center;">
+<p style="font-size:13px;color:rgba(10,40,23,0.5);margin:0;font-weight:500;">&copy; 2025 Arumee&trade; &bull; Mani Flour &amp; Oil Mill &nbsp;&middot;&nbsp; FSSAI: 22425133000137 &nbsp;&middot;&nbsp; <a href="tel:9751425598" style="color:var(--green);text-decoration:none;font-weight:600;">9751425598</a> / <a href="tel:9443342098" style="color:var(--green);text-decoration:none;font-weight:600;">9443342098</a></p>
 </footer>
 <button aria-label="Scroll to top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 <a aria-label="Chat on WhatsApp" href="https://wa.me/918925295844" id="whatsappBtn" rel="noopener noreferrer" target="_blank" title="Chat on WhatsApp">
@@ -2479,6 +3299,54 @@
       if (savedCart) {
         try {
           orderItems = JSON.parse(savedCart);
+
+          // Migration: reconcile stored item prices with current site prices
+          // For non-bundle items, update price and total according to current `oilOptions`.
+          try {
+            // Build quick lookup from oilOptions (defined later in the file)
+            const lookup = {};
+            if (typeof oilOptions !== 'undefined' && Array.isArray(oilOptions)) {
+              oilOptions.forEach(o => { if (o && o.id) lookup[o.id] = o.price; });
+            }
+
+            // Baseline strike-through for supported oils: 1L price × litres
+            function baselineOriginalPrice(itemKey) {
+              if (!itemKey) return null;
+              const m = String(itemKey).match(/^(groundnut|coconut|gingelly)\-(\d+)L$/i);
+              if (!m) return null;
+              const product = String(m[1]).toLowerCase();
+              const litres = parseInt(m[2], 10);
+              // Prefer explicit data-original-price present in the DOM size-option (packaging-aware)
+              try {
+                const sizeStr = `${litres}L`;
+                const el = document.querySelector(`.size-option[data-product="${product}"][data-size="${sizeStr}"]`);
+                if (el && el.dataset && el.dataset.originalPrice) {
+                  const v = parseInt(el.dataset.originalPrice, 10);
+                  if (!isNaN(v) && v > 0) return v;
+                }
+              } catch (e) {
+                // ignore
+              }
+              const oneL = lookup[product + '-1L'] || 0;
+              if (!oneL || !litres) return null;
+              return oneL * litres;
+            }
+
+            orderItems = orderItems.map(item => {
+              if (!item || item.isFixedBundle) return item; // keep bundles as-is
+              if (item.itemKey && lookup[item.itemKey]) {
+                const p = parseInt(lookup[item.itemKey]) || item.price || 0;
+                const q = parseInt(item.qty) || 1;
+                const op = (item.originalPrice && item.originalPrice > p) ? item.originalPrice : baselineOriginalPrice(item.itemKey);
+                return Object.assign({}, item, { price: p, qty: q, total: p * q, originalPrice: op || undefined });
+              }
+              return item;
+            });
+          } catch (m) {
+            // Migration best-effort; ignore if anything goes wrong
+            console.warn('Cart migration error', m);
+          }
+
           updateOrderDetails();
         } catch (e) {
           // failed to parse stored cart
@@ -2737,26 +3605,82 @@
         let grandTotal = 0;
         
         orderItems.forEach((item, index) => {
+          const isBundleDiscount = item && item.id === 'bundle-discount';
+          const isFixedBundle = !!(item && item.isFixedBundle);
+          const hideQuantityControls = isBundleDiscount || isFixedBundle;
+
+          // Compute display and totals. If user selected multiple 1L units and a 2L price exists
+          // that's cheaper than 2×1L, show applied bundle(s) with strike-through and adjusted total.
+          let priceHtml = '';
+          let lineTotal = 0;
+
+          if (item && item.size === '1L') {
+            const oneLObj = (oilOptions.find(o => o.id === `${item.id}-1L`) || {});
+            const twoLObj = (oilOptions.find(o => o.id === `${item.id}-2L`) || {});
+            const oneL = oneLObj.price ? parseInt(oneLObj.price, 10) : null;
+            const twoL = twoLObj.price ? parseInt(twoLObj.price, 10) : null;
+
+            if (twoL && oneL && twoL < (oneL * 2) && item.qty >= 2) {
+              const bundles = Math.floor(item.qty / 2);
+              const rem = item.qty % 2;
+              const parts = [];
+              if (bundles > 0) {
+                parts.push(`<span class="old-price">₹${oneL * 2}</span> <span class="new-price">₹${twoL}</span> × ${bundles}`);
+                lineTotal += bundles * twoL;
+              }
+              if (rem > 0) {
+                parts.push(`₹${oneL} × ${rem}`);
+                lineTotal += rem * oneL;
+              }
+              priceHtml = parts.join(' + ');
+            } else {
+              // fallback to original behavior
+              if (item.originalPrice && item.originalPrice > item.price) {
+                priceHtml = `<span class="old-price">₹${item.originalPrice}</span> <span class="new-price">₹${item.price}</span> × ${item.qty}`;
+              } else {
+                priceHtml = `₹${item.price} × ${item.qty}`;
+              }
+              lineTotal = item.price * item.qty;
+            }
+          } else {
+            if (item.originalPrice && item.originalPrice > item.price) {
+              priceHtml = `<span class="old-price">₹${item.originalPrice}</span> <span class="new-price">₹${item.price}</span> × ${item.qty}`;
+            } else {
+              priceHtml = `₹${item.price} × ${item.qty}`;
+            }
+            lineTotal = item.price * item.qty;
+          }
+
           cartHTML += `
-            <div class="cart-item">
-              <div class="cart-item-info">
-                <div class="cart-item-name">${item.productName}</div>
-                <div class="cart-item-details">
-                  <span>₹${item.price} × ${item.qty}</span>
-                </div>
-                <div class="cart-item-price">₹${item.total}</div>
-              </div>
-              <div class="cart-item-controls">
-                <div class="cart-stepper">
-                  <button onclick="updateCartItemQty(${index}, -1)" aria-label="Decrease quantity">−</button>
-                  <input type="number" value="${item.qty}" min="1" max="10" readonly>
-                  <button onclick="updateCartItemQty(${index}, 1)" aria-label="Increase quantity">+</button>
-                </div>
-                <button class="cart-item-remove" onclick="removeCartItem(${index})" title="Remove">Remove</button>
-              </div>
-            </div>
-          `;
-          grandTotal += item.total;
+<div class="order-item">
+  <div class="order-left">
+    <div class="order-name">${item.productName}</div>
+    <div class="order-price">${priceHtml}</div>
+  </div>
+
+  <div class="order-right">
+    ${hideQuantityControls ? `
+      <div style="font-weight:700; color: var(--green);">
+        Bundle Offer
+      </div>
+    ` : `
+      <div class="quantity-controls">
+        <button type="button" onclick="changeQuantity('${item.itemKey}', -1)">−</button>
+        <span>${item.qty}</span>
+        <button type="button" onclick="changeQuantity('${item.itemKey}', 1)">+</button>
+      </div>
+    `}
+    
+    ${!isBundleDiscount ? `
+      <button class="remove-btn" type="button" onclick="removeItem('${item.itemKey}')">
+        Remove
+      </button>
+    ` : ''}
+  </div>
+</div>
+`;
+
+          grandTotal += lineTotal;
         });
         
         cartContent.innerHTML = cartHTML;
@@ -2796,6 +3720,39 @@
     }
 
     // Cart item management functions
+    function findCartIndexByItemKey(itemKey) {
+      return orderItems.findIndex(it => it && it.itemKey === itemKey);
+    }
+
+    // Upsert a cart line: if itemKey exists, increment qty, else push new line
+    function upsertCartLine(line) {
+      const idx = findCartIndexByItemKey(line.itemKey);
+      if (idx > -1) {
+        // For fixed bundles do not sum quantities beyond 1
+        if (orderItems[idx].isFixedBundle) return;
+        orderItems[idx].qty = (orderItems[idx].qty || 0) + (line.qty || 1);
+        orderItems[idx].total = orderItems[idx].price * orderItems[idx].qty;
+      } else {
+        orderItems.push(line);
+      }
+      updateOrderDetails();
+      saveCartToStorage();
+    }
+
+    function changeQuantity(itemKey, delta) {
+      const index = findCartIndexByItemKey(itemKey);
+      if (index < 0) return;
+      if (orderItems[index] && (orderItems[index].id === 'bundle-discount' || orderItems[index].isFixedBundle)) return;
+      updateCartItemQty(index, delta);
+    }
+
+    function removeItem(itemKey) {
+      const index = findCartIndexByItemKey(itemKey);
+      if (index < 0) return;
+      if (orderItems[index] && orderItems[index].id === 'bundle-discount') return;
+      removeCartItem(index);
+    }
+
     function updateCartItemQty(index, change) {
       if (index >= 0 && index < orderItems.length) {
         const item = orderItems[index];
@@ -2862,18 +3819,58 @@
     }
     
     const oilOptions = [
-      { id: 'coconut-1L', name: 'Cold-Pressed Coconut Oil (1L)', price: 400 },
-      { id: 'coconut-5L', name: 'Cold-Pressed Coconut Oil (5L)', price: 2000 },
-      { id: 'groundnut-1L', name: 'Wooden Cold-Pressed Groundnut Oil (1L)', price: 240 },
-      { id: 'groundnut-5L', name: 'Wooden Cold-Pressed Groundnut Oil (5L)', price: 1200 },
-      { id: 'gingelly-1L', name: 'Wooden Cold-Pressed Gingelly Oil (1L)', price: 400 },
-      { id: 'gingelly-5L', name: 'Wooden Cold-Pressed Gingelly Oil (5L)', price: 2000 }
+      { id: 'coconut-1L', name: 'Cold-Pressed Coconut Oil (1L)', price: 449 },
+      { id: 'coconut-2L', name: 'Cold-Pressed Coconut Oil (2L)', price: 869 },
+      { id: 'coconut-5L', name: 'Cold-Pressed Coconut Oil (5L)', price: 2199 },
+      { id: 'coconut-8L', name: 'Cold-Pressed Coconut Oil (8L)', price: 3399 },
+      { id: 'groundnut-1L', name: 'Wooden Cold-Pressed Groundnut Oil (1L)', price: 329 },
+      { id: 'groundnut-2L', name: 'Wooden Cold-Pressed Groundnut Oil (2L)', price: 639 },
+      { id: 'groundnut-5L', name: 'Wooden Cold-Pressed Groundnut Oil (5L)', price: 1549 },
+      { id: 'gingelly-1L', name: 'Wooden Cold-Pressed Gingelly Oil (1L)', price: 499 },
+      { id: 'gingelly-2L', name: 'Wooden Cold-Pressed Gingelly Oil (2L)', price: 969 },
+      { id: 'gingelly-5L', name: 'Wooden Cold-Pressed Gingelly Oil (5L)', price: 2395 },
+      { id: 'gingelly-8L', name: 'Wooden Cold-Pressed Gingelly Oil (8L)', price: 3799 }
     ];
     
     function getCurrentPrice(product) {
       const selectedSizeOption = document.querySelector(`.size-option.active[data-product="${product}"]`);
       return selectedSizeOption ? parseInt(selectedSizeOption.dataset.price) : 225;
     }
+    
+    // Add a global addBundle so bundles added from other pages behave consistently
+    window.addBundle = function(product, bundleLabel, bundlePrice) {
+      // Create a normalized itemKey for bundles
+      const itemKey = `${product}-bundle-${String(bundleLabel).replace(/[^a-z0-9]+/gi,'-').toLowerCase()}`;
+
+      // Try to compute originalPrice for display (baseline 1L × litres)
+      let originalPrice = null;
+      try {
+        const oneL = (oilOptions.find(o => o.id === `${product}-1L`) || {}).price;
+        // If bundle label mentions '3 × 1L' or '3L', use 3 * 1L
+        if (/3\s*(?:×|x)\s*1L|\b3L\b/i.test(bundleLabel)) {
+          originalPrice = (parseInt(oneL) || 0) * 3;
+        } else if (/5L\s*\+\s*1L|5L.*1L/i.test(bundleLabel)) {
+          originalPrice = (parseInt(oneL) || 0) * 6;
+        }
+      } catch (e) { originalPrice = null; }
+
+      const p = parseInt(bundlePrice) || 0;
+      const line = {
+        id: `${product}-bundle`,
+        itemKey,
+        productName: bundleLabel,
+        originalName: bundleLabel,
+        size: '',
+        price: p,
+        originalPrice: originalPrice || undefined,
+        qty: 1,
+        total: p,
+        isFixedBundle: true
+      };
+
+      upsertCartLine(line);
+      showAddToCartModal(`Added — ${bundleLabel}`);
+    };
     // Legacy calls safety: manual selection removed, keep no-op to avoid runtime errors
     function toggleManualSelection() {}
     
@@ -2967,7 +3964,7 @@
       });
       
       if (summary) {
-        summary += `\nTotal Amount: ₹${total}\n\n* Delivery charges extra (to be discussed during payment confirmation)`;
+        summary += `\nTotal Amount: ₹${total}\nDelivery: Free`;
       }
       
       const orderDetailsTextarea = document.getElementById('orderDetails');
@@ -3047,6 +4044,8 @@
       const selectedSizeOption = document.querySelector(`.size-option.active[data-product="${id}"]`);
       const selectedSize = selectedSizeOption ? selectedSizeOption.dataset.size : '1L';
       const selectedPrice = selectedSizeOption ? parseInt(selectedSizeOption.dataset.price) : price;
+      const selectedOriginalPrice = selectedSizeOption && selectedSizeOption.dataset.originalPrice
+        ? parseInt(selectedSizeOption.dataset.originalPrice) : selectedPrice;
       
       const qty = parseInt(document.getElementById('qty-' + id).value);
       const total = selectedPrice * qty;
@@ -3069,7 +4068,8 @@
           productName: fullProductName, 
           originalName: productName,
           size: selectedSize,
-          price: selectedPrice, 
+          price: selectedPrice,
+          originalPrice: selectedOriginalPrice,
           qty, 
           total 
         });
@@ -3107,7 +4107,7 @@
         grandTotal += item.total;
       });
       
-      orderText += `\nTotal Amount: ₹${grandTotal}\n\n* Delivery charges extra (to be discussed during payment confirmation)`;
+      orderText += `\nTotal Amount: ₹${grandTotal}\nDelivery: Free`;
       orderDetailsTextarea.value = orderText;
       
       // Set the hidden total amount field
@@ -3274,13 +4274,40 @@
         
         // WhatsApp message
         const whatsappNumber = '918925295844'; // WhatsApp number (include country code, no + or spaces)
+        function toWhatsAppLine(item) {
+          const rawName = (item && item.productName) ? String(item.productName) : 'Oil';
+
+          // Keep fixed bundle labels as-is
+          if (item && item.isFixedBundle) return rawName;
+          const sizeMatch = rawName.match(/\(([^)]+)\)\s*$/);
+          const size = sizeMatch ? sizeMatch[1] : '';
+          const base = rawName.replace(/\s*\([^)]+\)\s*$/, '')
+            .replace(/^Wooden\s+Cold[\-‑]Pressed\s+/i, '')
+            .replace(/^Cold[\-‑]Pressed\s+/i, '')
+            .replace(/\s+Oil$/i, ' Oil');
+
+          // Prefer short oil name if detected
+          let short = base;
+          if (/groundnut/i.test(base)) short = 'Groundnut Oil';
+          else if (/coconut/i.test(base)) short = 'Coconut Oil';
+          else if (/gingelly|sesame/i.test(base)) short = 'Gingelly Oil';
+
+          return (size ? `${size} ` : '') + short;
+        }
+
+        const itemsText = Array.isArray(orderItems) && orderItems.length
+          ? orderItems.map(it => {
+              const line = toWhatsAppLine(it);
+              return (it.qty && it.qty > 1) ? `${line} × ${it.qty}` : line;
+            }).join('\n')
+          : 'Oil order';
+
+        const totalAmount = formData.get('totalAmount') || '0';
         const whatsappMessage = encodeURIComponent(
-          `*New Order from ${name}*\n\n` +
-          `📞 Phone: ${phone}\n` +
-          `📍 Address: ${address}\n\n` +
-          `*Order Details:*\n${orderDetails}\n\n` +
-          `*Additional Notes:*\n${notes}\n\n` +
-          `Please confirm payment and delivery details.`
+          `Hi, I want to order:\n\n` +
+          `${itemsText}\n\n` +
+          `Total: ₹${totalAmount}\n` +
+          `Delivery: Free`
         );
         
         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
@@ -3557,7 +4584,13 @@
           // Update price display
           const priceElement = document.getElementById(`${product}-price`);
           if (priceElement) {
-            priceElement.innerHTML = `₹${price} <span>/ ${size}</span>`;
+            const original = this.dataset.originalPrice ? parseInt(this.dataset.originalPrice) : null;
+            const p = parseInt(price);
+            if (original && original > p) {
+              priceElement.innerHTML = `<span class="old-price">₹${original}</span> <span class="new-price">₹${p}</span> <span class="unit">/ ${size}</span>`;
+            } else {
+              priceElement.innerHTML = `₹${p} <span class="unit">/ ${size}</span>`;
+            }
           }
           
           // Update pill display
@@ -4029,5 +5062,97 @@ document.addEventListener('DOMContentLoaded', function(){
     };
     window.showAddToCartModal.__normalized = true;
   }
-})();</script></body>
+})();</script>
+<script id="carousel-dots">
+/* ── Mobile carousel dot indicators ── */
+document.addEventListener('DOMContentLoaded', function () {
+  if (window.innerWidth > 768) return;
+  var carousel = document.querySelector('#oils .grid');
+  if (!carousel) return;
+  var cards = Array.from(carousel.querySelectorAll('.card'));
+  if (cards.length < 2) return;
+
+  /* Dots container injected right after the carousel */
+  var dotsWrap = document.createElement('div');
+  dotsWrap.className = 'carousel-dots';
+  carousel.parentNode.insertBefore(dotsWrap, carousel.nextSibling);
+
+  /* Swipe hint — fades out via CSS animation */
+  var hint = document.createElement('p');
+  hint.className = 'grid-scroll-hint';
+  hint.innerHTML = '&#8592; swipe to browse &#8594;';
+  dotsWrap.parentNode.insertBefore(hint, dotsWrap);
+
+  var dots = cards.map(function (_, i) {
+    var d = document.createElement('button');
+    d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'View product ' + (i + 1));
+    d.addEventListener('click', function () {
+      cards[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    });
+    dotsWrap.appendChild(d);
+    return d;
+  });
+
+  function syncDots() {
+    var center = carousel.scrollLeft + carousel.clientWidth / 2;
+    var best = 0, bestD = Infinity;
+    cards.forEach(function (c, i) {
+      var d = Math.abs(c.offsetLeft + c.clientWidth / 2 - center);
+      if (d < bestD) { bestD = d; best = i; }
+    });
+    dots.forEach(function (d, i) { d.classList.toggle('active', i === best); });
+  }
+  carousel.addEventListener('scroll', syncDots, { passive: true });
+  window.addEventListener('resize', syncDots);
+});
+</script>
+
+<!-- Mobile-only visibility for exact phrase: "Tradionally Cold-Pressed Oil" -->
+<style id="mobile-only-phrase">
+  /* hidden by default (desktop) */
+  .mobile-only { display: none !important; }
+  /* show on narrow viewports */
+  @media (max-width: 768px) {
+    .mobile-only { display: inline !important; }
+  }
+</style>
+
+<script>
+/* Wrap exact phrase occurrences with a span.mobile-only so it's visible only on mobile */
+(function () {
+  function wrapPhrase() {
+    var phrase = 'Tradionally Cold-Pressed Oil';
+    if (!phrase) return;
+
+    // Find text nodes containing the phrase
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    var nodes = [];
+    while (walker.nextNode()) {
+      var nv = walker.currentNode.nodeValue;
+      if (nv && nv.indexOf(phrase) !== -1) nodes.push(walker.currentNode);
+    }
+
+    nodes.forEach(function (textNode) {
+      var idx = textNode.nodeValue.indexOf(phrase);
+      if (idx === -1) return;
+
+      // Split the text node into three parts: before, match, after
+      var after = textNode.splitText(idx);
+      var rest = after.splitText(phrase.length);
+
+      var span = document.createElement('span');
+      span.className = 'mobile-only';
+      span.textContent = phrase;
+
+      // Replace the matched text node with the span
+      after.parentNode.replaceChild(span, after);
+    });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wrapPhrase);
+  else wrapPhrase();
+})();
+</script>
+</body>
 </html>
