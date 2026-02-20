@@ -3,16 +3,32 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Arumee Benefits — Premium Cold‑Pressed Oils</title>
+<link rel="icon" type="image/png" href="arumee_assets/favicon.png" />
+<title>Benefits of Cold-Pressed Oils | Why Wood-Pressed Is Healthier — Arumee</title>
+<meta name="description" content="Discover why cold-pressed oils are healthier. Wood-pressed oils retain natural vitamins, omega fatty acids &amp; antioxidants lost in refined oil. Coconut, groundnut &amp; gingelly."/>
+<meta name="keywords" content="benefits of cold pressed oil, why cold pressed oil is better, wood pressed oil health benefits, cold pressed vs refined oil, sesame oil benefits, coconut oil health benefits, groundnut oil nutrition"/>
+<meta name="robots" content="index,follow"/>
+<link rel="canonical" href="https://arumee.co.in/benefits.html"/>
+<meta property="og:title" content="Benefits of Cold-Pressed Oils | Why Wood-Pressed Is Healthier — Arumee"/>
+<meta property="og:description" content="Cold-pressed oils retain full nutrition, natural aroma and health properties lost in refined oil. Discover the Arumee difference."/>
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="https://arumee.co.in/benefits.html"/>
+<meta property="og:image" content="https://arumee.co.in/arumee_assets/logo.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Benefits of Cold-Pressed Oils — Arumee"/>
+<meta name="twitter:description" content="Why cold-pressed wood-pressed oils are healthier than refined. Vitamins, antioxidants and natural flavour intact."/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="arumee_assets/cart.css">
 <style>
   :root {
     --green: #1e4d32;
+    /* unified header spacing for non-Oils pages */
+    --site-header-height: 56px;
+    --site-header-height-mobile: 90px;
     --green-dark: #153d28;
-    --gold: #9d7c2a;
-    --gold-light: #b8941f;
+    --gold: #c09b3a;
+    --gold-light: #d4af50;
     --cream: #faf8f5;
     --ink: #0a2817;
   }
@@ -24,8 +40,12 @@
     background: var(--cream); 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
-  .container { max-width: 1200px; margin: 0 auto; padding: 60px 4vw 80px; }
+  main.container { flex: 1; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 60px 4vw 32px; }
   
   /* STICKY NAVIGATION BAR */
   .sticky-nav {
@@ -89,8 +109,7 @@
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-  }
+    gap: 6px;    white-space: nowrap;  }
   .sticky-nav .nav-btn.primary {
     background: var(--green);
     color: white;
@@ -126,24 +145,41 @@
     z-index: 1200; 
   }
   
-  /* Adjust tab position on mobile to sit below sticky nav */
+  /* Mobile: all 5 tabs horizontally scrollable */
   @media (max-width: 768px) {
     .hero-tabs-wrapper {
-      top: 44px;
+      top: calc(44px + env(safe-area-inset-top, 0px));
+      overflow: hidden;
+    }
+    .hero-nav {
+      justify-content: flex-start;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .hero-nav::-webkit-scrollbar { display: none; }
+    .hero-nav-tab {
+      padding: 11px 16px;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+    .hero-nav-tab.active::after {
+      bottom: 2px;
+      height: 3px;
+      left: 8px;
+      right: 8px;
     }
   }
-  
-  .hero-nav { 
-    display: flex; 
-    justify-content: center; 
-    gap: 0; 
-    padding: 0; 
+  .hero-nav {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    padding: 0;
     max-width: 1100px;
     margin: 0 auto;
-    position: relative;
-    padding-bottom: 12px;
-    margin-bottom: -12px;
   }
+  /* Apply consistent top spacing so header area appears uniform across pages */
+  main.container { padding-top: var(--site-header-height,120px); }
   .hero-nav-tab { 
     padding: 12px 24px; 
     background: rgba(255, 255, 255, 0.07); 
@@ -208,7 +244,8 @@
     color: #1a4a2f;
     font-weight: 500;
   }
-  .grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .grid { display: grid; gap: 20px; grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
   /* Remove persistent card shadow; reveal on hover (pointer devices) and on keyboard focus */
   .card { 
     background: #fff; 
@@ -233,7 +270,32 @@
   }
   .card h3 { margin: 0 0 12px; font-size: 18px; color: var(--green); font-weight: 700; }
   .card p { margin: 0; font-size: 15px; line-height: 1.6; color: #2d4a3e; }
-  footer { background:#0f2922; color:#eee; text-align:center; padding:32px 20px; font-size:13px; }
+  footer { background: linear-gradient(135deg,rgba(30,77,50,.08),rgba(157,124,42,.05)); border-top:1px solid rgba(30,77,50,0.15); text-align:center; padding:16px 20px; color:var(--green); font-size:13px; }
+
+  /* ─── MOBILE-FIRST ────────────────────────────────── */
+  .sticky-nav { padding-top: env(safe-area-inset-top, 0px); }
+
+  @media (max-width: 768px) {
+    main.container { padding-top: var(--site-header-height-mobile,110px); }
+    .container { padding-top: 24px; padding-bottom: 24px; }
+
+    h2 { font-size: clamp(24px, 7.5vw, 36px); letter-spacing: -.5px; margin-bottom: 8px; }
+    p.lead { font-size: 15px; margin-bottom: 28px; }
+
+    /* 2-column grid on tablets before collapsing to 1 */
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+
+    footer { padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
+  }
+
+  @media (max-width: 500px) {
+    .grid { grid-template-columns: 1fr; }
+    h2 { font-size: 22px; }
+    p.lead { font-size: 14px; }
+    .card { padding: 18px 14px; }
+    .card h3 { font-size: 16px; }
+    .card p { font-size: 14px; }
+  }
 </style>
 </head>
 <body>
@@ -256,11 +318,41 @@
   <div class="hero-tabs-wrapper" role="tablist" aria-label="Primary site sections">
     <nav class="hero-nav">
       <a href="index.html" class="hero-nav-tab" role="tab" aria-selected="false">Our Oils</a>
+      <a href="combo.html" class="hero-nav-tab" role="tab" aria-selected="false">Combo Offers</a>
       <a href="benefits.html" class="hero-nav-tab active" role="tab" aria-selected="true">Benefits</a>
       <a href="about.html" class="hero-nav-tab" role="tab" aria-selected="false">About Us</a>
       <a href="contact.html" class="hero-nav-tab" role="tab" aria-selected="false">Contact Us</a>
     </nav>
   </div>
+  <script>
+  (function(){
+    var stickyNav = document.querySelector('.sticky-nav');
+    var tabsWrapper = document.querySelector('.hero-tabs-wrapper');
+    var heroNav = document.querySelector('.hero-nav');
+    var activeTab = document.querySelector('.hero-nav-tab.active');
+    function setTop() {
+      if (stickyNav && tabsWrapper && window.innerWidth <= 768) {
+        tabsWrapper.style.top = stickyNav.offsetHeight + 'px';
+      }
+    }
+    function centerActive() {
+      if (heroNav && activeTab) {
+        var tabLeft = activeTab.offsetLeft;
+        var tabWidth = activeTab.offsetWidth;
+        var navWidth = heroNav.offsetWidth;
+        heroNav.scrollLeft = tabLeft - (navWidth / 2) + (tabWidth / 2);
+      }
+    }
+    setTop();
+    centerActive();
+    window.addEventListener('resize', function(){ setTop(); centerActive(); });
+    /* Re-measure after fonts finish loading — prevents jump from font-swap changing nav height */
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function(){ setTop(); });
+    }
+    window.addEventListener('load', function(){ setTop(); });
+  }());
+  </script>
   <!-- Unified Cart Components -->
   <div id="cartTab" class="cart-tab" role="button" aria-label="Shopping cart" aria-expanded="false" tabindex="0">
     <span class="cart-icon" aria-hidden="true">🛒</span>
@@ -299,7 +391,9 @@
       <div class="card"><h3>Pure &amp; Honest</h3><p>No added colors, fragrances, or preservatives — just natural goodness.</p></div>
     </div>
   </main>
-  <footer>© <span id="year"></span> Arumee™ — Premium Cold‑Pressed Oils</footer>
+  <footer style="border-top:1px solid rgba(30,77,50,0.12);padding:16px 20px;text-align:center;">
+    <p style="font-size:13px;color:rgba(10,40,23,0.5);margin:0;font-weight:500;">&copy; <span id="year"></span> Arumee&trade; &bull; Mani Flour &amp; Oil Mill &nbsp;&middot;&nbsp; FSSAI: 22425133000137 &nbsp;&middot;&nbsp; <a href="tel:9751425598" style="color:var(--green);text-decoration:none;font-weight:600;">9751425598</a> / <a href="tel:9443342098" style="color:var(--green);text-decoration:none;font-weight:600;">9443342098</a></p>
+  </footer>
   <script>
     console.log('Benefits page script starting...');
     document.getElementById('year').textContent=new Date().getFullYear();
