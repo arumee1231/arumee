@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Combo Offers — Buy Cold-Pressed Oil Bundles &amp; Save | Arumee</title>
+  <meta name="description" content="Save more with Arumee combo packs. Bundle deals on cold-pressed coconut, groundnut &amp; gingelly oils. 1L, 2L &amp; 5L packs. Free delivery across India. Best value."/>
+  <meta name="keywords" content="cold pressed oil combo pack india, buy oil bundle offer, coconut oil family pack, groundnut oil bulk buy, gingelly oil combo, arumee combo offer, cold pressed oil discount"/>
+  <meta name="robots" content="index,follow"/>
+  <link rel="canonical" href="https://arumee.co.in/combo.html"/>
+  <meta property="og:title" content="Combo Offers — Cold-Pressed Oil Bundles | Arumee"/>
+  <meta property="og:description" content="Bundle deals on cold-pressed coconut, groundnut &amp; gingelly oils. 1L, 2L &amp; 5L combo packs. Free delivery. Best value cold-pressed oils."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://arumee.co.in/combo.html"/>
+  <meta property="og:image" content="https://arumee.co.in/arumee_assets/logo.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Combo Oil Bundles — Save More | Arumee"/>
+  <meta name="twitter:description" content="Bundle deals on cold-pressed coconut, groundnut &amp; gingelly oils. Free delivery across India."/>
+
+  <link rel="icon" type="image/png" href="arumee_assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@400;500;600&display=swap" />
+  <link rel="stylesheet" href="arumee_assets/cart.css" />
+
+  <style>
+    :root {
+      --green: #1e4d32;
+      /* unified header spacing for non-Oils pages */
+      --site-header-height: 120px; /* desktop */
+      --site-header-height-mobile: 110px; /* mobile */
+      --green-dark: #153d28;
+      --gold: #c09b3a;
+      --gold-light: #d4af50;
+      --cream: #faf8f5;
+      --ink: #0a2817;
+      --shadow-sm: 0 2px 8px rgba(30, 77, 50, 0.08);
+      --shadow-md: 0 4px 16px rgba(30, 77, 50, 0.12);
+      --shadow-xl: 0 16px 48px rgba(30, 77, 50, 0.2);
+      --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      color: var(--ink);
+      background: var(--cream);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .container { width: min(1100px, 92vw); margin: 0 auto; }
+
+    .old-price { text-decoration: line-through; color: #777; margin-right:6px; font-size: inherit; font-weight:700; }
+    .new-price { color: var(--green); font-weight:700; margin-right:6px; font-size: inherit; }
+    /* Make cart/cart-details old/new price readable */
+    .cart-item-details .old-price, .cart-item-details .new-price { font-size: 16px; font-weight:700; }
+
+    /* Sticky nav — hidden on desktop, shown only on mobile (matches benefits/about/contact) */
+    .sticky-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(30, 77, 50, 0.08);
+      z-index: 9998;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      display: none; /* Hidden on desktop */
+    }
+    @media (max-width: 768px) {
+      .sticky-nav { display: block; }
+    }
+    .sticky-nav .nav-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 4vw;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .sticky-nav .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--green);
+      text-decoration: none;
+    }
+    .sticky-nav .nav-brand img { width: 28px; height: 28px; border-radius: 6px; }
+    .sticky-nav .nav-actions { display: flex; align-items: center; gap: 8px; }
+    .sticky-nav .nav-btn {
+      padding: 6px 16px;
+      border-radius: 20px;
+      border: 1.5px solid var(--green);
+      background: white;
+      color: var(--green);
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .sticky-nav .nav-btn.primary { background: var(--green); color: white; border-color: var(--green); }
+    .sticky-nav .nav-btn:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(30,77,50,0.15); }
+    .nav-cart-count {
+      background: var(--gold);
+      color: white;
+      border-radius: 50%;
+      min-width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 0 5px;
+    }
+
+    /* Hero tabs */
+    .hero-tabs-wrapper {
+      position: sticky;
+      top: 0; /* Desktop: nav is hidden, tabs sit at top */
+      background: linear-gradient(90deg, rgba(14,40,31,0.85), rgba(30,77,50,0.85));
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+      border-bottom: 2px solid rgba(157, 124, 42, 0.4);
+      box-shadow: 0 4px 20px -4px rgba(0,0,0,0.35);
+      z-index: 1200;
+    }
+    .hero-nav { display: flex; justify-content: center; max-width: 1100px; margin: 0 auto; }
+    .hero-nav-tab {
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.07);
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.92);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.25s ease;
+    }
+    .hero-nav-tab:last-child { border-right: none; }
+    .hero-nav-tab:hover { background: rgba(255, 255, 255, 0.12); color: #fff; }
+    .hero-nav-tab.active {
+      background: linear-gradient(180deg, rgba(21,61,40,1), rgba(30,77,50,1));
+      color: #fff;
+      font-weight: 900;
+      position: relative;
+    }
+    .hero-nav-tab.active::after {
+      content: '';
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: -8px;
+      height: 4px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--gold-light), var(--gold));
+      box-shadow: 0 4px 12px rgba(157,124,42,0.18);
+    }
+    @media (max-width: 768px) {
+      .hero-tabs-wrapper {
+        top: calc(44px + env(safe-area-inset-top, 0px));
+        overflow: hidden;
+      }
+      .hero-nav {
+        justify-content: flex-start;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .hero-nav::-webkit-scrollbar { display: none; }
+      .hero-nav-tab {
+        flex: 0 0 auto;
+        padding: 11px 16px;
+        font-size: 12px;
+      }
+      .hero-nav-tab.active::after {
+        bottom: 2px;
+        height: 3px;
+        left: 8px;
+        right: 8px;
+      }
+    }
+
+    main { padding: 56px 0 60px; }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      color: var(--green);
+      font-size: 34px;
+      margin: 0 0 6px;
+    }
+    .lead { margin: 0 0 26px; font-weight: 600; color: rgba(10,40,23,0.75); }
+
+    footer { background: linear-gradient(135deg,rgba(30,77,50,.08),rgba(157,124,42,.05)); border-top:1px solid rgba(30,77,50,0.15); text-align:center; padding:16px 20px; color:var(--green); font-size:13px; }
+    /* TOAST NOTIFICATION (match index.html) */
+    .toast {
+      position: fixed;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, rgba(30, 77, 50, 0.95), rgba(21, 61, 40, 0.95));
+      color: white;
+      padding: 16px 32px;
+      border-radius: 16px;
+      font-weight: 600;
+      font-size: 15px;
+      z-index: 10001;
+      transition: all 0.4s var(--transition-smooth);
+      box-shadow: var(--shadow-xl);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      opacity: 0;
+      visibility: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      max-width: 90vw;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      pointer-events: none;
+    }
+    .toast::before {
+      content: '✓';
+      font-size: 20px;
+      font-weight: 800;
+      color: white;
+      flex-shrink: 0;
+    }
+    .toast.show {
+      top: 24px;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* ── Page header ─── */
+    .page-header {
+      padding: 32px 0 28px;
+      border-bottom: 1px solid rgba(30,77,50,0.1);
+      margin-bottom: 32px;
+    }
+    .page-header-eyebrow {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 3.5vw, 40px);
+      font-weight: 800;
+      color: var(--green);
+      margin: 0 0 10px;
+      line-height: 1.15;
+    }
+    .page-header-sub {
+      font-size: 15px;
+      font-weight: 500;
+      color: rgba(10,40,23,0.65);
+      margin: 0 0 20px;
+      max-width: 540px;
+      line-height: 1.65;
+    }
+    .page-header-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .page-header-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(30,77,50,0.07);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(30,77,50,0.12);
+    }
+
+    /* ── Oil section head ─── */
+    .oil-section {
+      margin-top: 40px;
+    }
+    .oil-section:first-of-type {
+      margin-top: 0;
+    }
+    .oil-section-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid rgba(30,77,50,0.1);
+    }
+    .oil-section-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .oil-section-icon.coconut  { background: linear-gradient(135deg,#fff8e6,#fdefc0); }
+    .oil-section-icon.groundnut { background: linear-gradient(135deg,#fff3e0,#ffd89b); }
+    .oil-section-icon.gingelly  { background: linear-gradient(135deg,#e8f5e9,#c8f0d0); }
+    .oil-section-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--green);
+      margin: 0;
+    }
+    .oil-section-desc {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(10,40,23,0.55);
+      margin: 2px 0 0;
+    }
+    .oil-section-free {
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--green);
+      background: rgba(30,77,50,0.07);
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(30,77,50,0.12);
+      white-space: nowrap;
+    }
+    @media (max-width: 560px) { .oil-section-free { display: none; } }
+
+    /* ── Offer cards ─── */
+    .offers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 860px) { .offers-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    /* Mobile: horizontal scroll carousel per oil section */
+    @media (max-width: 600px) {
+      .offers-grid {
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        overflow-y: visible;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding: 4px 4px 16px;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+      .offers-grid::-webkit-scrollbar { display: none; }
+      .offer-card {
+        flex: 0 0 calc(75vw);
+        max-width: 260px;
+        min-width: 200px;
+        scroll-snap-align: center;
+      }
+      /* Featured card stays same width, just highlighted */
+      .offer-card.featured {
+        flex: 0 0 calc(78vw);
+        max-width: 270px;
+      }
+    }
+
+    .offer-card {
+      background: #fff;
+      border: 1.5px solid rgba(30,77,50,0.1);
+      border-radius: 16px;
+      padding: 16px 14px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+      transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+      overflow: hidden;
+    }
+    .offer-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(30,77,50,0.2);
+    }
+    /* Featured card — best value */
+    .offer-card.featured {
+      border: 2px solid var(--gold);
+      background: linear-gradient(160deg,#fffef8 0%,#fffae8 100%);
+      box-shadow: 0 4px 18px rgba(157,124,42,0.15);
+    }
+    .offer-card.featured:hover {
+      border-color: var(--gold-light);
+      box-shadow: 0 8px 28px rgba(157,124,42,0.22);
+    }
+    /* Featured ribbon */
+    .featured-ribbon {
+      position: absolute;
+      top: 10px;
+      right: -22px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: #fff;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 4px 28px 4px 10px;
+      transform: rotate(35deg);
+      transform-origin: top right;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      pointer-events: none;
+    }
+
+    .offer-tier {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0;
+    }
+    .offer-card.featured .offer-tier { color: var(--gold); }
+
+    .offer-vol {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--ink);
+      margin: 0;
+      line-height: 1.1;
+    }
+    .offer-vol-sub {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(10,40,23,0.5);
+      margin: 0 0 2px;
+    }
+
+    /* Savings chip */
+    .save-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #edfaf1;
+      color: #167a3b;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(22,122,59,0.18);
+      width: fit-content;
+    }
+
+    .offer-price-block { margin: 4px 0 2px; }
+    .offer-price-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .offer-price {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--green);
+      line-height: 1;
+    }
+    .offer-card.featured .offer-price { font-size: 26px; }
+    .offer-per-litre { display: none; }
+
+    .offer-btn {
+      margin-top: auto;
+      padding-top: 6px;
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      padding: 11px 10px;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 13px;
+      background: var(--green);
+      color: #fff;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+      letter-spacing: 0.1px;
+    }
+    .offer-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      background: var(--green-dark);
+    }
+    .offer-card.featured .offer-btn {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    }
+    .offer-card.featured .offer-btn:hover {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    }
+    @media (max-width: 540px) {
+      .offer-vol  { font-size: 17px; }
+      .offer-price { font-size: 20px; }
+      .offer-card.featured .offer-price { font-size: 22px; }
+      .offer-btn  { font-size: 13px; padding: 13px 8px; min-height: 44px; }
+      .oil-section-name { font-size: 19px; }
+    }
+
+    /* ─── MOBILE-FIRST SYSTEM ─────────────────────────────── */
+    /* Safe area insets: iOS notch & home bar */
+    .sticky-nav { padding-top: env(safe-area-inset-top, 0px); }
+
+    @media (max-width: 768px) {
+      main { padding-top: 100px; padding-bottom: 40px; }
+
+      /* Compact page header */
+      .page-header { padding: 20px 0 16px; margin-bottom: 20px; }
+      .page-header h1 { font-size: clamp(22px, 6vw, 30px); }
+      .page-header-sub { font-size: 13px; margin-bottom: 14px; }
+      .page-header-chips { gap: 6px; }
+      .page-header-chip { font-size: 11px; padding: 4px 10px; }
+
+      /* Oil section head compact */
+      .oil-section { margin-top: 28px; }
+      .oil-section-head { gap: 10px; margin-bottom: 12px; }
+      .oil-section-icon { width: 38px; height: 38px; font-size: 18px; }
+      .oil-section-name { font-size: 18px; }
+      .oil-section-desc { font-size: 12px; }
+
+      /* Bump up offer btn tap target */
+      .offer-btn { min-height: 44px; }
+
+      /* Safe area: footer + floating */
+      .site-footer { padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
+
+      /* Nav tab left fade indicator */
+      .hero-tabs-wrapper::before {
+        content: '';
+        position: absolute;
+        left: 0; top: 0; bottom: 2px;
+        width: 20px;
+        background: linear-gradient(to left, transparent, rgba(14,40,31,0.7));
+        pointer-events: none;
+        z-index: 10;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-header h1 { font-size: 20px; }
+      .page-header-sub { font-size: 12px; }
+      .offer-vol  { font-size: 16px; }
+      .offer-price { font-size: 19px; }
+      .offer-card { padding: 14px 12px 12px; border-radius: 12px; }
+      .oil-section-name { font-size: 17px; }
+    }
+    .site-footer {
+      border-top: 1px solid rgba(30,77,50,0.12);
+      padding: 16px 20px;
+      text-align: center;
+    }
+    .site-footer p {
+      font-size: 13px;
+      color: rgba(10,40,23,0.5);
+      margin: 0;
+      font-weight: 500;
+    }
+    .site-footer a {
+      color: var(--green);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .site-footer a:hover { color: var(--gold); }
+
+    /* Hero sibling: removed when hero is not present */
+    /* previously adjusted main padding for the hero; keep default spacing */
+  </style>
+</head>
+<body>
+  <nav class="sticky-nav">
+    <div class="nav-content">
+      <div class="nav-brand">
+        <img src="arumee_assets/logo.png" alt="Arumee" width="40" height="40" />
+        <span>ARUMEE</span>
+      </div>
+      <div class="nav-actions">
+        <a href="index.html#oils" class="nav-btn">Our Oils</a>
+        <button class="nav-btn primary" type="button" onclick="toggleCart()">
+          🛒
+          <span class="nav-cart-count" id="navCartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="hero-tabs-wrapper" role="tablist" aria-label="Primary site sections">
+    <nav class="hero-nav">
+      <a href="index.html" class="hero-nav-tab" role="tab" aria-selected="false">Our Oils</a>
+      <a href="combo.html" class="hero-nav-tab active" role="tab" aria-selected="true">Combo Offers</a>
+      <a href="benefits.html" class="hero-nav-tab" role="tab" aria-selected="false">Benefits</a>
+      <a href="about.html" class="hero-nav-tab" role="tab" aria-selected="false">About Us</a>
+      <a href="contact.html" class="hero-nav-tab" role="tab" aria-selected="false">Contact Us</a>
+    </nav>
+  </div>
+  <script>
+  (function(){
+    var stickyNav = document.querySelector('.sticky-nav');
+    var tabsWrapper = document.querySelector('.hero-tabs-wrapper');
+    var heroNav = document.querySelector('.hero-nav');
+    var activeTab = document.querySelector('.hero-nav-tab.active');
+    function setTop() {
+      if (stickyNav && tabsWrapper && window.innerWidth <= 768) {
+        tabsWrapper.style.top = stickyNav.offsetHeight + 'px';
+      }
+    }
+    function centerActive() {
+      if (heroNav && activeTab) {
+        var tabLeft = activeTab.offsetLeft;
+        var tabWidth = activeTab.offsetWidth;
+        var navWidth = heroNav.offsetWidth;
+        heroNav.scrollLeft = tabLeft - (navWidth / 2) + (tabWidth / 2);
+      }
+    }
+    setTop();
+    centerActive();
+    window.addEventListener('resize', function(){ setTop(); centerActive(); });
+    /* Re-measure after fonts finish loading — prevents jump from font-swap changing nav height */
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function(){ setTop(); });
+    }
+    window.addEventListener('load', function(){ setTop(); });
+  }());
+  </script>
+
+  <!-- Unified Cart Components: cart is available via sticky nav button (navCartCount) -->
+  <div id="cartDropdown" class="cart-dropdown" role="dialog" aria-modal="true" aria-labelledby="cartHeader" tabindex="-1">
+    <div class="cart-header">
+      <h3 id="cartHeader"><span>🛒</span> Your Cart</h3>
+      <button class="cart-close" type="button" aria-label="Close cart" onclick="toggleCart()">×</button>
+    </div>
+    <div class="cart-content" id="cartContent">
+      <p class="empty-cart">Your cart is empty</p>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none;">
+      <div class="cart-total-section">
+        <span class="cart-total-label">Total Amount</span>
+        <span class="cart-total-amount" id="cartTotal">₹0</span>
+      </div>
+      <div class="cart-actions">
+        <button class="cart-clear-btn" onclick="clearSubCart()"><span>🗑️</span><span>Clear All</span></button>
+        <button class="cart-proceed-btn" onclick="proceedToOrder()"><span>Proceed to Order</span><span>→</span></button>
+      </div>
+    </div>
+  </div>
+  <div id="cartBackdrop" class="cart-backdrop" onclick="toggleCart()"></div>
+
+  <main>
+    <div class="container">
+      <div class="page-header">
+        <div class="page-header-eyebrow">Bulk &amp; Bundle Savings</div>
+        <h1>Combo Offers</h1>
+        <p class="page-header-sub">Freshly cold-pressed, delivered free. Pick your oil, pick your size &mdash; the bigger you buy, the more you save.</p>
+        <div class="page-header-chips">
+          <span class="page-header-chip">🌿 Direct from Mill</span>
+          <span class="page-header-chip">🚚 Free Delivery</span>
+          <span class="page-header-chip">✓ FSSAI Certified</span>
+        </div>
+      </div>
+
+      <section class="offer-section oil-section" id="coconut-offers">
+        <div class="oil-section-head">
+          <div class="oil-section-icon coconut">🥥</div>
+          <div>
+            <h3 class="oil-section-name">Coconut Oil</h3>
+            <div class="oil-section-desc">Cold-Pressed &middot; Ancestral Wooden Pressed (Marachekku)</div>
+          </div>
+          <div class="oil-section-free">🚚 Free Delivery</div>
+        </div>
+        <div class="offers-grid">
+          <div class="offer-card">
+            <div class="offer-tier">Entry Pack</div>
+            <h4 class="offer-vol">1 Litre</h4>
+            <div class="offer-vol-sub">Single bottle</div>
+            <div class="offer-price-block">
+              <div class="offer-price">₹449</div>
+            </div>
+            <button class="offer-btn" type="button" onclick="addSingle('coconut','Cold-Pressed Coconut Oil','1L')">Add to Cart</button>
+          </div>
+
+          <div class="offer-card">
+            <div class="offer-tier">Bundle</div>
+            <h4 class="offer-vol">2 Litre</h4>
+            <div class="offer-vol-sub">2 × 1L bottles</div>
+            <div class="offer-price-block">
+              <div class="offer-price-row">
+                <div class="offer-price">₹869</div>
+                <span class="save-chip">🏷 Save ₹29</span>
+              </div>
+            </div>
+            <button class="offer-btn" type="button" onclick="addBundle('coconut','Coconut Bundle (2 × 1L)',869)">Add to Cart</button>
+          </div>
+
+          <div class="offer-card featured">
+            <div class="featured-ribbon">Best Value</div>
+            <div class="offer-tier">Best Value</div>
+            <h4 class="offer-vol">5 Litre</h4>
+            <div class="offer-vol-sub">Big family pack</div>
+            <div class="offer-price-block">
+              <div class="offer-price-row">
+                <div class="offer-price">₹2,199</div>
+                <span class="save-chip">🏷 Save ₹86</span>
+              </div>
+            </div>
+            <button class="offer-btn" type="button" onclick="addSingle('coconut','Cold-Pressed Coconut Oil','5L')">Add to Cart</button>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="offer-section oil-section" id="groundnut-offers">
+        <div class="oil-section-head">
+          <div class="oil-section-icon groundnut">🥜</div>
+          <div>
+            <h3 class="oil-section-name">Groundnut Oil</h3>
+            <div class="oil-section-desc">Wooden Cold-Pressed &middot; Chekku Method</div>
+          </div>
+          <div class="oil-section-free">🚚 Free Delivery</div>
+        </div>
+        <div class="offers-grid">
+          <div class="offer-card">
+            <div class="offer-tier">Entry Pack</div>
+            <h4 class="offer-vol">1 Litre</h4>
+            <div class="offer-vol-sub">Single bottle</div>
+            <div class="offer-price-block">
+              <div class="offer-price">₹329</div>
+            </div>
+            <button class="offer-btn" type="button" onclick="addSingle('groundnut','Wooden Cold-Pressed Groundnut Oil','1L')">Add to Cart</button>
+          </div>
+
+          <div class="offer-card">
+            <div class="offer-tier">Bundle</div>
+            <h4 class="offer-vol">2 Litre</h4>
+            <div class="offer-vol-sub">2-bottle value pack</div>
+            <div class="offer-price-block">
+              <div class="offer-price-row">
+                <div class="offer-price">₹639</div>
+                <span class="save-chip">🏷 Save ₹19</span>
+              </div>
+            </div>
+            <button class="offer-btn" type="button" onclick="addSingle('groundnut','Wooden Cold-Pressed Groundnut Oil','2L')">Add to Cart</button>
+          </div>
+
+          <div class="offer-card featured">
+            <div class="featured-ribbon">Best Value</div>
+            <div class="offer-tier">Best Value</div>
+            <h4 class="offer-vol">5 Litre</h4>
+            <div class="offer-vol-sub">Big family pack</div>
+            <div class="offer-price-block">
+              <div class="offer-price-row">
+                <div class="offer-price">₹1,549</div>
+                <span class="save-chip">🏷 Save ₹96</span>
+              </div>
+            </div>
+            <button class="offer-btn" type="button" onclick="addSingle('groundnut','Wooden Cold-Pressed Groundnut Oil','5L')">Add to Cart</button>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="offer-section oil-section" id="gingelly-offers">
+        <div class="oil-section-head">
+          <div class="oil-section-icon gingelly">🌿</div>
+          <div>
+            <h3 class="oil-section-name">Gingelly Oil</h3>
+            <div class="oil-section-desc">Wooden Cold-Pressed &middot; Sesame Origin</div>
+          </div>
+          <div class="oil-section-free">🚚 Free Delivery</div>
+        </div>
+        <div class="offers-grid">
+          <div class="offer-card">
+            <div class="offer-tier">Entry Pack</div>
+            <h4 class="offer-vol">1 Litre</h4>
+            <div class="offer-vol-sub">Single bottle</div>
+            <div class="offer-price-block">
+              <div class="offer-price">₹499</div>
+            </div>
+            <button class="offer-btn" type="button" onclick="addSingle('gingelly','Wooden Cold-Pressed Gingelly Oil','1L')">Add to Cart</button>
+          </div>
+
+          <div class="offer-card">
+            <div class="offer-tier">Bundle</div>
+            <h4 class="offer-vol">2 Litre</h4>
+            <div class="offer-vol-sub">2-bottle value pack</div>
+            <div class="offer-price-block">
+              <div class="offer-price-row">
+                <div class="offer-price">₹969</div>
+                <span class="save-chip">🏷 Save ₹29</span>
+              </div>
+            </div>
+            <button class="offer-btn" type="button" onclick="addSingle('gingelly','Wooden Cold-Pressed Gingelly Oil','2L')">Add to Cart</button>
+          </div>
+
+          <div class="offer-card featured">
+            <div class="featured-ribbon">Best Value</div>
+            <div class="offer-tier">Best Value</div>
+            <h4 class="offer-vol">5 Litre</h4>
+            <div class="offer-vol-sub">Big family pack</div>
+            <div class="offer-price-block">
+              <div class="offer-price-row">
+                <div class="offer-price">₹2,395</div>
+                <span class="save-chip">🏷 Save ₹100</span>
+              </div>
+            </div>
+            <button class="offer-btn" type="button" onclick="addSingle('gingelly','Wooden Cold-Pressed Gingelly Oil','5L')">Add to Cart</button>
+          </div>
+
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> Arumee&trade; &bull; Mani Flour &amp; Oil Mill &nbsp;&middot;&nbsp; FSSAI: 22425133000137 &nbsp;&middot;&nbsp; <a href="tel:9751425598">9751425598</a> / <a href="tel:9443342098">9443342098</a></p>
+  </footer>
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    let isCartOpen = false;
+    let lastCartToggleTime = 0;
+    let orderItems = [];
+
+    function showToast(message){
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    function loadCart(){
+      const saved = localStorage.getItem('arumeeCart');
+      orderItems = [];
+      if (saved) {
+        try {
+          const arr = JSON.parse(saved);
+          if (Array.isArray(arr)) orderItems = arr;
+        } catch (e) {}
+      }
+    }
+
+    function saveCart(){
+      localStorage.setItem('arumeeCart', JSON.stringify(orderItems));
+    }
+
+    window.toggleCart = function toggleCart(event) {
+      const now = Date.now();
+      if (now - lastCartToggleTime < 300) return;
+      lastCartToggleTime = now;
+
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+      const cartDropdown = document.getElementById('cartDropdown');
+      const backdrop = document.getElementById('cartBackdrop');
+      const cartTab = document.getElementById('cartTab');
+
+      isCartOpen = !isCartOpen;
+      if (cartTab) cartTab.setAttribute('aria-expanded', isCartOpen);
+
+      if (isCartOpen) {
+        if (cartDropdown) cartDropdown.classList.add('open');
+        if (backdrop) backdrop.classList.add('visible');
+        if (window.matchMedia('(max-width:768px)').matches) document.body.classList.add('cart-open');
+        updateCartDisplay();
+      } else {
+        if (cartDropdown) cartDropdown.classList.remove('open');
+        if (backdrop) backdrop.classList.remove('visible');
+        if (window.matchMedia('(max-width:768px)').matches) document.body.classList.remove('cart-open');
+      }
+    };
+
+    function escapeHtml(str){
+      return String(str).replace(/[&<>"]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[s]));
+    }
+
+    function updateCartDisplay(){
+      loadCart();
+      const cartCount = document.getElementById('cartCount');
+      const navCartCount = document.getElementById('navCartCount');
+      const cartContent = document.getElementById('cartContent');
+      const cartFooter = document.getElementById('cartFooter');
+      const cartTotal = document.getElementById('cartTotal');
+
+  if (cartCount) cartCount.textContent = orderItems.length;
+      if (navCartCount) navCartCount.textContent = orderItems.length;
+      document.body.classList.toggle('has-cart-items', orderItems.length > 0);
+
+      if (!orderItems.length) {
+        cartContent.innerHTML = '<p class="empty-cart">Your cart is empty</p>';
+        cartFooter.style.display = 'none';
+        return;
+      }
+
+      let html = '';
+      let grand = 0;
+
+      orderItems.forEach((item, i) => {
+        const isFixedBundle = !!(item && item.isFixedBundle);
+
+        // If 1L items can be bundled into 2L at a cheaper price, compute group totals
+        let lineTotal = 0;
+        let detailsHtml = '';
+        if (item && item.size === '1L') {
+          const oneLObj = ( (typeof oilOptions !== 'undefined' && Array.isArray(oilOptions)) ? (oilOptions.find(o => o.id === `${item.id}-1L`) || {}) : {} );
+          const twoLObj = ( (typeof oilOptions !== 'undefined' && Array.isArray(oilOptions)) ? (oilOptions.find(o => o.id === `${item.id}-2L`) || {}) : {} );
+          const oneL = oneLObj.price ? parseInt(oneLObj.price, 10) : null;
+          const twoL = twoLObj.price ? parseInt(twoLObj.price, 10) : null;
+          if (twoL && oneL && twoL < (oneL * 2) && item.qty >= 2) {
+            const bundles = Math.floor(item.qty / 2);
+            const rem = item.qty % 2;
+            const parts = [];
+            if (bundles > 0) {
+              parts.push('<span class="old-price">₹' + (oneL * 2) + '</span> <span class="new-price">₹' + twoL + '</span> × ' + bundles);
+              lineTotal += bundles * twoL;
+            }
+            if (rem > 0) {
+              parts.push('₹' + oneL + ' × ' + rem);
+              lineTotal += rem * oneL;
+            }
+            detailsHtml = parts.join(' + ');
+          } else {
+            detailsHtml = (item.originalPrice && item.originalPrice > item.price) ? ('<span class="old-price">₹' + item.originalPrice + '</span> <span class="new-price">₹' + item.price + '</span> × ' + item.qty) : ('₹' + item.price + ' × ' + item.qty);
+            lineTotal = item.price * item.qty;
+          }
+        } else {
+          detailsHtml = (item.originalPrice && item.originalPrice > item.price) ? ('<span class="old-price">₹' + item.originalPrice + '</span> <span class="new-price">₹' + item.price + '</span> × ' + item.qty) : ('₹' + item.price + ' × ' + item.qty);
+          lineTotal = item.total ?? (item.price * item.qty);
+        }
+
+        grand += lineTotal;
+
+        html += '<div class="cart-item">'
+          + '<div class="cart-item-info">'
+            + '<div class="cart-item-name">' + escapeHtml(item.productName || item.originalName || 'Item') + '</div>'
+            + '<div class="cart-item-details">' + detailsHtml + '</div>'
+            + '<div class="cart-item-price">₹' + lineTotal + '</div>'
+          + '</div>'
+          + '<div class="cart-item-controls">'
+          + (isFixedBundle ? '<div style="font-weight:800; color: var(--green);">Bundle Offer</div>' : (
+              '<div class="cart-stepper">'
+                + '<button class="qty-btn-cart" data-index="' + i + '" data-action="dec" aria-label="Decrease quantity">−</button>'
+                + '<input type="number" value="' + item.qty + '" min="1" max="10" readonly />'
+                + '<button class="qty-btn-cart" data-index="' + i + '" data-action="inc" aria-label="Increase quantity">+</button>'
+              + '</div>'
+              + '<button class="cart-item-remove" data-index="' + i + '" title="Remove">Remove</button>'
+            ))
+          + '</div>'
+        + '</div>';
+      });
+
+      cartContent.innerHTML = html;
+      cartTotal.textContent = '₹' + grand;
+      cartFooter.style.display = 'flex';
+    }
+
+    function changeQty(i, d){
+      loadCart();
+      if (i < 0 || i >= orderItems.length) return;
+      const it = orderItems[i];
+      if (it && it.isFixedBundle) return;
+      const q = Math.max(1, Math.min(10, it.qty + d));
+      if (q !== it.qty) {
+        it.qty = q;
+        it.total = it.price * q;
+        saveCart();
+        updateCartDisplay();
+      }
+    }
+
+    function removeItem(i){
+      loadCart();
+      if (i < 0 || i >= orderItems.length) return;
+      orderItems.splice(i, 1);
+      saveCart();
+      updateCartDisplay();
+    }
+
+    window.clearSubCart = function(){
+      orderItems = [];
+      saveCart();
+      updateCartDisplay();
+      showToast('Cart cleared');
+    };
+
+    window.proceedToOrder = function(){
+      loadCart();
+      if (!orderItems.length) return;
+      toggleCart();
+      sessionStorage.setItem('scrollToOrder', 'true');
+      window.location.href = 'index.html#order';
+    };
+
+    function upsertCartLine(line){
+      const idx = orderItems.findIndex(x => x && x.itemKey === line.itemKey);
+      if (idx > -1) {
+        orderItems[idx].qty += line.qty;
+        orderItems[idx].total = orderItems[idx].price * orderItems[idx].qty;
+      } else {
+        orderItems.push(line);
+      }
+    }
+
+    function getUnitPrice(product, size){
+      const prices = {
+        coconut: { '1L': 449, '2L': 869, '5L': 2199, '8L': 3399 },
+          groundnut: { '1L': 329, '2L': 639, '5L': 1549 },
+          gingelly: { '1L': 499, '2L': 969, '5L': 2395, '8L': 3799 }
+      };
+      return prices[product]?.[size] ?? 0;
+    }
+
+    // Original prices for strike-through (baseline: 1L price × litres)
+    const originalPrices = {
+      coconut: { '1L': 449, '2L': 898, '5L': 2285, '8L': 3592 },
+      groundnut: { '1L': 329, '2L': 658, '5L': 1645 },
+      gingelly: { '1L': 499, '2L': 998, '5L': 2495, '8L': 3992 }
+    };
+
+    window.addSingle = function(product, displayName, size){
+      loadCart();
+
+      const price = getUnitPrice(product, size);
+      const itemKey = `${product}-${size}`;
+      upsertCartLine({
+        id: product,
+        itemKey,
+        productName: `${displayName} (${size})`,
+        originalName: displayName,
+        size,
+        price,
+        originalPrice: (originalPrices[product] && originalPrices[product][size]) ? originalPrices[product][size] : price,
+        qty: 1,
+        total: price
+      });
+
+      saveCart();
+      updateCartDisplay();
+      showToast(`Added — ${displayName} ${size}`);
+    };
+
+    window.addBundle = function(product, bundleLabel, bundlePrice){
+      loadCart();
+
+      const itemKey = `${product}-bundle-${bundleLabel.replace(/[^a-z0-9]+/gi,'-').toLowerCase()}`;
+
+      // compute originalPrice for bundle (baseline 1L × litres)
+      let originalPrice = null;
+      try {
+        if (/3\s*(?:×|x)\s*1L|\b3L\b/i.test(bundleLabel)) {
+          originalPrice = getUnitPrice(product, '1L') * 3;
+        } else if (/5L\s*\+\s*1L|5L.*1L/i.test(bundleLabel)) {
+          originalPrice = getUnitPrice(product, '1L') * 6;
+        }
+      } catch (e) { originalPrice = null; }
+
+      upsertCartLine({
+        id: `${product}-bundle`,
+        itemKey,
+        productName: bundleLabel,
+        originalName: bundleLabel,
+        size: '',
+        price: bundlePrice,
+        originalPrice: originalPrice || undefined,
+        qty: 1,
+        total: bundlePrice,
+        isFixedBundle: true
+      });
+
+      saveCart();
+      updateCartDisplay();
+      showToast(`Added — ${bundleLabel}`);
+    };
+
+    // Event delegation for cart quantity and remove buttons
+    document.addEventListener('click', function(e){
+      const target = e.target;
+      if (target.classList && target.classList.contains('qty-btn-cart')) {
+        const index = parseInt(target.dataset.index, 10);
+        const action = target.dataset.action;
+        if (!isNaN(index) && action) changeQty(index, action === 'inc' ? 1 : -1);
+        e.stopPropagation();
+        return;
+      }
+      if (target.classList && target.classList.contains('cart-item-remove')) {
+        const index = parseInt(target.dataset.index, 10);
+        if (!isNaN(index)) removeItem(index);
+        e.stopPropagation();
+        return;
+      }
+    });
+
+    // Bind cart toggle to floating cart only if present (we use sticky nav cart by default)
+    const __cartTabEl = document.getElementById('cartTab');
+    if (__cartTabEl) __cartTabEl.addEventListener('click', toggleCart);
+    window.addEventListener('storage', function(e){ if (e.key === 'arumeeCart') updateCartDisplay(); });
+    updateCartDisplay();
+  </script>
+</body>
+</html>
