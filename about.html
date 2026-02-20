@@ -3,16 +3,35 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>About Arumee — Premium Cold‑Pressed Oils</title>
+<link rel="icon" type="image/png" href="arumee_assets/favicon.png" />
+<title>About Arumee — Our Story | Traditional Cold-Pressed Oil Makers</title>
+<meta name="description" content="Arumee is powered by Mani Flour &amp; Oil Mill — a family heritage using ancestral wooden pressed (marachekku) method to cold-press coconut, groundnut &amp; gingelly oils. FSSAI 22425133000137."/>
+<meta name="keywords" content="about arumee, mani flour oil mill, traditional cold pressed oil maker, marachekku heritage oil india, chekku oil brand south india"/>
+<meta name="robots" content="index,follow"/>
+<link rel="canonical" href="https://arumee.co.in/about.html"/>
+<meta property="og:title" content="About Arumee — Traditional Cold-Pressed Oil Makers"/>
+<meta property="og:description" content="Learn about Arumee's heritage. Mani Flour &amp; Oil Mill cold-presses coconut, groundnut &amp; gingelly oils the traditional way. FSSAI certified."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://arumee.co.in/about.html"/>
+<meta property="og:image" content="https://arumee.co.in/arumee_assets/logo.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="About Arumee — Traditional Cold-Pressed Oil Makers"/>
+<meta name="twitter:description" content="Arumee by Mani Flour &amp; Oil Mill. Ancestral wooden pressed (marachekku) cold-pressed oils. FSSAI certified."/>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"Arumee","url":"https://arumee.co.in","logo":"https://arumee.co.in/arumee_assets/logo.png","legalName":"Mani Flour & Oil Mill","description":"Traditional cold-pressed coconut, groundnut and gingelly oil brand. Ancestral wooden pressed (marachekku). FSSAI: 22425133000137.","telephone":["+919751425598","+919443342098"],"sameAs":["https://arumee.co.in"]}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="arumee_assets/cart.css">
 <style>
   :root {
     --green: #1e4d32;
+    /* unified header spacing for non-Oils pages */
+    --site-header-height: 56px;
+    --site-header-height-mobile: 90px;
     --green-dark: #153d28;
-    --gold: #9d7c2a;
-    --gold-light: #b8941f;
+    --gold: #c09b3a;
+    --gold-light: #d4af50;
     --cream: #faf8f5;
     --ink: #0a2817;
   }
@@ -76,6 +95,8 @@
     align-items: center;
     gap: 8px;
   }
+  /* Consistent spacing beneath the header area for non-Oils pages */
+  main.container { padding-top: var(--site-header-height,120px); }
   .sticky-nav .nav-btn {
     padding: 6px 16px;
     border-radius: 20px;
@@ -89,8 +110,7 @@
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-  }
+    gap: 6px;    white-space: nowrap;  }
   .sticky-nav .nav-btn.primary {
     background: var(--green);
     color: white;
@@ -126,22 +146,38 @@
     z-index: 1200; 
   }
   
-  /* Adjust tab position on mobile to sit below sticky nav */
+  /* Mobile: all 5 tabs horizontally scrollable */
   @media (max-width: 768px) {
     .hero-tabs-wrapper {
-      top: 44px;
+      top: calc(44px + env(safe-area-inset-top, 0px));
+      overflow: hidden;
+    }
+    .hero-nav {
+      justify-content: flex-start;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .hero-nav::-webkit-scrollbar { display: none; }
+    .hero-nav-tab {
+      padding: 11px 16px;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+    .hero-nav-tab.active::after {
+      bottom: 2px;
+      height: 3px;
+      left: 8px;
+      right: 8px;
     }
   }
-  .hero-nav { 
-    display: flex; 
-    justify-content: center; 
-    gap: 0; 
-    padding: 0; 
+  .hero-nav {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    padding: 0;
     max-width: 1100px;
     margin: 0 auto;
-    position: relative;
-    padding-bottom: 12px;
-    margin-bottom: -12px;
   }
   .hero-nav-tab { 
     padding: 12px 24px; 
@@ -264,7 +300,7 @@
     transform: translateY(-2px);
   }
   .value h3 { margin: 0 0 12px; font-size: 18px; color: var(--green); font-weight: 700; }
-  footer { background:#0f2922; color:#eee; text-align:center; padding:32px 20px; font-size:13px; }
+  footer { background: linear-gradient(135deg,rgba(30,77,50,.08),rgba(157,124,42,.05)); border-top:1px solid rgba(30,77,50,0.15); text-align:center; padding:16px 20px; color:var(--green); font-size:13px; }
   /* Removed legacy floating cart indicator styles */
   /* Page & element animations */
   @keyframes pageFadeUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
@@ -276,6 +312,39 @@
   .values .value:nth-child(5){ animation-delay:.44s; }
   .values .value:nth-child(6){ animation-delay:.52s; }
   @media (prefers-reduced-motion: reduce){ body, .value { animation:none!important; opacity:1!important; transform:none!important; } }
+
+  /* ─── MOBILE-FIRST ────────────────────────────────── */
+  .sticky-nav { padding-top: env(safe-area-inset-top, 0px); }
+
+  @media (max-width: 768px) {
+    .container { padding-top: 24px; padding-bottom: 36px; }
+    /* mobile header spacing for consistency */
+    main.container { padding-top: var(--site-header-height-mobile,110px); }
+
+    h2 { font-size: clamp(24px, 7.5vw, 36px); letter-spacing: -.5px; margin-bottom: 8px; }
+    h2.section-subtitle { font-size: clamp(20px, 5.5vw, 28px); margin: 32px 0 16px; }
+    p.lead { font-size: 15px; margin-bottom: 28px; }
+    p { font-size: 15px; }
+
+    /* Values grid: 2 cols on tablet */
+    .values { grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 20px; }
+
+    /* Touch: no fly-up on hover */
+    .value:hover { transform: none; }
+    .value:active { transform: scale(.98); box-shadow: 0 4px 14px rgba(30,77,50,.1); }
+
+    footer { padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
+  }
+
+  @media (max-width: 480px) {
+    h2 { font-size: 22px; }
+    h2.section-subtitle { font-size: 19px; }
+    p.lead { font-size: 14px; }
+    .values { grid-template-columns: 1fr; gap: 12px; }
+    .value { padding: 16px 14px; }
+    .value h3 { font-size: 16px; }
+    .panel { padding: 20px 16px; }
+  }
 </style>
 </head>
 <body>
@@ -298,11 +367,41 @@
   <div class="hero-tabs-wrapper" role="tablist" aria-label="Primary site sections">
     <nav class="hero-nav">
       <a href="index.html" class="hero-nav-tab" aria-selected="false">Our Oils</a>
+      <a href="combo.html" class="hero-nav-tab" aria-selected="false">Combo Offers</a>
       <a href="benefits.html" class="hero-nav-tab" aria-selected="false">Benefits</a>
       <a href="about.html" class="hero-nav-tab active" aria-selected="true">About Us</a>
       <a href="contact.html" class="hero-nav-tab" aria-selected="false">Contact Us</a>
     </nav>
   </div>
+  <script>
+  (function(){
+    var stickyNav = document.querySelector('.sticky-nav');
+    var tabsWrapper = document.querySelector('.hero-tabs-wrapper');
+    var heroNav = document.querySelector('.hero-nav');
+    var activeTab = document.querySelector('.hero-nav-tab.active');
+    function setTop() {
+      if (stickyNav && tabsWrapper && window.innerWidth <= 768) {
+        tabsWrapper.style.top = stickyNav.offsetHeight + 'px';
+      }
+    }
+    function centerActive() {
+      if (heroNav && activeTab) {
+        var tabLeft = activeTab.offsetLeft;
+        var tabWidth = activeTab.offsetWidth;
+        var navWidth = heroNav.offsetWidth;
+        heroNav.scrollLeft = tabLeft - (navWidth / 2) + (tabWidth / 2);
+      }
+    }
+    setTop();
+    centerActive();
+    window.addEventListener('resize', function(){ setTop(); centerActive(); });
+    /* Re-measure after fonts finish loading — prevents jump from font-swap changing nav height */
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function(){ setTop(); });
+    }
+    window.addEventListener('load', function(){ setTop(); });
+  }());
+  </script>
   <!-- Unified Cart Components -->
   <div id="cartTab" class="cart-tab" role="button" aria-label="Shopping cart" aria-expanded="false" tabindex="0">
     <span class="cart-icon" aria-hidden="true">🛒</span>
@@ -330,7 +429,7 @@
   <div id="cartBackdrop" class="cart-backdrop" onclick="toggleCart()"></div>
   <main class="container">
     <h2>About Arumee</h2>
-    <p class="lead">Welcome to Arumee — where purity meets tradition. We create natural, cold-pressed oils using the traditional wooden ghani (mara chekku) method to bring you the true taste and goodness of nature.</p>
+    <p class="lead">Welcome to Arumee — where purity meets tradition. We create natural, cold-pressed oils using the ancestral wooden pressed (marachekku) method to bring you the true taste and goodness of nature.</p>
 
     <h2 class="section-subtitle">Our Journey</h2>
     <p style="max-width: 900px; margin-left: auto; margin-right: auto;">Arumee started with one simple idea — to make pure, chemical-free oils easily available to every home. We noticed how modern refining removes the natural aroma and nutrients from oils, so we went back to our roots. By using slow, wooden pressing at low temperatures, we preserve everything good — flavor, freshness, and natural nutrition.</p>
@@ -346,7 +445,9 @@
       <div class="value"><h3>Our Promise</h3><p>We believe healthy food starts with honest ingredients. At Arumee, every drop of oil is made with care — so you can cook, serve, and live purely and naturally.</p></div>
     </div>
   </main>
-  <footer>© <span id="year"></span> Arumee™ — Premium Cold‑Pressed Oils</footer>
+  <footer style="border-top:1px solid rgba(30,77,50,0.12);padding:16px 20px;text-align:center;">
+    <p style="font-size:13px;color:rgba(10,40,23,0.5);margin:0;font-weight:500;">&copy; <span id="year"></span> Arumee&trade; &bull; Mani Flour &amp; Oil Mill &nbsp;&middot;&nbsp; FSSAI: 22425133000137 &nbsp;&middot;&nbsp; <a href="tel:9751425598" style="color:var(--green);text-decoration:none;font-weight:600;">9751425598</a> / <a href="tel:9443342098" style="color:var(--green);text-decoration:none;font-weight:600;">9443342098</a></p>
+  </footer>
   <script>
     console.log('Script starting...');
     document.getElementById('year').textContent=new Date().getFullYear();
