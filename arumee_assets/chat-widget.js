@@ -7,6 +7,7 @@
   var _st = document.createElement('style');
   _st.textContent = `
     /* WHATSAPP CHAT WIDGET */
+    body.wa-chat-open { overflow: hidden; }
     #waWidget {
       position: fixed;
       bottom: 20px;
@@ -420,11 +421,30 @@
     #waWidget .wa-disc-decline:hover { background: #f5f5f5; }
     @media (max-width: 480px) {
       #waChatPanel {
-        left: 0 !important; right: 0 !important;
-        width: 100% !important; max-height: 92vh !important;
-        border-radius: 18px 18px 0 0 !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        max-height: none !important;
+        border-radius: 0 !important;
       }
-      .wa-msgs { max-height: none !important; flex: 1; }
+      .wa-msgs { max-height: none !important; min-height: 0 !important; flex: 1; }
+      .wa-chips { padding: 8px 10px 10px !important; gap: 8px !important; }
+      #waWidget .wa-chip {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        min-height: 36px !important;
+        padding: 8px 12px !important;
+        font-size: 11px !important;
+        border-radius: 18px !important;
+        white-space: normal !important;
+        line-height: 1.2 !important;
+        touch-action: manipulation !important;
+      }
       .wa-hint { display: none; }
     }
     /* ── Refresh Confirmation Modal ── */
@@ -1360,6 +1380,7 @@
     panel.classList.toggle('wa-open');
     if (widget) widget.classList.toggle('wa-active', opening);
     if (trigger) trigger.setAttribute('aria-expanded', opening ? 'true' : 'false');
+    if (document.body) document.body.classList.toggle('wa-chat-open', opening);
     if (opening) {
       if (dot) dot.classList.remove('show');
       // Only start chat if disclaimer has been accepted
@@ -1398,6 +1419,7 @@
     if (widget && widget.contains(e.target)) return;
     panel.classList.remove('wa-open');
     if (widget) widget.classList.remove('wa-active');
+    if (document.body) document.body.classList.remove('wa-chat-open');
     var trigger = document.getElementById('waChatTrigger');
     if (trigger) trigger.setAttribute('aria-expanded', 'false');
   });
@@ -1411,6 +1433,7 @@
     if (panel && panel.classList.contains('wa-open')) {
       panel.classList.remove('wa-open');
       if (widget) widget.classList.remove('wa-active');
+      if (document.body) document.body.classList.remove('wa-chat-open');
       if (trigger) { trigger.setAttribute('aria-expanded', 'false'); trigger.focus(); }
     }
   });
