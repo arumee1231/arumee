@@ -481,6 +481,11 @@
     window.clearSubCart = function(){ 
       orderItems=[]; 
       saveCart(); 
+      try {
+        localStorage.removeItem('arumee_cart');
+        localStorage.removeItem('arumee_chat');
+        localStorage.removeItem('arumee_delivery');
+      } catch(e) {}
       updateCartDisplay(); 
       // Navigate to homepage oils section and show toast
       sessionStorage.setItem('showClearToast', 'true');
@@ -681,5 +686,6 @@
       });
     })();
   </script>
+  <script src="arumee_assets/chat-widget.js"></script>
 </body>
 </html>
