@@ -3510,20 +3510,19 @@ h2.section-title {
 </div>
 <!-- Custom Modal -->
 <div class="modal-overlay" id="successModal">
-<div class="modal-content">
-<div class="modal-icon">✓</div>
-<h3 class="modal-title">Order Submitted Successfully!</h3>
+<div class="modal-content" style="max-width:460px;">
+<div class="modal-icon">✅</div>
+<h3 class="modal-title">Order Received — Confirm on WhatsApp</h3>
 <div class="modal-message">
-<p>We will contact you soon to confirm:</p>
-<ul>
-<li>Payment details</li>
-<li>Delivery schedule</li>
-</ul>
-<p style="margin-top: 16px;">Click OK to open WhatsApp and send your order directly to us.</p>
+  <div id="successOrderSummary"></div>
+  <div style="margin-top:12px;background:#fff8e1;border-left:3px solid #f59e0b;padding:10px 12px;border-radius:6px;font-size:13px;color:#78350f;line-height:1.5;">
+    ⚠️ <strong>WhatsApp confirmation is required.</strong><br>
+    Your order is <strong>not confirmed</strong> until you message us. We will share UPI payment details and delivery date on WhatsApp.
+  </div>
 </div>
 <div class="modal-buttons">
-<button class="modal-btn secondary" onclick="closeModal()">Cancel</button>
-<button class="modal-btn primary" onclick="openWhatsApp()">OK</button>
+<button class="modal-btn secondary" onclick="closeModal()" style="opacity:0.65;font-size:13px;">I'll do it later</button>
+<button class="modal-btn primary" onclick="openWhatsApp()" style="gap:6px;">📲 Confirm on WhatsApp →</button>
 </div>
 </div>
 </div>
@@ -3633,7 +3632,57 @@ h2.section-title {
 
     function showSuccessModal(whatsappUrl) {
       pendingWhatsAppUrl = whatsappUrl;
+
+      // Populate order summary inside the modal
+      try {
+        var summaryEl = document.getElementById('successOrderSummary');
+        if (summaryEl) {
+          var html = '';
+          if (Array.isArray(orderItems) && orderItems.length) {
+            var grandTotal = orderItems.reduce(function(s, it) {
+              return s + ((it.price || 0) * (it.qty || 1));
+            }, 0);
+            html += '<div style="font-size:13px;background:#f0faf4;border-radius:8px;padding:12px 14px;margin-bottom:4px;">';
+            html += '<div style="font-weight:700;color:#1e4d32;margin-bottom:8px;">🛒 Your Order</div>';
+            orderItems.forEach(function(it) {
+              var lineTotal = (it.price || 0) * (it.qty || 1);
+              html += '<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #d1ead9;">';
+              html += '<span style="color:#374151;">' + escapeHtml(it.productName || '') + (it.qty > 1 ? ' &times; ' + it.qty : '') + '</span>';
+              html += '<span style="font-weight:600;color:#1e4d32;">&#8377;' + lineTotal.toLocaleString('en-IN') + '</span>';
+              html += '</div>';
+            });
+            html += '<div style="display:flex;justify-content:space-between;margin-top:10px;font-weight:700;color:#1e4d32;font-size:14px;">';
+            html += '<span>Total &nbsp;<span style="font-weight:400;font-size:11px;color:#6b7c74;">(Free Delivery)</span></span>';
+            html += '<span>&#8377;' + grandTotal.toLocaleString('en-IN') + '</span>';
+            html += '</div>';
+            html += '</div>';
+          }
+          // Delivery address if available
+          var addrName = '';
+          var addrPin = (document.getElementById('input-pincode') || {}).value || '';
+          var addrDistrict = (document.getElementById('input-district') || {}).value || '';
+          var addrStreet = (document.getElementById('input-address') || {}).value || '';
+          var addrPhone = (document.getElementById('input-phone') || {}).value || '';
+          var addrFull = addrStreet + (addrPin ? ', ' + addrPin : '') + (addrDistrict ? ' (' + addrDistrict + ', TN)' : '');
+          addrName = (document.getElementById('input-name') || {}).value || '';
+          if (addrName || addrFull) {
+            html += '<div style="font-size:12px;color:#4b5563;margin-top:8px;line-height:1.6;padding:0 2px;">';
+            if (addrName) html += '<strong>' + escapeHtml(addrName) + '</strong>';
+            if (addrPhone) html += ' &nbsp;|&nbsp; 📞 ' + escapeHtml(addrPhone);
+            if (addrFull) html += '<br>📍 ' + escapeHtml(addrFull);
+            html += '</div>';
+          }
+          summaryEl.innerHTML = html;
+        }
+      } catch(e) {}
+
       document.getElementById('successModal').classList.add('show');
+    }
+
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"]/g, function(c) {
+        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];
+      });
     }
 
     function closeModal() {
