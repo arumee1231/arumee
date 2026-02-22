@@ -1016,10 +1016,22 @@
     setChips([]); showTyping();
     setTimeout(function() {
       hideTyping();
-      addMsg('bot', '✅ Perfect! Opening WhatsApp now with your complete order...');
-      setChips(['➕ Add another oil', '🗑️ Start over']);
+      // Build order summary confirmation message
+      var total = orderCart.reduce(function(s, i) { return s + i.price; }, 0);
+      var cartLines = orderCart.map(function(i) {
+        return '&bull; ' + i.label + ' ' + i.size + (i.qty > 1 ? ' &times; ' + i.qty : '') + ' &mdash; &#8377;' + i.price.toLocaleString('en-IN');
+      }).join('<br>');
+      var confirmHtml =
+        '<strong>✅ Order Summary</strong><br><br>' +
+        cartLines + '<br><br>' +
+        '<strong>Total: &#8377;' + total.toLocaleString('en-IN') + '</strong> &nbsp;<span style="font-size:11px;opacity:0.75;">(Free delivery)</span><br><br>' +
+        '📍 <strong>' + name + '</strong><br>' +
+        addr + ', ' + district + ' ' + pin + '<br>' +
+        '📞 ' + phone + '<br><br>' +
+        '<span style="background:#fff8e1;padding:4px 8px;border-radius:5px;font-size:12px;color:#78350f;">⚠️ Tap <strong>Confirm on WhatsApp</strong> to complete your order &amp; discuss payment.</span>';
+      addMsg('bot', confirmHtml);
+      setChips(['📲 Confirm on WhatsApp', '✏️ Edit Details', '🗑️ Start over']);
       updateWaBtn();
-      setTimeout(waContinue, 600);
     }, 750);
   }
 
@@ -1148,6 +1160,14 @@
 
   function pick(label) {
     if (label === '📞 Chat on WhatsApp') { waContinue(); return; }
+    if (label === '📲 Confirm on WhatsApp') { addMsg('user', label); setChips([]); waContinue(); return; }
+    if (label === '✏️ Edit Details') {
+      addMsg('user', label); setChips([]);
+      deliveryInfo = null;
+      saveDelivery();
+      showAddressForm();
+      return;
+    }
 
     if (label === '🛍️ Order Now') {
       addMsg('user', label); setChips([]);
