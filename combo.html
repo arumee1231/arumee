@@ -999,6 +999,11 @@
     window.clearSubCart = function(){
       orderItems = [];
       saveCart();
+      try {
+        localStorage.removeItem('arumee_cart');
+        localStorage.removeItem('arumee_chat');
+        localStorage.removeItem('arumee_delivery');
+      } catch(e) {}
       updateCartDisplay();
       showToast('Cart cleared');
     };
@@ -1115,6 +1120,15 @@
     if (__cartTabEl) __cartTabEl.addEventListener('click', toggleCart);
     window.addEventListener('storage', function(e){ if (e.key === 'arumeeCart') updateCartDisplay(); });
     updateCartDisplay();
+    // Re-run after all scripts (including chat-widget.js) finish loading
+    // to ensure the cart count badge is correct after a page refresh.
+    window.addEventListener('load', updateCartDisplay);
   </script>
+  <!-- Floating Cart Tab -->
+  <div aria-expanded="false" aria-label="Shopping cart" class="cart-tab" id="cartTab" onclick="toggleCart()" role="button">
+    <span aria-hidden="true" class="cart-icon">🛒</span>
+    <span aria-live="polite" class="cart-count" id="cartCount">0</span>
+  </div>
+  <script src="arumee_assets/chat-widget.js"></script>
 </body>
 </html>
