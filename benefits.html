@@ -43,7 +43,9 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    animation: page-in 0.12s ease-out both;
   }
+  @keyframes page-in { from { opacity: 0; } to { opacity: 1; } }
   main.container { flex: 1; }
   .container { max-width: 1200px; margin: 0 auto; padding: 60px 4vw 32px; }
   
@@ -300,6 +302,11 @@
     .card h3 { font-size: 16px; }
     .card p { font-size: 14px; }
   }
+
+  /* Cross-document view transitions — prevents header blink on tab navigation */
+  @view-transition { navigation: auto; }
+  .sticky-nav        { view-transition-name: site-sticky-nav; }
+  .hero-tabs-wrapper { view-transition-name: site-tabs; }
 </style>
 </head>
 <body>
@@ -564,5 +571,6 @@
     console.log('Benefits page script loaded. toggleCart is:', typeof window.toggleCart);
   </script>
   <script src="arumee_assets/chat-widget.js"></script>
+<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('/service-worker.js');</script>
 </body>
 </html>
