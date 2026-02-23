@@ -47,7 +47,9 @@
       background: var(--cream);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      animation: page-in 0.12s ease-out both;
     }
+    @keyframes page-in { from { opacity: 0; } to { opacity: 1; } }
     .container { width: min(1100px, 92vw); margin: 0 auto; }
 
     .old-price { text-decoration: line-through; color: #777; margin-right:6px; font-size: inherit; font-weight:700; }
@@ -180,14 +182,14 @@
       }
       .hero-nav::-webkit-scrollbar { display: none; }
       .hero-nav-tab {
-      padding: 11px 16px;
-      font-size: 12px;
-      flex-shrink: 0;
-      min-height: 44px;
-      display: inline-flex;
-      align-items: center;
-      line-height: 1.2;
-    }
+        flex: 0 0 auto;
+        padding: 11px 16px;
+        font-size: 12px;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        line-height: 1.2;
+      }
       .hero-nav-tab.active::after {
         bottom: 2px;
         height: 3px;
@@ -587,6 +589,11 @@
 
     /* Hero sibling: removed when hero is not present */
     /* previously adjusted main padding for the hero; keep default spacing */
+
+    /* Cross-document view transitions — prevents header blink on tab navigation */
+    @view-transition { navigation: auto; }
+    .sticky-nav        { view-transition-name: site-sticky-nav; }
+    .hero-tabs-wrapper { view-transition-name: site-tabs; }
   </style>
 </head>
 <body>
@@ -1135,5 +1142,6 @@
     <span aria-live="polite" class="cart-count" id="cartCount">0</span>
   </div>
   <script src="arumee_assets/chat-widget.js"></script>
+<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('/service-worker.js');</script>
 </body>
 </html>
