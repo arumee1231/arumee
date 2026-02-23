@@ -1512,10 +1512,8 @@
     // Update last URL for the next load
     try { localStorage.setItem('arumee_last_url', curUrl); } catch(e) {}
 
-    // Prompt only on reload, and only if there is something to clear
-    if (isReload && hasAnyCart) {
-      setTimeout(function() { showRefreshModal(); }, 250);
-    }
+    // Refresh prompt handled by cartRestoreModal in index.html — skip here.
+    // if (isReload && hasAnyCart) { setTimeout(function() { showRefreshModal(); }, 250); }
   }());
 }());
 }());
