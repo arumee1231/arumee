@@ -292,10 +292,9 @@
       overflow-x: hidden;
       width: 100%;
       position: relative;
+      animation: page-in 0.12s ease-out both;
     }
-    /* Prevent initial flash: fade hero brand in after load */
-    header.hero .brand { opacity: 0; transform: translateY(10px); transition: opacity .4s ease, transform .4s ease; }
-    body.hero-ready header.hero .brand { opacity: 1; transform: translateY(0); }
+    @keyframes page-in { from { opacity: 0; } to { opacity: 1; } }
     .container { width: min(1200px, 92vw); margin: 0 auto; }
 
     /* STICKY NAVIGATION BAR */
@@ -3044,7 +3043,35 @@ h2.section-title {
 #oils .grid .card::before {
   display: none;
 }
+
+/* ── Cross-document view transitions ──────────────────────────
+   Morphs shared header elements across tab navigations instead of hard-cutting.
+   Supported: Chrome 126+, Safari 18.2+. Gracefully ignored elsewhere. */
+@view-transition { navigation: auto; }
+.sticky-nav        { view-transition-name: site-sticky-nav; }
+.hero-tabs-wrapper { view-transition-name: site-tabs; }
+/* Named so the cart button never gets included in the root cross-fade (prevents z-index blink) */
+.cart-tab          { view-transition-name: site-cart; }
+/* Hero banner only exists on this page; naming it makes it fade out gracefully on other pages */
+header.hero        { view-transition-name: page-hero; }
+
+/* Pre-show sticky nav instantly on first paint when cart has items (set by preload script below).
+   Prevents the translateY(-100%) → translateY(0) blink on navigation back to this page. */
+html[data-has-cart] .sticky-nav {
+  transform: translateY(0);
+  transition: none; /* suppress the slide-in animation during initial render */
+}
 </style>
+<script>
+  /* Preload: set data-has-cart on <html> synchronously before any render,
+     so the sticky nav is visible on first paint when the cart is not empty. */
+  try {
+    var _pc = JSON.parse(localStorage.getItem('arumeeCart') || '[]');
+    if (Array.isArray(_pc) && _pc.length > 0) {
+      document.documentElement.setAttribute('data-has-cart', '1');
+    }
+  } catch(e) {}
+</script>
 </head>
 <body class="page-our-oils">
 <!-- Sticky Navigation -->
@@ -5650,10 +5677,6 @@ document.addEventListener('DOMContentLoaded', function(){
 <script>
 // --- Desktop safety: ensure no 'active-slide' class remains on desktop ---
 document.addEventListener('DOMContentLoaded', function(){
-  // Mark body ready for hero fade-in once fonts + images have a chance to load
-  window.addEventListener('load', () => {
-    document.body.classList.add('hero-ready');
-  });
   function cleanupActiveForDesktop(){
     if (window.innerWidth > 768) {
       document.querySelectorAll('#oils .grid .card.active-slide').forEach(el => el.classList.remove('active-slide'));
@@ -5802,5 +5825,6 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 </script>
   <script src="arumee_assets/chat-widget.js"></script>
+<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('/service-worker.js');</script>
 </body>
 </html>
