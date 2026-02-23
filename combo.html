@@ -27,8 +27,8 @@
     :root {
       --green: #1e4d32;
       /* unified header spacing for non-Oils pages */
-      --site-header-height: 120px; /* desktop */
-      --site-header-height-mobile: 110px; /* mobile */
+      --site-header-height: 56px; /* desktop */
+      --site-header-height-mobile: 90px; /* mobile */
       --green-dark: #153d28;
       --gold: #c09b3a;
       --gold-light: #d4af50;
@@ -137,12 +137,12 @@
     }
     .hero-nav { display: flex; justify-content: center; max-width: 1100px; margin: 0 auto; }
     .hero-nav-tab {
-      padding: 12px 20px;
+      padding: 12px 24px;
       background: rgba(255, 255, 255, 0.07);
       border-right: 1px solid rgba(255, 255, 255, 0.1);
       color: rgba(255, 255, 255, 0.92);
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 600;
       text-decoration: none;
       white-space: nowrap;
       transition: background 0.25s ease;
@@ -152,8 +152,9 @@
     .hero-nav-tab.active {
       background: linear-gradient(180deg, rgba(21,61,40,1), rgba(30,77,50,1));
       color: #fff;
-      font-weight: 900;
+      font-weight: 800;
       position: relative;
+      box-shadow: 0 6px 18px rgba(16,45,33,0.18);
     }
     .hero-nav-tab.active::after {
       content: '';
