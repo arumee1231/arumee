@@ -437,12 +437,12 @@
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
-        min-height: 36px !important;
-        padding: 8px 12px !important;
-        font-size: 11px !important;
+        min-height: 44px !important;
+        padding: 10px 12px !important;
+        font-size: 12px !important;
         border-radius: 18px !important;
         white-space: normal !important;
-        line-height: 1.2 !important;
+        line-height: 1.25 !important;
         touch-action: manipulation !important;
       }
       .wa-hint { display: none; }
