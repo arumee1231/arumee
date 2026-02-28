@@ -47,7 +47,9 @@
       background: var(--cream);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      animation: page-in 0.12s ease-out both;
+    }
+    @media (max-width: 768px) {
+      body { animation: page-in 0.12s ease-out both; }
     }
     @keyframes page-in { from { opacity: 0; } to { opacity: 1; } }
     .container { width: min(1100px, 92vw); margin: 0 auto; }
@@ -592,8 +594,14 @@
 
     /* Cross-document view transitions — prevents header blink on tab navigation */
     @view-transition { navigation: auto; }
-    .sticky-nav        { view-transition-name: site-sticky-nav; }
     .hero-tabs-wrapper { view-transition-name: site-tabs; }
+    .cart-tab          { view-transition-name: site-cart; }
+    ::view-transition-old(site-tabs),
+    ::view-transition-new(site-tabs),
+    ::view-transition-old(site-cart),
+    ::view-transition-new(site-cart) { animation: none; mix-blend-mode: normal; }
+    ::view-transition-old(root),
+    ::view-transition-new(root) { animation-duration: 0.18s; }
   </style>
 </head>
 <body>
