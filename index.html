@@ -292,7 +292,10 @@
       overflow-x: hidden;
       width: 100%;
       position: relative;
-      animation: page-in 0.12s ease-out both;
+    }
+    /* Mobile only: fade-in masks sticky-nav slide-in on navigation */
+    @media (max-width: 768px) {
+      body { animation: page-in 0.12s ease-out both; }
     }
     @keyframes page-in { from { opacity: 0; } to { opacity: 1; } }
     .container { width: min(1200px, 92vw); margin: 0 auto; }
@@ -333,6 +336,7 @@
       font-size: 24px;
       font-weight: 800;
       color: var(--green);
+      letter-spacing: 2px;
     }
     .sticky-nav .nav-brand img {
       width: 40px;
@@ -704,7 +708,7 @@
       font-weight: 800; 
       color: #ffffff;
       line-height: 1.08;
-      letter-spacing: -0.5px;
+      letter-spacing: 2px;
       margin: 0;
       padding: 0;
       text-shadow: 
@@ -1610,6 +1614,30 @@
       transform: translateY(-2px);
     }
 
+    /* MINI FLOATING CART FAB — visible on mobile while hero is in view + cart has items */
+    #heroCartFab {
+      display: none;
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      z-index: 10004;
+      background: linear-gradient(135deg, var(--green), var(--green-dark));
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 11px 18px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.28);
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    #heroCartFab:active { transform: scale(0.95); }
+
     /* CUSTOM MODAL */
     .modal-overlay {
       display: none;
@@ -2351,7 +2379,7 @@
         height: 56px; 
         font-size: 20px; 
         bottom: 84px; 
-        right: 20px;
+        right: 22px; /* center-aligns with 60px chat trigger: 20+(60-56)/2 */
       }
       #waChatTrigger { 
         width: 56px; 
@@ -2504,11 +2532,17 @@
         height: 52px;
         font-size: 18px;
         bottom: 80px;
-        right: 16px;
+        right: 24px; /* center-aligns with 60px chat trigger: 20+(60-52)/2 */
       }
       #waChatTrigger {
         width: 52px;
         height: 52px;
+      }
+      #heroCartFab {
+        bottom: 88px; /* above chat widget */
+        right: 20px;
+        font-size: 14px;
+        padding: 10px 15px;
       }
     }
   
@@ -3045,22 +3079,23 @@ h2.section-title {
 }
 
 /* ── Cross-document view transitions ──────────────────────────
-   Morphs shared header elements across tab navigations instead of hard-cutting.
+   Tab bar is frozen in place; only the page content below cross-fades.
    Supported: Chrome 126+, Safari 18.2+. Gracefully ignored elsewhere. */
 @view-transition { navigation: auto; }
-.sticky-nav        { view-transition-name: site-sticky-nav; }
 .hero-tabs-wrapper { view-transition-name: site-tabs; }
-/* Named so the cart button never gets included in the root cross-fade (prevents z-index blink) */
+/* cart-tab gets its own layer so it's never covered by the root cross-fade snapshot */
 .cart-tab          { view-transition-name: site-cart; }
-/* Hero banner only exists on this page; naming it makes it fade out gracefully on other pages */
-header.hero        { view-transition-name: page-hero; }
+/* Freeze both the tab bar and cart — no animation, they stay put */
+::view-transition-old(site-tabs),
+::view-transition-new(site-tabs),
+::view-transition-old(site-cart),
+::view-transition-new(site-cart) { animation: none; mix-blend-mode: normal; }
+/* Brief root cross-fade for the content area */
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: 0.18s; }
 
-/* Pre-show sticky nav instantly on first paint when cart has items (set by preload script below).
-   Prevents the translateY(-100%) → translateY(0) blink on navigation back to this page. */
-html[data-has-cart] .sticky-nav {
-  transform: translateY(0);
-  transition: none; /* suppress the slide-in animation during initial render */
-}
+/* Sticky nav is controlled purely by JS scroll + cart state.
+   The body page-in fade-in (0.12s) masks any blink on navigation back to this page. */
 </style>
 <script>
   /* Preload: set data-has-cart on <html> synchronously before any render,
@@ -3574,6 +3609,7 @@ html[data-has-cart] .sticky-nav {
 <p style="font-size:13px;color:rgba(10,40,23,0.5);margin:0;font-weight:500;">&copy; 2025 Arumee&trade; &bull; Mani Flour &amp; Oil Mill &nbsp;&middot;&nbsp; FSSAI: 22425133000137 &nbsp;&middot;&nbsp; <a href="tel:9751425598" style="color:var(--green);text-decoration:none;font-weight:600;">9751425598</a> / <a href="tel:9443342098" style="color:var(--green);text-decoration:none;font-weight:600;">9443342098</a></p>
 </footer>
 <button aria-label="Scroll to top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<button id="heroCartFab" onclick="toggleCart()" aria-label="View cart">🛒 <span id="heroFabCount">0</span></button>
 <div aria-live="polite" class="toast" id="toast" role="alert"></div>
 <!-- Image Zoom Overlay -->
 <div class="zoom-overlay" id="imageZoomOverlay">
@@ -4021,8 +4057,11 @@ html[data-has-cart] .sticky-nav {
       const oldCount = parseInt(cartCount.textContent) || 0;
       
       cartCount.textContent = newCount;
-  // Toggle body.has-cart-items for conditional mobile cart icon visibility
-  document.body.classList.toggle('has-cart-items', newCount > 0);
+      // Toggle body.has-cart-items for conditional mobile cart icon visibility
+      document.body.classList.toggle('has-cart-items', newCount > 0);
+      // Keep hero FAB count in sync
+      const _fab = document.getElementById('heroFabCount');
+      if (_fab) _fab.textContent = String(newCount);
       
       // Trigger bounce animation when count increases (but skip on initial page load)
       if (!isInitialLoad && newCount > oldCount) {
@@ -4971,12 +5010,17 @@ html[data-has-cart] .sticky-nav {
     const navCartCount = document.getElementById('navCartCount');
     let lastScroll = 0;
 
-    // Cache viewport mode + oils threshold to reduce layout work on scroll
+    // Cache viewport mode + thresholds to reduce layout work on scroll
     const mobileMQ = window.matchMedia('(max-width: 768px)');
     let isMobileViewport = mobileMQ.matches;
     let oilsThresholdY = null;
+    let heroThresholdY = 0; // sticky nav stays hidden while hero is in viewport
 
     function computeOilsThreshold() {
+      // Hero threshold: hide sticky nav while hero banner is still in view
+      const heroEl = document.querySelector('header.hero');
+      heroThresholdY = heroEl ? (heroEl.offsetTop + heroEl.offsetHeight * 0.7) : 0;
+
       const oilsSection = document.getElementById('oils');
       if (!oilsSection) {
         oilsThresholdY = null;
@@ -5015,6 +5059,8 @@ html[data-has-cart] .sticky-nav {
       const hasItemsInCart = orderItems && orderItems.length > 0;
       const passedOils = (typeof oilsThresholdY === 'number') ? (currentScroll > oilsThresholdY) : false;
       const isMobile = isMobileViewport;
+      const heroFab = document.getElementById('heroCartFab');
+      const heroFabCount = document.getElementById('heroFabCount');
 
       // Desktop: always hide sticky nav to avoid duplicate cart controls
       if (!isMobile) {
@@ -5022,15 +5068,30 @@ html[data-has-cart] .sticky-nav {
         if (navCartBtn) navCartBtn.style.display = 'none';
         if (navOilsBtn) navOilsBtn.style.display = 'none';
         if (cartTab) cartTab.style.display = 'flex'; // unchanged desktop behavior
+        if (heroFab) heroFab.style.display = 'none';
         lastScroll = currentScroll;
         return;
       }
       
-      // MOBILE BEHAVIOR (FINAL):
-      // - Floating cart removed entirely.
-      // - Sticky nav shows ONLY when cart has items.
-      // - Before any items added, no cart UI appears.
-      if (!hasItemsInCart) {
+      // MOBILE BEHAVIOR:
+      // Phase 1 — hero visible (scrollY < heroThresholdY):
+      //   • No sticky nav. If cart has items, show mini FAB (🛒 N) bottom-right.
+      // Phase 2 — hero scrolled past:
+      //   • Sticky nav appears (with cart count + optional Our Oils btn).
+      //   • FAB hides (nav already shows the cart).
+      const heroVisible = currentScroll < heroThresholdY;
+
+      // Mini FAB: visible only while hero is in view + cart has items
+      if (heroFab) {
+        if (hasItemsInCart && heroVisible) {
+          heroFab.style.display = 'flex';
+          if (heroFabCount) heroFabCount.textContent = orderItems.length;
+        } else {
+          heroFab.style.display = 'none';
+        }
+      }
+
+      if (!hasItemsInCart || heroVisible) {
         stickyNav.classList.remove('visible');
         navCartBtn.style.display = 'none';
         navOilsBtn.style.display = 'none';
@@ -5054,6 +5115,13 @@ html[data-has-cart] .sticky-nav {
   // Scroll handler is passive + rAF-throttled for smoother scrolling.
   window.addEventListener('scroll', scheduleStickyNavUpdate, { passive: true });
   window.addEventListener('resize', function(){ computeOilsThreshold(); scheduleStickyNavUpdate(); });
+
+  // When chatbot adds items to cart it dispatches this event — reload cart state + refresh nav
+  window.addEventListener('arumee-cart-updated', function() {
+    loadCartFromStorage();
+    updateCartDisplay();
+    updateStickyNav();
+  });
     
     // Call initially and whenever cart changes
     computeOilsThreshold();
@@ -5067,9 +5135,13 @@ html[data-has-cart] .sticky-nav {
       loadCartFromStorage();
       updateOrderDetails();
 
-      // Show cart-restore modal if items were saved from a previous session
+      // Show cart-restore modal only on an actual page refresh, not on tab-link navigation
       setTimeout(() => {
-        if (orderItems && orderItems.length > 0) {
+        const navEntry = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+        const navType = navEntry ? navEntry.type : null;
+        // Show only on reload (F5/hard-refresh) or browsers that don't support the API
+        const isReload = !navType || navType === 'reload';
+        if (isReload && orderItems && orderItems.length > 0) {
           showCartRestoreModal();
         }
       }, 250);
