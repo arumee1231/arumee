@@ -3107,6 +3107,80 @@ h2.section-title {
     }
   } catch(e) {}
 </script>
+<style id="mobile-ux-polish">
+/* Mobile spacing polish (senior UX review): keep rhythm tight, align cards, avoid layout jumps */
+@media (max-width: 768px) {
+  /* Make anchor jumps land nicely under sticky bars */
+  html { scroll-padding-top: 92px; }
+
+  /* Hero: reduce vertical bulk, keep premium */
+  header.hero { padding: 22px 0 28px; }
+  .brand { gap: 14px; }
+  .brand img { width: 76px; height: 76px; border-radius: 18px; }
+  .name { letter-spacing: 1.6px; }
+  .tagline { margin-top: 4px; }
+
+  /* Sticky nav touch targets */
+  .sticky-nav .nav-content { padding-top: 10px; padding-bottom: 10px; }
+  .sticky-nav .nav-brand { font-size: 20px; gap: 10px; letter-spacing: 1.6px; }
+  .sticky-nav .nav-brand img { width: 34px; height: 34px; border-radius: 8px; }
+  .sticky-nav .nav-btn { padding: 8px 14px; font-size: 13px; }
+
+  /* Section rhythm */
+  section { padding: 44px 0; }
+  section#oils { padding-top: 28px; }
+  h2.section-title { font-size: 32px; margin-bottom: 10px; }
+  h2.section-title::after { width: 68px; }
+  p.lead { font-size: 16px; margin-bottom: 28px; margin-top: 16px; }
+
+  /* Info banner: tighter */
+  .important-info { margin: 14px auto 18px; padding: 12px 12px; border-radius: 14px; }
+  .important-info__icon { width: 30px; height: 30px; border-radius: 11px; }
+
+  /* HERO CTAs: reduce width pressure */
+  .hero-cta { gap: 10px; margin-top: 14px; }
+  .btn { padding: 10px 18px; font-size: 13.5px; }
+
+  /* Product carousel: equal-height cards + consistent baseline */
+  .grid { gap: 14px; padding: 16px 14px 26px 14px; align-items: stretch; }
+  .grid .card {
+    flex: 0 0 calc(100% - 72px);
+    max-width: 340px;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+  .grid .card.active-slide { transform: translateY(-4px); } /* reduce jump */
+  .grid .card .content { display: flex; flex-direction: column; flex: 1; padding: 16px; }
+  .grid .card .title { min-height: 44px; font-size: 17px; }
+  .grid .card .price { font-size: 26px; }
+  .grid .card .add-to-order { margin-top: auto; }
+
+  /* Image block: stabilize heights so card sizes match */
+  .pic-wrap { min-height: 190px; padding: 14px; }
+  .pic-wrap img { height: 160px; }
+
+  /* Controls: comfortable touch without being bulky */
+  .size-option { padding: 9px 10px; font-size: 12.5px; border-radius: 10px; }
+  .quantity-stepper { gap: 8px; padding: 6px; border-radius: 12px; }
+  .quantity-stepper button { width: 34px; height: 34px; border-radius: 10px; }
+  .quantity-stepper input { height: 34px; font-size: 15px; border-radius: 10px; }
+
+  /* Pricing & bundles: reduce padding to avoid endless scrolling */
+  .pricing-card { padding: 18px; border-radius: 20px; }
+  .pricing-title { font-size: 20px; }
+  .pricing-price { font-size: 30px; }
+  .bundle-bar { padding: 16px; border-radius: 16px; }
+  .bundle-card { padding: 12px; border-radius: 14px; }
+  .bundle-price { font-size: 18px; }
+
+  /* Toast + FABs: keep clear of iOS bottom bar */
+  .toast { top: 16px; padding: 12px 16px; border-radius: 14px; font-size: 14px; }
+  #scrollTop { width: 54px; height: 54px; right: 16px; bottom: 86px; }
+  #heroCartFab { right: 16px; bottom: 86px; padding: 10px 14px; font-size: 14px; }
+}
+</style>
+
 </head>
 <body class="page-our-oils">
 <!-- Sticky Navigation -->
