@@ -14,13 +14,19 @@
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="https://arumee.co.in/about.html"/>
 <meta property="og:image" content="https://arumee.co.in/arumee_assets/logo.png"/>
+<meta property="og:site_name" content="Arumee"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="About Arumee — Traditional Cold-Pressed Oil Makers"/>
 <meta name="twitter:description" content="Arumee by Mani Flour &amp; Oil Mill. Ancestral wooden pressed (marachekku) cold-pressed oils. FSSAI certified."/>
+<meta name="twitter:image" content="https://arumee.co.in/arumee_assets/logo.png"/>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Organization","name":"Arumee","url":"https://arumee.co.in","logo":"https://arumee.co.in/arumee_assets/logo.png","legalName":"Mani Flour & Oil Mill","description":"Traditional cold-pressed coconut, groundnut and gingelly oil brand. Ancestral wooden pressed (marachekku). FSSAI: 22425133000137.","telephone":["+919751425598","+919443342098"],"sameAs":["https://arumee.co.in"]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://arumee.co.in/"},{"@type":"ListItem","position":2,"name":"About Us","item":"https://arumee.co.in/about.html"}]}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="arumee_assets/cart.css">
 <style>
@@ -36,6 +42,13 @@
     --ink: #0a2817;
   }
   * { box-sizing: border-box; }
+  html {
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
+  }
+  .skip-link { position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden; }
+  .skip-link:focus { position:fixed; left:16px; top:16px; width:auto; height:auto; padding:10px 14px; background:#000; color:#fff; z-index:10001; border-radius:8px; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
   body { 
     margin: 0; 
     font-family: 'Inter', sans-serif; 
@@ -44,10 +57,13 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  @media (max-width: 768px) {
-    body { animation: page-in 0.12s ease-out both; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
   }
-  @keyframes page-in { from { opacity: 0; } to { opacity: 1; } }
   .container { width: min(1200px, 92vw); margin: 0 auto; padding: 60px 4vw 80px; }
   
   /* STICKY NAVIGATION BAR */
@@ -109,6 +125,8 @@
     color: var(--green);
     font-weight: 600;
     font-size: 13px;
+    line-height: 1.2;
+    letter-spacing: 0.01em;
     cursor: pointer;
     transition: all 0.2s ease;
     text-decoration: none;
@@ -154,15 +172,18 @@
   @media (max-width: 768px) {
     .hero-tabs-wrapper {
       top: calc(44px + env(safe-area-inset-top, 0px));
-      overflow: hidden;
-    }
-    .hero-nav {
-      justify-content: flex-start;
       overflow-x: auto;
+      overflow-y: hidden;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
     }
-    .hero-nav::-webkit-scrollbar { display: none; }
+    .hero-tabs-wrapper::-webkit-scrollbar { display: none; }
+    .hero-nav {
+      justify-content: flex-start;
+      width: max-content;
+      min-width: 100%;
+      margin: 0;
+    }
     .hero-nav-tab {
       padding: 11px 16px;
       font-size: 12px;
@@ -193,8 +214,8 @@
     border-right: 1px solid rgba(255, 255, 255, 0.1); 
     color: rgba(255, 255, 255, 0.9); 
     font-size: 13px; 
-    font-weight: 600; 
-    transition: all 0.3s ease; 
+    font-weight: 700; 
+    transition: none; 
     text-decoration: none; 
     white-space: nowrap;
   }
@@ -212,9 +233,11 @@
   .hero-nav-tab.active {
     background: linear-gradient(180deg, rgba(21,61,40,1), rgba(30,77,50,1));
     color: #fff;
-    font-weight: 800;
+    font-weight: 700;
     position: relative;
     box-shadow: 0 6px 18px rgba(16,45,33,0.18);
+    pointer-events: none;
+    cursor: default;
   }
   .hero-nav-tab.active::after {
     content: '';
@@ -232,19 +255,22 @@
     outline-offset: 4px;
     border-radius: 6px;
   }
-  h2 { 
+  h1, h2 { 
     font-family: 'Playfair Display', serif; 
     font-size: 48px; 
     margin: 0 0 12px; 
     color: var(--green); 
     text-align: center;
     font-weight: 800;
-    letter-spacing: -1px;
+    letter-spacing: -0.02em;
+    line-height: 1.14;
   }
   h2.section-subtitle {
     font-size: 32px;
     margin: 50px 0 20px;
     text-align: center;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
   }
   p.lead { 
     font-size: 19px; 
@@ -307,7 +333,7 @@
     box-shadow: 0 10px 30px rgba(30,77,50,0.12);
     transform: translateY(-2px);
   }
-  .value h3 { margin: 0 0 12px; font-size: 18px; color: var(--green); font-weight: 700; }
+  .value h3 { margin: 0 0 12px; font-size: 18px; color: var(--green); font-weight: 700; line-height: 1.28; letter-spacing: -0.01em; }
   footer { background: linear-gradient(135deg,rgba(30,77,50,.08),rgba(157,124,42,.05)); border-top:1px solid rgba(30,77,50,0.15); text-align:center; padding:16px 20px; color:var(--green); font-size:13px; }
   /* Removed legacy floating cart indicator styles */
   /* Page & element animations */
@@ -319,23 +345,21 @@
   .values .value:nth-child(4){ animation-delay:.36s; }
   .values .value:nth-child(5){ animation-delay:.44s; }
   .values .value:nth-child(6){ animation-delay:.52s; }
-  @media (prefers-reduced-motion: reduce){ body, .value { animation:none!important; opacity:1!important; transform:none!important; } }
-
   /* ─── MOBILE-FIRST ────────────────────────────────── */
   .sticky-nav { padding-top: env(safe-area-inset-top, 0px); }
 
   @media (max-width: 768px) {
-    .container { padding-top: 24px; padding-bottom: 36px; }
+    .container { padding-top: 20px; padding-bottom: 28px; }
     /* mobile header spacing for consistency */
     main.container { padding-top: var(--site-header-height-mobile,110px); }
 
-    h2 { font-size: clamp(24px, 7.5vw, 36px); letter-spacing: -.5px; margin-bottom: 8px; }
-    h2.section-subtitle { font-size: clamp(20px, 5.5vw, 28px); margin: 32px 0 16px; }
+    h1, h2 { font-size: clamp(24px, 7.5vw, 36px); letter-spacing: -.5px; margin-bottom: 8px; }
+    h2.section-subtitle { font-size: clamp(20px, 5.5vw, 28px); margin: 28px 0 14px; }
     p.lead { font-size: 15px; margin-bottom: 28px; }
     p { font-size: 15px; }
 
     /* Values grid: 2 cols on tablet */
-    .values { grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 20px; }
+    .values { grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 22px; }
 
     /* Touch: no fly-up on hover */
     .value:hover { transform: none; }
@@ -345,13 +369,13 @@
   }
 
   @media (max-width: 480px) {
-    h2 { font-size: 22px; }
+    h1, h2 { font-size: 22px; }
     h2.section-subtitle { font-size: 19px; }
     p.lead { font-size: 14px; }
-    .values { grid-template-columns: 1fr; gap: 12px; }
-    .value { padding: 16px 14px; }
+    .values { grid-template-columns: 1fr; gap: 14px; }
+    .value { padding: 18px 16px; }
     .value h3 { font-size: 16px; }
-    .panel { padding: 20px 16px; }
+    .panel { padding: 18px 16px; }
   }
 
   /* Cross-document view transitions — prevents header blink on tab navigation */
@@ -362,11 +386,15 @@
   ::view-transition-new(site-tabs),
   ::view-transition-old(site-cart),
   ::view-transition-new(site-cart) { animation: none; mix-blend-mode: normal; }
+  ::view-transition-group(site-tabs),
+  ::view-transition-group(site-cart) { z-index: 2147483647; }
+  ::view-transition-group(root) { z-index: 2147483646; }
   ::view-transition-old(root),
-  ::view-transition-new(root) { animation-duration: 0.18s; }
+  ::view-transition-new(root) { animation: none; }
 </style>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   <nav class="sticky-nav">
     <div class="nav-content">
       <div class="nav-brand">
@@ -374,7 +402,7 @@
         <span>ARUMEE</span>
       </div>
       <div class="nav-actions">
-        <a href="index.html#oils" class="nav-btn">Our Oils</a>
+        <a href="index.html#oilsGrid" class="nav-btn">Our Oils</a>
         <button class="nav-btn primary" onclick="console.log('Cart clicked!'); toggleCart();">
           🛒
           <span class="nav-cart-count" id="navCartCount">0</span>
@@ -385,7 +413,7 @@
 
   <div class="hero-tabs-wrapper" role="tablist" aria-label="Primary site sections">
     <nav class="hero-nav">
-      <a href="index.html" class="hero-nav-tab" aria-selected="false">Our Oils</a>
+      <a href="index.html#oilsGrid" class="hero-nav-tab" aria-selected="false">Our Oils</a>
       <a href="combo.html" class="hero-nav-tab" aria-selected="false">Combo Offers</a>
       <a href="benefits.html" class="hero-nav-tab" aria-selected="false">Benefits</a>
       <a href="about.html" class="hero-nav-tab active" aria-selected="true">About Us</a>
@@ -399,17 +427,19 @@
     var heroNav = document.querySelector('.hero-nav');
     var activeTab = document.querySelector('.hero-nav-tab.active');
     function setTop() {
-      if (stickyNav && tabsWrapper && window.innerWidth <= 768) {
-        tabsWrapper.style.top = stickyNav.offsetHeight + 'px';
-      }
+      if (!tabsWrapper) return;
+      var navVisible = stickyNav && window.getComputedStyle(stickyNav).display !== 'none';
+      tabsWrapper.style.top = (navVisible ? stickyNav.offsetHeight : 0) + 'px';
     }
     function centerActive() {
-      if (heroNav && activeTab) {
-        var tabLeft = activeTab.offsetLeft;
-        var tabWidth = activeTab.offsetWidth;
-        var navWidth = heroNav.offsetWidth;
-        heroNav.scrollLeft = tabLeft - (navWidth / 2) + (tabWidth / 2);
-      }
+      if (!activeTab) return;
+      var scroller = (tabsWrapper && tabsWrapper.scrollWidth > tabsWrapper.clientWidth) ? tabsWrapper : heroNav;
+      if (!scroller) return;
+      var tabLeft = activeTab.offsetLeft;
+      var tabWidth = activeTab.offsetWidth;
+      var viewWidth = scroller.clientWidth;
+      var target = tabLeft - (viewWidth / 2) + (tabWidth / 2);
+      scroller.scrollLeft = Math.max(0, target);
     }
     setTop();
     centerActive();
@@ -446,8 +476,8 @@
     </div>
   </div>
   <div id="cartBackdrop" class="cart-backdrop" onclick="toggleCart()"></div>
-  <main class="container">
-    <h2>About Arumee</h2>
+  <main class="container" id="main-content">
+    <h1>About Arumee</h1>
     <p class="lead">Welcome to Arumee — where purity meets tradition. We create natural, cold-pressed oils using the ancestral wooden pressed (marachekku) method to bring you the true taste and goodness of nature.</p>
 
     <h2 class="section-subtitle">Our Journey</h2>
@@ -567,7 +597,7 @@
       updateCartDisplay(); 
       // Navigate to homepage oils section and show toast
       sessionStorage.setItem('showClearToast', 'true');
-      window.location.href='index.html#oils';
+      window.location.href='index.html#oilsGrid';
     };
     window.proceedToOrder = function(){ 
       if(!orderItems.length){ return; } 

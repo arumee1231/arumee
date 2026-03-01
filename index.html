@@ -13,6 +13,7 @@
 <meta content="website" property="og:type"/>
 <meta content="https://arumee.co.in/" property="og:url"/>
 <meta content="https://arumee.co.in/arumee_assets/logo.png" property="og:image"/>
+<meta content="Arumee" property="og:site_name"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="Buy Cold-Pressed Oils Online | Coconut, Groundnut &amp; Gingelly | Arumee" name="twitter:title"/>
 <meta content="Cold-pressed coconut oil and wooden-pressed (marachekku) groundnut &amp; gingelly oils. No chemicals, no heat. FSSAI certified. Free delivery within Tamil Nadu." name="twitter:description"/>
@@ -43,12 +44,14 @@
     // reCAPTCHA does not reliably support file:// origins (even with the test key).
     // For local file previews, hide the widget and skip loading Google's script.
     if (location.protocol === 'file:') {
+      window.__LOCAL_PREVIEW_MODE = true;
       window.__RECAPTCHA_DISABLED = true;
       var hide = function(){
         var el = document.querySelector('.g-recaptcha');
         if (el) {
-          el.style.display = 'none';
-          el.setAttribute('aria-hidden', 'true');
+          el.style.display = 'block';
+          el.setAttribute('aria-hidden', 'false');
+          el.innerHTML = '<div style="font-size:12px;line-height:1.45;color:#6b7c74;background:#f3f3f3;border-radius:8px;padding:10px 12px;">Preview mode: CAPTCHA is disabled on file://. Test CAPTCHA on live domain or localhost.</div>';
         }
       };
       if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', hide);
@@ -86,6 +89,13 @@
     s.src = 'https://www.google.com/recaptcha/api.js?onload=__onRecaptchaLoaded&render=explicit';
     s.async = true;
     s.defer = true;
+    s.onerror = function(){
+      window.__RECAPTCHA_LOAD_FAILED = true;
+      var el = document.querySelector('.g-recaptcha');
+      if (el) {
+        el.innerHTML = '<div style="font-size:12px;line-height:1.45;color:#7a5d00;background:#fff8db;border-radius:8px;padding:10px 12px;">Captcha failed to load. Check internet/ad-blocker and refresh.</div>';
+      }
+    };
     document.head.appendChild(s);
   }());
 </script>
@@ -189,6 +199,14 @@
     },
     {
       "@type": "Question",
+      "name": "Why can online delivery pricing differ from direct mill purchase pricing?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Online delivery pricing may differ from direct mill purchase pricing because it includes packaging, order handling, and transportation to your address. The total online amount covers these delivery-related costs for doorstep convenience."
+      }
+    },
+    {
+      "@type": "Question",
       "name": "How do I pay for my order?",
       "acceptedAnswer": {
         "@type": "Answer",
@@ -252,6 +270,23 @@
   "sameAs": ["https://arumee.co.in/"]
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Arumee",
+  "url": "https://arumee.co.in/",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Arumee",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://arumee.co.in/arumee_assets/logo.png"
+    }
+  },
+  "inLanguage": "en-IN"
+}
+</script>
 <style>
     :root {
       --green: #1e4d32;
@@ -278,26 +313,24 @@
     }
     html {
       overflow-x: hidden;
+      overflow-y: scroll;
       width: 100%;
-      scroll-behavior: smooth;
+      scroll-behavior: auto;
+      scrollbar-gutter: stable;
     }
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
       color: var(--ink);
       background: var(--cream);
-      scroll-behavior: smooth;
+      scroll-behavior: auto;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
       width: 100%;
       position: relative;
     }
-    /* Mobile only: fade-in masks sticky-nav slide-in on navigation */
-    @media (max-width: 768px) {
-      body { animation: page-in 0.12s ease-out both; }
-    }
-    @keyframes page-in { from { opacity: 0; } to { opacity: 1; } }
+    /* Keep page static during cross-document navigations; transitions are handled below */
     .container { width: min(1200px, 92vw); margin: 0 auto; }
 
     /* STICKY NAVIGATION BAR */
@@ -356,6 +389,8 @@
       color: var(--green);
       font-weight: 600;
       font-size: 14px;
+      line-height: 1.2;
+      letter-spacing: 0.01em;
       cursor: pointer;
       transition: all 0.3s ease;
       text-decoration: none;
@@ -473,6 +508,7 @@
 
     /* HERO NAVIGATION TABS (separate bar below hero) */
     .hero-tabs-wrapper { 
+      position: -webkit-sticky;
       position: sticky; 
       top: 0; /* Back to top: 0 for desktop */
       background: linear-gradient(90deg, rgba(14,40,31,0.85), rgba(30,77,50,0.85)); 
@@ -481,6 +517,14 @@
       border-bottom: 2px solid rgba(157, 124, 42, 0.4); 
       box-shadow: 0 4px 20px -4px rgba(0,0,0,0.35);
       z-index: 1200; 
+    }
+    .hero-tabs-wrapper.is-pinned {
+      position: fixed;
+      left: 0;
+      right: 0;
+    }
+    .hero-tabs-placeholder {
+      height: 0;
     }
     
     /* Tab top offset on mobile is controlled dynamically by JS (setTop).
@@ -505,8 +549,8 @@
       border-right: 1px solid rgba(255, 255, 255, 0.1); 
       color: rgba(255, 255, 255, 0.9); 
       font-size: 13px; 
-      font-weight: 600; 
-      transition: all 0.3s ease; 
+      font-weight: 700; 
+      transition: none; 
       text-decoration: none; 
       white-space: nowrap;
     }
@@ -524,9 +568,11 @@
       /* stronger active tab styles for clear differentiation */
       background: linear-gradient(180deg, rgba(21,61,40,1), rgba(30,77,50,1));
       color: #fff;
-      font-weight: 800;
+      font-weight: 700;
       position: relative;
       box-shadow: 0 6px 18px rgba(16,45,33,0.18);
+      pointer-events: none;
+      cursor: default;
     }
     .hero-nav-tab.active::after {
       content: '';
@@ -549,18 +595,21 @@
       .hero-tabs-wrapper {
         position: sticky;
         top: 0; /* JS (setTop + MutationObserver) handles the offset */
-        overflow: hidden;
-        z-index: 1200;
-      }
-      .hero-nav {
-        justify-content: flex-start;
         overflow-x: auto;
+        overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
+        z-index: 1200;
+      }
+      .hero-tabs-wrapper::-webkit-scrollbar { display: none; }
+      .hero-nav {
+        justify-content: flex-start;
+        width: max-content;
+        min-width: 100%;
+        margin: 0;
         padding-bottom: 0;
         margin-bottom: 0;
       }
-      .hero-nav::-webkit-scrollbar { display: none; }
       .hero-nav-tab {
         padding: 11px 16px;
         font-size: 12px;
@@ -730,9 +779,9 @@
     
     /* Modern Hero CTAs */
     .hero-cta { 
-      margin-top: 16px; 
+      margin-top: 18px; 
       display: flex; 
-      gap: 10px; 
+      gap: 12px; 
       flex-wrap: wrap;
       animation: fade-in-up 0.8s ease 0.5s both;
     }
@@ -743,6 +792,9 @@
       border: none;
       font-size: 14px;
       font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: 0.01em;
+      min-height: 44px;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       text-decoration: none;
@@ -801,7 +853,7 @@
     }
     
     .btn.fill:hover { 
-      transform: translateY(-4px) scale(1.05); 
+      transform: translateY(-3px) scale(1.02); 
       box-shadow: 
         0 15px 40px rgba(157, 124, 42, 0.5),
         0 0 0 2px rgba(255, 255, 255, 0.3) inset;
@@ -860,7 +912,8 @@
       margin-bottom: 12px;
       margin-top: 0;
       font-weight: 800;
-      letter-spacing: -1px;
+      letter-spacing: -0.02em;
+      line-height: 1.14;
       position: relative;
       display: inline-block;
       width: 100%;
@@ -884,6 +937,16 @@
       margin-top: 20px;
       font-weight: 500;
       letter-spacing: 0.3px;
+      line-height: 1.6;
+    }
+
+    .benefit-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: var(--green);
+      margin: 0 0 12px;
+      line-height: 1.28;
+      letter-spacing: -0.01em;
     }
 
     /* IMPORTANT INFORMATION BANNER */
@@ -2574,18 +2637,31 @@
 /* --- Carousel inactive grayscale effect (STRICTLY mobile only) --- */
 @media screen and (max-width: 767px) {
   #oils .grid .card {
-    filter: grayscale(0.8) brightness(0.85);
+    filter: grayscale(0.28) saturate(0.88) brightness(0.94);
+    opacity: 0.84;
+    transform: scale(0.985);
     transition:
       transform .28s cubic-bezier(.2,.9,.2,1),
       box-shadow .28s cubic-bezier(.2,.9,.2,1),
-      filter .4s ease;
+      filter .4s ease,
+      opacity .28s ease;
   }
   #oils .grid .card.active-slide {
-    filter: grayscale(0) brightness(1);
-    transform: translateY(-6px);
+    filter: grayscale(0) saturate(1) brightness(1);
+    opacity: 1;
+    transform: translateY(-6px) scale(1);
     border-color: var(--green);
     box-shadow: 0 20px 48px rgba(30,77,50,0.18);
     z-index: 4;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #oils .grid .card,
+  #oils .grid .card.active-slide,
+  #oils .pic-wrap img {
+    transform: none !important;
+    transition: none !important;
   }
 }
 
@@ -2867,6 +2943,11 @@ h2.section-title {
    ════════════════════════════════════════════════════════ */
 
 /* Fixed 3-column grid – never collapses, max width contained */
+#oilsGrid { scroll-margin-top: 96px; }
+@media (max-width: 768px) {
+  #oilsGrid { scroll-margin-top: 132px; }
+}
+
 @media (min-width: 769px) {
   #oils .grid {
     display: grid;
@@ -2876,6 +2957,7 @@ h2.section-title {
     margin: 0 auto;
     overflow: visible;
     padding: 4px 0 8px;
+    align-items: stretch;
   }
 }
 
@@ -2885,6 +2967,7 @@ h2.section-title {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  height: 100%;
   border: 1.5px solid rgba(30,77,50,0.10);
   box-shadow: 0 2px 12px rgba(0,0,0,0.06);
   transition: transform 0.32s cubic-bezier(.2,.9,.2,1), box-shadow 0.32s ease, border-color 0.32s ease;
@@ -2892,7 +2975,7 @@ h2.section-title {
   background: #fff;
 }
 #oils .grid .card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-6px) scale(1.01);
   box-shadow: 0 16px 40px rgba(30,77,50,0.14);
   border-color: rgba(157,124,42,0.4);
 }
@@ -2977,10 +3060,12 @@ h2.section-title {
 #oils .grid .title {
   font-size: 15px;
   font-weight: 700;
-  min-height: unset;
+  min-height: 44px;
   margin: 7px 0 4px;
   line-height: 1.35;
   color: var(--ink);
+  display: flex;
+  align-items: center;
 }
 #oils .grid .price {
   font-size: 28px;
@@ -3090,12 +3175,14 @@ h2.section-title {
 ::view-transition-new(site-tabs),
 ::view-transition-old(site-cart),
 ::view-transition-new(site-cart) { animation: none; mix-blend-mode: normal; }
-/* Brief root cross-fade for the content area */
+::view-transition-group(site-tabs),
+::view-transition-group(site-cart) { z-index: 2147483647; }
+::view-transition-group(root) { z-index: 2147483646; }
+/* Disable root animation for seamless tab-to-tab navigation */
 ::view-transition-old(root),
-::view-transition-new(root) { animation-duration: 0.18s; }
+::view-transition-new(root) { animation: none; }
 
-/* Sticky nav is controlled purely by JS scroll + cart state.
-   The body page-in fade-in (0.12s) masks any blink on navigation back to this page. */
+/* Sticky nav is controlled purely by JS scroll + cart state. */
 </style>
 <script>
   /* Preload: set data-has-cart on <html> synchronously before any render,
@@ -3132,6 +3219,7 @@ h2.section-title {
   h2.section-title { font-size: 32px; margin-bottom: 10px; }
   h2.section-title::after { width: 68px; }
   p.lead { font-size: 16px; margin-bottom: 28px; margin-top: 16px; }
+  .benefit-card-title { font-size: 20px; margin-bottom: 10px; }
 
   /* Info banner: tighter */
   .important-info { margin: 14px auto 18px; padding: 12px 12px; border-radius: 14px; }
@@ -3176,7 +3264,7 @@ h2.section-title {
 
   /* Toast + FABs: keep clear of iOS bottom bar */
   .toast { top: 16px; padding: 12px 16px; border-radius: 14px; font-size: 14px; }
-  #scrollTop { width: 54px; height: 54px; right: 16px; bottom: 86px; }
+  #scrollTop { width: 54px; height: 54px; right: 23px; bottom: 86px; }
   #heroCartFab { right: 16px; bottom: 86px; padding: 10px 14px; font-size: 14px; }
 }
 </style>
@@ -3222,7 +3310,7 @@ h2.section-title {
 </div>
 </div>
 <div class="hero-cta">
-<a class="btn fill" href="#oils">Shop Now &rarr;</a>
+<a class="btn fill" href="#oilsGrid">Shop Now &rarr;</a>
 <a class="btn outline" href="combo.html">View Combos</a>
 </div>
 </div>
@@ -3230,6 +3318,7 @@ h2.section-title {
 </div>
 </header>
 <!-- Hero Tabs Below Banner -->
+<div aria-hidden="true" id="heroTabsSentinel"></div>
 <div aria-label="Primary site sections" class="hero-tabs-wrapper" role="tablist">
 <nav class="hero-nav">
 <a aria-selected="true" class="hero-nav-tab active" href="index.html" role="tab">Our Oils</a>
@@ -3239,33 +3328,50 @@ h2.section-title {
 <a aria-selected="false" class="hero-nav-tab" href="contact.html" role="tab">Contact Us</a>
 </nav>
 </div>
+<div aria-hidden="true" class="hero-tabs-placeholder" id="heroTabsPlaceholder"></div>
 <script>
 (function(){
   var stickyNav = document.getElementById('stickyNav');
   var tabsWrapper = document.querySelector('.hero-tabs-wrapper');
+  var tabsSentinel = document.getElementById('heroTabsSentinel');
+  var tabsPlaceholder = document.getElementById('heroTabsPlaceholder');
   var heroNav = document.querySelector('.hero-nav');
   var activeTab = document.querySelector('.hero-nav-tab.active');
 
   function setTop() {
-    if (!tabsWrapper || window.innerWidth > 768) return;
+    if (!tabsWrapper) return;
     /* Only account for the sticky nav height when it is actually visible */
     var navH = (stickyNav && stickyNav.classList.contains('visible'))
                ? stickyNav.offsetHeight
                : 0;
     tabsWrapper.style.top = navH + 'px';
+    updatePinnedTabs();
+  }
+
+  function updatePinnedTabs() {
+    if (!tabsWrapper || !tabsSentinel) return;
+    var topOffset = parseFloat(tabsWrapper.style.top || '0') || 0;
+    var shouldPin = tabsSentinel.getBoundingClientRect().top <= topOffset;
+    tabsWrapper.classList.toggle('is-pinned', shouldPin);
+    if (tabsPlaceholder) {
+      tabsPlaceholder.style.height = shouldPin ? tabsWrapper.offsetHeight + 'px' : '0px';
+    }
   }
 
   function centerActive() {
-    if (heroNav && activeTab) {
-      var tabLeft = activeTab.offsetLeft;
-      var tabWidth = activeTab.offsetWidth;
-      var navWidth = heroNav.offsetWidth;
-      heroNav.scrollLeft = tabLeft - (navWidth / 2) + (tabWidth / 2);
-    }
+    if (!activeTab) return;
+    var scroller = (tabsWrapper && tabsWrapper.scrollWidth > tabsWrapper.clientWidth) ? tabsWrapper : heroNav;
+    if (!scroller) return;
+    var tabLeft = activeTab.offsetLeft;
+    var tabWidth = activeTab.offsetWidth;
+    var viewWidth = scroller.clientWidth;
+    var target = tabLeft - (viewWidth / 2) + (tabWidth / 2);
+    scroller.scrollLeft = Math.max(0, target);
   }
 
   setTop();
   centerActive();
+  updatePinnedTabs();
   var resizeRaf = 0;
   function onResize(){
     if (resizeRaf) return;
@@ -3273,9 +3379,24 @@ h2.section-title {
       resizeRaf = 0;
       setTop();
       centerActive();
+      updatePinnedTabs();
     });
   }
   window.addEventListener('resize', onResize);
+  window.addEventListener('scroll', updatePinnedTabs, { passive: true });
+
+  var headerTabs = document.querySelectorAll('.hero-nav-tab');
+  headerTabs.forEach(function(tab){
+    tab.addEventListener('click', function(e){
+      var href = tab.getAttribute('href') || '';
+      if (!href || href.charAt(0) === '#') return;
+      var targetPath = href.replace(/^\.\//, '').replace(/^\//, '').toLowerCase();
+      var currentPath = (window.location.pathname || '').split('/').pop().toLowerCase() || 'index.html';
+      if (targetPath === currentPath) {
+        e.preventDefault();
+      }
+    });
+  });
 
   /* Re-run setTop whenever the sticky nav gains/loses the 'visible' class */
   if (stickyNav && window.MutationObserver) {
@@ -3348,7 +3469,7 @@ h2.section-title {
     <p class="important-info__text">Delivery is currently available within Tamil Nadu only. We&rsquo;ll expand to other states soon.</p>
   </div>
 </div>
-<div class="grid">
+<div class="grid" id="oilsGrid">
 <article aria-labelledby="prod-coconut-title" class="card">
 <div class="product-badge" style="background:linear-gradient(135deg,#2a7d4f,#1e6040);">Cold Pressed</div>
 <div class="pic-wrap"><img alt="Cold‑Pressed Coconut Oil bottle" decoding="async" height="240" loading="lazy" src="arumee_assets/mockup_coconut.png" width="240"/></div>
@@ -3453,7 +3574,7 @@ h2.section-title {
 <!-- Natural.png icon asset -->
 <img alt="100% Pure &amp; Natural" loading="lazy" src="arumee_assets/Natural.png" style="width:44px;height:44px;display:block;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.25));"/>
 </div>
-<h3 style="font-family: 'Playfair Display', serif; font-size: 22px; color: var(--green); margin: 0 0 12px;">100% Pure &amp; Natural</h3>
+<h3 class="benefit-card-title">100% Pure &amp; Natural</h3>
 <p style="color: #666; line-height: 1.6; margin: 0;">No chemicals, no preservatives. Just pure, cold-pressed goodness from farm to bottle.</p>
 </div>
 <div class="benefit-card" style="text-align: center; padding: 24px; border-radius: 16px; transition: all 0.3s ease;">
@@ -3482,17 +3603,17 @@ h2.section-title {
 </g>
 </svg>
 </div>
-<h3 style="font-family: 'Playfair Display', serif; font-size: 22px; color: var(--green); margin: 0 0 12px;">Traditional Methods</h3>
+<h3 class="benefit-card-title">Traditional Methods</h3>
 <p style="color: #666; line-height: 1.6; margin: 0;">Wooden cold-pressed technique preserves nutrients and authentic flavor in every drop.</p>
 </div>
 <div class="benefit-card" style="text-align: center; padding: 24px; border-radius: 16px; transition: all 0.3s ease;">
 <div style="width: 64px; height: 64px; margin: 0 auto 16px; background: linear-gradient(135deg, var(--green), var(--green-dark)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; box-shadow: var(--shadow-md);">✓</div>
-<h3 style="font-family: 'Playfair Display', serif; font-size: 22px; color: var(--green); margin: 0 0 12px;">FSSAI Certified</h3>
+<h3 class="benefit-card-title">FSSAI Certified</h3>
 <p style="color: #666; line-height: 1.6; margin: 0;">Quality you can trust. Licensed and certified for your peace of mind.</p>
 </div>
 <div class="benefit-card" style="text-align: center; padding: 24px; border-radius: 16px; transition: all 0.3s ease;">
 <div style="width: 64px; height: 64px; margin: 0 auto 16px; background: linear-gradient(135deg, var(--gold), var(--gold-light)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; box-shadow: var(--shadow-md);">🚚</div>
-<h3 style="font-family: 'Playfair Display', serif; font-size: 22px; color: var(--green); margin: 0 0 12px;">Fresh Delivery</h3>
+<h3 class="benefit-card-title">Fresh Delivery</h3>
 <p style="color: #666; line-height: 1.6; margin: 0;">Direct from our mill to your doorstep. Fresh, sealed, and ready to use.</p>
 </div>
 </div>
@@ -3526,6 +3647,8 @@ h2.section-title {
     gap: 12px;
     list-style: none;
     user-select: none;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
   }
   .faq-q::after {
     content: '+';
@@ -3592,6 +3715,13 @@ h2.section-title {
     <h3 class="faq-q" itemprop="name" onclick="this.closest('.faq-item').classList.toggle('open')">Is delivery free? Where do you deliver?</h3>
     <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
       <p itemprop="text">Yes, all Arumee orders include free delivery within Tamil Nadu. We currently deliver only within Tamil Nadu. We&rsquo;ll expand to other states soon. We dispatch from our mill in Namakkal, Tamil Nadu. Most orders arrive within 3–5 business days.</p>
+    </div>
+  </div>
+
+  <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+    <h3 class="faq-q" itemprop="name" onclick="this.closest('.faq-item').classList.toggle('open')">Why can online delivery pricing differ from direct mill purchase pricing?</h3>
+    <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+      <p itemprop="text">Online delivery pricing may differ from direct mill purchase pricing because it includes packaging, order handling, and transportation to your address. The total online amount covers these delivery-related costs for doorstep convenience.</p>
     </div>
   </div>
 
@@ -3764,6 +3894,24 @@ h2.section-title {
       if (savedCart) {
         try {
           orderItems = JSON.parse(savedCart);
+
+          // If chat cart is empty, remove stale chat-mirrored lines from page cart
+          try {
+            const rawChat = localStorage.getItem('arumee_cart') || '[]';
+            const chatArr = JSON.parse(rawChat);
+            const hasChatCart = Array.isArray(chatArr) && chatArr.length > 0;
+            if (!hasChatCart && Array.isArray(orderItems)) {
+              const beforeLen = orderItems.length;
+              orderItems = orderItems.filter(function(item) {
+                if (!item) return false;
+                const key = String(item.itemKey || '');
+                return !(item.fromChat || key.indexOf('chat:') === 0);
+              });
+              if (orderItems.length !== beforeLen) {
+                localStorage.setItem('arumeeCart', JSON.stringify(orderItems));
+              }
+            }
+          } catch(ignoreChatPruneErr) {}
 
           // Migration: reconcile stored item prices with current site prices
           // For non-bundle items, update price and total according to current `oilOptions`.
@@ -3946,7 +4094,14 @@ h2.section-title {
       document.getElementById('cartRestoreModal').classList.remove('show');
       orderItems = [];
       updateOrderDetails();
-      localStorage.removeItem('arumeeCart');
+      try {
+        localStorage.removeItem('arumeeCart');
+        localStorage.removeItem('arumee_cart');
+        localStorage.removeItem('arumee_chat');
+        localStorage.removeItem('arumee_delivery');
+      } catch(e) {}
+      // Tell any listeners (chat widget / nav badges) to refresh cart state now
+      try { window.dispatchEvent(new CustomEvent('arumee-cart-updated')); } catch(e) {}
     }
 
     // Show order guidance when clicking "Order Without Payment"
@@ -4061,6 +4216,14 @@ h2.section-title {
       }
 
       if (isCartOpen) {
+        try {
+          if (typeof window.waCloseChat === 'function') {
+            window.waCloseChat();
+          } else if (typeof window.waToggle === 'function') {
+            window.waToggle();
+          }
+        } catch(e) {}
+
         if (cartDropdown) cartDropdown.classList.add('open');
         if (backdrop) backdrop.classList.add('visible');
         if (window.matchMedia('(max-width:768px)').matches) { document.body.classList.add('cart-open'); }
@@ -4537,7 +4700,7 @@ h2.section-title {
       }, 3000);
     }
 
-    // If user clicks the order form with an empty cart, redirect them to oils section
+    // If user clicks the order form with an empty cart, redirect to first product card CTA
     document.addEventListener('DOMContentLoaded', () => {
       const orderSection = document.getElementById('order');
       if (orderSection) {
@@ -4548,10 +4711,15 @@ h2.section-title {
           if (Array.isArray(orderItems) && orderItems.length === 0) {
             e.preventDefault();
             e.stopPropagation();
-            showToast('Select oil then proceed to order');
-            const oilsSection = document.getElementById('oils');
-            if (oilsSection) {
-              oilsSection.scrollIntoView({ behavior: 'smooth' });
+            showToast('Select oil and tap Add to Order');
+            const firstAddBtn = document.querySelector('#oilsGrid .card .add-to-order') || document.querySelector('#oils .grid .card .add-to-order');
+            const firstCard = firstAddBtn ? firstAddBtn.closest('.card') : null;
+            if (firstCard) {
+              firstCard.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+              setTimeout(function(){ try { firstAddBtn.focus({ preventScroll: true }); } catch(err) {} }, 420);
+            } else {
+              const oilsSection = document.getElementById('oilsGrid') || document.getElementById('oils');
+              if (oilsSection) oilsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
           }
         }, true); // capture to intercept before inputs
@@ -4675,24 +4843,68 @@ h2.section-title {
     // ── Tamil Nadu Pincode Validation (lazy-loaded) ──
     (function(){
       var __tnPinsPromise = null;
+      var __tnPinsStorageKey = 'arumee_tn_pins_cache_v1';
 
-      function loadTnPinsData() {
-        if (window._tnPinsData && typeof window._tnPinsData === 'object') {
-          return Promise.resolve(window._tnPinsData);
+      function readPinsFromStorage() {
+        try {
+          var raw = localStorage.getItem(__tnPinsStorageKey);
+          if (!raw) return null;
+          var parsed = JSON.parse(raw);
+          return (parsed && typeof parsed === 'object') ? parsed : null;
+        } catch(e) {
+          return null;
         }
-        if (__tnPinsPromise) return __tnPinsPromise;
+      }
 
-        __tnPinsPromise = fetch('arumee_assets/tn_pins.json', { cache: 'force-cache' })
+      function savePinsToStorage(pins) {
+        try {
+          if (pins && typeof pins === 'object') {
+            localStorage.setItem(__tnPinsStorageKey, JSON.stringify(pins));
+          }
+        } catch(e) {}
+      }
+
+      function fetchPinsFrom(url) {
+        return fetch(url, { cache: 'force-cache' })
           .then(function(res){
-            if (!res.ok) throw new Error('Failed to load pincode data');
+            if (!res || !res.ok) throw new Error('Failed to load pincode data');
             return res.json();
           })
           .then(function(data){
-            window._tnPinsData = (data && typeof data === 'object') ? data : {};
+            if (!data || typeof data !== 'object') throw new Error('Invalid pincode data');
+            return data;
+          });
+      }
+
+      function loadTnPinsData() {
+        if (location.protocol === 'file:') {
+          return Promise.resolve(null);
+        }
+        if (window._tnPinsData && typeof window._tnPinsData === 'object') {
+          return Promise.resolve(window._tnPinsData);
+        }
+
+        var storedPins = readPinsFromStorage();
+        if (storedPins) {
+          window._tnPinsData = storedPins;
+        }
+
+        if (__tnPinsPromise) return __tnPinsPromise;
+
+        __tnPinsPromise = fetchPinsFrom('/arumee_assets/tn_pins.json')
+          .catch(function(){
+            return fetchPinsFrom('arumee_assets/tn_pins.json');
+          })
+          .then(function(data){
+            window._tnPinsData = data;
+            savePinsToStorage(data);
             return window._tnPinsData;
           })
           .catch(function(err){
             __tnPinsPromise = null;
+            if (window._tnPinsData && typeof window._tnPinsData === 'object') {
+              return window._tnPinsData;
+            }
             throw err;
           });
 
@@ -4732,7 +4944,9 @@ h2.section-title {
 
         if (!pins) {
           statusEl.style.cssText = 'font-size:12px;border-radius:7px;padding:8px 11px;margin:0;line-height:1.45;color:#6b7c74;background:#f3f3f3;';
-          statusEl.innerHTML = 'Unable to check pincode right now. Please try again.';
+          statusEl.innerHTML = (location.protocol === 'file:')
+            ? 'Preview mode: pincode check is unavailable on file://. It will work on live site.'
+            : 'Unable to check pincode right now. Please try again.';
           if (distInput) distInput.value = '';
           if (distWrap)  distWrap.style.display = 'none';
           return;
@@ -4852,6 +5066,10 @@ h2.section-title {
         const hasCaptchaEl = !!document.querySelector('.g-recaptcha');
         const captchaDisabled = !!window.__RECAPTCHA_DISABLED;
         if (hasCaptchaEl && !captchaDisabled) {
+          if (window.__RECAPTCHA_LOAD_FAILED) {
+            alert('Captcha failed to load. Please disable ad-blocker or check internet, then refresh.');
+            return;
+          }
           if (!window.grecaptcha || typeof window.grecaptcha.getResponse !== 'function' || !window.grecaptcha.getResponse()) {
             alert('Please verify you are not a robot.');
             return;
@@ -4912,17 +5130,19 @@ h2.section-title {
         return;
       }
       let tnPins = null;
-      try {
-        tnPins = await (window.loadTnPinsData ? window.loadTnPinsData() : Promise.resolve(window._tnPinsData || null));
-      } catch (pinLoadErr) {
-        alert('Unable to validate pincode right now. Please check your internet connection and try again.');
-        document.getElementById('input-pincode').focus();
-        return;
-      }
-      if (!tnPins || !tnPins[pincode]) {
-        alert('Sorry, we currently deliver only within Tamil Nadu. Please enter a valid Tamil Nadu pincode.');
-        document.getElementById('input-pincode').focus();
-        return;
+      if (location.protocol !== 'file:') {
+        try {
+          tnPins = await (window.loadTnPinsData ? window.loadTnPinsData() : Promise.resolve(window._tnPinsData || null));
+        } catch (pinLoadErr) {
+          alert('Unable to validate pincode right now. Please check your internet connection and try again.');
+          document.getElementById('input-pincode').focus();
+          return;
+        }
+        if (!tnPins || !tnPins[pincode]) {
+          alert('Sorry, we currently deliver only within Tamil Nadu. Please enter a valid Tamil Nadu pincode.');
+          document.getElementById('input-pincode').focus();
+          return;
+        }
       }
 
       // Ensure district field is in sync even if user didn't pause on 6 digits
@@ -5067,14 +5287,11 @@ h2.section-title {
       });
     }
     
-    // Scroll to top on page load/refresh - prevent browser scroll restoration
+    // Keep browser from restoring stale scroll on reload/navigation
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
     // NOTE: Avoid using beforeunload handlers — they disable the back/forward cache in many browsers.
-    window.addEventListener('load', () => {
-      window.scrollTo(0, 0);
-    });
     
     // Sticky Navigation - Smart Context-Aware Header
     const stickyNav = document.getElementById('stickyNav');
@@ -5203,8 +5420,6 @@ h2.section-title {
     
     // Also on DOMContentLoaded for faster trigger
     document.addEventListener('DOMContentLoaded', () => {
-      window.scrollTo(0, 0);
-      
       // Load cart from localStorage FIRST before updating display
       loadCartFromStorage();
       updateOrderDetails();
