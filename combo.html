@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
   <meta name="theme-color" content="#ffffff" />
   <title>Combo Offers — Buy Cold-Pressed Oil Bundles &amp; Save | Arumee</title>
-  <meta name="description" content="Save more with Arumee combo packs. Bundle deals on cold-pressed coconut, groundnut &amp; gingelly oils. 1L, 2L &amp; 5L packs. Free delivery across India. Best value."/>
+  <meta name="description" content="Save more with Arumee combo packs. Bundle deals on cold-pressed coconut, groundnut &amp; gingelly oils. 1L, 2L &amp; 5L packs. Free delivery across Tamil Nadu. Best value."/>
   <meta name="keywords" content="cold pressed oil combo pack india, buy oil bundle offer, coconut oil family pack, groundnut oil bulk buy, gingelly oil combo, arumee combo offer, cold pressed oil discount"/>
   <meta name="robots" content="index,follow"/>
   <link rel="canonical" href="https://arumee.co.in/combo.html"/>
@@ -16,10 +16,41 @@
   <meta property="og:image" content="https://arumee.co.in/arumee_assets/logo.png"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="Combo Oil Bundles — Save More | Arumee"/>
-  <meta name="twitter:description" content="Bundle deals on cold-pressed coconut, groundnut &amp; gingelly oils. Free delivery across India."/>
+  <meta name="twitter:description" content="Bundle deals on cold-pressed coconut, groundnut &amp; gingelly oils. Free delivery across Tamil Nadu."/>
+  <meta name="twitter:image" content="https://arumee.co.in/arumee_assets/logo.png"/>
+  <meta property="og:site_name" content="Arumee"/>
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://arumee.co.in/"},{"@type":"ListItem","position":2,"name":"Combo Offers","item":"https://arumee.co.in/combo.html"}]}
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Arumee (Mani Flour & Oil Mill)",
+    "url": "https://arumee.co.in/",
+    "image": "https://arumee.co.in/arumee_assets/logo.png",
+    "telephone": ["+919751425598", "+919443342098"],
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Namakkal",
+      "addressRegion": "Tamil Nadu",
+      "addressCountry": "IN"
+    },
+    "areaServed": {
+      "@type": "AdministrativeArea",
+      "name": "Tamil Nadu"
+    },
+    "makesOffer": {
+      "@type": "OfferCatalog",
+      "name": "Cold-Pressed Oil Combo Offers"
+    }
+  }
+  </script>
 
   <link rel="icon" type="image/png" href="arumee_assets/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@400;500;600&display=swap" />
   <link rel="stylesheet" href="arumee_assets/cart.css" />
 
@@ -40,6 +71,13 @@
       --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
     }
     * { box-sizing: border-box; }
+    html {
+      overflow-y: scroll;
+      scrollbar-gutter: stable;
+    }
+    .skip-link { position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden; }
+    .skip-link:focus { position:fixed; left:16px; top:16px; width:auto; height:auto; padding:10px 14px; background:#000; color:#fff; z-index:10001; border-radius:8px; }
+    :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
@@ -48,10 +86,13 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
-    @media (max-width: 768px) {
-      body { animation: page-in 0.12s ease-out both; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
     }
-    @keyframes page-in { from { opacity: 0; } to { opacity: 1; } }
     .container { width: min(1100px, 92vw); margin: 0 auto; }
 
     .old-price { text-decoration: line-through; color: #777; margin-right:6px; font-size: inherit; font-weight:700; }
@@ -104,6 +145,8 @@
       color: var(--green);
       font-weight: 600;
       font-size: 13px;
+      line-height: 1.2;
+      letter-spacing: 0.01em;
       cursor: pointer;
       transition: all 0.2s ease;
       text-decoration: none;
@@ -146,19 +189,23 @@
       border-right: 1px solid rgba(255, 255, 255, 0.1);
       color: rgba(255, 255, 255, 0.92);
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: 0.01em;
       text-decoration: none;
       white-space: nowrap;
-      transition: background 0.25s ease;
+      transition: none;
     }
     .hero-nav-tab:last-child { border-right: none; }
     .hero-nav-tab:hover { background: rgba(255, 255, 255, 0.12); color: #fff; }
     .hero-nav-tab.active {
       background: linear-gradient(180deg, rgba(21,61,40,1), rgba(30,77,50,1));
       color: #fff;
-      font-weight: 800;
+      font-weight: 700;
       position: relative;
       box-shadow: 0 6px 18px rgba(16,45,33,0.18);
+      pointer-events: none;
+      cursor: default;
     }
     .hero-nav-tab.active::after {
       content: '';
@@ -174,19 +221,23 @@
     @media (max-width: 768px) {
       .hero-tabs-wrapper {
         top: calc(44px + env(safe-area-inset-top, 0px));
-        overflow: hidden;
-      }
-      .hero-nav {
-        justify-content: flex-start;
         overflow-x: auto;
+        overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
       }
-      .hero-nav::-webkit-scrollbar { display: none; }
+      .hero-tabs-wrapper::-webkit-scrollbar { display: none; }
+      .hero-nav {
+        justify-content: flex-start;
+        width: max-content;
+        min-width: 100%;
+        margin: 0;
+      }
       .hero-nav-tab {
         flex: 0 0 auto;
         padding: 11px 16px;
         font-size: 12px;
+        letter-spacing: 0.01em;
         min-height: 44px;
         display: inline-flex;
         align-items: center;
@@ -206,8 +257,10 @@
       color: var(--green);
       font-size: 34px;
       margin: 0 0 6px;
+      line-height: 1.14;
+      letter-spacing: -0.02em;
     }
-    .lead { margin: 0 0 26px; font-weight: 600; color: rgba(10,40,23,0.75); }
+    .lead { margin: 0 0 26px; font-weight: 600; color: rgba(10,40,23,0.75); line-height: 1.58; }
 
     footer { background: linear-gradient(135deg,rgba(30,77,50,.08),rgba(157,124,42,.05)); border-top:1px solid rgba(30,77,50,0.15); text-align:center; padding:16px 20px; color:var(--green); font-size:13px; }
     /* TOAST NOTIFICATION (match index.html) */
@@ -269,7 +322,8 @@
       font-weight: 800;
       color: var(--green);
       margin: 0 0 10px;
-      line-height: 1.15;
+      line-height: 1.14;
+      letter-spacing: -0.02em;
     }
     .page-header-sub {
       font-size: 15px;
@@ -331,6 +385,8 @@
       font-weight: 800;
       color: var(--green);
       margin: 0;
+      line-height: 1.22;
+      letter-spacing: -0.01em;
     }
     .oil-section-desc {
       font-size: 13px;
@@ -366,12 +422,12 @@
     @media (max-width: 600px) {
       .offers-grid {
         display: flex;
-        gap: 12px;
+        gap: 10px;
         overflow-x: auto;
         overflow-y: visible;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
-        padding: 4px 4px 16px;
+        padding: 4px 2px 14px;
         scrollbar-width: none;
         -ms-overflow-style: none;
       }
@@ -450,7 +506,8 @@
       font-weight: 800;
       color: var(--ink);
       margin: 0;
-      line-height: 1.1;
+      line-height: 1.18;
+      letter-spacing: -0.01em;
     }
     .offer-vol-sub {
       font-size: 11px;
@@ -500,10 +557,11 @@
       cursor: pointer;
       font-weight: 800;
       font-size: 13px;
+      line-height: 1.2;
       background: var(--green);
       color: #fff;
       transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
-      letter-spacing: 0.1px;
+      letter-spacing: 0.01em;
     }
     .offer-btn:hover {
       transform: translateY(-2px);
@@ -545,6 +603,26 @@
       .oil-section-name { font-size: 18px; }
       .oil-section-desc { font-size: 12px; }
 
+      /* Offer cards: tighter, consistent vertical rhythm on touch */
+      .offer-card {
+        padding: 14px 12px 12px;
+        border-radius: 14px;
+        gap: 5px;
+        filter: grayscale(0.12) saturate(0.94) brightness(0.97);
+        opacity: 0.9;
+        transform: scale(0.99);
+        transition: transform .24s ease, box-shadow .24s ease, filter .3s ease, opacity .24s ease;
+      }
+      .offer-card.featured,
+      .offer-card:focus-within,
+      .offer-card:hover {
+        filter: grayscale(0) saturate(1) brightness(1);
+        opacity: 1;
+        transform: translateY(-2px) scale(1);
+      }
+      .offer-price-block { margin: 2px 0 1px; }
+      .offer-btn { padding: 12px 10px; }
+
       /* Bump up offer btn tap target */
       .offer-btn { min-height: 44px; }
 
@@ -571,6 +649,35 @@
       .offer-card { padding: 14px 12px 12px; border-radius: 12px; }
       .oil-section-name { font-size: 17px; }
     }
+
+    /* Soft depth glide for mobile carousel cards */
+    @media (max-width: 600px) {
+      .offers-grid .offer-card {
+        filter: grayscale(0.18) saturate(0.9) brightness(0.95);
+        opacity: 0.82;
+        transform: scale(0.965);
+        transition: transform .32s cubic-bezier(.22,.61,.36,1), filter .32s ease, opacity .28s ease, box-shadow .32s ease;
+      }
+      .offers-grid .offer-card.active-slide {
+        filter: grayscale(0) saturate(1) brightness(1);
+        opacity: 1;
+        transform: translateY(-2px) scale(1);
+        box-shadow: var(--shadow-md);
+      }
+      .offers-grid .offer-card:not(.active-slide).featured {
+        filter: grayscale(0.1) saturate(0.94) brightness(0.98);
+        opacity: 0.9;
+      }
+    }
+
+    @media (max-width: 600px) and (prefers-reduced-motion: reduce) {
+      .offers-grid .offer-card,
+      .offers-grid .offer-card.active-slide {
+        transform: none;
+        transition: none;
+      }
+    }
+
     .site-footer {
       border-top: 1px solid rgba(30,77,50,0.12);
       padding: 16px 20px;
@@ -600,11 +707,15 @@
     ::view-transition-new(site-tabs),
     ::view-transition-old(site-cart),
     ::view-transition-new(site-cart) { animation: none; mix-blend-mode: normal; }
+    ::view-transition-group(site-tabs),
+    ::view-transition-group(site-cart) { z-index: 2147483647; }
+    ::view-transition-group(root) { z-index: 2147483646; }
     ::view-transition-old(root),
-    ::view-transition-new(root) { animation-duration: 0.18s; }
+    ::view-transition-new(root) { animation: none; }
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   <nav class="sticky-nav">
     <div class="nav-content">
       <div class="nav-brand">
@@ -612,7 +723,7 @@
         <span>ARUMEE</span>
       </div>
       <div class="nav-actions">
-        <a href="index.html#oils" class="nav-btn">Our Oils</a>
+        <a href="index.html#oilsGrid" class="nav-btn">Our Oils</a>
         <button class="nav-btn primary" type="button" onclick="toggleCart()">
           🛒
           <span class="nav-cart-count" id="navCartCount">0</span>
@@ -623,7 +734,7 @@
 
   <div class="hero-tabs-wrapper" role="tablist" aria-label="Primary site sections">
     <nav class="hero-nav">
-      <a href="index.html" class="hero-nav-tab" role="tab" aria-selected="false">Our Oils</a>
+      <a href="index.html#oilsGrid" class="hero-nav-tab" role="tab" aria-selected="false">Our Oils</a>
       <a href="combo.html" class="hero-nav-tab active" role="tab" aria-selected="true">Combo Offers</a>
       <a href="benefits.html" class="hero-nav-tab" role="tab" aria-selected="false">Benefits</a>
       <a href="about.html" class="hero-nav-tab" role="tab" aria-selected="false">About Us</a>
@@ -637,17 +748,19 @@
     var heroNav = document.querySelector('.hero-nav');
     var activeTab = document.querySelector('.hero-nav-tab.active');
     function setTop() {
-      if (stickyNav && tabsWrapper && window.innerWidth <= 768) {
-        tabsWrapper.style.top = stickyNav.offsetHeight + 'px';
-      }
+      if (!tabsWrapper) return;
+      var navVisible = stickyNav && window.getComputedStyle(stickyNav).display !== 'none';
+      tabsWrapper.style.top = (navVisible ? stickyNav.offsetHeight : 0) + 'px';
     }
     function centerActive() {
-      if (heroNav && activeTab) {
-        var tabLeft = activeTab.offsetLeft;
-        var tabWidth = activeTab.offsetWidth;
-        var navWidth = heroNav.offsetWidth;
-        heroNav.scrollLeft = tabLeft - (navWidth / 2) + (tabWidth / 2);
-      }
+      if (!activeTab) return;
+      var scroller = (tabsWrapper && tabsWrapper.scrollWidth > tabsWrapper.clientWidth) ? tabsWrapper : heroNav;
+      if (!scroller) return;
+      var tabLeft = activeTab.offsetLeft;
+      var tabWidth = activeTab.offsetWidth;
+      var viewWidth = scroller.clientWidth;
+      var target = tabLeft - (viewWidth / 2) + (tabWidth / 2);
+      scroller.scrollLeft = Math.max(0, target);
     }
     setTop();
     centerActive();
@@ -682,7 +795,7 @@
   </div>
   <div id="cartBackdrop" class="cart-backdrop" onclick="toggleCart()"></div>
 
-  <main>
+  <main id="main-content">
     <div class="container">
       <div class="page-header">
         <div class="page-header-eyebrow">Bulk &amp; Bundle Savings</div>
@@ -854,6 +967,59 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    function initOfferCarouselDepthGlide() {
+      const grids = document.querySelectorAll('.offers-grid');
+      if (!grids.length) return;
+
+      const isMobileCarousel = window.matchMedia('(max-width: 600px)').matches;
+
+      grids.forEach(function(grid) {
+        const cards = Array.prototype.slice.call(grid.querySelectorAll('.offer-card'));
+        if (!cards.length) return;
+
+        if (!isMobileCarousel) {
+          cards.forEach(function(card){ card.classList.remove('active-slide'); });
+          return;
+        }
+
+        function updateActiveSlide() {
+          const gridRect = grid.getBoundingClientRect();
+          const centerX = gridRect.left + (gridRect.width / 2);
+          let nearest = cards[0];
+          let minDistance = Infinity;
+
+          cards.forEach(function(card) {
+            const cardRect = card.getBoundingClientRect();
+            const cardCenter = cardRect.left + (cardRect.width / 2);
+            const distance = Math.abs(cardCenter - centerX);
+            if (distance < minDistance) {
+              minDistance = distance;
+              nearest = card;
+            }
+          });
+
+          cards.forEach(function(card) {
+            card.classList.toggle('active-slide', card === nearest);
+          });
+        }
+
+        let scrollRaf = 0;
+        function scheduleUpdate() {
+          if (scrollRaf) return;
+          scrollRaf = window.requestAnimationFrame(function(){
+            scrollRaf = 0;
+            updateActiveSlide();
+          });
+        }
+
+        updateActiveSlide();
+        grid.addEventListener('scroll', scheduleUpdate, { passive: true });
+        window.addEventListener('resize', scheduleUpdate, { passive: true });
+        window.addEventListener('orientationchange', scheduleUpdate, { passive: true });
+      });
+    }
+    initOfferCarouselDepthGlide();
 
     let isCartOpen = false;
     let lastCartToggleTime = 0;

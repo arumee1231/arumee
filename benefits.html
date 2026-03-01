@@ -14,10 +14,16 @@
 <meta property="og:type" content="article"/>
 <meta property="og:url" content="https://arumee.co.in/benefits.html"/>
 <meta property="og:image" content="https://arumee.co.in/arumee_assets/logo.png"/>
+<meta property="og:site_name" content="Arumee"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="Benefits of Cold-Pressed Oils — Arumee"/>
 <meta name="twitter:description" content="Why cold-pressed wood-pressed oils are healthier than refined. Vitamins, antioxidants and natural flavour intact."/>
+<meta name="twitter:image" content="https://arumee.co.in/arumee_assets/logo.png"/>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://arumee.co.in/"},{"@type":"ListItem","position":2,"name":"Benefits","item":"https://arumee.co.in/benefits.html"}]}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="arumee_assets/cart.css">
 <style>
@@ -33,6 +39,13 @@
     --ink: #0a2817;
   }
   * { box-sizing: border-box; }
+  html {
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
+  }
+  .skip-link { position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden; }
+  .skip-link:focus { position:fixed; left:16px; top:16px; width:auto; height:auto; padding:10px 14px; background:#000; color:#fff; z-index:10001; border-radius:8px; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
   body { 
     margin: 0; 
     font-family: 'Inter', sans-serif; 
@@ -44,10 +57,13 @@
     display: flex;
     flex-direction: column;
   }
-  @media (max-width: 768px) {
-    body { animation: page-in 0.12s ease-out both; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
   }
-  @keyframes page-in { from { opacity: 0; } to { opacity: 1; } }
   main.container { flex: 1; }
   .container { max-width: 1200px; margin: 0 auto; padding: 60px 4vw 32px; }
   
@@ -108,6 +124,8 @@
     color: var(--green);
     font-weight: 600;
     font-size: 13px;
+    line-height: 1.2;
+    letter-spacing: 0.01em;
     cursor: pointer;
     transition: all 0.2s ease;
     text-decoration: none;
@@ -153,15 +171,18 @@
   @media (max-width: 768px) {
     .hero-tabs-wrapper {
       top: calc(44px + env(safe-area-inset-top, 0px));
-      overflow: hidden;
-    }
-    .hero-nav {
-      justify-content: flex-start;
       overflow-x: auto;
+      overflow-y: hidden;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
     }
-    .hero-nav::-webkit-scrollbar { display: none; }
+    .hero-tabs-wrapper::-webkit-scrollbar { display: none; }
+    .hero-nav {
+      justify-content: flex-start;
+      width: max-content;
+      min-width: 100%;
+      margin: 0;
+    }
     .hero-nav-tab {
       padding: 11px 16px;
       font-size: 12px;
@@ -194,8 +215,8 @@
     border-right: 1px solid rgba(255, 255, 255, 0.1); 
     color: rgba(255, 255, 255, 0.9); 
     font-size: 13px; 
-    font-weight: 600; 
-    transition: all 0.3s ease; 
+    font-weight: 700; 
+    transition: none; 
     text-decoration: none; 
     white-space: nowrap;
   }
@@ -213,9 +234,11 @@
     /* stronger active tab styles for clear differentiation */
     background: linear-gradient(180deg, rgba(21,61,40,1), rgba(30,77,50,1));
     color: #fff;
-    font-weight: 800;
+    font-weight: 700;
     position: relative;
     box-shadow: 0 6px 18px rgba(16,45,33,0.18);
+    pointer-events: none;
+    cursor: default;
   }
   .hero-nav-tab.active::after {
     content: '';
@@ -234,14 +257,15 @@
     border-radius: 6px;
   }
   
-  h2 { 
+  h1, h2 { 
     font-family: 'Playfair Display', serif; 
     font-size: 48px; 
     margin: 0 0 12px; 
     color: var(--green); 
     text-align: center;
     font-weight: 800;
-    letter-spacing: -1px;
+    letter-spacing: -0.02em;
+    line-height: 1.14;
   }
   p.lead { 
     font-size: 19px; 
@@ -276,7 +300,7 @@
     box-shadow: 0 10px 30px rgba(30,77,50,0.12);
     transform: translateY(-2px);
   }
-  .card h3 { margin: 0 0 12px; font-size: 18px; color: var(--green); font-weight: 700; }
+  .card h3 { margin: 0 0 12px; font-size: 18px; color: var(--green); font-weight: 700; line-height: 1.28; letter-spacing: -0.01em; }
   .card p { margin: 0; font-size: 15px; line-height: 1.6; color: #2d4a3e; }
   footer { background: linear-gradient(135deg,rgba(30,77,50,.08),rgba(157,124,42,.05)); border-top:1px solid rgba(30,77,50,0.15); text-align:center; padding:16px 20px; color:var(--green); font-size:13px; }
 
@@ -285,24 +309,24 @@
 
   @media (max-width: 768px) {
     main.container { padding-top: var(--site-header-height-mobile,110px); }
-    .container { padding-top: 24px; padding-bottom: 24px; }
+    .container { padding-top: 20px; padding-bottom: 20px; }
 
-    h2 { font-size: clamp(24px, 7.5vw, 36px); letter-spacing: -.5px; margin-bottom: 8px; }
+    h1, h2 { font-size: clamp(24px, 7.5vw, 36px); letter-spacing: -.5px; margin-bottom: 8px; }
     p.lead { font-size: 15px; margin-bottom: 28px; }
 
     /* 2-column grid on tablets before collapsing to 1 */
-    .grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
 
     footer { padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
   }
 
   @media (max-width: 500px) {
     .grid { grid-template-columns: 1fr; }
-    h2 { font-size: 22px; }
+    h1, h2 { font-size: 22px; }
     p.lead { font-size: 14px; }
-    .card { padding: 18px 14px; }
+    .card { padding: 18px 16px; border-radius: 16px; }
     .card h3 { font-size: 16px; }
-    .card p { font-size: 14px; }
+    .card p { font-size: 14px; line-height: 1.55; }
   }
 
   /* Cross-document view transitions — prevents header blink on tab navigation */
@@ -313,11 +337,15 @@
   ::view-transition-new(site-tabs),
   ::view-transition-old(site-cart),
   ::view-transition-new(site-cart) { animation: none; mix-blend-mode: normal; }
+  ::view-transition-group(site-tabs),
+  ::view-transition-group(site-cart) { z-index: 2147483647; }
+  ::view-transition-group(root) { z-index: 2147483646; }
   ::view-transition-old(root),
-  ::view-transition-new(root) { animation-duration: 0.18s; }
+  ::view-transition-new(root) { animation: none; }
 </style>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   <nav class="sticky-nav">
     <div class="nav-content">
       <div class="nav-brand">
@@ -325,7 +353,7 @@
         <span>ARUMEE</span>
       </div>
       <div class="nav-actions">
-        <a href="index.html#oils" class="nav-btn">Our Oils</a>
+        <a href="index.html#oilsGrid" class="nav-btn">Our Oils</a>
         <button class="nav-btn primary" onclick="console.log('Cart clicked!'); toggleCart();">
           🛒
           <span class="nav-cart-count" id="navCartCount">0</span>
@@ -336,7 +364,7 @@
 
   <div class="hero-tabs-wrapper" role="tablist" aria-label="Primary site sections">
     <nav class="hero-nav">
-      <a href="index.html" class="hero-nav-tab" role="tab" aria-selected="false">Our Oils</a>
+      <a href="index.html#oilsGrid" class="hero-nav-tab" role="tab" aria-selected="false">Our Oils</a>
       <a href="combo.html" class="hero-nav-tab" role="tab" aria-selected="false">Combo Offers</a>
       <a href="benefits.html" class="hero-nav-tab active" role="tab" aria-selected="true">Benefits</a>
       <a href="about.html" class="hero-nav-tab" role="tab" aria-selected="false">About Us</a>
@@ -350,17 +378,19 @@
     var heroNav = document.querySelector('.hero-nav');
     var activeTab = document.querySelector('.hero-nav-tab.active');
     function setTop() {
-      if (stickyNav && tabsWrapper && window.innerWidth <= 768) {
-        tabsWrapper.style.top = stickyNav.offsetHeight + 'px';
-      }
+      if (!tabsWrapper) return;
+      var navVisible = stickyNav && window.getComputedStyle(stickyNav).display !== 'none';
+      tabsWrapper.style.top = (navVisible ? stickyNav.offsetHeight : 0) + 'px';
     }
     function centerActive() {
-      if (heroNav && activeTab) {
-        var tabLeft = activeTab.offsetLeft;
-        var tabWidth = activeTab.offsetWidth;
-        var navWidth = heroNav.offsetWidth;
-        heroNav.scrollLeft = tabLeft - (navWidth / 2) + (tabWidth / 2);
-      }
+      if (!activeTab) return;
+      var scroller = (tabsWrapper && tabsWrapper.scrollWidth > tabsWrapper.clientWidth) ? tabsWrapper : heroNav;
+      if (!scroller) return;
+      var tabLeft = activeTab.offsetLeft;
+      var tabWidth = activeTab.offsetWidth;
+      var viewWidth = scroller.clientWidth;
+      var target = tabLeft - (viewWidth / 2) + (tabWidth / 2);
+      scroller.scrollLeft = Math.max(0, target);
     }
     setTop();
     centerActive();
@@ -397,8 +427,8 @@
     </div>
   </div>
   <div id="cartBackdrop" class="cart-backdrop" onclick="toggleCart()"></div>
-  <main class="container">
-    <h2>Benefits</h2>
+  <main class="container" id="main-content">
+    <h1>Benefits</h1>
     <p class="lead">Why choose cold-pressed oils for your everyday wellness</p>
 
     <div class="grid">
@@ -522,7 +552,7 @@
       updateCartDisplay(); 
       // Navigate to homepage oils section and show toast
       sessionStorage.setItem('showClearToast', 'true');
-      window.location.href='index.html#oils';
+      window.location.href='index.html#oilsGrid';
     };
     window.proceedToOrder = function(){ 
       if(!orderItems.length){ return; } 

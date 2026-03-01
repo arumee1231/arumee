@@ -1,0 +1,14 @@
+{
+  "name": "arumee-site",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Regression tests for Arumee static storefront",
+  "scripts": {
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:ui": "playwright test --ui"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.51.0"
+  }
+}

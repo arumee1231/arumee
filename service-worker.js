@@ -1,11 +1,11 @@
 /* ─────────────────────────────────────────────────────────────────────────
-   Arumee Service Worker — stale-while-revalidate strategy
-   • Serves every same-origin GET from cache immediately (instant load)
-   • Revalidates in the background so the next visit gets fresh content
-   • New SW version → old cache is automatically wiped on activation
-   ───────────────────────────────────────────────────────────────────────── */
+  Arumee Service Worker — mixed strategy for speed + freshness
+  • HTML navigations: network-first (fresh content) with cache fallback
+  • Static assets: stale-while-revalidate (fast repeat loads)
+  • New SW version → old cache is automatically wiped on activation
+  ───────────────────────────────────────────────────────────────────────── */
 
-const CACHE_NAME = 'arumee-v1';
+const CACHE_NAME = 'arumee-v3';
 
 const PRECACHE = [
   '/',
@@ -43,11 +43,53 @@ self.addEventListener('activate', event => {
       Promise.all(
         keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
       )
-    ).then(() => self.clients.claim())
+    ).then(async () => {
+      if (self.registration && self.registration.navigationPreload) {
+        try { await self.registration.navigationPreload.enable(); } catch (e) {}
+      }
+      return self.clients.claim();
+    })
   );
 });
 
-// ── Fetch: stale-while-revalidate ────────────────────────────────────────
+async function networkFirst(event, cache) {
+  const req = event.request;
+  try {
+    const preloaded = await event.preloadResponse;
+    const fresh = preloaded || await fetch(req);
+    if (fresh && fresh.status === 200 && fresh.type !== 'opaque') {
+      cache.put(req, fresh.clone());
+    }
+    return fresh;
+  } catch (e) {
+    const cached = await cache.match(req);
+    if (cached) return cached;
+    const fallback = await cache.match('/index.html');
+    return fallback || new Response('Offline', { status: 503 });
+  }
+}
+
+async function staleWhileRevalidate(req, cache) {
+  const cached = await cache.match(req);
+  const revalidate = fetch(req)
+    .then(res => {
+      if (res && res.status === 200 && res.type !== 'opaque') {
+        cache.put(req, res.clone());
+      }
+      return res;
+    })
+    .catch(() => null);
+
+  if (cached) return cached;
+  const fresh = await revalidate;
+  if (!fresh && req.url.indexOf('/arumee_assets/tn_pins.json') !== -1) {
+    const pinsFallback = await cache.match('/arumee_assets/tn_pins.json');
+    if (pinsFallback) return pinsFallback;
+  }
+  return fresh || new Response('Offline', { status: 503 });
+}
+
+// ── Fetch: choose best strategy by request type ─────────────────────────
 self.addEventListener('fetch', event => {
   const req = event.request;
 
@@ -60,24 +102,27 @@ self.addEventListener('fetch', event => {
 
   event.respondWith(
     caches.open(CACHE_NAME).then(async cache => {
-      const cached = await cache.match(req);
-
-      const revalidate = fetch(req).then(res => {
-        // Only cache valid responses
-        if (res && res.status === 200 && res.type !== 'opaque') {
-          cache.put(req, res.clone());
-        }
-        return res;
-      }).catch(() => null);
-
-      // Stale-while-revalidate: serve cache instantly, refresh in background
-      if (cached) {
-        event.waitUntil(revalidate);
-        return cached;
+      // Keep HTML pages fresh while still resilient offline
+      if (req.mode === 'navigate' || req.destination === 'document') {
+        return networkFirst(event, cache);
       }
 
-      // Nothing in cache yet — wait for network
-      return revalidate.then(res => res || new Response('Offline', { status: 503 }));
+      // Static assets should feel instant on repeat visits
+      if (['script', 'style', 'image', 'font'].includes(req.destination) || req.url.endsWith('.json')) {
+        return staleWhileRevalidate(req, cache);
+      }
+
+      // Fallback for other GET requests
+      try {
+        const fresh = await fetch(req);
+        if (fresh && fresh.status === 200 && fresh.type !== 'opaque') {
+          cache.put(req, fresh.clone());
+        }
+        return fresh;
+      } catch (e) {
+        const cached = await cache.match(req);
+        return cached || new Response('Offline', { status: 503 });
+      }
     })
   );
 });

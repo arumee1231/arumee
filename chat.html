@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5"/>
+  <meta name="robots" content="noindex,nofollow"/>
+  <meta name="theme-color" content="#1e4d32"/>
+  <title>Arumee Full Chat</title>
+  <link rel="icon" type="image/png" href="arumee_assets/favicon.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"/>
+  <style>
+    html, body { margin: 0; height: 100%; background: #e5ede8; font-family: 'Inter', sans-serif; }
+    .chat-page-topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10004;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: linear-gradient(135deg, #0d2b1e, #1e4d32);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,.18);
+    }
+    .chat-page-title { font-weight: 700; font-size: 14px; letter-spacing: .01em; }
+    .chat-page-back {
+      color: #fff;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 999px;
+      padding: 6px 10px;
+    }
+    body.chat-ready { padding-top: 48px; }
+  </style>
+</head>
+<body class="chat-ready">
+  <div class="chat-page-topbar">
+    <span class="chat-page-title">Arumee • Full Chat</span>
+    <a class="chat-page-back" href="index.html">← Back to Store</a>
+  </div>
+  <script src="arumee_assets/chat-widget.js"></script>
+</body>
+</html>
