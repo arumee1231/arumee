@@ -103,7 +103,7 @@
     .wa-msgs {
       flex: 1;
       overflow-y: auto;
-      padding: 14px 12px;
+      padding: 14px 12px 18px;
       background: #e5ede8;
       display: flex; flex-direction: column; gap: 8px;
       scroll-behavior: smooth;
@@ -169,6 +169,10 @@
       background: #e5ede8;
       flex-shrink: 0;
       min-height: 0;
+      border-top: 1px solid rgba(30,77,50,.08);
+      margin-top: 2px;
+      position: relative;
+      z-index: 1;
     }
     #waWidget .wa-chip {
       background: #fff;
@@ -195,6 +199,44 @@
       text-align: center; margin: 0 0 7px; padding: 0;
       font-style: italic;
     }
+    .wa-input-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    #waWidget .wa-text-input {
+      flex: 1;
+      min-width: 0;
+      border: 1.5px solid rgba(30,77,50,.2);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 13px;
+      color: #1a4230;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      background: #fff;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+    #waWidget .wa-text-input:focus {
+      border-color: #1e4d32;
+      box-shadow: 0 0 0 3px rgba(30,77,50,.12);
+    }
+    #waWidget .wa-send-btn {
+      border: none;
+      border-radius: 10px;
+      padding: 10px 12px;
+      min-width: 44px;
+      min-height: 40px;
+      background: #1e4d32;
+      color: #fff;
+      font-weight: 800;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background .2s ease, transform .15s ease;
+    }
+    #waWidget .wa-send-btn:hover { background: #153d28; transform: translateY(-1px); }
     #waWidget .wa-wa-btn {
       display: flex; align-items: center; gap: 8px; justify-content: center;
       background: #25D366; color: #fff; border: none;
@@ -446,6 +488,7 @@
         touch-action: manipulation !important;
       }
       .wa-hint { display: none; }
+      #waWidget .wa-head-full { display: none !important; }
     }
     /* ── Refresh Confirmation Modal ── */
     #waRefreshModal {
@@ -506,6 +549,75 @@
       transition: background .18s, transform .12s;
     }
     #waRefreshModalCard .wa-rm-proceed:hover { background: #dc2626; transform: translateY(-1px); }
+
+    #waWidget .wa-head-full {
+      background: rgba(255,255,255,.15);
+      border: none;
+      color: #fff;
+      height: 27px;
+      border-radius: 999px;
+      padding: 0 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .01em;
+      line-height: 1;
+      transition: background .2s;
+      flex-shrink: 0;
+    }
+    #waWidget .wa-head-full:hover { background: rgba(255,255,255,.3); }
+    body.wa-full-page #waWidget .wa-head-full { display: none; }
+
+    /* honeypot field – hidden from real users */
+    .wa-hp { position:absolute; left:-9999px; top:-9999px; width:0; height:0; overflow:hidden; }
+
+    body.wa-full-page {
+      background: #e5ede8;
+      min-height: 100vh;
+    }
+    body.wa-full-page #waWidget {
+      position: fixed;
+      inset: 0;
+      z-index: 10005;
+      right: 0;
+      bottom: 0;
+    }
+    body.wa-full-page #waChatTrigger {
+      display: none !important;
+    }
+    body.wa-full-page #waChatPanel {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      max-height: 100vh;
+      border-radius: 0;
+      right: 0;
+      bottom: 0;
+      transform: none !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      box-shadow: none;
+    }
+    body.wa-full-page .wa-msgs {
+      max-height: none;
+      padding-bottom: 20px;
+    }
+    body.wa-full-page .wa-chips {
+      padding: 10px 14px 12px;
+      gap: 8px;
+    }
+    body.wa-full-page #waWidget .wa-chip {
+      min-height: 40px;
+      padding: 9px 14px;
+      font-size: 13px;
+      border-radius: 20px;
+    }
+    body.wa-full-page #waAddrPanel {
+      border-radius: 0;
+      max-height: 100vh;
+    }
 `;
   document.head.appendChild(_st);
 
@@ -520,8 +632,9 @@
         <span class="wa-head-name">Arumee Oils</span>
         <span class="wa-head-sub">&#x25CF; Online &middot; Replies instantly</span>
       </div>
+      <button aria-label="Open full chat" class="wa-head-full" onclick="openFullChat()" title="Open full-page chat">Full Chat</button>
       <button aria-label="Clear chat history" class="wa-head-clear" onclick="clearChat()" title="Clear chat"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="14"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg></button>
-      <button aria-label="Close chat" class="wa-head-close" onclick="waToggle()">&#x2715;</button>
+      <button aria-label="Close chat" class="wa-head-close" onclick="waCloseChat()">&#x2715;</button>
     </div>
     <div class="wa-msgs" id="waMsgs">
       <div class="wa-typing" id="waTyping">
@@ -536,6 +649,10 @@
     <div class="wa-chips" id="waChips"></div>
     <div class="wa-foot">
       <p class="wa-hint">Tap a question or continue on WhatsApp</p>
+      <div class="wa-input-row">
+        <input aria-label="Type your message" class="wa-text-input" id="waTextInput" maxlength="180" placeholder="Type your question or order request..." type="text"/>
+        <button aria-label="Send message" class="wa-send-btn" id="waSendBtn" onclick="waSendText()">Send</button>
+      </div>
       <button class="wa-wa-btn" onclick="waContinue()">
         <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.847L.057 23.882l6.19-1.624A11.932 11.932 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.658-.514-5.168-1.411l-.371-.22-3.835 1.006 1.022-3.73-.242-.386A9.956 9.956 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
         <span class="wa-btn-text">Continue on WhatsApp</span>
@@ -554,7 +671,7 @@
         <div class="wa-pin-status" id="waPinStatus"></div>
         <div id="waAddrFormFields" style="display:none">
           <label class="wa-addr-lbl">Full Name</label>
-          <input class="wa-addr-input" id="waAddrName" maxlength="80" placeholder="e.g. Arun Kumar" type="text"/>
+          <input class="wa-addr-input" id="waAddrName" maxlength="80" type="text"/>
           <label class="wa-addr-lbl">WhatsApp / Phone</label>
           <input class="wa-addr-input" id="waAddrPhone" inputmode="numeric" maxlength="15" placeholder="e.g. 9876543210" type="tel"/>
           <label class="wa-addr-lbl">Full Address</label>
@@ -565,9 +682,11 @@
       </div>
       <div class="wa-addr-panel-foot">
         <p class="wa-addr-err" id="waAddrErr"></p>
+        <!-- honeypot: bots fill this, humans don't -->
+        <div class="wa-hp" aria-hidden="true"><input type="text" name="url_confirm" id="waHoneypot" tabindex="-1" autocomplete="off"/></div>
         <button class="wa-addr-submit" onclick="waSubmitAddress()">
           <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.847L.057 23.882l6.19-1.624A11.932 11.932 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.658-.514-5.168-1.411l-.371-.22-3.835 1.006 1.022-3.73-.242-.386A9.956 9.956 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
-          Send Order on WhatsApp
+          Place My Order
         </button>
       </div>
     </div>
@@ -608,6 +727,7 @@
 
   // ── 3. Widget Logic ────────────────────────────────────────────────────
 (function () {
+  var IS_FULL_CHAT = /(^|\/)chat\.html$/i.test(String(location.pathname || '')) || /(?:\?|&)fullchat=1(?:&|$)/i.test(String(location.search || ''));
   var WA = '918925295844';
   var history = JSON.parse(localStorage.getItem('arumee_chat') || '[]');
   var orderCart = JSON.parse(localStorage.getItem('arumee_cart') || '[]');
@@ -617,13 +737,58 @@
   var pendingSize = null;
   var _tnPins = null;
   var _tnPinsLoading = false;
+  var __lastTypedAt = 0;
+  var __typedTs = [];
+
   function saveHistory(){ try{ localStorage.setItem('arumee_chat', JSON.stringify(history)); }catch(e){} }
   function saveCart(){
     try{ localStorage.setItem('arumee_cart', JSON.stringify(orderCart)); }catch(e){}
     try{ syncSiteCartBadges(); }catch(e){}
   }
   function saveDelivery(){ try{ localStorage.setItem('arumee_delivery', JSON.stringify(deliveryInfo)); }catch(e){} }
-  function clearStorage(){ try{ localStorage.removeItem('arumee_chat'); localStorage.removeItem('arumee_cart'); localStorage.removeItem('arumee_delivery'); }catch(e){} }
+  function clearStorage(){
+    try{
+      localStorage.removeItem('arumee_chat');
+      localStorage.removeItem('arumee_cart');
+      localStorage.removeItem('arumee_delivery');
+      pruneChatMirrorsFromPageCart(true);
+    }catch(e){}
+  }
+
+  function openFullChat() {
+    try {
+      if (window.matchMedia && window.matchMedia('(max-width: 480px)').matches) return;
+    } catch(e) {}
+    try {
+      var target = (location.origin && location.origin !== 'null') ? (location.origin + '/chat.html') : 'chat.html';
+      window.open(target, '_blank', 'noopener,noreferrer');
+    } catch(e) {
+      window.open('chat.html', '_blank', 'noopener,noreferrer');
+    }
+  }
+
+  /* honeypot check – returns true if the submission looks like a bot */
+  function isHoneypotTripped() {
+    var hp = document.getElementById('waHoneypot');
+    return hp && hp.value.length > 0;
+  }
+
+  function initFullPageMode() {
+    if (!IS_FULL_CHAT) return;
+    try {
+      document.body.classList.add('wa-full-page');
+      var panel = document.getElementById('waChatPanel');
+      var widget = document.getElementById('waWidget');
+      if (panel) panel.classList.add('wa-open');
+      if (widget) widget.classList.add('wa-active');
+      if (!disclaimerAccepted) {
+        try { acceptDisclaimer(); } catch(e) {}
+      } else {
+        setTimeout(function(){ hydrateChatFromStorage(); }, 120);
+      }
+
+    } catch(e) {}
+  }
   // Hide disclaimer panel immediately if already accepted
   (function(){ if (disclaimerAccepted) { var d = document.getElementById('waDisclaimerPanel'); if(d) d.style.display='none'; } }());
 
@@ -633,6 +798,234 @@
     '🥜 Groundnut Oil': { label: 'Groundnut Oil (Wooden-Pressed)', sizes: {'1L': 329,  '5L': 1549} },
     '🌿 Gingelly Oil':  { label: 'Gingelly Oil (Wooden-Pressed)',  sizes: {'1L': 499,  '5L': 2395} }
   };
+  var OIL_COMBOS = {
+    '🥥 Coconut Oil':   { twoL: 869,  save2L: 29,  save5L: 86  },
+    '🥜 Groundnut Oil': { twoL: 639,  save2L: 19,  save5L: 96  },
+    '🌿 Gingelly Oil':  { twoL: 969,  save2L: 29,  save5L: 100 }
+  };
+
+  function detectOilLabel(textLower) {
+    if (!textLower) return null;
+    if (/coconut|copra|தேங்காய்/.test(textLower)) return '🥥 Coconut Oil';
+    if (/groundnut|ground\s*nut|groi?und\s*nut|peanut|verkadalai|வேர்க்கடலை/.test(textLower)) return '🥜 Groundnut Oil';
+    if (/gingelly|sesame|nallennai|எள்ளெண்ணெய்|sesam/.test(textLower)) return '🌿 Gingelly Oil';
+    return null;
+  }
+
+  function detectOilLabels(textLower) {
+    if (!textLower) return [];
+    var found = [];
+    if (/coconut|copra|தேங்காய்/.test(textLower)) found.push('🥥 Coconut Oil');
+    if (/groundnut|ground\s*nut|groi?und\s*nut|peanut|verkadalai|வேர்க்கடலை/.test(textLower)) found.push('🥜 Groundnut Oil');
+    if (/gingelly|sesame|nallennai|எள்ளெண்ணெய்|sesam/.test(textLower)) found.push('🌿 Gingelly Oil');
+    return found;
+  }
+
+  function getStarterChips() {
+    return ['🛍️ Order Now', '💰 Prices & sizes', '🎁 Combo offers', '🚚 Delivery info', '🌿 About the oils', '✅ Quality & FSSAI'];
+  }
+
+  function getOilSizeChips(oilLabel) {
+    var oil = OILS[oilLabel];
+    if (!oil) return [];
+    var chips = Object.keys(oil.sizes).map(function (s) {
+      return s + ' – ' + inr(oil.sizes[s]);
+    });
+    chips.push('↩️ Choose different oil');
+    return chips;
+  }
+
+  function parseSizeFromText(textLower, oilLabel) {
+    var oil = OILS[oilLabel];
+    if (!oil) return null;
+    var normalized = String(textLower || '').replace(/\s+/g, '');
+    var keys = Object.keys(oil.sizes);
+    for (var i = 0; i < keys.length; i++) {
+      var size = keys[i];
+      var num = size.replace(/[^0-9]/g, '');
+      if (!num) continue;
+      var re = new RegExp('(^|[^0-9])' + num + '(\\s*(l|lt|ltr|liter|litre))?([^0-9]|$)');
+      if (re.test(textLower) || normalized.indexOf(num + 'l') > -1) return size;
+    }
+    return null;
+  }
+
+  function parseQtyFromText(textLower) {
+    if (!textLower) return null;
+    var words = {
+      'one': 1,
+      'two': 2,
+      'three': 3,
+      'four': 4,
+      'five': 5
+    };
+    for (var key in words) {
+      if (Object.prototype.hasOwnProperty.call(words, key) && new RegExp('\\b' + key + '\\b').test(textLower)) {
+        return words[key];
+      }
+    }
+    var m = textLower.match(/\b([1-9])\b/);
+    if (m) return parseInt(m[1], 10);
+    if (/\ba\b|\ban\b|\bone\b/.test(textLower)) return 1;
+    return null;
+  }
+
+  function addPendingOilToCart(qty) {
+    if (!pendingOil || !pendingSize) return false;
+    var safeQty = Number(qty);
+    if (!Number.isFinite(safeQty) || safeQty < 1) safeQty = 1;
+    if (safeQty > 5) safeQty = 5;
+    var linePrice = safeQty * pendingSize.priceEach;
+    orderCart.push({
+      emoji: pendingOil.split(' ')[0],
+      label: OILS[pendingOil].label,
+      size: pendingSize.size,
+      qty: safeQty,
+      price: linePrice
+    });
+    try { syncChatLineToPageCart(OILS[pendingOil].label, pendingSize.size, pendingSize.priceEach, safeQty); } catch(e) {}
+    saveCart();
+    pendingOil = null;
+    pendingSize = null;
+    var cartLines = orderCart.map(function (i) {
+      return '  ' + i.emoji + ' ' + i.label + ' ' + i.size + (i.qty > 1 ? ' × ' + i.qty : '') + ' — ' + inr(i.price);
+    }).join('\n');
+    var total = orderCart.reduce(function (s, i) { return s + i.price; }, 0);
+    botReply({
+      text: '✅ Added!\n\n🛒 Your cart:\n' + cartLines + '\n\n  Total: ' + inr(total) + ' + free delivery\n\nAdd more oils or send your order?',
+      chips: ['➕ Add another oil', '📦 Send my order', '🗑️ Start over']
+    });
+    setTimeout(updateWaBtn, 900);
+    return true;
+  }
+
+  function isOrderIntent(textLower) {
+    return /(buy|order|purchase|get|want|need|book|add\s+to\s+cart|place\s+order|checkout)/.test(textLower);
+  }
+
+  function isOfferIntent(textLower) {
+    return /(offer|combo|discount|deal|save|price|rate|cost|size|pack|litre|liter|1l|2l|5l)/.test(textLower);
+  }
+
+  function buildOilOfferText(oilLabel) {
+    var oil = OILS[oilLabel];
+    var combo = OIL_COMBOS[oilLabel] || {};
+    if (!oil) return 'I can help you choose an oil and pack size.';
+    var oneL = oil.sizes['1L'];
+    var fiveL = oil.sizes['5L'];
+    return 'Great choice! ' + oilLabel + ' 👍\n\n' +
+      'Available offers:\n' +
+      '• 1L → ' + inr(oneL) + '\n' +
+      '• 2L Combo → ' + inr(combo.twoL || (oneL * 2)) + (combo.save2L ? (' (Save ' + inr(combo.save2L) + ')') : '') + '\n' +
+      '• 5L Family Pack → ' + inr(fiveL) + (combo.save5L ? (' (Save ' + inr(combo.save5L) + ')') : '') + '\n\n' +
+      'What would you like to do next?';
+  }
+
+  function handleTypedMessage(rawText) {
+    var text = String(rawText || '').trim();
+    if (!text) return;
+    var t = text.toLowerCase();
+
+    addMsg('user', escapeHtml(text));
+    setChips([]);
+
+    var oilLabels = detectOilLabels(t);
+    var hasExplicitOilMention = oilLabels.length > 0;
+
+    // Explicit multi-oil message should always win over any pending step state.
+    if (oilLabels.length >= 2 && (isOrderIntent(t) || isOfferIntent(t) || /\band\b|,|\+/.test(t))) {
+      pendingOil = null;
+      pendingSize = null;
+      botReply({
+        text: 'Nice picks 👍 I can add one oil at a time. Which one should we start with?',
+        chips: oilLabels.concat(['↩️ Back to menu'])
+      });
+      return;
+    }
+
+    // If user explicitly names an oil, do not treat the message as qty/size reply
+    // for an older pending oil context.
+    if (hasExplicitOilMention && pendingOil && oilLabels.indexOf(pendingOil) === -1) {
+      pendingOil = null;
+      pendingSize = null;
+    }
+
+    if (pendingOil && !pendingSize && !hasExplicitOilMention) {
+      var typedSize = parseSizeFromText(t, pendingOil);
+      if (typedSize) {
+        var priceEach2 = OILS[pendingOil].sizes[typedSize];
+        pendingSize = { size: typedSize, priceEach: priceEach2 };
+        var typedQty2 = parseQtyFromText(t);
+        if (typedQty2) {
+          addPendingOilToCart(typedQty2);
+          return;
+        }
+        botReply({
+          text: 'Perfect — ' + pendingOil + ' ' + typedSize + '. How many bottles would you like?',
+          chips: ['1 bottle', '2 bottles', '3 bottles', '4 bottles', '5 bottles', '↩️ Choose different oil']
+        });
+        return;
+      }
+    }
+
+    if (pendingOil && pendingSize && !hasExplicitOilMention) {
+      var typedQty = parseQtyFromText(t);
+      if (typedQty) {
+        addPendingOilToCart(typedQty);
+        return;
+      }
+    }
+
+    var oilLabel = oilLabels.length ? oilLabels[0] : detectOilLabel(t);
+    if (oilLabel && (isOrderIntent(t) || isOfferIntent(t))) {
+      pendingOil = oilLabel;
+      pendingSize = null;
+      botReply({ text: buildOilOfferText(oilLabel), chips: getOilSizeChips(oilLabel) });
+      return;
+    }
+
+    if (oilLabel) {
+      pendingOil = oilLabel;
+      pendingSize = null;
+      botReply({ text: 'Great choice! Select your size for ' + oilLabel + ':', chips: getOilSizeChips(oilLabel) });
+      return;
+    }
+
+    if (isOrderIntent(t)) {
+      botReply({ text: 'Awesome! Let\'s place your order. Which oil do you want?', chips: ['🥥 Coconut Oil', '🥜 Groundnut Oil', '🌿 Gingelly Oil', '↩️ Back to menu'] });
+      return;
+    }
+
+    if (/combo|offer|discount|save/.test(t)) { botReply(KB['🎁 Combo offers']); return; }
+    if (/price|cost|rate|size|pack/.test(t)) { botReply(KB['💰 Prices & sizes']); return; }
+    if (/delivery|shipping|ship|pincode|pin code|when/.test(t)) { botReply(KB['🚚 Delivery info']); return; }
+    if (/quality|fssai|certified|pure|chemical/.test(t)) { botReply(KB['✅ Quality & FSSAI']); return; }
+    if (/about|oil|benefit|healthy|cold\s*pressed|marachekku/.test(t)) { botReply(KB['🌿 About the oils']); return; }
+
+    botReply({
+      text: 'I can help with prices, offers, delivery, and placing an order in real-time.\nTry: "I want coconut oil" or "show groundnut offers".',
+      chips: ['🛍️ Order Now', '💰 Prices & sizes', '🎁 Combo offers', '🚚 Delivery info']
+    });
+  }
+
+  function waSendText() {
+    var input = document.getElementById('waTextInput');
+    if (!input) return;
+    var text = input.value;
+    var nowTs = Date.now();
+    __typedTs = __typedTs.filter(function(ts){ return (nowTs - ts) < 20000; });
+    if (__typedTs.length >= 8) {
+      botReply({ text: 'Too many messages quickly. Please wait a few seconds and continue.', chips: ['🛍️ Order Now', '💰 Prices & sizes', '🎁 Combo offers'] });
+      return;
+    }
+    if (nowTs - __lastTypedAt < 700) {
+      return;
+    }
+    __lastTypedAt = nowTs;
+    __typedTs.push(nowTs);
+    input.value = '';
+    handleTypedMessage(text);
+  }
   function inr(n) { return '₹' + n.toLocaleString('en-IN'); }
   function escapeHtml(str){
     return String(str).replace(/[&<>\"]/g, function (s) {
@@ -663,17 +1056,39 @@
     }
   }
 
+  function pruneChatMirrorsFromPageCart(forceAll) {
+    try {
+      var pageCart = _readJsonArray('arumeeCart');
+      if (!pageCart.length) return;
+      var hasChatCart = Array.isArray(orderCart) && orderCart.length > 0;
+      if (!forceAll && hasChatCart) return;
+      var filtered = pageCart.filter(function(it){
+        if (!it) return false;
+        var key = String(it.itemKey || '');
+        var isMirror = !!it.fromChat || key.indexOf('chat:') === 0;
+        return !isMirror;
+      });
+      if (filtered.length !== pageCart.length) {
+        localStorage.setItem('arumeeCart', JSON.stringify(filtered));
+      }
+    } catch(e) {}
+  }
+
   function syncChatLineToPageCart(label, size, unitPrice, qty){
     try {
       var pageCart = _readJsonArray('arumeeCart');
       var cleanLabel = label ? String(label) : 'Item';
       var cleanSize = size ? String(size) : '';
+      var normalizedLabel = cleanLabel;
+      if (/^\s*Coconut Oil\s*\(Cold-Pressed\)\s*$/i.test(cleanLabel)) normalizedLabel = 'Cold-Pressed Coconut Oil';
+      if (/^\s*Groundnut Oil\s*\(Wooden-Pressed\)\s*$/i.test(cleanLabel)) normalizedLabel = 'Wooden-Pressed Groundnut Oil';
+      if (/^\s*Gingelly Oil\s*\(Wooden-Pressed\)\s*$/i.test(cleanLabel)) normalizedLabel = 'Wooden-Pressed Gingelly Oil';
       var q = (qty != null) ? Number(qty) : 1;
       q = (Number.isFinite(q) && q > 0) ? q : 1;
       var up = (unitPrice != null) ? Number(unitPrice) : 0;
       up = (Number.isFinite(up) && up >= 0) ? up : 0;
-      var itemKey = 'chat:' + cleanLabel + ':' + cleanSize;
-      var productName = cleanLabel + (cleanSize ? (' (' + cleanSize + ')') : '');
+      var itemKey = 'chat:' + normalizedLabel + ':' + cleanSize;
+      var productName = normalizedLabel + (cleanSize ? (' (' + cleanSize + ')') : '');
 
       var idx = -1;
       for (var i = 0; i < pageCart.length; i++) {
@@ -681,6 +1096,7 @@
         if (!it) continue;
         if (it.itemKey && String(it.itemKey) === itemKey) { idx = i; break; }
         if (String(it.originalName || '') === cleanLabel && String(it.size || '') === cleanSize) { idx = i; break; }
+        if (String(it.originalName || '') === normalizedLabel && String(it.size || '') === cleanSize) { idx = i; break; }
         if (String(it.productName || '') === productName && String(it.size || '') === cleanSize) { idx = i; break; }
       }
 
@@ -692,7 +1108,7 @@
         if (up > 0) ex.price = up;
         ex.size = cleanSize;
         ex.productName = ex.productName || productName;
-        ex.originalName = ex.originalName || cleanLabel;
+        ex.originalName = ex.originalName || normalizedLabel;
         ex.itemKey = ex.itemKey || itemKey;
         ex.fromChat = true;
         ex.total = (Number(ex.price) || 0) * (Number(ex.qty) || 1);
@@ -700,7 +1116,7 @@
       } else {
         pageCart.push({
           productName: productName,
-          originalName: cleanLabel,
+          originalName: normalizedLabel,
           size: cleanSize,
           price: up,
           qty: q,
@@ -755,8 +1171,53 @@
         nodes[i].textContent = String(totalUnits);
       }
     } catch(e) {}
+
+    // Notify the page so sticky nav + cart icon update when chatbot adds items
+    try {
+      document.body.classList.toggle('has-cart-items', totalUnits > 0);
+      window.dispatchEvent(new CustomEvent('arumee-cart-updated'));
+    } catch(e) {}
   }
 
+  function syncFromStorageOnExternalCartUpdate() {
+    try {
+      var raw = localStorage.getItem('arumee_cart');
+      var parsed = raw ? JSON.parse(raw) : [];
+      orderCart = Array.isArray(parsed) ? parsed : [];
+
+      var rawHistory = localStorage.getItem('arumee_chat');
+      var parsedHistory = rawHistory ? JSON.parse(rawHistory) : [];
+      history = Array.isArray(parsedHistory) ? parsedHistory : [];
+
+      var rawDelivery = localStorage.getItem('arumee_delivery');
+      deliveryInfo = rawDelivery ? JSON.parse(rawDelivery) : null;
+
+      if (!orderCart.length) {
+        pendingOil = null;
+        pendingSize = null;
+      }
+      updateWaBtn();
+
+      if (!history.length) {
+        var msgs = document.getElementById('waMsgs');
+        if (msgs) {
+          var nodes = msgs.querySelectorAll('.wa-msg');
+          nodes.forEach(function(n) { n.remove(); });
+        }
+        var addrPanel = document.getElementById('waAddrPanel');
+        if (addrPanel) addrPanel.classList.remove('wa-addr-open');
+        setChips(getStarterChips());
+
+        var panel = document.getElementById('waChatPanel');
+        var isOpen = IS_FULL_CHAT || (panel && panel.classList.contains('wa-open'));
+        if (isOpen && disclaimerAccepted) {
+          botReply(KB.greeting);
+        }
+      }
+    } catch(e) {}
+  }
+
+  try { if (!orderCart || !orderCart.length) pruneChatMirrorsFromPageCart(false); } catch(e) {}
   // Ensure main page cart badges reflect chatbot cart too
   try { bootstrapChatCartIntoPageCart(); } catch(e) {}
   try { syncSiteCartBadges(); } catch(e) {}
@@ -873,6 +1334,49 @@
       btn.onclick = function (e) { e.stopPropagation(); pick(label); };
       c.appendChild(btn);
     });
+
+    try {
+      var msgs = document.getElementById('waMsgs');
+      if (msgs) {
+        requestAnimationFrame(function() {
+          msgs.scrollTop = msgs.scrollHeight;
+        });
+        setTimeout(function(){
+          msgs.scrollTop = msgs.scrollHeight;
+        }, 40);
+      }
+    } catch(e) {}
+  }
+
+  function hydrateChatFromStorage() {
+    var msgs = document.getElementById('waMsgs');
+    var typing = document.getElementById('waTyping');
+    if (!msgs || !typing) return;
+
+    if (history.length === 0) {
+      setChips(getStarterChips());
+      botReply(KB.greeting);
+      return;
+    }
+
+    if (!document.querySelector('#waMsgs .wa-msg')) {
+      history.forEach(function(m) {
+        var d = document.createElement('div');
+        d.className = 'wa-msg ' + m.role;
+        d.innerHTML = m.role === 'bot'
+          ? '<span class="wa-avatar">A</span><div class="wa-msg-bubble">' + m.text + '</div>'
+          : '<div class="wa-msg-bubble">' + m.text + '</div>';
+        msgs.insertBefore(d, typing);
+      });
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    if (orderCart.length > 0) {
+      setChips(['➕ Add another oil', '📦 Send my order', '🗑️ Start over']);
+      updateWaBtn();
+    } else {
+      setChips(getStarterChips());
+    }
   }
 
   function showTyping() {
@@ -892,6 +1396,17 @@
       hideTyping();
       addMsg('bot', entry.text);
       setChips(entry.chips || []);
+      try {
+        var msgs = document.getElementById('waMsgs');
+        if (msgs) {
+          requestAnimationFrame(function() {
+            msgs.scrollTop = msgs.scrollHeight;
+          });
+          setTimeout(function(){
+            msgs.scrollTop = msgs.scrollHeight;
+          }, 40);
+        }
+      } catch(e) {}
     }, 750);
   }
 
@@ -1048,8 +1563,30 @@
         '📍 <strong>' + name + '</strong><br>' +
         addr + ', ' + district + ' ' + pin + '<br>' +
         '📞 ' + phone + '<br><br>' +
-        '<span style="background:#fff8e1;padding:4px 8px;border-radius:5px;font-size:12px;color:#78350f;">⚠️ Tap <strong>Confirm on WhatsApp</strong> to complete your order &amp; discuss payment.</span>';
+        '<span style="background:#fff8e1;padding:4px 8px;border-radius:5px;font-size:12px;color:#78350f;">⚠️ Tap <strong>Confirm on WhatsApp</strong> below to discuss pricing &amp; finalise your order.</span>';
       addMsg('bot', confirmHtml);
+
+      // ── Submit order to Google Sheets on "Place My Order" click ──
+      // (No honeypot check here — user passed form validation, they're real.)
+      try {
+        var _total = orderCart.reduce(function(s, i) { return s + i.price; }, 0);
+        var _orderLines = orderCart.map(function(i) {
+          return i.label + ' ' + i.size + (i.qty > 1 ? ' \u00d7 ' + i.qty : '') + ' \u2014 \u20b9' + i.price.toLocaleString('en-IN');
+        }).join('\n');
+        var _addrFull = addr + (district ? ', ' + district : '') + ' ' + pin;
+        var _ENDPOINT = 'https://script.google.com/macros/s/AKfycbwpKpqtx9jqE3zAFy8F_MBcEc9F8mFIp8FmxkJCxfDXd3sxczYDvy-zmNW8uDGMMtdhfA/exec';
+        var _fd = new URLSearchParams();
+        _fd.append('name',    name);
+        _fd.append('phone',   phone);
+        _fd.append('address', _addrFull);
+        _fd.append('pincode', pin);
+        _fd.append('items',   _orderLines + '\n\nTotal: \u20b9' + _total.toLocaleString('en-IN'));
+        _fd.append('total',   String(_total));
+        _fd.append('source',  'chat');
+        _fd.append('url_confirm', ''); // honeypot — always blank for real users
+        fetch(_ENDPOINT, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: _fd.toString() }).catch(function(){});
+      } catch(gsErr) {}
+
       setChips(['📲 Confirm on WhatsApp', '✏️ Edit Details', '🗑️ Start over']);
       updateWaBtn();
     }, 750);
@@ -1278,6 +1815,13 @@
   }
 
   function waContinue() {
+    var nowTs = Date.now();
+    var lastSubmit = 0;
+    try { lastSubmit = parseInt(localStorage.getItem('arumee_chat_submit_ts') || '0', 10) || 0; } catch(e) {}
+    if (lastSubmit && (nowTs - lastSubmit) < 30000) {
+      // Clear the throttle so re-attempts always go through (order placed in same session)
+      try { localStorage.removeItem('arumee_chat_submit_ts'); } catch(e) {}
+    }
     // If cart has items but delivery info not yet collected, show address panel first
     if (orderCart.length && !deliveryInfo) {
       showAddressForm();
@@ -1285,6 +1829,8 @@
     }
     var msg;
     if (orderCart.length) {
+      // Honeypot bot check — silently abort if the hidden field was filled
+      if (isHoneypotTripped()) { return; }
       var total = orderCart.reduce(function (s, i) { return s + i.price; }, 0);
       msg = 'Hi Arumee! I would like to place this order:\n\n';
       orderCart.forEach(function (i) { msg += '• ' + i.label + ' ' + i.size + (i.qty > 1 ? ' × ' + i.qty : '') + ' — ₹' + i.price.toLocaleString('en-IN') + '\n'; });
@@ -1299,26 +1845,8 @@
       }
       msg += '\n\nKindly confirm and share UPI payment details. Thank you!';
 
-      // Submit chatbot order to Google Forms (same form as main page — no-cors, fire & forget)
-      try {
-        var GFORM = 'https://docs.google.com/forms/d/e/1FAIpQLSflC-Ev08-1K4ULCfcscEw6WsCDV-tm99cGCAIt_V0-FC7lEg/formResponse';
-        var orderLines = orderCart.map(function(i) {
-          return i.label + ' ' + i.size + (i.qty > 1 ? ' \u00d7 ' + i.qty : '') + ' \u2014 \u20b9' + i.price.toLocaleString('en-IN');
-        }).join('\n');
-        var addrFull = deliveryInfo
-          ? (deliveryInfo.address || '') + (deliveryInfo.city ? ', ' + deliveryInfo.city : '') + (deliveryInfo.pincode ? ' ' + deliveryInfo.pincode : '')
-          : '';
-        var fd = new FormData();
-        fd.append('entry.1725501823', deliveryInfo ? deliveryInfo.name    : '');
-        fd.append('entry.1067964574', deliveryInfo ? deliveryInfo.phone   : '');
-        fd.append('entry.815750809',  addrFull);
-        fd.append('entry.1998696792', orderLines + '\n\nTotal: \u20b9' + total.toLocaleString('en-IN') + ' (via chatbot)');
-        fd.append('entry.185274423',  'Ordered via chat widget');
-        fd.append('entry.1620525141', String(total));
-        fetch(GFORM, { method: 'POST', body: fd, mode: 'no-cors' }).catch(function(){});
-      } catch(gfErr) {
-        // Google Form submission is best-effort; never block the WhatsApp flow
-      }
+      // Google Sheets submission already done in waSubmitAddress() on first "Place My Order" click.
+      // waContinue() only opens WhatsApp so the customer can discuss pricing & confirm.
     } else {
       var userMsgs = history.filter(function (m) { return m.role === 'user'; });
       if (userMsgs.length) {
@@ -1330,6 +1858,7 @@
       }
     }
     window.open('https://wa.me/' + WA + '?text=' + encodeURIComponent(msg), '_blank', 'noopener,noreferrer');
+
   }
 
   function acceptDisclaimer() {
@@ -1342,27 +1871,7 @@
     }
     // Now start the chat
     setTimeout(function() {
-      if (history.length === 0) {
-        botReply(KB.greeting);
-      } else if (!document.querySelector('#waMsgs .wa-msg')) {
-        var msgs = document.getElementById('waMsgs');
-        var typing = document.getElementById('waTyping');
-        history.forEach(function(m) {
-          var div = document.createElement('div');
-          div.className = 'wa-msg ' + m.role;
-          div.innerHTML = m.role === 'bot'
-            ? '<span class="wa-avatar">A</span><div class="wa-msg-bubble">' + m.text + '</div>'
-            : '<div class="wa-msg-bubble">' + m.text + '</div>';
-          msgs.insertBefore(div, typing);
-        });
-        msgs.scrollTop = msgs.scrollHeight;
-        if (orderCart.length > 0) {
-          setChips(['➕ Add another oil', '📦 Send my order', '🗑️ Start over']);
-          updateWaBtn();
-        } else {
-          setChips(['🛍️ Order Now', '💰 Prices & sizes', '🎁 Combo offers', '🚚 Delivery info', '🌿 About the oils', '✅ Quality & FSSAI']);
-        }
-      }
+      hydrateChatFromStorage();
     }, 320);
   }
 
@@ -1385,30 +1894,33 @@
       if (dot) dot.classList.remove('show');
       // Only start chat if disclaimer has been accepted
       if (!disclaimerAccepted) return;
-      if (history.length === 0) {
-        setTimeout(function () { botReply(KB.greeting); }, 350);
-      } else if (!document.querySelector('#waMsgs .wa-msg')) {
-        // First open after navigation — replay stored messages into DOM
-        var msgs = document.getElementById('waMsgs');
-        var typing = document.getElementById('waTyping');
-        history.forEach(function(m) {
-          var d = document.createElement('div');
-          d.className = 'wa-msg ' + m.role;
-          d.innerHTML = m.role === 'bot'
-            ? '<span class="wa-avatar">A</span><div class="wa-msg-bubble">' + m.text + '</div>'
-            : '<div class="wa-msg-bubble">' + m.text + '</div>';
-          msgs.insertBefore(d, typing);
-        });
-        msgs.scrollTop = msgs.scrollHeight;
-        // Restore chips based on cart state
-        if (orderCart.length > 0) {
-          setChips(['➕ Add another oil', '📦 Send my order', '🗑️ Start over']);
-          updateWaBtn();
-        } else {
-          setChips(['🛍️ Order Now', '💰 Prices & sizes', '🎁 Combo offers', '🚚 Delivery info', '🌿 About the oils', '✅ Quality & FSSAI']);
-        }
-      }
+      hydrateChatFromStorage();
     }
+  }
+
+  function waCloseChat() {
+    var panel = document.getElementById('waChatPanel');
+    var widget = document.getElementById('waWidget');
+    var trigger = document.getElementById('waChatTrigger');
+
+    if (IS_FULL_CHAT) {
+      try { window.close(); } catch(e) {}
+      setTimeout(function(){
+        try {
+          if (window.history.length > 1) {
+            window.history.back();
+          } else {
+            window.location.href = 'index.html';
+          }
+        } catch(e2) {}
+      }, 80);
+      return;
+    }
+
+    if (panel) panel.classList.remove('wa-open');
+    if (widget) widget.classList.remove('wa-active');
+    if (document.body) document.body.classList.remove('wa-chat-open');
+    if (trigger) trigger.setAttribute('aria-expanded', 'false');
   }
 
   // Close on outside click
@@ -1446,6 +1958,7 @@
   }, 3000);
 
   window.waToggle = waToggle;
+  window.waCloseChat = waCloseChat;
   window.waContinue = waContinue;
   window.clearChat = clearChat;
   window.waSubmitAddress = waSubmitAddress;
@@ -1453,11 +1966,30 @@
   window.acceptDisclaimer = acceptDisclaimer;
   window.declineDisclaimer = declineDisclaimer;
   window.waPinCheck = waPinCheck;
+  window.waSendText = waSendText;
+  window.openFullChat = openFullChat;
   window.waHideRefreshModal  = hideRefreshModal;
   window.waConfirmRefresh    = confirmRefreshAction;
 
+  try {
+    window.addEventListener('arumee-cart-updated', syncFromStorageOnExternalCartUpdate);
+  } catch(e) {}
+
+  try {
+    var _textInput = document.getElementById('waTextInput');
+    if (_textInput) {
+      _textInput.addEventListener('keydown', function(e){
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          waSendText();
+        }
+      });
+    }
+  } catch(e) {}
+
   // ── On-load init: call AFTER all functions are defined ────────────────────
   // Fix cart-count=0 after refresh: update the WA button to reflect loaded cart
+  initFullPageMode();
   updateWaBtn();
 
   // Detect true page refresh only (F5 / refresh button).
