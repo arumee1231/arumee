@@ -11,6 +11,7 @@ module.exports = defineConfig({
   reporter: [['list']],
   use: {
     baseURL: 'http://127.0.0.1:5500',
+    serviceWorkers: 'block',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure'

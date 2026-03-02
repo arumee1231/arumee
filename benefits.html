@@ -24,6 +24,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://www.google.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="arumee_assets/cart.css">
 <style>
@@ -349,11 +350,14 @@
   <nav class="sticky-nav">
     <div class="nav-content">
       <div class="nav-brand">
-        <img src="arumee_assets/logo.png" alt="Arumee" width="40" height="40" />
+        <picture>
+          <source srcset="arumee_assets/logo.webp" type="image/webp"/>
+          <img src="arumee_assets/logo.png" alt="Arumee" width="40" height="40" />
+        </picture>
         <span>ARUMEE</span>
       </div>
       <div class="nav-actions">
-        <a href="index.html#oilsGrid" class="nav-btn">Our Oils</a>
+        <a href="index.html#oilsDeliveryInfo" class="nav-btn">Our Oils</a>
         <button class="nav-btn primary" onclick="console.log('Cart clicked!'); toggleCart();">
           🛒
           <span class="nav-cart-count" id="navCartCount">0</span>
@@ -362,9 +366,9 @@
     </div>
   </nav>
 
-  <div class="hero-tabs-wrapper" role="tablist" aria-label="Primary site sections">
-    <nav class="hero-nav">
-      <a href="index.html#oilsGrid" class="hero-nav-tab" role="tab" aria-selected="false">Our Oils</a>
+  <div class="hero-tabs-wrapper">
+    <nav class="hero-nav" role="tablist" aria-label="Primary site sections">
+      <a href="index.html#oilsDeliveryInfo" class="hero-nav-tab" role="tab" aria-selected="false">Our Oils</a>
       <a href="combo.html" class="hero-nav-tab" role="tab" aria-selected="false">Combo Offers</a>
       <a href="benefits.html" class="hero-nav-tab active" role="tab" aria-selected="true">Benefits</a>
       <a href="about.html" class="hero-nav-tab" role="tab" aria-selected="false">About Us</a>
@@ -409,7 +413,7 @@
   </div>
   <div id="cartDropdown" class="cart-dropdown" role="dialog" aria-modal="true" aria-labelledby="cartHeader" tabindex="-1">
     <div class="cart-header">
-      <h3 id="cartHeader"><span>🛒</span> Your Cart</h3>
+      <h2 id="cartHeader"><span>🛒</span> Your Cart</h2>
       <button class="cart-close" type="button" aria-label="Close cart" onclick="toggleCart()">×</button>
     </div>
     <div class="cart-content" id="cartContent">
@@ -552,7 +556,7 @@
       updateCartDisplay(); 
       // Navigate to homepage oils section and show toast
       sessionStorage.setItem('showClearToast', 'true');
-      window.location.href='index.html#oilsGrid';
+      window.location.href='index.html#oilsDeliveryInfo';
     };
     window.proceedToOrder = function(){ 
       if(!orderItems.length){ return; } 
