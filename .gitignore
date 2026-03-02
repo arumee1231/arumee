@@ -1,0 +1,10 @@
+# Ignore dependencies
+node_modules/
+
+# Ignore test outputs
+test-results/
+playwright-report/
+
+# Optional
+.env
+.DS_Store
