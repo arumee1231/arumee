@@ -24,81 +24,17 @@
 <meta name="geo.region" content="IN"/>
 <link href="arumee_assets/favicon.png" rel="icon" type="image/png"/>
 <!-- Preload critical hero assets to reduce flicker -->
-<link as="image" fetchpriority="high" href="arumee_assets/logo.png" rel="preload"/>
-<!-- Preconnect & use font-display swap already configured; ensure fast font load -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link as="image" fetchpriority="high" href="arumee_assets/logo.webp" rel="preload" type="image/webp"/>
+<!-- Preconnect: crossorigin required on both for font requests -->
+<link href="https://fonts.googleapis.com" rel="preconnect" crossorigin/>
 <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Async font load — non-render-blocking -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&amp;family=Inter:wght@400;500;600&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'"/>
+<noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/></noscript>
 <!-- Shared unified cart styles -->
 <link href="arumee_assets/cart.css" rel="stylesheet"/>
 
-<!-- Bot protection (reCAPTCHA v2 checkbox)
-     NOTE: reCAPTCHA site keys are domain-bound. Local testing via file:// will fail.
-     This loader uses Google's public test key for local (file:// / localhost), and
-     your real key on production (arumee.co.in). -->
-<script>
-  (function(){
-    var PROD_SITE_KEY = '6Lds8XMsAAAAAHG6wW_iypqtL00bL7XO0X-RbRA2';
-    var TEST_SITE_KEY = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
-
-    // reCAPTCHA does not reliably support file:// origins (even with the test key).
-    // For local file previews, hide the widget and skip loading Google's script.
-    if (location.protocol === 'file:') {
-      window.__LOCAL_PREVIEW_MODE = true;
-      window.__RECAPTCHA_DISABLED = true;
-      var hide = function(){
-        var el = document.querySelector('.g-recaptcha');
-        if (el) {
-          el.style.display = 'block';
-          el.setAttribute('aria-hidden', 'false');
-          el.innerHTML = '<div style="font-size:12px;line-height:1.45;color:#6b7c74;background:#f3f3f3;border-radius:8px;padding:10px 12px;">Preview mode: CAPTCHA is disabled on file://. Test CAPTCHA on live domain or localhost.</div>';
-        }
-      };
-      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', hide);
-      else hide();
-      return;
-    }
-
-    var host = String(location.hostname || '').toLowerCase();
-    var isLocalHost = (host === 'localhost') || (host === '127.0.0.1') || (host === '');
-    var siteKey = isLocalHost ? TEST_SITE_KEY : PROD_SITE_KEY;
-
-    window.__RECAPTCHA_SITE_KEY = siteKey;
-    window.__recaptchaRendered = false;
-    window.__onRecaptchaLoaded = function(){
-      var attempts = 0;
-      var tryRender = function(){
-        try {
-          var el = document.querySelector('.g-recaptcha');
-          if (!el || window.__recaptchaRendered) return;
-          if (!window.grecaptcha || typeof window.grecaptcha.render !== 'function') {
-            if (++attempts < 40) return setTimeout(tryRender, 50);
-            return;
-          }
-          window.__recaptchaRendered = true;
-          window.grecaptcha.render(el, { sitekey: siteKey });
-        } catch (e) {
-          if (++attempts < 40) return setTimeout(tryRender, 50);
-          console.warn('reCAPTCHA render failed', e);
-        }
-      };
-      tryRender();
-    };
-
-    var s = document.createElement('script');
-    s.src = 'https://www.google.com/recaptcha/api.js?onload=__onRecaptchaLoaded&render=explicit';
-    s.async = true;
-    s.defer = true;
-    s.onerror = function(){
-      window.__RECAPTCHA_LOAD_FAILED = true;
-      var el = document.querySelector('.g-recaptcha');
-      if (el) {
-        el.innerHTML = '<div style="font-size:12px;line-height:1.45;color:#7a5d00;background:#fff8db;border-radius:8px;padding:10px 12px;">Captcha failed to load. Check internet/ad-blocker and refresh.</div>';
-      }
-    };
-    document.head.appendChild(s);
-  }());
-</script>
+<!-- Honeypot bot protection – no third-party scripts needed -->
 <!-- Removed inline Our Oils cart overrides – unified in arumee_assets/cart.css -->
 <!-- Skip link for accessibility -->
 <style>
@@ -653,16 +589,12 @@
       /* Reduced vertical padding for more compact hero */
       padding: 28px 0 34px;
       background: linear-gradient(135deg, #0f2922 0%, #1e4d32 25%, #2a5f42 50%, #1e4d32 75%, #0f2922 100%);
-      background-size: 400% 400%;
-      animation: gradient-shift 15s ease infinite;
       overflow: hidden;
       border-bottom: 4px solid var(--gold);
     }
     
-    @keyframes gradient-shift {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
+    /* gradient-shift removed — background-position animations are non-composited
+       and cause jank. The ::before pattern-pulse (opacity) provides the ambient motion. */
     
     /* Animated overlay patterns */
     header.hero::before {
@@ -890,13 +822,6 @@
     /* SECTIONS */
     section { 
       padding: 60px 0; 
-      opacity: 0; 
-      transform: translateY(30px); 
-      transition: all 0.8s var(--transition-smooth);
-    }
-    section.visible { 
-      opacity: 1; 
-      transform: translateY(0); 
     }
     
     /* First section (oils) should have less top padding */
@@ -1336,20 +1261,6 @@
     .order-price .old-price, .order-price .new-price, .cart-item-details .old-price, .cart-item-details .new-price {
       font-size: 18px;
       font-weight: 700;
-    }
-    .free-delivery-badge{
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--gold);
-      color: #fff;
-      font-size: 12px;
-      font-weight: 900;
-      padding: 6px 12px;
-      border-radius: 999px;
-      box-shadow: var(--shadow-sm);
-      letter-spacing: 0.2px;
-      margin: 0 0 8px;
     }
     .size-selector { margin: 12px 0; }
     .size-selector label { 
@@ -1901,28 +1812,50 @@
       transform: scale(1.05);
     }
     
-    /* Loading state for buttons */
-    .btn.loading, .add-to-order.loading {
-      position: relative;
+    /* Loading state for submit button */
+    .btn.loading {
       pointer-events: none;
-      opacity: 0.7;
+      background: linear-gradient(135deg, var(--green) 0%, #2d7a50 100%) !important;
+      box-shadow: 0 4px 16px rgba(30,77,50,0.35) !important;
+      color: white !important;
+      transform: none !important;
+      min-width: 170px;
+      transition: background 0.3s, min-width 0.2s;
     }
-    .btn.loading::after, .add-to-order.loading::after {
-      content: '';
-      position: absolute;
-      width: 16px;
-      height: 16px;
-      top: 50%;
-      left: 50%;
-      margin-left: -8px;
-      margin-top: -8px;
-      border: 2px solid transparent;
-      border-top-color: white;
+    .btn-spinner {
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      border: 2.5px solid rgba(255,255,255,0.35);
+      border-top-color: #fff;
       border-radius: 50%;
-      animation: spin 0.6s linear infinite;
+      animation: btnSpin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 7px;
+      flex-shrink: 0;
     }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    @keyframes btnSpin { to { transform: rotate(360deg); } }
+    /* Progress bar under form card */
+    #orderProgressBar {
+      display: none;
+      height: 4px;
+      border-radius: 0 0 16px 16px;
+      overflow: hidden;
+      background: rgba(30,77,50,0.1);
+      margin-top: -4px;
+    }
+    #orderProgressBar.active { display: block; }
+    #orderProgressBar span {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--green), var(--gold));
+      animation: progressSweep 2s ease-in-out infinite;
+    }
+    @keyframes progressSweep {
+      0%   { width: 0%;   margin-left: 0%; }
+      50%  { width: 60%;  margin-left: 20%; }
+      100% { width: 0%;   margin-left: 100%; }
     }
     
     @keyframes fadeIn {
@@ -2790,7 +2723,7 @@ h2.section-title {
   gap: 8px;
   font-size: 13px;
   font-weight: 700;
-  color: rgba(30,77,50,0.5);
+  color: rgba(30,77,50,0.72); /* bumped from 0.5 — passes WCAG AA contrast */
 }
 .form-step-hint .step.done {
   color: var(--green);
@@ -2943,9 +2876,9 @@ h2.section-title {
    ════════════════════════════════════════════════════════ */
 
 /* Fixed 3-column grid – never collapses, max width contained */
-#oilsGrid { scroll-margin-top: 96px; }
+#oilsGrid, #oilsDeliveryInfo { scroll-margin-top: 96px; }
 @media (max-width: 768px) {
-  #oilsGrid { scroll-margin-top: 132px; }
+  #oilsGrid, #oilsDeliveryInfo { scroll-margin-top: 132px; }
 }
 
 @media (min-width: 769px) {
@@ -3076,13 +3009,6 @@ h2.section-title {
 #oils .grid .price .unit {
   font-size: 12px;
 }
-#oils .grid .free-delivery-badge {
-  font-size: 10px;
-  padding: 3px 9px;
-  gap: 5px;
-  margin: 0 0 8px;
-}
-
 /* ── Size selector ── */
 #oils .grid .size-selector {
   margin: 0 0 8px;
@@ -3275,11 +3201,11 @@ h2.section-title {
 <nav class="sticky-nav" id="stickyNav">
 <div class="nav-content">
 <div class="nav-brand">
-<img alt="Arumee" decoding="async" fetchpriority="high" height="40" src="arumee_assets/logo.png" width="40"/>
+<img alt="Arumee" decoding="async" fetchpriority="high" height="40" src="arumee_assets/logo.webp" width="40"/>
 <span>ARUMEE</span>
 </div>
 <div class="nav-actions">
-<a class="nav-btn" href="#oils" id="navOilsBtn" style="display: none;">Our Oils</a>
+<a class="nav-btn" href="#oilsDeliveryInfo" id="navOilsBtn" style="display: none;">Our Oils</a>
 <button class="nav-btn primary" id="navCartBtn" onclick="toggleCart()" style="display: none;">
 <span>🛒</span>
 <span>View Cart</span>
@@ -3291,7 +3217,7 @@ h2.section-title {
 <header class="hero">
 <div class="container">
 <div class="brand">
-<img alt="Arumee logo" decoding="async" fetchpriority="high" height="76" src="arumee_assets/logo.png" style="aspect-ratio:1/1;" width="76"/>
+<img alt="Arumee logo" decoding="async" fetchpriority="high" height="76" src="arumee_assets/logo.webp" style="aspect-ratio:1/1;" width="76"/>
 <div>
 <h1 class="name">ARUMEE<sup style="font-size:0.4em; color:var(--gold); font-weight:800;">™</sup></h1>
 <div class="tagline">Traditionally Cold-Pressed &middot; Unmatched Purity</div>
@@ -3310,7 +3236,7 @@ h2.section-title {
 </div>
 </div>
 <div class="hero-cta">
-<a class="btn fill" href="#oilsGrid">Shop Now &rarr;</a>
+<a class="btn fill" href="#oilsDeliveryInfo">Shop Now &rarr;</a>
 <a class="btn outline" href="combo.html">View Combos</a>
 </div>
 </div>
@@ -3319,8 +3245,8 @@ h2.section-title {
 </header>
 <!-- Hero Tabs Below Banner -->
 <div aria-hidden="true" id="heroTabsSentinel"></div>
-<div aria-label="Primary site sections" class="hero-tabs-wrapper" role="tablist">
-<nav class="hero-nav">
+<div class="hero-tabs-wrapper">
+<nav aria-label="Primary site sections" class="hero-nav" role="tablist">
 <a aria-selected="true" class="hero-nav-tab active" href="index.html" role="tab">Our Oils</a>
 <a aria-selected="false" class="hero-nav-tab" href="combo.html" role="tab">Combo Offers</a>
 <a aria-selected="false" class="hero-nav-tab" href="benefits.html" role="tab">Benefits</a>
@@ -3369,9 +3295,28 @@ h2.section-title {
     scroller.scrollLeft = Math.max(0, target);
   }
 
+  function alignHashTarget() {
+    var hash = window.location.hash || '';
+    if (!hash || hash.length < 2) return;
+    var id = decodeURIComponent(hash.slice(1));
+    var target = document.getElementById(id);
+    if (!target) return;
+    try {
+      target.scrollIntoView({ behavior: 'auto', block: 'start' });
+    } catch (e) {
+      target.scrollIntoView(true);
+    }
+  }
+
   setTop();
   centerActive();
   updatePinnedTabs();
+  if (window.location.hash) {
+    window.requestAnimationFrame(function(){
+      alignHashTarget();
+      window.requestAnimationFrame(alignHashTarget);
+    });
+  }
   var resizeRaf = 0;
   function onResize(){
     if (resizeRaf) return;
@@ -3384,6 +3329,12 @@ h2.section-title {
   }
   window.addEventListener('resize', onResize);
   window.addEventListener('scroll', updatePinnedTabs, { passive: true });
+  window.addEventListener('hashchange', function(){
+    window.requestAnimationFrame(function(){
+      alignHashTarget();
+      window.requestAnimationFrame(alignHashTarget);
+    });
+  });
 
   var headerTabs = document.querySelectorAll('.hero-nav-tab');
   headerTabs.forEach(function(tab){
@@ -3432,7 +3383,7 @@ h2.section-title {
 <!-- Cart Slide-in Panel -->
 <div aria-labelledby="cartHeader" aria-modal="true" class="cart-dropdown" id="cartDropdown" role="dialog" tabindex="-1">
 <div class="cart-header">
-<h3 id="cartHeader"><span>🛒</span> Your Cart</h3>
+<h2 id="cartHeader"><span>🛒</span> Your Cart</h2>
 <button aria-label="Close cart" class="cart-close" onclick="toggleCart()">×</button>
 </div>
 <div class="cart-content" id="cartContent">
@@ -3462,7 +3413,7 @@ h2.section-title {
 <div class="container">
 <h2 class="section-title">Our Signature Oils</h2>
 <p class="lead">Our groundnut and gingelly oils are extracted using the ancestral wooden pressed (marachekku) technique; our coconut oil is cold-pressed &mdash; every drop retains full nutrients, aroma, and authentic flavour. Delivered fresh to your door.</p>
-<div class="important-info" role="note" aria-label="Important information about delivery">
+<div class="important-info" id="oilsDeliveryInfo" role="note" aria-label="Important information about delivery">
   <div class="important-info__icon" aria-hidden="true">ℹ️</div>
   <div class="important-info__body">
     <div class="important-info__title">Important information</div>
@@ -3472,13 +3423,15 @@ h2.section-title {
 <div class="grid" id="oilsGrid">
 <article aria-labelledby="prod-coconut-title" class="card">
 <div class="product-badge" style="background:linear-gradient(135deg,#2a7d4f,#1e6040);">Cold Pressed</div>
-<div class="pic-wrap"><img alt="Cold‑Pressed Coconut Oil bottle" decoding="async" height="240" loading="lazy" src="arumee_assets/mockup_coconut.png" width="240"/></div>
+<div class="pic-wrap"><picture>
+  <source srcset="arumee_assets/mockup_coconut.webp" type="image/webp"/>
+  <img alt="Cold‑Pressed Coconut Oil bottle" decoding="async" height="240" loading="lazy" src="arumee_assets/mockup_coconut.png" width="240"/>
+</picture></div>
 
 <div class="content">
   <span class="pill" id="coconut-pill">Coconut • 1L</span>
 <div class="title" id="prod-coconut-title">Cold‑Pressed Coconut Oil</div>
 <div class="price" id="coconut-price">₹449 <span>/ 1L</span></div>
-<div class="free-delivery-badge">🚚 Free Delivery Included</div>
 <div class="size-selector">
 <label>SIZE</label>
   <div class="size-options">
@@ -3499,12 +3452,14 @@ h2.section-title {
 </article>
 <article aria-labelledby="prod-groundnut-title" class="card">
 <div class="product-badge">★ Best Seller</div>
-<div class="pic-wrap"><img alt="Cold‑Pressed Groundnut Oil bottle" decoding="async" height="240" loading="lazy" src="arumee_assets/mockup_groundnut.png" width="240"/></div>
+<div class="pic-wrap"><picture>
+  <source srcset="arumee_assets/mockup_groundnut.webp" type="image/webp"/>
+  <img alt="Cold‑Pressed Groundnut Oil bottle" decoding="async" height="240" loading="lazy" src="arumee_assets/mockup_groundnut.png" width="240"/>
+</picture></div>
 <div class="content">
 <span class="pill" id="groundnut-pill">Groundnut • 1L</span>
 <div class="title" id="prod-groundnut-title">Wooden Cold‑Pressed Groundnut Oil</div>
   <div class="price" id="groundnut-price">₹329 <span>/ 1L</span></div>
-<div class="free-delivery-badge">🚚 Free Delivery Included</div>
 <div class="size-selector">
 <label>SIZE</label>
 <div class="size-options">
@@ -3525,12 +3480,14 @@ h2.section-title {
 </article>
 <article aria-labelledby="prod-gingelly-title" class="card">
 <div class="product-badge" style="background:linear-gradient(135deg,#2a7d4f,#1e6040);">Wooden Press</div>
-<div class="pic-wrap"><img alt="Cold‑Pressed Gingelly (Sesame) Oil bottle" decoding="async" height="240" loading="lazy" src="arumee_assets/mockup_gingelly.png" width="240"/></div>
+<div class="pic-wrap"><picture>
+  <source srcset="arumee_assets/mockup_gingelly.webp" type="image/webp"/>
+  <img alt="Cold‑Pressed Gingelly (Sesame) Oil bottle" decoding="async" height="240" loading="lazy" src="arumee_assets/mockup_gingelly.png" width="240"/>
+</picture></div>
 <div class="content">
 <span class="pill" id="gingelly-pill">Gingelly • 1L</span>
 <div class="title" id="prod-gingelly-title">Wooden Cold‑Pressed Gingelly Oil</div>
 <div class="price" id="gingelly-price">₹499 <span class="unit">/ 1L</span></div>
-<div class="free-delivery-badge">🚚 Free Delivery Included</div>
 <div class="size-selector">
 <label>SIZE</label>
 <div class="size-options">
@@ -3571,8 +3528,7 @@ h2.section-title {
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 32px; margin-top: 40px;">
 <div class="benefit-card" style="text-align: center; padding: 24px; border-radius: 16px; transition: all 0.3s ease;">
 <div style="width: 64px; height: 64px; margin: 0 auto 16px; background: linear-gradient(135deg, var(--green-dark), var(--green)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md);">
-<!-- Natural.png icon asset -->
-<img alt="100% Pure &amp; Natural" loading="lazy" src="arumee_assets/Natural.png" style="width:44px;height:44px;display:block;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.25));"/>
+<img alt="100% Pure and Natural" src="arumee_assets/Natural.webp" width="38" height="38" style="display:block; width:38px; height:38px; object-fit:contain;" decoding="async" loading="lazy"/>
 </div>
 <h3 class="benefit-card-title">100% Pure &amp; Natural</h3>
 <p style="color: #666; line-height: 1.6; margin: 0;">No chemicals, no preservatives. Just pure, cold-pressed goodness from farm to bottle.</p>
@@ -3620,7 +3576,7 @@ h2.section-title {
 </div>
 </section>
 
-<!-- FAQ Section — FAQPage microdata for Google SGE / voice search / featured snippets -->
+<!-- FAQ Section -->
 <style>
   .faq-item {
     background: #ffffff;
@@ -3684,65 +3640,65 @@ h2.section-title {
     .faq-a p { padding: 0 18px 16px; padding-top: 12px; }
   }
 </style>
-<section id="faq" aria-labelledby="faq-heading" itemscope itemtype="https://schema.org/FAQPage" style="background:#f4f9f5; padding:60px 0; border-top:1px solid rgba(30,77,50,0.1);">
+<section id="faq" aria-labelledby="faq-heading" style="background:#f4f9f5; padding:60px 0; border-top:1px solid rgba(30,77,50,0.1);">
 <div class="container">
 <h2 class="section-title" id="faq-heading">Frequently Asked Questions</h2>
 <p class="lead">Everything you need to know about Arumee cold-pressed oils — answered honestly.</p>
 <div style="max-width:780px; margin:40px auto 0; display:flex; flex-direction:column; gap:12px;">
 
-  <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-    <h3 class="faq-q" itemprop="name" onclick="this.closest('.faq-item').classList.toggle('open')">What is Arumee?</h3>
-    <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-      <p itemprop="text">Arumee is a premium oil brand based in Namakkal, Tamil Nadu. We produce pure cold-pressed coconut oil and wooden-pressed (marachekku) groundnut &amp; gingelly (sesame) oils at Mani Flour &amp; Oil Mill. All oils are FSSAI certified (licence 22425133000137), free of chemicals and preservatives, and delivered free within Tamil Nadu.</p>
+  <div class="faq-item">
+    <h3 class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">What is Arumee?</h3>
+    <div class="faq-a">
+      <p>Arumee is a premium oil brand based in Namakkal, Tamil Nadu. We produce pure cold-pressed coconut oil and wooden-pressed (marachekku) groundnut &amp; gingelly (sesame) oils at Mani Flour &amp; Oil Mill. All oils are FSSAI certified (licence 22425133000137), free of chemicals and preservatives, and delivered free within Tamil Nadu.</p>
     </div>
   </div>
 
-  <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-    <h3 class="faq-q" itemprop="name" onclick="this.closest('.faq-item').classList.toggle('open')">Is Arumee oil truly cold-pressed?</h3>
-    <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-      <p itemprop="text">Yes. All our oils are cold-pressed at low temperature — well below the threshold that destroys natural nutrients, antioxidants, and aroma. Our groundnut and gingelly oils are extracted using the traditional wooden marachekku press; our coconut oil is cold-pressed with no heat treatment, bleaching, or chemical solvents at any stage.</p>
+  <div class="faq-item">
+    <h3 class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">Is Arumee oil truly cold-pressed?</h3>
+    <div class="faq-a">
+      <p>Yes. All our oils are cold-pressed at low temperature — well below the threshold that destroys natural nutrients, antioxidants, and aroma. Our groundnut and gingelly oils are extracted using the traditional wooden marachekku press; our coconut oil is cold-pressed with no heat treatment, bleaching, or chemical solvents at any stage.</p>
     </div>
   </div>
 
-  <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-    <h3 class="faq-q" itemprop="name" onclick="this.closest('.faq-item').classList.toggle('open')">Why is cold-pressed oil better than refined oil?</h3>
-    <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-      <p itemprop="text">Refined oils undergo high-heat processing, chemical bleaching, and deodorizing — stripping away natural vitamins, antioxidants, and flavour. Cold-pressed oils retain their full nutritional profile including Vitamin E, natural antioxidants like sesamol (in gingelly oil) and lauric acid (in coconut oil), along with authentic aroma and taste.</p>
+  <div class="faq-item">
+    <h3 class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">Why is cold-pressed oil better than refined oil?</h3>
+    <div class="faq-a">
+      <p>Refined oils undergo high-heat processing, chemical bleaching, and deodorizing — stripping away natural vitamins, antioxidants, and flavour. Cold-pressed oils retain their full nutritional profile including Vitamin E, natural antioxidants like sesamol (in gingelly oil) and lauric acid (in coconut oil), along with authentic aroma and taste.</p>
     </div>
   </div>
 
-  <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-    <h3 class="faq-q" itemprop="name" onclick="this.closest('.faq-item').classList.toggle('open')">Is delivery free? Where do you deliver?</h3>
-    <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-      <p itemprop="text">Yes, all Arumee orders include free delivery within Tamil Nadu. We currently deliver only within Tamil Nadu. We&rsquo;ll expand to other states soon. We dispatch from our mill in Namakkal, Tamil Nadu. Most orders arrive within 3–5 business days.</p>
+  <div class="faq-item">
+    <h3 class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">Is delivery free? Where do you deliver?</h3>
+    <div class="faq-a">
+      <p>Yes, all Arumee orders include free delivery within Tamil Nadu. We currently deliver only within Tamil Nadu. We&rsquo;ll expand to other states soon. We dispatch from our mill in Namakkal, Tamil Nadu. Most orders arrive within 3–5 business days.</p>
     </div>
   </div>
 
-  <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-    <h3 class="faq-q" itemprop="name" onclick="this.closest('.faq-item').classList.toggle('open')">Why can online delivery pricing differ from direct mill purchase pricing?</h3>
-    <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-      <p itemprop="text">Online delivery pricing may differ from direct mill purchase pricing because it includes packaging, order handling, and transportation to your address. The total online amount covers these delivery-related costs for doorstep convenience.</p>
+  <div class="faq-item">
+    <h3 class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">Why can online delivery pricing differ from direct mill purchase pricing?</h3>
+    <div class="faq-a">
+      <p>Online delivery pricing may differ from direct mill purchase pricing because it includes packaging, order handling, and transportation to your address. The total online amount covers these delivery-related costs for doorstep convenience.</p>
     </div>
   </div>
 
-  <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-    <h3 class="faq-q" itemprop="name" onclick="this.closest('.faq-item').classList.toggle('open')">How do I pay for my order?</h3>
-    <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-      <p itemprop="text">Orders are placed via WhatsApp. Once you discuss and confirm your order in the chat, you pay upfront via UPI — then your oil is packed and dispatched. Free delivery within Tamil Nadu.</p>
+  <div class="faq-item">
+    <h3 class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">How do I pay for my order?</h3>
+    <div class="faq-a">
+      <p>Orders are placed via WhatsApp. Once you discuss and confirm your order in the chat, you pay upfront via UPI — then your oil is packed and dispatched. Free delivery within Tamil Nadu.</p>
     </div>
   </div>
 
-  <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-    <h3 class="faq-q" itemprop="name" onclick="this.closest('.faq-item').classList.toggle('open')">Is Arumee oil FSSAI certified?</h3>
-    <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-      <p itemprop="text">Yes. Arumee is licensed and certified by FSSAI (Food Safety and Standards Authority of India) under licence number 22425133000137, operated by Mani Flour &amp; Oil Mill, Namakkal, Tamil Nadu.</p>
+  <div class="faq-item">
+    <h3 class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">Is Arumee oil FSSAI certified?</h3>
+    <div class="faq-a">
+      <p>Yes. Arumee is licensed and certified by FSSAI (Food Safety and Standards Authority of India) under licence number 22425133000137, operated by Mani Flour &amp; Oil Mill, Namakkal, Tamil Nadu.</p>
     </div>
   </div>
 
-  <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-    <h3 class="faq-q" itemprop="name" onclick="this.closest('.faq-item').classList.toggle('open')">What sizes and prices are available?</h3>
-    <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-      <p itemprop="text">All three oils are available in 1 litre and 5 litre packs. Cold-Pressed Coconut Oil — ₹449 (1L) / ₹2,199 (5L). Wooden Cold-Pressed Groundnut Oil — ₹329 (1L) / ₹1,549 (5L). Wooden Cold-Pressed Gingelly Oil — ₹499 (1L) / ₹2,395 (5L). Free delivery included on all orders.</p>
+  <div class="faq-item">
+    <h3 class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">What sizes and prices are available?</h3>
+    <div class="faq-a">
+      <p>All three oils are available in 1 litre and 5 litre packs. Cold-Pressed Coconut Oil — ₹449 (1L) / ₹2,199 (5L). Wooden Cold-Pressed Groundnut Oil — ₹329 (1L) / ₹1,549 (5L). Wooden Cold-Pressed Gingelly Oil — ₹499 (1L) / ₹2,395 (5L). Free delivery included on all orders.</p>
     </div>
   </div>
 
@@ -3762,8 +3718,6 @@ h2.section-title {
   <div class="step"><span class="step-num">3</span> Confirm on WhatsApp</div>
 </div>
 <form autocapitalize="none" autocomplete="off" class="card" onsubmit="handleSubmit(event)" spellcheck="false">
-  <!-- Honeypot field (bots will often fill this; humans won't see it) -->
-  <input aria-hidden="true" autocomplete="off" id="website" name="website" tabindex="-1" type="text" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;"/>
 <div class="form-row" style="display:grid; grid-template-columns: repeat(2, 1fr); gap:20px;">
 <div>
 <label for="input-name">Full Name</label><br/>
@@ -3796,9 +3750,9 @@ h2.section-title {
 <textarea autocomplete="off" id="input-notes" name="notes" onclick="this.readOnly=false;this.disabled=false;this.focus();" onfocus="this.readOnly=false;this.disabled=false;" placeholder="Any special delivery instructions..." rows="3"></textarea>
 </div>
 
-<!-- reCAPTCHA (set your site key below) -->
-<div style="grid-column:1/-1; display:flex; justify-content:flex-end;">
-  <div class="g-recaptcha"></div>
+<!-- honeypot: bots fill this, real users never see it -->
+<div style="position:absolute;left:-9999px;top:-9999px;width:0;height:0;overflow:hidden;" aria-hidden="true">
+  <input type="text" name="url_confirm" id="formHoneypot" tabindex="-1" autocomplete="off"/>
 </div>
 </div>
 <div class="form-buttons" style="display:flex;gap:16px;justify-content:flex-end;margin-top:20px;">
@@ -3806,6 +3760,7 @@ h2.section-title {
 <button class="btn fill" type="submit">Submit Order</button>
 </div>
 </form>
+<div id="orderProgressBar"><span></span></div>
 </div>
 </section>
 </main>
@@ -4974,9 +4929,6 @@ h2.section-title {
   orderItems = [];
   updateOrderDetails();
 
-  // Reset reCAPTCHA (best-effort)
-  try { if (window.grecaptcha && typeof window.grecaptcha.reset === 'function') window.grecaptcha.reset(); } catch(e) {}
-
   // Clear saved carts + chat widget state so items don't come back on refresh
   try {
     localStorage.removeItem('arumeeCart');
@@ -5042,7 +4994,7 @@ h2.section-title {
       // Basic anti-bot checks (zero-flow-change)
       try {
         // Honeypot
-        const hp = (e.target && e.target.website) ? String(e.target.website.value || '') : '';
+        const hp = (e.target && e.target.url_confirm) ? String(e.target.url_confirm.value || '') : '';
         if (hp.trim()) {
           alert('Unable to submit. Please try again.');
           return;
@@ -5054,27 +5006,12 @@ h2.section-title {
           return;
         }
 
-        // Simple throttle (prevents repeated rapid submits)
+        // Simple throttle (prevents double-clicks within 3 seconds)
         const last = parseInt(localStorage.getItem('arumee_last_submit_ts') || '0', 10) || 0;
-        if (last && (Date.now() - last) < 30000) {
-          alert('Please wait 30 seconds before submitting again.');
-          return;
+        if (last && (Date.now() - last) < 3000) {
+          return; // silent — just prevents accidental double-click
         }
 
-        // reCAPTCHA — skip only when explicitly disabled (file:// origin, where the widget is hidden).
-        // On localhost the test key renders the real checkbox, so we enforce it there too.
-        const hasCaptchaEl = !!document.querySelector('.g-recaptcha');
-        const captchaDisabled = !!window.__RECAPTCHA_DISABLED;
-        if (hasCaptchaEl && !captchaDisabled) {
-          if (window.__RECAPTCHA_LOAD_FAILED) {
-            alert('Captcha failed to load. Please disable ad-blocker or check internet, then refresh.');
-            return;
-          }
-          if (!window.grecaptcha || typeof window.grecaptcha.getResponse !== 'function' || !window.grecaptcha.getResponse()) {
-            alert('Please verify you are not a robot.');
-            return;
-          }
-        }
       } catch (antiBotErr) {
         // If anti-bot logic fails, do not block legitimate users
         console.warn('Anti-bot check skipped:', antiBotErr);
@@ -5175,32 +5112,49 @@ h2.section-title {
       // Show loading state
       submitBtn.classList.add('loading');
       submitBtn.disabled = true;
+      const _spinnerHTML = '<span class="btn-spinner"></span>';
+      const _messages = ['Placing your order...', 'Sending to Arumee...', 'Almost there...', 'Hang tight!'];
+      let _msgIdx = 0;
+      submitBtn.innerHTML = _spinnerHTML + _messages[0];
+      const _msgTimer = setInterval(function() {
+        _msgIdx = (_msgIdx + 1) % _messages.length;
+        submitBtn.innerHTML = _spinnerHTML + _messages[_msgIdx];
+      }, 1800);
+      const _progressBar = document.getElementById('orderProgressBar');
+      if (_progressBar) _progressBar.classList.add('active');
 
       // Mark submit attempt time (best-effort)
       try { localStorage.setItem('arumee_last_submit_ts', String(Date.now())); } catch(e) {}
       
-      const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSflC-Ev08-1K4ULCfcscEw6WsCDV-tm99cGCAIt_V0-FC7lEg/formResponse';
+      // ── Apps Script endpoint (replace URL after deploying apps-script/Code.gs) ──
+      const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwpKpqtx9jqE3zAFy8F_MBcEc9F8mFIp8FmxkJCxfDXd3sxczYDvy-zmNW8uDGMMtdhfA/exec';
       
       const formData = new FormData(e.target);
-      const googleFormData = new FormData();
+      const googleFormData = new URLSearchParams();
       
-      // Map form fields to Google Form entry IDs
-      googleFormData.append('entry.1725501823', formData.get('name'));        // Full Name
-      googleFormData.append('entry.1067964574', formData.get('phone'));       // Phone / WhatsApp
-      googleFormData.append('entry.815750809', formData.get('address'));      // Address
-      googleFormData.append('entry.1998696792', formData.get('orderDetails')); // Order Details
-      googleFormData.append('entry.185274423', formData.get('notes') || 'None'); // Additional Notes
-      googleFormData.append('entry.1620525141', formData.get('totalAmount') || '0'); // Total Amount (Replace 123456789 with actual entry ID from your Google Form)
+      // Clean field names matching Code.gs expectations
+      googleFormData.append('name',    formData.get('name'));
+      googleFormData.append('phone',   formData.get('phone'));
+      googleFormData.append('address', formData.get('address'));
+      googleFormData.append('pincode', formData.get('pincode') || '');
+      googleFormData.append('items',   formData.get('orderDetails'));
+      googleFormData.append('total',   formData.get('totalAmount') || '0');
+      googleFormData.append('notes',   formData.get('notes') || '');
+      googleFormData.append('source',  'website');
+      googleFormData.append('url_confirm', ''); // honeypot — always blank for real users
       
-      // Submit to Google Form
-      fetch(GOOGLE_FORM_URL, {
+      // Submit to Apps Script (no-cors + url-encoded avoids CORS preflight)
+      fetch(APPS_SCRIPT_URL, {
         method: 'POST',
-        body: googleFormData,
-        mode: 'no-cors'
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: googleFormData.toString()
       }).then(() => {
-        // Remove loading state
+        clearInterval(_msgTimer);
         submitBtn.classList.remove('loading');
         submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Order';
+        if (_progressBar) _progressBar.classList.remove('active');
         
         // Success - show confirmation and open WhatsApp
         const name = formData.get('name');
@@ -5262,7 +5216,6 @@ h2.section-title {
         // Clear form and scroll to top
         setTimeout(() => {
           e.target.reset();
-          try { if (window.grecaptcha && typeof window.grecaptcha.reset === 'function') window.grecaptcha.reset(); } catch(e) {}
           // Hide district field after form reset (reset() doesn't trigger oninput)
           var dw = document.getElementById('page-district-wrap');
           var di = document.getElementById('input-district');
@@ -5277,9 +5230,11 @@ h2.section-title {
         }, 1000);
         
       }).catch((error) => {
-        // Remove loading state
+        clearInterval(_msgTimer);
         submitBtn.classList.remove('loading');
         submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Order';
+        if (_progressBar) _progressBar.classList.remove('active');
         
         // Error - don't clear anything
         console.error('Submission error:', error);
@@ -5659,18 +5614,7 @@ h2.section-title {
       });
     });
     
-    // Fade in on scroll with improved observer
-    const sections = document.querySelectorAll('section');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => { 
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          // Optionally stop observing once visible for better performance
-          observer.unobserve(e.target);
-        }
-      });
-    }, {threshold: 0.15, rootMargin: '0px 0px -50px 0px'});
-    sections.forEach(sec => observer.observe(sec));
+    // (Fade-in removed — sections are always visible)
 
     // Scroll-top visibility with throttle
     const topBtn = document.getElementById('scrollTop');
@@ -6185,7 +6129,30 @@ document.addEventListener('DOMContentLoaded', function () {
   else wrapPhrase();
 })();
 </script>
-  <script src="arumee_assets/chat-widget.js"></script>
-<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('/service-worker.js');</script>
+  <script src="arumee_assets/chat-widget.js?v=6"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  // Unregister any stale SW first, then register fresh
+  navigator.serviceWorker.getRegistrations().then(function(regs) {
+    var unregAll = regs.map(function(r) { return r.unregister(); });
+    return Promise.all(unregAll);
+  }).then(function() {
+    return navigator.serviceWorker.register('/service-worker.js');
+  }).then(function(reg) {
+    // Force new SW to activate immediately without waiting for tab close
+    if (reg.waiting) { reg.waiting.postMessage({type:'SKIP_WAITING'}); }
+    reg.addEventListener('updatefound', function() {
+      var newSW = reg.installing;
+      if (newSW) {
+        newSW.addEventListener('statechange', function() {
+          if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+            newSW.postMessage({type:'SKIP_WAITING'});
+          }
+        });
+      }
+    });
+  });
+}
+</script>
 </body>
 </html>

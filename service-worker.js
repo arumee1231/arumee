@@ -5,7 +5,14 @@
   • New SW version → old cache is automatically wiped on activation
   ───────────────────────────────────────────────────────────────────────── */
 
-const CACHE_NAME = 'arumee-v3';
+const CACHE_NAME = 'arumee-v7';
+
+// Allow the page to force-activate a waiting SW
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
 
 const PRECACHE = [
   '/',
@@ -107,8 +114,13 @@ self.addEventListener('fetch', event => {
         return networkFirst(event, cache);
       }
 
-      // Static assets should feel instant on repeat visits
-      if (['script', 'style', 'image', 'font'].includes(req.destination) || req.url.endsWith('.json')) {
+      // JS scripts: always fetch fresh so code changes apply immediately
+      if (req.destination === 'script') {
+        return networkFirst(event, cache);
+      }
+
+      // Other static assets (css, images, fonts, json): fast stale-while-revalidate
+      if (['style', 'image', 'font'].includes(req.destination) || req.url.endsWith('.json')) {
         return staleWhileRevalidate(req, cache);
       }
 
