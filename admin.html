@@ -1,1916 +1,1631 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arumee Sales Admin - Password Protected</title>
-    <!-- Chart.js Library for Trending Charts -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Desktop-specific override: keep buttons inline and compact */
-        @media (min-width: 769px) {
-            .button-group {
-                flex-direction: row;
-            }
-            .button-group button {
-                width: auto !important;
-                flex: 0 0 auto !important;
-            }
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 20px;
-        }
-
-        body.sheet-open {
-            overflow: hidden;
-            touch-action: none;
-        }
-
-        .login-container {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            padding: 40px;
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-            animation: slideDown 0.5s ease-out;
-            margin: auto;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .login-container.hidden {
-            display: none;
-        }
-
-        .login-container h1 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 28px;
-        }
-
-        .login-container p {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 14px;
-        }
-
-        .form-group {
-            text-align: left;
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        input[type="password"] {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 6px;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
-        }
-
-        input[type="password"]:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        .error-message {
-            color: #e74c3c;
-            font-size: 14px;
-            margin-top: 10px;
-            display: none;
-        }
-
-        /* Admin Dashboard Styles */
-        .admin-container {
-            background: white;
-            border-radius: 14px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 1200px;
-            overflow: hidden;
-            display: none;
-            animation: slideDown 0.5s ease-out;
-            margin: 0 auto;
-        }
-
-        .admin-container.visible {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .admin-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .admin-header h1 {
-            font-size: 24px;
-        }
-
-        .logout-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            border: 1px solid white;
-            transition: all 0.3s ease;
-        }
-
-        .logout-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: none;
-        }
-
-        .tabs {
-            display: flex;
-            background: #f8f9fa;
-            border-bottom: 2px solid #ddd;
-            position: sticky;
-            top: 0;
-            z-index: 20;
-        }
-
-        .tab {
-            flex: 1;
-            padding: 16px;
-            text-align: center;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            color: #666;
-            transition: all 0.3s ease;
-            border-bottom: 3px solid transparent;
-            margin-bottom: -2px;
-            white-space: nowrap;
-        }
-
-        .tab:hover {
-            background: #e9ecef;
-        }
-
-        .tab.active {
-            color: #667eea;
-            border-bottom-color: #667eea;
-        }
-
-        .tab-content {
-            display: none;
-            padding: 30px;
-            min-height: 420px;
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .form-field {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-field label {
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .form-field input,
-        .form-field select {
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 6px;
-            font-size: 14px;
-            transition: border-color 0.3s ease;
-        }
-
-        /* mobile-only helper: hidden on desktop by default */
-        .mobile-only {
-            display: none;
-        }
-
-        .form-field input:focus,
-        .form-field select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .form-field input[type="date"] {
-            cursor: pointer;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-            align-items: center;
-        }
-
-        /* Desktop: buttons are compact; Mobile override below makes them full-width */
-        .submit-btn {
-            flex: 0 0 auto;
-            min-width: 220px;
-            max-width: 360px;
-            height: 46px;
-            padding: 0 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px !important;
-            font-size: 16px;
-            font-weight: 600;
-            line-height: 1.2;
-            cursor: pointer;
-            transition: all 0.18s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            white-space: nowrap;
-            width: auto !important;
-            appearance: none;
-            -webkit-appearance: none;
-        }
-
-        .submit-btn.loading,
-        .sheet-submit.loading {
-            cursor: not-allowed;
-            transform: none !important;
-            box-shadow: none !important;
-            position: relative;
-            /* keep width while loading */
-            min-width: 220px;
-            height: 46px;
-            font-size: 16px;
-            font-weight: 600;
-            line-height: 1.2;
-        }
-
-        .reset-btn {
-            flex: 0 0 auto;
-            min-width: 120px;
-            padding: 10px 16px;
-            background: #e9ecef;
-            color: #333;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.18s ease;
-            width: auto;
-        }
-
-        .reset-btn:hover {
-            background: #dee2e6;
-        }
-
-        .success-message,
-        .error-message {
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            display: none;
-            font-size: 14px;
-        }
-
-        .success-message {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .success-message.show,
-        .error-message.show {
-            display: block;
-            animation: slideDown 0.3s ease-out;
-        }
-
-        /* Dashboard Styles */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .stat-card h3 {
-            font-size: 14px;
-            margin-bottom: 10px;
-            opacity: 0.9;
-        }
-
-        .stat-card .value {
-            font-size: 32px;
-            font-weight: bold;
-        }
-
-        .table-responsive {
-            overflow-x: auto;
-            border: 1px solid #eee;
-            border-radius: 8px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        thead {
-            background: #f8f9fa;
-        }
-
-        th {
-            padding: 12px;
-            text-align: left;
-            font-weight: 600;
-            color: #333;
-            border-bottom: 2px solid #ddd;
-            white-space: nowrap;
-        }
-
-        td {
-            padding: 12px;
-            border-bottom: 1px solid #ddd;
-            color: #666;
-            vertical-align: middle;
-        }
-
-        tr:hover {
-            background: #f8f9fa;
-        }
-
-        .no-data {
-            text-align: center;
-            padding: 40px;
-            color: #999;
-            font-size: 16px;
-        }
-
-        .delete-btn {
-            background: #e74c3c;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: background 0.3s ease;
-        }
-
-        .delete-btn:hover {
-            background: #c0392b;
-        }
-
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #667eea;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Chart Container Styles */
-        .chart-container {
-            position: relative;
-            background: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            border: 1px solid #eee;
-        }
-
-        .chart-wrapper {
-            position: relative;
-            height: 400px;
-            margin-bottom: 20px;
-        }
-
-        .dashboard-note {
-            color: #999;
-            font-size: 13px;
-            margin: 0;
-        }
-
-        .chart-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .chart-header h3 {
-            color: #333;
-            font-size: 18px;
-            margin: 0;
-        }
-
-        .chart-filter {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .chart-filter label {
-            font-weight: 600;
-            color: #555;
-            font-size: 14px;
-        }
-
-        .chart-filter select {
-            padding: 8px 12px;
-            border: 2px solid #ddd;
-            border-radius: 6px;
-            font-size: 14px;
-            background: white;
-            cursor: pointer;
-            transition: border-color 0.3s ease;
-        }
-
-        .chart-filter select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .chart-legend {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-            font-size: 13px;
-            color: #666;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .legend-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 2px;
-        }
-
-        /* Product Grid Styles */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .product-card {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            border: 3px solid #ddd;
-            border-radius: 12px;
-            cursor: pointer;
-            background: #f9f9f9;
-            transition: all 0.3s ease;
-            min-height: 170px;
-            text-align: center;
-        }
-
-        .product-card:hover {
-            border-color: #667eea;
-            background: #f0f4ff;
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
-        }
-
-        .product-card.selected {
-            border-color: #667eea;
-            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
-            font-weight: 600;
-        }
-
-        .product-icon {
-            font-size: 48px;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .product-image {
-            width: 72px;
-            height: 72px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-        }
-
-        .product-name {
-            display: block;
-            text-align: center;
-            font-size: 13px;
-            color: #222;
-            margin-top: 6px;
-            line-height: 1.2;
-            /* allow wrap but clamp to two lines with ellipsis */
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            word-break: break-word;
-            white-space: normal;
-            max-width: 100%;
-        }
-        
-
-        .checkmark {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            width: 24px;
-            height: 24px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        .product-card.selected .checkmark {
-            display: flex;
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 0;
-            }
-
-            .login-container {
-                padding: 30px 20px;
-                margin: auto 16px;
-            }
-
-            .admin-container {
-                border-radius: 0;
-                min-height: 100vh;
-                max-width: none;
-            }
-
-            .admin-header {
-                padding: 14px 16px;
-                position: sticky;
-                top: 0;
-                z-index: 30;
-            }
-
-            .admin-header h1 {
-                font-size: 18px;
-            }
-
-            .tabs {
-                position: sticky;
-                top: 64px;
-                z-index: 25;
-                overflow-x: auto;
-            }
-
-            .tab {
-                min-width: 50%;
-                font-size: 14px;
-                padding: 14px 12px;
-            }
-
-            .form-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-
-            .tab-content {
-                padding: 16px;
-                min-height: 400px;
-            }
-
-            .button-group {
-                display: none;
-            }
-
-            .submit-btn,
-            .reset-btn,
-            .logout-btn {
-                min-height: 44px;
-            }
-
-            .sheet-actions {
-                gap: 8px;
-            }
-
-            .sheet-actions button {
-                font-size: 14px;
-                padding: 12px 10px;
-                min-height: 44px;
-            }
-
-            .product-grid {
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-                gap: 12px;
-            }
-
-            .product-card {
-                min-height: 140px;
-                padding: 15px;
-            }
-
-            .product-icon {
-                font-size: 36px;
-                margin-bottom: 8px;
-            }
-
-            .product-name {
-                font-size: 11px;
-            }
-
-            .chart-container {
-                padding: 14px;
-                margin-bottom: 16px;
-            }
-
-            .chart-wrapper {
-                height: 280px;
-                margin-bottom: 12px;
-            }
-
-            .chart-header h3 {
-                font-size: 16px;
-            }
-
-            th,
-            td {
-                padding: 10px 8px;
-                font-size: 13px;
-            }
-
-            /* Mobile-only adjustments */
-            .product-card small.product-price { display: none !important; }
-            .mobile-only { display: block !important; }
-            .desktop-only { display: none !important; }
-        }
-
-        /* Bottom sheet for mobile quick entry */
-        .sheet-overlay {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.4);
-            opacity: 0;
-            pointer-events: none;
-            z-index: 1200;
-            transition: opacity 0.25s ease;
-        }
-
-        .sheet-overlay.open {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .bottom-sheet {
-            position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: #fff;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
-            box-shadow: 0 -8px 30px rgba(0,0,0,0.15);
-            z-index: 1300;
-            padding: 24px;
-            transform: translateY(110%);
-            transition: transform 0.3s ease;
-            max-height: 85%;
-            overflow: auto;
-        }
-
-        .bottom-sheet.open {
-            transform: translateY(0);
-        }
-
-        .sheet-handle {
-            width: 64px;
-            height: 8px;
-            background: #e9ecef;
-            border-radius: 6px;
-            margin: 0 auto 14px auto;
-        }
-
-        .sheet-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 12px;
-        }
-
-        .sheet-actions button {
-            flex: 1;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: 700;
-            border: none;
-            width: auto;
-            min-width: 0;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            white-space: nowrap;
-        }
-
-        @media (max-width: 420px) {
-            .sheet-actions {
-                flex-direction: column;
-            }
-
-            .sheet-actions button {
-                width: 100%;
-            }
-        }
-
-        .sheet-cancel { background: #e9ecef; color: #333; }
-        .sheet-submit { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arumee Sales Admin - Password Protected</title>
+
+  <!-- Chart.js Library for Trending Charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* Desktop-specific override: keep buttons inline and compact */
+    @media (min-width: 769px) {
+      .button-group { flex-direction: row; }
+      .button-group button { width: auto !important; flex: 0 0 auto !important; }
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 20px;
+    }
+
+    body.sheet-open { overflow: hidden; touch-action: none; }
+
+    .login-container {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      padding: 40px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      animation: slideDown 0.5s ease-out;
+      margin: auto;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .login-container.hidden { display: none; }
+
+    .login-container h1 { color: #333; margin-bottom: 10px; font-size: 28px; }
+    .login-container p { color: #666; margin-bottom: 30px; font-size: 14px; }
+
+    .form-group { text-align: left; margin-bottom: 20px; }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="password"]:focus { outline: none; border-color: #667eea; }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4); }
+    button:active { transform: translateY(0); }
+
+    .error-message {
+      color: #e74c3c;
+      font-size: 14px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    /* Admin Dashboard Styles */
+    .admin-container {
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 1200px;
+      overflow: hidden;
+      display: none;
+      animation: slideDown 0.5s ease-out;
+      margin: 0 auto;
+    }
+
+    .admin-container.visible { display: flex; flex-direction: column; }
+
+    .admin-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .admin-header h1 { font-size: 24px; }
+
+    /* Slightly reduce logout visual weight */
+    .logout-btn {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 14px;
+      border: 1px solid rgba(255,255,255,0.6);
+      transition: all 0.2s ease;
+      width: auto;
+      min-height: 40px;
+    }
+    .logout-btn:hover { background: rgba(255, 255, 255, 0.25); transform: none; box-shadow: none; }
+
+    .tabs {
+      display: flex;
+      background: #f8f9fa;
+      border-bottom: 2px solid #ddd;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      color: #666;
+      transition: all 0.3s ease;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      white-space: nowrap;
+    }
+
+    .tab:hover { background: #e9ecef; }
+    .tab.active { color: #667eea; border-bottom-color: #667eea; }
+
+    .tab-content { display: none; padding: 30px; min-height: 420px; }
+    .tab-content.active { display: block; animation: fadeIn 0.3s ease-out; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .form-field { display: flex; flex-direction: column; }
+
+    .form-field label { margin-bottom: 8px; color: #333; font-weight: 600; font-size: 14px; }
+
+    .form-field input,
+    .form-field select {
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border-color 0.3s ease;
+    }
+
+    /* mobile-only helper: hidden on desktop by default */
+    .mobile-only { display: none; }
+
+    .form-field input:focus,
+    .form-field select:focus { outline: none; border-color: #667eea; }
+
+    .form-field input[type="date"] { cursor: pointer; }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      align-items: center;
+    }
+
+    /* Desktop: buttons are compact; Mobile override below makes them full-width */
+    .submit-btn {
+      flex: 0 0 auto;
+      min-width: 220px;
+      max-width: 360px;
+      height: 46px;
+      padding: 0 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 10px !important;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.2;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      white-space: nowrap;
+      width: auto !important;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .submit-btn.loading,
+    .sheet-submit.loading {
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+      position: relative;
+      min-width: 220px;
+      height: 46px;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .reset-btn {
+      flex: 0 0 auto;
+      min-width: 120px;
+      padding: 10px 16px;
+      background: #e9ecef;
+      color: #333;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      width: auto;
+    }
+    .reset-btn:hover { background: #dee2e6; }
+
+    .success-message,
+    .error-message {
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      display: none;
+      font-size: 14px;
+    }
+
+    .success-message {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .error-message {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .success-message.show,
+    .error-message.show { display: block; animation: slideDown 0.3s ease-out; }
+
+    /* Dashboard Styles */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .stat-card h3 { font-size: 14px; margin-bottom: 10px; opacity: 0.9; }
+    .stat-card .value { font-size: 32px; font-weight: bold; }
+
+    .table-responsive { overflow-x: auto; border: 1px solid #eee; border-radius: 10px; }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    thead { background: #f8f9fa; }
+
+    th {
+      padding: 12px;
+      text-align: left;
+      font-weight: 600;
+      color: #333;
+      border-bottom: 2px solid #ddd;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      color: #666;
+      vertical-align: middle;
+    }
+
+    tr:hover { background: #f8f9fa; }
+
+    .no-data { text-align: center; padding: 40px; color: #999; font-size: 16px; }
+
+    .delete-btn {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: background 0.3s ease;
+      width: auto;
+    }
+    .delete-btn:hover { background: #c0392b; }
+
+    /* Chart Container Styles */
+    .chart-container {
+      position: relative;
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border: 1px solid #eee;
+    }
+
+    .chart-wrapper { position: relative; height: 400px; margin-bottom: 20px; }
+    .dashboard-note { color: #999; font-size: 13px; margin: 0; }
+
+    .chart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .chart-header h3 { color: #333; font-size: 18px; margin: 0; }
+
+    .chart-filter { display: flex; align-items: center; gap: 10px; }
+    .chart-filter label { font-weight: 600; color: #555; font-size: 14px; }
+
+    .chart-filter select {
+      padding: 8px 12px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      background: white;
+      cursor: pointer;
+      transition: border-color 0.3s ease;
+    }
+    .chart-filter select:focus { outline: none; border-color: #667eea; }
+
+    /* Product Grid Styles */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .product-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      border: 2px solid #e3e3e3;
+      border-radius: 14px;
+      cursor: pointer;
+      background: #fafafa;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.2s ease, background 0.2s ease;
+      min-height: 170px;
+      text-align: center;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Tap feedback (mobile friendly) */
+    .product-card:active { transform: scale(0.98); }
+
+    .product-card:hover {
+      border-color: #667eea;
+      background: #f0f4ff;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.18);
+    }
+
+    .product-card.selected {
+      border-color: #667eea;
+      background: linear-gradient(135deg, rgba(102,126,234,0.12) 0%, rgba(118,75,162,0.12) 100%);
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.18);
+      font-weight: 700;
+    }
+
+    .product-icon { font-size: 48px; margin-bottom: 10px; display: block; }
+
+    .product-image {
+      width: 74px;
+      height: 74px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+
+    .product-name {
+      text-align: center;
+      font-size: 14px;
+      color: #222;
+      margin-top: 6px;
+      line-height: 1.25;
+
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-word;
+      white-space: normal;
+      max-width: 100%;
+    }
+
+    .checkmark {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 26px;
+      height: 26px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 900;
+      font-size: 16px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+
+    .product-card.selected .checkmark { display: flex; }
+
+    /* Toast (with Undo) */
+    .toast {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 18px;
+      z-index: 2000;
+      background: rgba(30, 30, 30, 0.95);
+      color: #fff;
+      padding: 12px 14px;
+      border-radius: 12px;
+      display: none;
+      align-items: center;
+      gap: 12px;
+      max-width: min(520px, calc(100vw - 24px));
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+
+    .toast.show { display: flex; }
+    .toast .toast-text { font-size: 14px; font-weight: 600; line-height: 1.2; }
+    .toast .toast-action {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.35);
+      color: #fff;
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      width: auto;
+    }
+    .toast .toast-action:active { transform: scale(0.98); }
+
+    @media (max-width: 768px) {
+      body { padding: 0; }
+
+      .login-container { padding: 30px 20px; margin: auto 16px; }
+
+      .admin-container { border-radius: 0; min-height: 100vh; max-width: none; }
+
+      .admin-header { padding: 14px 16px; position: sticky; top: 0; z-index: 30; }
+      .admin-header h1 { font-size: 18px; }
+
+      .tabs { position: sticky; top: 64px; z-index: 25; overflow-x: auto; }
+
+      .tab { min-width: 50%; font-size: 14px; padding: 14px 12px; }
+
+      .form-grid { grid-template-columns: 1fr; gap: 12px; }
+      .dashboard-grid { grid-template-columns: 1fr; gap: 12px; }
+
+      .tab-content { padding: 16px; min-height: 400px; }
+
+      .button-group { display: none; }
+
+      .submit-btn, .reset-btn, .logout-btn { min-height: 44px; }
+
+      .sheet-actions { gap: 10px; }
+
+      .sheet-actions button { font-size: 15px; padding: 14px 12px; min-height: 52px; }
+
+      /* MOBILE: force 2-column grid (bigger tap targets than 3-col) */
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+
+      .product-card {
+        min-height: 156px;
+        padding: 16px 14px;
+      }
+
+      .product-icon { font-size: 40px; margin-bottom: 8px; }
+
+      /* Make Tamil name easier to read */
+      .product-name { font-size: 13px; }
+
+      .chart-container { padding: 14px; margin-bottom: 16px; }
+      .chart-wrapper { height: 280px; margin-bottom: 12px; }
+      .chart-header h3 { font-size: 16px; }
+
+      th, td { padding: 10px 8px; font-size: 13px; }
+
+      /* Mobile-only adjustments */
+      .product-card small.product-price { display: none !important; }
+      .mobile-only { display: block !important; }
+      .desktop-only { display: none !important; }
+    }
+
+    /* Bottom sheet for mobile quick entry */
+    .sheet-overlay {
+      position: fixed;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.42);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1200;
+      transition: opacity 0.25s ease;
+    }
+
+    .sheet-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .bottom-sheet {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      background: #fff;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+      box-shadow: 0 -8px 30px rgba(0,0,0,0.15);
+      z-index: 1300;
+      padding: 22px 18px 18px 18px;
+      transform: translateY(110%);
+      transition: transform 0.28s ease;
+      max-height: 85%;
+      overflow: auto;
+    }
+
+    .bottom-sheet.open { transform: translateY(0); }
+
+    .sheet-handle {
+      width: 64px;
+      height: 8px;
+      background: #e9ecef;
+      border-radius: 6px;
+      margin: 0 auto 12px auto;
+    }
+
+    /* Amount input with ₹ prefix */
+    .money-field {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 2px solid #ddd;
+      border-radius: 12px;
+      padding: 14px 14px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      background: #fff;
+    }
+
+    .money-field:focus-within {
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102,126,234,0.14);
+    }
+
+    .money-prefix {
+      font-size: 18px;
+      font-weight: 900;
+      color: #111;
+      line-height: 1;
+      padding-left: 2px;
+    }
+
+    .money-input {
+      border: none;
+      outline: none;
+      width: 100%;
+      font-size: 22px;
+      font-weight: 800;
+      color: #111;
+      background: transparent;
+    }
+
+    .sheet-actions { display: flex; gap: 10px; margin-top: 14px; }
+
+    .sheet-actions button {
+      flex: 1;
+      border-radius: 12px;
+      font-weight: 800;
+      border: none;
+      width: auto;
+      min-width: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      white-space: nowrap;
+      min-height: 54px; /* taller = easier tap */
+    }
+
+    /* Cancel as secondary text-style button */
+    .sheet-cancel {
+      background: transparent;
+      color: #444;
+      border: 2px solid #e1e1e1;
+    }
+
+    .sheet-submit { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+
+    @media (max-width: 420px) {
+      .sheet-actions { flex-direction: column; }
+      .sheet-actions button { width: 100%; }
+    }
+  </style>
 </head>
+
 <body>
-    <!-- Login Form -->
-    <div class="login-container" id="loginContainer">
-        <h1>🔐 Sales Admin</h1>
-        <p>Enter password to access sales tracking</p>
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input 
-                    type="password" 
-                    id="password" 
-                    placeholder="Enter admin password"
-                    autocomplete="off"
-                >
-            </div>
-            <button type="submit">Login</button>
-            <div class="error-message" id="loginError"></div>
-        </form>
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <div class="toast-text" id="toastText">Saved</div>
+    <button class="toast-action" id="toastUndoBtn" type="button" style="display:none;">Undo</button>
+  </div>
+
+  <!-- Login Form -->
+  <div class="login-container" id="loginContainer">
+    <h1>🔐 Sales Admin</h1>
+    <p>Enter password to access sales tracking</p>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="Enter admin password"
+          autocomplete="off"
+        />
+      </div>
+      <button type="submit">Login</button>
+      <div class="error-message" id="loginError"></div>
+    </form>
+  </div>
+
+  <!-- Admin Dashboard -->
+  <div class="admin-container" id="adminContainer">
+    <div class="admin-header">
+      <h1>📊 Arumee Sales Tracker</h1>
+      <button class="logout-btn" id="logoutBtn">Logout</button>
     </div>
 
-    <!-- Admin Dashboard -->
-    <div class="admin-container" id="adminContainer">
-        <div class="admin-header">
-            <h1>📊 Arumee Sales Tracker</h1>
-            <button class="logout-btn" id="logoutBtn">Logout</button>
-        </div>
-
-        <div class="tabs" role="tablist" aria-label="Sales sections">
-            <div class="tab active" data-tab="entry" role="tab" aria-selected="true" tabindex="0">📝 Sales Entry</div>
-            <div class="tab" data-tab="dashboard" role="tab" aria-selected="false" tabindex="0">📈 Dashboard</div>
-        </div>
-
-        <!-- Sales Entry Tab -->
-        <div class="tab-content active" id="entryTab">
-            <h2 style="margin-bottom: 20px; color: #333;">Record Sale</h2>
-            
-            <div class="success-message" id="successMessage">
-                ✓ Sale recorded successfully!
-            </div>
-            <div class="error-message" id="entryError"></div>
-
-            <form id="salesForm">
-                <!-- Product Selection with Images -->
-                <div style="margin-bottom: 30px;">
-                    <label style="display: block; margin-bottom: 15px; color: #333; font-weight: 600; font-size: 16px;">📦 Select Product *</label>
-                    <div class="product-grid" id="productGrid">
-                        <!-- Products will be rendered here by JavaScript -->
-                    </div>
-                    <input type="hidden" id="product" required>
-                </div>
-
-                <!-- Price and Amount Fields (date auto-set by system). Price visible on desktop only -->
-                <div class="form-grid">
-                    <div class="form-field desktop-only">
-                        <label for="pricePerUnit">🔖 Price (₹) *</label>
-                        <input type="number" id="pricePerUnit" placeholder="Enter price (per unit)" step="0.01" min="0">
-                    </div>
-
-                    <!-- Date input removed: system date will be used when recording sales -->
-                </div>
-
-                <div class="button-group">
-                    <button type="submit" class="submit-btn" id="recordSaleBtn">💾 Record Sale</button>
-                    <button type="reset" class="reset-btn">Clear</button>
-                </div>
-            </form>
-
-            <!-- Mobile Bottom Sheet -->
-            <div class="sheet-overlay" id="sheetOverlay" onclick="closeBottomSheet()"></div>
-            <div class="bottom-sheet" id="bottomSheet" role="dialog" aria-modal="true">
-                <div class="sheet-handle"></div>
-                <h3 id="bs_productTitle" style="margin:6px 0 10px 0; color:#333; font-size:16px;">Record Sale</h3>
-                <div style="display:flex; gap:14px; flex-direction:column;">
-                    <label style="font-weight:700; color:#111; font-size:18px;">Amount (₹)</label>
-                    <input id="bs_amount" type="number" step="0.01" min="0" placeholder="Enter amount" style="padding:18px; border-radius:10px; border:2px solid #ddd; font-size:20px; font-weight:700;">
-
-                    <!-- Date removed from bottom sheet: system date will be applied automatically -->
-
-                    <div class="sheet-actions">
-                        <button class="sheet-cancel" onclick="closeBottomSheet()" type="button">Cancel</button>
-                        <button class="sheet-submit" id="sheetRecordBtn" onclick="recordSaleFromBottomSheet()" type="button">Record</button>
-                    </div>
-                </div>
-            </div>
-
-            <div style="margin-top: 30px; padding-top: 30px; border-top: 2px solid #ddd;">
-                <h3 style="color: #333; margin-bottom: 15px;">Recent Sales</h3>
-                <div class="table-responsive">
-                    <table id="recentSalesTable">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Product</th>
-                                <th>Amount (₹)</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="recentSalesBody">
-                            <tr class="no-data">
-                                <td colspan="4">No sales recorded yet</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Dashboard Tab -->
-        <div class="tab-content" id="dashboardTab">
-            <h2 style="margin-bottom: 20px; color: #333;">📊 Sales Dashboard</h2>
-            
-            <div id="dashboardStats" class="dashboard-grid">
-                <div class="stat-card">
-                    <h3>Total Sales</h3>
-                    <div class="value" id="totalSales">0</div>
-                </div>
-                <div class="stat-card">
-                    <h3>💰 Total Revenue</h3>
-                    <div class="value" id="totalRevenue">₹ 0</div>
-                </div>
-                <div class="stat-card">
-                    <h3>Unique Products</h3>
-                    <div class="value" id="uniqueProducts">0</div>
-                </div>
-            </div>
-
-            <!-- Total Sales Trend Chart -->
-            <div class="chart-container">
-                <div class="chart-header">
-                    <h3>📈 Total Sales Trend</h3>
-                </div>
-                <div class="chart-wrapper">
-                    <canvas id="totalSalesChart"></canvas>
-                </div>
-                <p class="dashboard-note">Shows daily sales amount and cumulative revenue over time</p>
-            </div>
-
-            <!-- Individual Product Trend Chart -->
-            <div class="chart-container">
-                <div class="chart-header">
-                    <h3>📦 Product Trend Analysis</h3>
-                    <div class="chart-filter">
-                        <label for="productTrendSelect">Select Product:</label>
-                        <select id="productTrendSelect" onchange="updateProductChart()">
-                            <option value="">-- All Products --</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="chart-wrapper">
-                    <canvas id="productTrendChart"></canvas>
-                </div>
-                <p class="dashboard-note">Select a product to view its daily sales trend, or view all products combined</p>
-            </div>
-
-            <div style="margin-top: 30px;">
-                <h3 style="color: #333; margin-bottom: 15px;">Sales by Product</h3>
-                <div class="table-responsive">
-                    <table id="dashboardTable">
-                        <thead>
-                            <tr>
-                                <th>Product</th>
-                                <th>Total Amount (₹)</th>
-                                <th>Number of Sales</th>
-                                <th>Avg per Sale (₹)</th>
-                                <th>Revenue (₹)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="dashboardTableBody">
-                            <tr class="no-data">
-                                <td colspan="5">No sales data available</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+    <div class="tabs" role="tablist" aria-label="Sales sections">
+      <div class="tab active" data-tab="entry" role="tab" aria-selected="true" tabindex="0">📝 Sales Entry</div>
+      <div class="tab" data-tab="dashboard" role="tab" aria-selected="false" tabindex="0">📈 Dashboard</div>
     </div>
 
-    <script>
-        // ═══════════════════════════════════════════════════════════════════════════════
-        // Configuration
-        // ═══════════════════════════════════════════════════════════════════════════════
-        const ADMIN_PASSWORD = '265598';
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwpKpqtx9jqE3zAFy8F_MBcEc9F8mFIp8FmxkJCxfDXd3sxczYDvy-zmNW8uDGMMtdhfA/exec';
+    <!-- Sales Entry Tab -->
+    <div class="tab-content active" id="entryTab">
+      <h2 style="margin-bottom: 20px; color: #333;">Record Sale</h2>
 
-        // ═══════════════════════════════════════════════════════════════════════════════
-        // Product Data with Icons and Pricing
-        // ═══════════════════════════════════════════════════════════════════════════════
-        const PRODUCTS = [
-            { name: 'Coconut Oil', displayName: 'தேங்காய் எண்ணெய்', icon: '🥥', image: 'arumee_assets/Coconut.webp', color: '#FFE5B4', price: 400, unit: 'L' },
-            { name: 'Gingelly Oil', displayName: 'நல்லெண்ணெய்', icon: '🌾', image: 'arumee_assets/Sesame.webp', color: '#D4AF7A', price: 400, unit: 'L' },
-            { name: 'Groundnut Oil', displayName: 'கடலை எண்ணெய்', icon: '🥜', image: 'arumee_assets/groundnut.webp', color: '#E8B74F', price: 240, unit: 'L' },
-            { name: 'Groundnut Cattle Feed', displayName: 'மாட்டுத்தீவனம்', icon: '🐄', image: 'arumee_assets/cow.webp', color: '#8B6F47', price: null, unit: 'kg' },
-            { name: 'Dosa Batter', displayName: 'தோசை மாவு', icon: '🥘', image: 'arumee_assets/Dosa Batter.webp', color: '#C4A57B', price: null, unit: 'kg' },
-            { name: 'Chilli Powder', displayName: 'மிளகாய்த் தூள்', icon: '🌶️', image: 'arumee_assets/Chilli Powder.webp', color: '#E74C3C', price: null, unit: 'kg' },
-            { name: 'Cow Feed', displayName: 'கடலை புண்ணாக்கு', icon: '🐮', image: 'arumee_assets/Kadalai Punnakku.webp', color: '#9B8B7E', price: null, unit: 'kg' },
-            { name: 'Groundnut Breaking', icon: '🔨', image: 'arumee_assets/Groundnut_Shelling.webp', color: '#B8860B', price: null, unit: 'kg' },
-            { name: 'Wheat', displayName: 'கோதுமை மாவு', icon: '🌾', image: 'arumee_assets/wheat.webp', color: '#F5DEB3', price: null, unit: 'kg' }
-        ];
+      <div class="success-message" id="successMessage">✓ Sale recorded successfully!</div>
+      <div class="error-message" id="entryError"></div>
 
-        // ═══════════════════════════════════════════════════════════════════════════════
-        // DOM Elements
-        // ═══════════════════════════════════════════════════════════════════════════════
-        const loginContainer = document.getElementById('loginContainer');
-        const adminContainer = document.getElementById('adminContainer');
-        const loginForm = document.getElementById('loginForm');
-        const passwordInput = document.getElementById('password');
-        const loginError = document.getElementById('loginError');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const tabs = document.querySelectorAll('.tab');
-        const tabContents = document.querySelectorAll('.tab-content');
-        const salesForm = document.getElementById('salesForm');
-        const successMessage = document.getElementById('successMessage');
-        const entryError = document.getElementById('entryError');
-        const productGrid = document.getElementById('productGrid');
-        const productInput = document.getElementById('product');
-        const recordSaleBtn = document.getElementById('recordSaleBtn');
-        const sheetRecordBtn = document.getElementById('sheetRecordBtn');
+      <form id="salesForm">
+        <!-- Product Selection with Images -->
+        <div style="margin-bottom: 26px;">
+          <label style="display: block; margin-bottom: 14px; color: #333; font-weight: 700; font-size: 16px;">
+            📦 Select Product *
+          </label>
+          <div class="product-grid" id="productGrid"></div>
+          <input type="hidden" id="product" required />
+        </div>
 
-        let isSubmittingMain = false;
-        let isSubmittingSheet = false;
+        <!-- Desktop only: amount entry (kept as-is) -->
+        <div class="form-grid">
+          <div class="form-field desktop-only">
+            <label for="pricePerUnit">🔖 Amount (₹) *</label>
+            <input type="number" id="pricePerUnit" placeholder="Enter sale amount" step="0.01" min="0" />
+          </div>
+        </div>
 
-        function setButtonLoading(button, isLoading, loadingText, defaultText) {
-            if (!button) return;
-            if (isLoading) {
-                const currentWidth = Math.ceil(button.getBoundingClientRect().width);
-                button.style.width = `${currentWidth}px`;
-            }
-            button.disabled = isLoading;
-            button.classList.toggle('loading', isLoading);
-            button.textContent = isLoading ? loadingText : defaultText;
-            if (!isLoading) {
-                button.style.width = '';
-            }
+        <div class="button-group">
+          <button type="submit" class="submit-btn" id="recordSaleBtn">💾 Record Sale</button>
+          <button type="reset" class="reset-btn">Clear</button>
+        </div>
+      </form>
+
+      <!-- Mobile Bottom Sheet -->
+      <div class="sheet-overlay" id="sheetOverlay" onclick="closeBottomSheet()"></div>
+      <div class="bottom-sheet" id="bottomSheet" role="dialog" aria-modal="true" aria-labelledby="bs_productTitle">
+        <div class="sheet-handle"></div>
+
+        <h3 id="bs_productTitle" style="margin:6px 0 12px 0; color:#333; font-size:16px;">Record Sale</h3>
+
+        <div style="display:flex; gap:12px; flex-direction:column;">
+          <label style="font-weight:800; color:#111; font-size:16px;">Amount</label>
+
+          <div class="money-field">
+            <div class="money-prefix">₹</div>
+            <input
+              id="bs_amount"
+              class="money-input"
+              type="tel"
+              inputmode="numeric"
+              autocomplete="off"
+              placeholder="Enter amount"
+            />
+          </div>
+
+          <div class="sheet-actions">
+            <button class="sheet-cancel" onclick="closeBottomSheet()" type="button">Cancel</button>
+            <button class="sheet-submit" id="sheetRecordBtn" onclick="recordSaleFromBottomSheet()" type="button">Record</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 26px; padding-top: 26px; border-top: 2px solid #ddd;">
+        <h3 style="color: #333; margin-bottom: 15px;">Recent Sales</h3>
+        <div class="table-responsive">
+          <table id="recentSalesTable">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Product</th>
+                <th>Amount (₹)</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="recentSalesBody">
+              <tr class="no-data">
+                <td colspan="4">No sales recorded yet</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard Tab -->
+    <div class="tab-content" id="dashboardTab">
+      <h2 style="margin-bottom: 20px; color: #333;">📊 Sales Dashboard</h2>
+
+      <div id="dashboardStats" class="dashboard-grid">
+        <div class="stat-card">
+          <h3>Total Sales</h3>
+          <div class="value" id="totalSales">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>💰 Total Revenue</h3>
+          <div class="value" id="totalRevenue">₹ 0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Unique Products</h3>
+          <div class="value" id="uniqueProducts">0</div>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <div class="chart-header">
+          <h3>📈 Total Sales Trend</h3>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="totalSalesChart"></canvas>
+        </div>
+        <p class="dashboard-note">Shows daily sales amount and cumulative revenue over time</p>
+      </div>
+
+      <div class="chart-container">
+        <div class="chart-header">
+          <h3>📦 Product Trend Analysis</h3>
+          <div class="chart-filter">
+            <label for="productTrendSelect">Select Product:</label>
+            <select id="productTrendSelect" onchange="updateProductChart()">
+              <option value="">-- All Products --</option>
+            </select>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="productTrendChart"></canvas>
+        </div>
+        <p class="dashboard-note">Select a product to view its daily sales trend, or view all products combined</p>
+      </div>
+
+      <div style="margin-top: 30px;">
+        <h3 style="color: #333; margin-bottom: 15px;">Sales by Product</h3>
+        <div class="table-responsive">
+          <table id="dashboardTable">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Total Amount (₹)</th>
+                <th>Number of Sales</th>
+                <th>Avg per Sale (₹)</th>
+                <th>Revenue (₹)</th>
+              </tr>
+            </thead>
+            <tbody id="dashboardTableBody">
+              <tr class="no-data">
+                <td colspan="5">No sales data available</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // Configuration
+    // ═══════════════════════════════════════════════════════════════════════════════
+    const ADMIN_PASSWORD = '265598';
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwpKpqtx9jqE3zAFy8F_MBcEc9F8mFIp8FmxkJCxfDXd3sxczYDvy-zmNW8uDGMMtdhfA/exec';
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // Product Data
+    // ═══════════════════════════════════════════════════════════════════════════════
+    const PRODUCTS = [
+      { name: 'Coconut Oil', displayName: 'தேங்காய் எண்ணெய்', icon: '🥥', image: 'arumee_assets/Coconut.webp', color: '#FFE5B4', price: 400, unit: 'L' },
+      { name: 'Gingelly Oil', displayName: 'நல்லெண்ணெய்', icon: '🌾', image: 'arumee_assets/Sesame.webp', color: '#D4AF7A', price: 400, unit: 'L' },
+      { name: 'Groundnut Oil', displayName: 'கடலை எண்ணெய்', icon: '🥜', image: 'arumee_assets/groundnut.webp', color: '#E8B74F', price: 240, unit: 'L' },
+      { name: 'Groundnut Cattle Feed', displayName: 'மாட்டுத்தீவனம்', icon: '🐄', image: 'arumee_assets/cow.webp', color: '#8B6F47', price: null, unit: 'kg' },
+      { name: 'Dosa Batter', displayName: 'தோசை மாவு', icon: '🥘', image: 'arumee_assets/Dosa Batter.webp', color: '#C4A57B', price: null, unit: 'kg' },
+      { name: 'Chilli Powder', displayName: 'மிளகாய்த் தூள்', icon: '🌶️', image: 'arumee_assets/Chilli Powder.webp', color: '#E74C3C', price: null, unit: 'kg' },
+      { name: 'Cow Feed', displayName: 'கடலை புண்ணாக்கு', icon: '🐮', image: 'arumee_assets/Kadalai Punnakku.webp', color: '#9B8B7E', price: null, unit: 'kg' },
+      { name: 'Groundnut Breaking', icon: '🔨', image: 'arumee_assets/Groundnut_Shelling.webp', color: '#B8860B', price: null, unit: 'kg' },
+      { name: 'Wheat', displayName: 'கோதுமை மாவு', icon: '🌾', image: 'arumee_assets/wheat.webp', color: '#F5DEB3', price: null, unit: 'kg' }
+    ];
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // DOM Elements
+    // ═══════════════════════════════════════════════════════════════════════════════
+    const loginContainer = document.getElementById('loginContainer');
+    const adminContainer = document.getElementById('adminContainer');
+    const loginForm = document.getElementById('loginForm');
+    const passwordInput = document.getElementById('password');
+    const loginError = document.getElementById('loginError');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    const salesForm = document.getElementById('salesForm');
+    const successMessage = document.getElementById('successMessage');
+    const entryError = document.getElementById('entryError');
+
+    const productGrid = document.getElementById('productGrid');
+    const productInput = document.getElementById('product');
+
+    const recordSaleBtn = document.getElementById('recordSaleBtn');
+    const sheetRecordBtn = document.getElementById('sheetRecordBtn');
+
+    const toast = document.getElementById('toast');
+    const toastText = document.getElementById('toastText');
+    const toastUndoBtn = document.getElementById('toastUndoBtn');
+
+    let isSubmittingMain = false;
+    let isSubmittingSheet = false;
+
+    let toastTimer = null;
+    let lastSavedSaleId = null; // for Undo
+
+    function setButtonLoading(button, isLoading, loadingText, defaultText) {
+      if (!button) return;
+      if (isLoading) {
+        const currentWidth = Math.ceil(button.getBoundingClientRect().width);
+        button.style.width = `${currentWidth}px`;
+      }
+      button.disabled = isLoading;
+      button.classList.toggle('loading', isLoading);
+      button.textContent = isLoading ? loadingText : defaultText;
+      if (!isLoading) button.style.width = '';
+    }
+
+    function showToast(message, { undo = false } = {}) {
+      toastText.textContent = message || 'Done';
+      toast.classList.add('show');
+
+      toastUndoBtn.style.display = undo ? 'inline-flex' : 'none';
+
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('show');
+        toastUndoBtn.style.display = 'none';
+        lastSavedSaleId = null;
+      }, undo ? 5000 : 2500);
+    }
+
+    toastUndoBtn.addEventListener('click', () => {
+      if (!lastSavedSaleId) return;
+      undoLastSale(lastSavedSaleId);
+      lastSavedSaleId = null;
+      toast.classList.remove('show');
+    });
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // Initialize
+    // ═══════════════════════════════════════════════════════════════════════════════
+    window.addEventListener('DOMContentLoaded', () => {
+      renderProductGrid();
+
+      if (sessionStorage.getItem('adminLoggedIn') === 'true') {
+        showAdmin();
+        loadSalesData();
+      }
+
+      // Enter key to submit from bottom sheet
+      document.getElementById('bs_amount').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          recordSaleFromBottomSheet();
+        }
+      });
+    });
+
+    // Helper to show a transient success message (kept, but toast is primary)
+    function showSuccess(text) {
+      try {
+        successMessage.textContent = text || '✓ Sale recorded successfully!';
+        successMessage.classList.add('show');
+        setTimeout(() => successMessage.classList.remove('show'), 2000);
+      } catch (err) {}
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // Render Product Grid
+    // ═══════════════════════════════════════════════════════════════════════════════
+    function renderProductGrid() {
+      productGrid.innerHTML = PRODUCTS.map((product) => {
+        const displayName = product.displayName || product.name;
+        const imgHtml = product.image
+          ? `<img src="${product.image}" class="product-image" alt="${displayName}">`
+          : `<span class="product-icon">${product.icon}</span>`;
+
+        let priceInfo = '';
+        if (product.price) {
+          priceInfo = `<small class="product-price" style="font-size: 11px; color: #27ae60; font-weight: 700; margin-top: 3px; display: block;">₹${product.price}/${product.unit}</small>`;
         }
 
-        // ═══════════════════════════════════════════════════════════════════════════════
-        // Initialize
-        // ═══════════════════════════════════════════════════════════════════════════════
-        window.addEventListener('DOMContentLoaded', () => {
-            // Render product grid
-            renderProductGrid();
+        return `
+          <div class="product-card" data-product="${product.name}" onclick="selectProduct(this, '${product.name}', ${product.price || 'null'})" role="button" tabindex="0">
+            ${imgHtml}
+            <span class="product-name">${displayName}</span>
+            ${priceInfo}
+            <span class="checkmark">✓</span>
+          </div>
+        `;
+      }).join('');
 
-            // Check if already logged in
-            if (sessionStorage.getItem('adminLoggedIn') === 'true') {
-                showAdmin();
-                loadSalesData();
-            }
-
-            // Date input removed — system date will be used when recording sales
-        });
-
-        // Helper to show a transient success message
-        function showSuccess(text) {
-            try {
-                successMessage.textContent = text || '✓ Sale recorded successfully!';
-                successMessage.classList.add('show');
-                // ensure visible
-                successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                setTimeout(() => successMessage.classList.remove('show'), 3000);
-            } catch (err) {
-                // ignore
-            }
-        }
-
-        // ═══════════════════════════════════════════════════════════════════════════════
-        // Render Product Grid
-        // ═══════════════════════════════════════════════════════════════════════════════
-        function renderProductGrid() {
-            productGrid.innerHTML = PRODUCTS.map((product, index) => {
-                let priceInfo = '';
-                const displayName = product.displayName || product.name;
-                if (product.price) {
-                    priceInfo = `<small class="product-price" style="font-size: 11px; color: #27ae60; font-weight: 600; margin-top: 3px; display: block;">₹${product.price}/${product.unit}</small>`;
-                }
-                const imgHtml = product.image ? `<img src="${product.image}" class="product-image" alt="${displayName}">` : `<span class="product-icon">${product.icon}</span>`;
-                return `
-                    <div class="product-card" data-product="${product.name}" onclick="selectProduct(this, '${product.name}', ${product.price || 'null'})">
-                        ${imgHtml}
-                        <span class="product-name">${displayName}</span>
-                        ${priceInfo}
-                        <span class="checkmark">✓</span>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // ═══════════════════════════════════════════════════════════════════════════════
-        // Product Selection Handler
-        // ═══════════════════════════════════════════════════════════════════════════════
-        function selectProduct(element, productName, price) {
-            // Remove active class from all cards
-            document.querySelectorAll('.product-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-
-            // Add active class to clicked card
-            element.classList.add('selected');
-
-            // Update hidden input
-            productInput.value = productName;
-
-            // Determine display name (use displayName if provided for UI-only display)
-            const productObj = PRODUCTS.find(p => p.name === productName);
-            const displayName = (productObj && productObj.displayName) ? productObj.displayName : productName;
-
-            // Optional: Add a subtle feedback
-            element.style.animation = 'none';
-            setTimeout(() => {
-                element.style.animation = '';
-            }, 10);
-
-            // If on mobile, open bottom sheet for quick entry (use displayName for UI)
-            if (window.innerWidth <= 768) {
-                openBottomSheet(displayName, price);
-            }
-        }
-
-        // Open mobile bottom sheet and populate fields
-        function openBottomSheet(productName, price) {
-            document.getElementById('bs_productTitle').textContent = 'Record: ' + productName;
-            // bottom sheet no longer exposes a date field — we'll use system date on submit
-            document.getElementById('bs_amount').value = '';
-
-            // store price per unit for info (not required)
-            document.getElementById('bottomSheet').dataset.price = price || '';
-
-            document.getElementById('sheetOverlay').classList.add('open');
-            document.getElementById('bottomSheet').classList.add('open');
-            document.body.classList.add('sheet-open');
-            setTimeout(() => document.getElementById('bs_amount').focus(), 120);
-        }
-
-        function closeBottomSheet() {
-            document.getElementById('sheetOverlay').classList.remove('open');
-            document.getElementById('bottomSheet').classList.remove('open');
-            document.body.classList.remove('sheet-open');
-        }
-
-        // Submit from bottom sheet (mobile)
-        function recordSaleFromBottomSheet() {
-            if (isSubmittingSheet) return;
-
-            const productName = productInput.value; // already set by selectProduct
-            const amount = parseFloat(document.getElementById('bs_amount').value);
-            // use system date (YYYY-MM-DD)
-            const date = new Date().toISOString().slice(0,10);
-
-            if (!productName || Number.isNaN(amount) || amount <= 0) {
-                alert('Please select product and enter amount');
-                return;
-            }
-
-            // replicate submission behavior
-            (async function(){
-                isSubmittingSheet = true;
-                setButtonLoading(sheetRecordBtn, true, 'Saving...', 'Record');
-                try {
-                    const formData = new FormData();
-                    formData.append('action', 'recordSale');
-                    formData.append('product', productName);
-                    formData.append('amount', amount);
-                    formData.append('date', date);
-
-                    await fetch(APPS_SCRIPT_URL, { method: 'POST', body: formData, mode: 'no-cors' });
-
-                    // local save
-                    saveSaleLocally(productName, amount, date);
-
-                    closeBottomSheet();
-                    showSuccess('✓ Sale recorded successfully!');
-                    loadSalesData();
-                } catch(err) {
-                    console.error(err);
-                    alert('Error recording sale. Try again.');
-                } finally {
-                    isSubmittingSheet = false;
-                    setButtonLoading(sheetRecordBtn, false, 'Saving...', 'Record');
-                }
-            })();
-        }
-
-        // (Price calculations removed — admin now enters total amount directly)
-
-        // ═══════════════════════════════════════════════════════════════════════════════
-        // Login Handler
-        // ═══════════════════════════════════════════════════════════════════════════════
-        loginForm.addEventListener('submit', (e) => {
+      // Keyboard support on product cards
+      document.querySelectorAll('.product-card').forEach(card => {
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            const enteredPassword = passwordInput.value;
+            card.click();
+          }
+        });
+      });
+    }
 
-            if (enteredPassword === ADMIN_PASSWORD) {
-                sessionStorage.setItem('adminLoggedIn', 'true');
-                showAdmin();
-                loadSalesData();
-            } else {
-                loginError.textContent = '❌ Incorrect password. Try again.';
-                loginError.style.display = 'block';
-                passwordInput.value = '';
-                passwordInput.focus();
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // Product Selection Handler
+    // ═══════════════════════════════════════════════════════════════════════════════
+    function selectProduct(element, productName, price) {
+      document.querySelectorAll('.product-card').forEach(card => card.classList.remove('selected'));
+      element.classList.add('selected');
+
+      productInput.value = productName;
+
+      const productObj = PRODUCTS.find(p => p.name === productName);
+      const displayName = (productObj && productObj.displayName) ? productObj.displayName : productName;
+
+      // Mobile: open bottom sheet immediately
+      if (window.innerWidth <= 768) {
+        openBottomSheet(displayName, price);
+      }
+    }
+
+    function openBottomSheet(productName, price) {
+      document.getElementById('bs_productTitle').textContent = 'Record: ' + productName;
+
+      const amt = document.getElementById('bs_amount');
+      amt.value = '';
+
+      document.getElementById('bottomSheet').dataset.price = price || '';
+
+      document.getElementById('sheetOverlay').classList.add('open');
+      document.getElementById('bottomSheet').classList.add('open');
+      document.body.classList.add('sheet-open');
+
+      // Auto-focus quickly
+      setTimeout(() => amt.focus(), 120);
+    }
+
+    // Close bottom sheet. If `force` is true, close even while a save is in progress.
+    function closeBottomSheet(force = false) {
+      if (isSubmittingSheet && !force) return; // prevent accidental close while saving
+
+      document.getElementById('sheetOverlay').classList.remove('open');
+      document.getElementById('bottomSheet').classList.remove('open');
+      document.body.classList.remove('sheet-open');
+
+      // Clear transient inputs and selection when sheet is closed
+      clearProductSelection();
+      const amt = document.getElementById('bs_amount');
+      if (amt) amt.value = '';
+    }
+
+    // Remove selection/tick from product cards and clear hidden product input
+    function clearProductSelection() {
+      try {
+        document.querySelectorAll('.product-card.selected').forEach(c => c.classList.remove('selected'));
+        productInput.value = '';
+        const priceField = document.getElementById('pricePerUnit');
+        if (priceField) priceField.value = '';
+      } catch (err) {}
+    }
+
+    // Submit from bottom sheet (mobile)
+    function recordSaleFromBottomSheet() {
+      if (isSubmittingSheet) return;
+
+      const productName = productInput.value;
+      const raw = (document.getElementById('bs_amount').value || '').trim();
+      const amount = parseFloat(raw.replace(/,/g, ''));
+      const date = new Date().toISOString().slice(0, 10);
+
+      if (!productName || Number.isNaN(amount) || amount <= 0) {
+        alert('Please select product and enter amount');
+        return;
+      }
+
+      (async function () {
+        isSubmittingSheet = true;
+        setButtonLoading(sheetRecordBtn, true, 'Saving...', 'Record');
+
+        try {
+          const formData = new FormData();
+          formData.append('action', 'recordSale');
+          formData.append('product', productName);
+          formData.append('amount', amount);
+          formData.append('date', date);
+
+          // no-cors: assume success
+          await fetch(APPS_SCRIPT_URL, { method: 'POST', body: formData, mode: 'no-cors' });
+
+          // Save locally and enable Undo
+          // Save locally and enable Undo
+          const savedId = saveSaleLocally(productName, amount, date);
+          lastSavedSaleId = savedId;
+
+          // Force-close sheet even while still in submission flow, then clear UI selection
+          closeBottomSheet(true);
+
+          // Toast + highlight new row
+          showToast('Sale Recorded ✓', { undo: true });
+          loadSalesData({ highlightId: savedId });
+
+        } catch (err) {
+          console.error(err);
+          alert('Error recording sale. Try again.');
+        } finally {
+          isSubmittingSheet = false;
+          setButtonLoading(sheetRecordBtn, false, 'Saving...', 'Record');
+        }
+      })();
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // Login Handler
+    // ═══════════════════════════════════════════════════════════════════════════════
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const enteredPassword = passwordInput.value;
+
+      if (enteredPassword === ADMIN_PASSWORD) {
+        sessionStorage.setItem('adminLoggedIn', 'true');
+        showAdmin();
+        loadSalesData();
+      } else {
+        loginError.textContent = '❌ Incorrect password. Try again.';
+        loginError.style.display = 'block';
+        passwordInput.value = '';
+        passwordInput.focus();
+      }
+    });
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // Logout Handler
+    // ═══════════════════════════════════════════════════════════════════════════════
+    logoutBtn.addEventListener('click', () => {
+      sessionStorage.removeItem('adminLoggedIn');
+      loginContainer.classList.remove('hidden');
+      adminContainer.classList.remove('visible');
+      passwordInput.value = '';
+      loginError.style.display = 'none';
+    });
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // Tab Navigation
+    // ═══════════════════════════════════════════════════════════════════════════════
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const tabName = tab.getAttribute('data-tab');
+
+        tabs.forEach(t => t.classList.remove('active'));
+        tabContents.forEach(tc => tc.classList.remove('active'));
+        tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        document.getElementById(tabName + 'Tab').classList.add('active');
+
+        if (tabName === 'dashboard') {
+          closeBottomSheet();
+          updateDashboard();
+        }
+      });
+
+      tab.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          tab.click();
+        }
+      });
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeBottomSheet();
+    });
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // Sales Form Submission (Desktop)
+    // ═══════════════════════════════════════════════════════════════════════════════
+    salesForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (isSubmittingMain) return;
+
+      if (window.innerWidth <= 768) {
+        entryError.textContent = '⚠️ Tap a product card to enter amount in the bottom sheet';
+        entryError.classList.add('show');
+        return;
+      }
+
+      const product = productInput.value;
+      const saleDate = new Date().toISOString().slice(0, 10);
+      const amount = parseFloat(document.getElementById('pricePerUnit')?.value || NaN);
+
+      if (!product || Number.isNaN(amount) || amount <= 0) {
+        entryError.textContent = '⚠️ Please select a product and enter amount';
+        entryError.classList.add('show');
+        return;
+      }
+
+      try {
+        isSubmittingMain = true;
+        setButtonLoading(recordSaleBtn, true, 'Saving...', '💾 Record Sale');
+
+        const formData = new FormData();
+        formData.append('action', 'recordSale');
+        formData.append('product', product);
+        formData.append('amount', amount);
+        formData.append('date', saleDate);
+
+        await fetch(APPS_SCRIPT_URL, { method: 'POST', body: formData, mode: 'no-cors' });
+
+        entryError.classList.remove('show');
+
+        const savedId = saveSaleLocally(product, amount, saleDate);
+        lastSavedSaleId = savedId;
+
+        salesForm.reset();
+        renderProductGrid();
+
+        showToast('Sale Recorded ✓', { undo: true });
+        loadSalesData({ highlightId: savedId });
+
+      } catch (error) {
+        console.error('Error:', error);
+        entryError.textContent = '❌ Error recording sale. Please try again.';
+        entryError.classList.add('show');
+      } finally {
+        isSubmittingMain = false;
+        setButtonLoading(recordSaleBtn, false, 'Saving...', '💾 Record Sale');
+      }
+    });
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // Local Storage Management
+    // ═══════════════════════════════════════════════════════════════════════════════
+    function saveSaleLocally(product, amount, date) {
+      let sales = JSON.parse(localStorage.getItem('arumee_sales') || '[]');
+      const id = Date.now();
+      sales.push({
+        id,
+        product,
+        amount,
+        date,
+        timestamp: new Date().toISOString()
+      });
+      localStorage.setItem('arumee_sales', JSON.stringify(sales));
+      return id;
+    }
+
+    function getSalesData() {
+      return JSON.parse(localStorage.getItem('arumee_sales') || '[]');
+    }
+
+    function deleteSale(id) {
+      if (confirm('Are you sure you want to delete this sale?')) {
+        let sales = getSalesData();
+        sales = sales.filter(sale => sale.id !== id);
+        localStorage.setItem('arumee_sales', JSON.stringify(sales));
+        loadSalesData();
+      }
+    }
+
+    function undoLastSale(id) {
+      let sales = getSalesData();
+      const beforeLen = sales.length;
+      sales = sales.filter(sale => sale.id !== id);
+      localStorage.setItem('arumee_sales', JSON.stringify(sales));
+      loadSalesData();
+
+      if (sales.length !== beforeLen) {
+        showToast('Undone ✓');
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // Load and Display Sales Data
+    // ═══════════════════════════════════════════════════════════════════════════════
+    function loadSalesData({ highlightId = null } = {}) {
+      const sales = getSalesData();
+      const tbody = document.getElementById('recentSalesBody');
+
+      if (sales.length === 0) {
+        tbody.innerHTML = '<tr class="no-data"><td colspan="4">No sales recorded yet</td></tr>';
+        return;
+      }
+
+      sales.sort((a, b) => new Date(b.date) - new Date(a.date) || (b.id - a.id));
+
+      tbody.innerHTML = sales.map(sale => {
+        const amountCell = sale.amount ? `₹ ${Number(sale.amount).toFixed(2)}` : '-';
+        const highlightAttr = (highlightId && sale.id === highlightId) ? 'data-highlight="1"' : '';
+        return `
+          <tr ${highlightAttr} data-id="${sale.id}">
+            <td>${formatDate(sale.date)}</td>
+            <td>${sale.product}</td>
+            <td style="font-weight:700; color:#222;">${amountCell}</td>
+            <td><button class="delete-btn" onclick="deleteSale(${sale.id})">Delete</button></td>
+          </tr>
+        `;
+      }).join('');
+
+      // Highlight newly added row briefly
+      if (highlightId) {
+        const row = tbody.querySelector(`tr[data-id="${highlightId}"]`);
+        if (row) {
+          row.style.background = 'rgba(102,126,234,0.10)';
+          setTimeout(() => { row.style.background = ''; }, 1200);
+          row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // Chart Instances (Global)
+    // ═══════════════════════════════════════════════════════════════════════════════
+    let totalSalesChart = null;
+    let productTrendChart = null;
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // Update Dashboard
+    // ═══════════════════════════════════════════════════════════════════════════════
+    function updateDashboard() {
+      const sales = getSalesData();
+
+      if (sales.length === 0) {
+        document.getElementById('totalSales').textContent = '0';
+        document.getElementById('totalRevenue').textContent = '₹ 0';
+        document.getElementById('uniqueProducts').textContent = '0';
+        document.getElementById('dashboardTableBody').innerHTML =
+          '<tr class="no-data"><td colspan="5">No sales data available</td></tr>';
+
+        if (totalSalesChart) totalSalesChart.destroy();
+        if (productTrendChart) productTrendChart.destroy();
+        return;
+      }
+
+      const totalSalesCount = sales.length;
+      const totalRevenue = sales.reduce((sum, sale) => sum + (sale.amount || 0), 0);
+      const uniqueProducts = new Set(sales.map(s => s.product)).size;
+
+      document.getElementById('totalSales').textContent = totalSalesCount;
+      document.getElementById('totalRevenue').textContent = '₹ ' + totalRevenue.toFixed(2);
+      document.getElementById('uniqueProducts').textContent = uniqueProducts;
+
+      const byProduct = {};
+      sales.forEach(sale => {
+        if (!byProduct[sale.product]) byProduct[sale.product] = { totalAmount: 0, count: 0 };
+        byProduct[sale.product].totalAmount += (sale.amount || 0);
+        byProduct[sale.product].count += 1;
+      });
+
+      const tbody = document.getElementById('dashboardTableBody');
+      tbody.innerHTML = Object.entries(byProduct).map(([product, data]) => {
+        return `
+          <tr>
+            <td>${product}</td>
+            <td>₹ ${data.totalAmount.toFixed(2)}</td>
+            <td>${data.count}</td>
+            <td>₹ ${(data.totalAmount / data.count).toFixed(2)}</td>
+            <td>₹ ${data.totalAmount.toFixed(2)}</td>
+          </tr>
+        `;
+      }).join('');
+
+      updateProductDropdown();
+      renderTotalSalesChart();
+      updateProductChart();
+    }
+
+    function updateProductDropdown() {
+      const sales = getSalesData();
+      const products = [...new Set(sales.map(s => s.product))].sort();
+      const dropdown = document.getElementById('productTrendSelect');
+      const currentValue = dropdown.value;
+
+      dropdown.innerHTML = '<option value="">-- All Products --</option>';
+      products.forEach(product => {
+        const option = document.createElement('option');
+        option.value = product;
+        option.textContent = product;
+        dropdown.appendChild(option);
+      });
+
+      dropdown.value = currentValue;
+    }
+
+    function renderTotalSalesChart() {
+      const sales = getSalesData();
+      if (sales.length === 0) return;
+
+      const dateSales = {};
+      sales.forEach(sale => {
+        if (!dateSales[sale.date]) dateSales[sale.date] = 0;
+        dateSales[sale.date] += (sale.amount || 0);
+      });
+
+      const sortedDates = Object.keys(dateSales).sort();
+      const amounts = sortedDates.map(date => dateSales[date]);
+
+      let cumulative = 0;
+      const cumulativeAmounts = amounts.map(a => (cumulative += a));
+
+      const ctx = document.getElementById('totalSalesChart');
+      if (totalSalesChart) totalSalesChart.destroy();
+
+      totalSalesChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: sortedDates.map(d => formatDate(d)),
+          datasets: [
+            {
+              label: 'Daily Sales Amount',
+              data: amounts,
+              borderColor: '#667eea',
+              backgroundColor: 'rgba(102, 126, 234, 0.1)',
+              borderWidth: 2,
+              fill: true,
+              tension: 0.4,
+              pointRadius: 5,
+              pointBackgroundColor: '#667eea',
+              pointBorderColor: '#fff',
+              pointBorderWidth: 2,
+              yAxisID: 'y'
+            },
+            {
+              label: 'Cumulative Amount',
+              data: cumulativeAmounts,
+              borderColor: '#764ba2',
+              backgroundColor: 'transparent',
+              borderWidth: 2,
+              fill: false,
+              tension: 0.4,
+              pointRadius: 4,
+              pointBackgroundColor: '#764ba2',
+              pointBorderColor: '#fff',
+              pointBorderWidth: 2,
+              borderDash: [5, 5],
+              yAxisID: 'y1'
             }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: {
+              display: true,
+              position: 'top',
+              labels: { font: { size: 13, weight: 'bold' }, color: '#333', padding: 15, usePointStyle: true }
+            },
+            tooltip: {
+              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              padding: 12,
+              titleFont: { size: 14, weight: 'bold' },
+              bodyFont: { size: 13 },
+              borderColor: '#667eea',
+              borderWidth: 1
+            }
+          },
+          scales: {
+            y: {
+              type: 'linear',
+              display: true,
+              position: 'left',
+              title: { display: true, text: 'Daily Amount (₹)', font: { size: 12, weight: 'bold' }, color: '#667eea' },
+              ticks: { color: '#666', font: { size: 12 } },
+              grid: { color: 'rgba(0, 0, 0, 0.05)' }
+            },
+            y1: {
+              type: 'linear',
+              display: true,
+              position: 'right',
+              title: { display: true, text: 'Cumulative (₹)', font: { size: 12, weight: 'bold' }, color: '#764ba2' },
+              ticks: { color: '#666', font: { size: 12 } },
+              grid: { drawOnChartArea: false }
+            },
+            x: {
+              ticks: { color: '#666', font: { size: 12 } },
+              grid: { color: 'rgba(0, 0, 0, 0.05)' }
+            }
+          }
+        }
+      });
+    }
+
+    function updateProductChart() {
+      const sales = getSalesData();
+      if (sales.length === 0) return;
+
+      const selectedProduct = document.getElementById('productTrendSelect').value;
+      const filteredSales = selectedProduct ? sales.filter(s => s.product === selectedProduct) : sales;
+      if (filteredSales.length === 0) return;
+
+      let productDateData = {};
+
+      if (selectedProduct) {
+        filteredSales.forEach(sale => {
+          if (!productDateData[sale.date]) productDateData[sale.date] = 0;
+          productDateData[sale.date] += (sale.amount || 0);
+        });
+      } else {
+        const allProducts = [...new Set(sales.map(s => s.product))];
+        allProducts.forEach(product => {
+          productDateData[product] = {};
+          const productSales = sales.filter(s => s.product === product);
+          productSales.forEach(sale => {
+            if (!productDateData[product][sale.date]) productDateData[product][sale.date] = 0;
+            productDateData[product][sale.date] += (sale.amount || 0);
+          });
+        });
+      }
+
+      const ctx = document.getElementById('productTrendChart');
+      if (productTrendChart) productTrendChart.destroy();
+
+      let chartConfig;
+
+      if (selectedProduct) {
+        const sortedDates = Object.keys(productDateData).sort();
+        const amounts = sortedDates.map(date => productDateData[date]);
+
+        chartConfig = {
+          type: 'bar',
+          data: {
+            labels: sortedDates.map(d => formatDate(d)),
+            datasets: [{
+              label: selectedProduct,
+              data: amounts,
+              backgroundColor: 'rgba(230, 126, 34, 0.6)',
+              borderColor: '#e67e22',
+              borderWidth: 2,
+              borderRadius: 6
+            }]
+          }
+        };
+      } else {
+        const allProducts = [...new Set(sales.map(s => s.product))].sort();
+        const allDates = [...new Set(sales.map(s => s.date))].sort();
+
+        const colors = ['#667eea', '#e67e22', '#e74c3c', '#f39c12', '#27ae60', '#3498db', '#9b59b6', '#1abc9c'];
+
+        const datasets = allProducts.map((product, index) => {
+          const productSales = sales.filter(s => s.product === product);
+          const dataSales = {};
+          allDates.forEach(date => {
+            dataSales[date] = productSales
+              .filter(s => s.date === date)
+              .reduce((sum, s) => sum + (s.amount || 0), 0);
+          });
+
+          return {
+            label: product,
+            data: allDates.map(date => dataSales[date] || 0),
+            borderColor: colors[index % colors.length],
+            backgroundColor: colors[index % colors.length] + '15',
+            borderWidth: 2,
+            fill: true,
+            tension: 0.4,
+            pointRadius: 4,
+            pointBackgroundColor: colors[index % colors.length],
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2
+          };
         });
 
-        // ═══════════════════════════════════════════════════════════════════════════════
-        // Logout Handler
-        // ═══════════════════════════════════════════════════════════════════════════════
-        logoutBtn.addEventListener('click', () => {
-            sessionStorage.removeItem('adminLoggedIn');
-            loginContainer.classList.remove('hidden');
-            adminContainer.classList.remove('visible');
-            passwordInput.value = '';
-            loginError.style.display = 'none';
-        });
+        chartConfig = {
+          type: 'line',
+          data: { labels: allDates.map(d => formatDate(d)), datasets }
+        };
+      }
 
-        // ═══════════════════════════════════════════════════════════════════════════════
-        // Tab Navigation
-        // ═══════════════════════════════════════════════════════════════════════════════
-        tabs.forEach((tab) => {
-            tab.addEventListener('click', () => {
-                const tabName = tab.getAttribute('data-tab');
-
-                // Remove active class from all tabs and contents
-                tabs.forEach(t => t.classList.remove('active'));
-                tabContents.forEach(tc => tc.classList.remove('active'));
-                tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
-
-                // Add active class to clicked tab and corresponding content
-                tab.classList.add('active');
-                tab.setAttribute('aria-selected', 'true');
-                document.getElementById(tabName + 'Tab').classList.add('active');
-
-                // Refresh dashboard when switching to it
-                if (tabName === 'dashboard') {
-                    closeBottomSheet();
-                    updateDashboard();
-                }
-            });
-
-            tab.addEventListener('keydown', (event) => {
-                if (event.key === 'Enter' || event.key === ' ') {
-                    event.preventDefault();
-                    tab.click();
-                }
-            });
-        });
-
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') {
-                closeBottomSheet();
+      chartConfig.options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            labels: { font: { size: 13, weight: 'bold' }, color: '#333', padding: 15, usePointStyle: true, boxWidth: 10 }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            padding: 12,
+            titleFont: { size: 14, weight: 'bold' },
+            bodyFont: { size: 13 },
+            borderColor: '#667eea',
+            borderWidth: 1,
+            callbacks: {
+              label: function (context) {
+                const val = (context.parsed && typeof context.parsed.y === 'number') ? context.parsed.y : context.raw;
+                return context.dataset.label + ': ₹ ' + Number(val || 0).toFixed(2);
+              }
             }
-        });
-
-        // ═══════════════════════════════════════════════════════════════════════════════
-        // Sales Form Submission (amount-only)
-        // ═══════════════════════════════════════════════════════════════════════════════
-        salesForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            if (isSubmittingMain) return;
-
-            if (window.innerWidth <= 768) {
-                entryError.textContent = '⚠️ Tap a product card to enter amount in the bottom sheet';
-                entryError.classList.add('show');
-                return;
-            }
-
-            const product = productInput.value;
-            // Determine amount source: mobile uses #amount (entered total), desktop uses pricePerUnit as the sale amount
-            const saleDate = new Date().toISOString().slice(0,10);
-            let amount;
-            if (window.innerWidth <= 768) {
-                amount = parseFloat(document.getElementById('amount')?.value || NaN);
-            } else {
-                amount = parseFloat(document.getElementById('pricePerUnit')?.value || NaN);
-            }
-
-            if (!product || Number.isNaN(amount) || amount <= 0) {
-                entryError.textContent = '⚠️ Please select a product and enter price';
-                entryError.classList.add('show');
-                return;
-            }
-
-            try {
-                isSubmittingMain = true;
-                setButtonLoading(recordSaleBtn, true, 'Saving...', '💾 Record Sale');
-
-                // Send to Google Apps Script
-                const formData = new FormData();
-                formData.append('action', 'recordSale');
-                formData.append('product', product);
-                formData.append('amount', amount);
-                formData.append('date', saleDate);
-
-                const response = await fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    body: formData,
-                    mode: 'no-cors'
-                });
-
-                // Even with no-cors, we'll assume it worked
-                showSuccess('✓ Sale recorded successfully!');
-                entryError.classList.remove('show');
-
-                // Store locally too (uses system date)
-                saveSaleLocally(product, amount, saleDate);
-
-                // Reset form
-                salesForm.reset();
-                renderProductGrid(); // Re-render product grid
-
-                // Hide success message after 3 seconds
-                setTimeout(() => {
-                    successMessage.classList.remove('show');
-                }, 3000);
-
-                // Reload sales data
-                loadSalesData();
-            } catch (error) {
-                console.error('Error:', error);
-                entryError.textContent = '❌ Error recording sale. Please try again.';
-                entryError.classList.add('show');
-            } finally {
-                isSubmittingMain = false;
-                setButtonLoading(recordSaleBtn, false, 'Saving...', '💾 Record Sale');
-            }
-        });
-
-        // ═══════════════════════════════════════════════════════════════════════════════
-        // Local Storage Management
-        // ═══════════════════════════════════════════════════════════════════════════════
-        function saveSaleLocally(product, amount, date) {
-            let sales = JSON.parse(localStorage.getItem('arumee_sales') || '[]');
-            sales.push({
-                id: Date.now(),
-                product,
-                amount,
-                date,
-                timestamp: new Date().toISOString()
-            });
-            localStorage.setItem('arumee_sales', JSON.stringify(sales));
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: 'Amount (₹)', font: { size: 12, weight: 'bold' }, color: '#333' },
+            ticks: { color: '#666', font: { size: 12 } },
+            grid: { color: 'rgba(0, 0, 0, 0.05)' }
+          },
+          x: {
+            ticks: { color: '#666', font: { size: 12 } },
+            grid: { color: 'rgba(0, 0, 0, 0.05)' }
+          }
         }
+      };
 
-        function getSalesData() {
-            return JSON.parse(localStorage.getItem('arumee_sales') || '[]');
-        }
+      productTrendChart = new Chart(ctx, chartConfig);
+    }
 
-        function deleteSale(id) {
-            if (confirm('Are you sure you want to delete this sale?')) {
-                let sales = getSalesData();
-                sales = sales.filter(sale => sale.id !== id);
-                localStorage.setItem('arumee_sales', JSON.stringify(sales));
-                loadSalesData();
-            }
-        }
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // Helper Functions
+    // ═══════════════════════════════════════════════════════════════════════════════
+    function showAdmin() {
+      loginContainer.classList.add('hidden');
+      adminContainer.classList.add('visible');
+    }
 
-        // ═══════════════════════════════════════════════════════════════════════════════
-        // Load and Display Sales Data
-        // ═══════════════════════════════════════════════════════════════════════════════
-        function loadSalesData() {
-            const sales = getSalesData();
-            const tbody = document.getElementById('recentSalesBody');
-
-            if (sales.length === 0) {
-                tbody.innerHTML = '<tr class="no-data"><td colspan="5">No sales recorded yet</td></tr>';
-                return;
-            }
-
-            // Sort by date descending
-            sales.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-            tbody.innerHTML = sales.map(sale => {
-                let amountCell = '';
-                if (sale.amount) {
-                    amountCell = `<td>₹ ${sale.amount.toFixed(2)}</td>`;
-                } else {
-                    amountCell = '<td>-</td>';
-                }
-                return `
-                    <tr>
-                        <td>${formatDate(sale.date)}</td>
-                        <td>${sale.product}</td>
-                        ${amountCell}
-                        <td>
-                            <button class="delete-btn" onclick="deleteSale(${sale.id})">Delete</button>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-
-            // Update table header if needed
-            const thead = document.getElementById('recentSalesTable').querySelector('thead');
-            if (thead.innerHTML.indexOf('Amount') === -1) {
-                thead.innerHTML = `
-                    <tr>
-                        <th>Date</th>
-                        <th>Product</th>
-                        <th>Amount (₹)</th>
-                        <th>Action</th>
-                    </tr>
-                `;
-            }
-        }
-
-        // ═══════════════════════════════════════════════════════════════════════════════
-        // Chart Instances (Global)
-        // ═══════════════════════════════════════════════════════════════════════════════
-        let totalSalesChart = null;
-        let productTrendChart = null;
-
-        // ═══════════════════════════════════════════════════════════════════════════════
-        // Update Dashboard
-        // ═══════════════════════════════════════════════════════════════════════════════
-        function updateDashboard() {
-            const sales = getSalesData();
-
-            if (sales.length === 0) {
-                document.getElementById('totalSales').textContent = '0';
-                document.getElementById('totalRevenue').textContent = '₹ 0';
-                document.getElementById('uniqueProducts').textContent = '0';
-                // revenue card not used; totalRevenue shown in stat cards
-                document.getElementById('dashboardTableBody').innerHTML = 
-                    '<tr class="no-data"><td colspan="5">No sales data available</td></tr>';
-                
-                // Clear charts
-                if (totalSalesChart) totalSalesChart.destroy();
-                if (productTrendChart) productTrendChart.destroy();
-                return;
-            }
-
-
-            // Calculate statistics (amount-only)
-            const totalSalesCount = sales.length;
-            const totalRevenue = sales.reduce((sum, sale) => sum + (sale.amount || 0), 0);
-            const uniqueProducts = new Set(sales.map(s => s.product)).size;
-
-            // Update stat cards
-            document.getElementById('totalSales').textContent = totalSalesCount;
-            document.getElementById('totalRevenue').textContent = '₹ ' + totalRevenue.toFixed(2);
-            document.getElementById('uniqueProducts').textContent = uniqueProducts;
-
-            // Calculate by product
-            const byProduct = {};
-            sales.forEach(sale => {
-                if (!byProduct[sale.product]) {
-                    byProduct[sale.product] = {
-                        totalAmount: 0,
-                        count: 0
-                    };
-                }
-                byProduct[sale.product].totalAmount += (sale.amount || 0);
-                byProduct[sale.product].count += 1;
-            });
-
-            // Populate table
-            const tbody = document.getElementById('dashboardTableBody');
-            tbody.innerHTML = Object.entries(byProduct).map(([product, data]) => {
-                let revenueCell = '';
-                if (data.totalAmount > 0) {
-                    revenueCell = `<td>₹ ${data.totalAmount.toFixed(2)}</td>`;
-                } else {
-                    revenueCell = '<td>-</td>';
-                }
-                return `
-                    <tr>
-                        <td>${product}</td>
-                        <td>₹ ${data.totalAmount.toFixed(2)}</td>
-                        <td>${data.count}</td>
-                        <td>₹ ${(data.totalAmount / data.count).toFixed(2)}</td>
-                        ${revenueCell}
-                    </tr>
-                `;
-            }).join('');
-
-            // Update table header if needed
-            const thead = document.getElementById('dashboardTable').querySelector('thead');
-            if (thead.innerHTML.indexOf('Revenue') === -1) {
-                thead.innerHTML = `
-                    <tr>
-                        <th>Product</th>
-                        <th>Total Amount (₹)</th>
-                        <th>Number of Sales</th>
-                        <th>Avg per Sale (₹)</th>
-                        <th>Revenue (₹)</th>
-                    </tr>
-                `;
-            }
-
-            // Update product dropdown
-            updateProductDropdown();
-
-            // Render charts
-            renderTotalSalesChart();
-            updateProductChart();
-        }
-
-        // ═══════════════════════════════════════════════════════════════════════════════
-        // Update Product Dropdown for Charts
-        // ═══════════════════════════════════════════════════════════════════════════════
-        function updateProductDropdown() {
-            const sales = getSalesData();
-            const products = [...new Set(sales.map(s => s.product))].sort();
-            const dropdown = document.getElementById('productTrendSelect');
-            const currentValue = dropdown.value;
-
-            dropdown.innerHTML = '<option value="">-- All Products --</option>';
-            products.forEach(product => {
-                const option = document.createElement('option');
-                option.value = product;
-                option.textContent = product;
-                dropdown.appendChild(option);
-            });
-
-            dropdown.value = currentValue;
-        }
-
-        // ═══════════════════════════════════════════════════════════════════════════════
-        // Render Total Sales Trend Chart
-        // ═══════════════════════════════════════════════════════════════════════════════
-        function renderTotalSalesChart() {
-            const sales = getSalesData();
-            
-            if (sales.length === 0) return;
-
-            // Group sales by date (amount)
-            const dateSales = {};
-            sales.forEach(sale => {
-                if (!dateSales[sale.date]) {
-                    dateSales[sale.date] = 0;
-                }
-                dateSales[sale.date] += (sale.amount || 0);
-            });
-
-            // Sort dates
-            const sortedDates = Object.keys(dateSales).sort();
-            const amounts = sortedDates.map(date => dateSales[date]);
-
-            // Calculate cumulative values
-            let cumulative = 0;
-            const cumulativeAmounts = amounts.map(a => {
-                cumulative += a;
-                return cumulative;
-            });
-
-            const ctx = document.getElementById('totalSalesChart');
-            
-            if (totalSalesChart) {
-                totalSalesChart.destroy();
-            }
-
-            totalSalesChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: sortedDates.map(d => formatDate(d)),
-                    datasets: [
-                        {
-                            label: 'Daily Sales Amount',
-                            data: amounts,
-                            borderColor: '#667eea',
-                            backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                            borderWidth: 2,
-                            fill: true,
-                            tension: 0.4,
-                            pointRadius: 5,
-                            pointBackgroundColor: '#667eea',
-                            pointBorderColor: '#fff',
-                            pointBorderWidth: 2,
-                            yAxisID: 'y'
-                        },
-                        {
-                            label: 'Cumulative Amount',
-                            data: cumulativeAmounts,
-                            borderColor: '#764ba2',
-                            backgroundColor: 'transparent',
-                            borderWidth: 2,
-                            fill: false,
-                            tension: 0.4,
-                            pointRadius: 4,
-                            pointBackgroundColor: '#764ba2',
-                            pointBorderColor: '#fff',
-                            pointBorderWidth: 2,
-                            borderDash: [5, 5],
-                            yAxisID: 'y1'
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    interaction: {
-                        mode: 'index',
-                        intersect: false
-                    },
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top',
-                            labels: {
-                                font: { size: 13, weight: 'bold' },
-                                color: '#333',
-                                padding: 15,
-                                usePointStyle: true
-                            }
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                            padding: 12,
-                            titleFont: { size: 14, weight: 'bold' },
-                            bodyFont: { size: 13 },
-                            borderColor: '#667eea',
-                            borderWidth: 1
-                        }
-                    },
-                    scales: {
-                        y: {
-                            type: 'linear',
-                            display: true,
-                            position: 'left',
-                                title: {
-                                display: true,
-                                text: 'Daily Amount (₹)',
-                                font: { size: 12, weight: 'bold' },
-                                color: '#667eea'
-                            },
-                            ticks: {
-                                color: '#666',
-                                font: { size: 12 }
-                            },
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
-                        },
-                        y1: {
-                            type: 'linear',
-                            display: true,
-                            position: 'right',
-                            title: {
-                                display: true,
-                                text: 'Cumulative (₹)',
-                                font: { size: 12, weight: 'bold' },
-                                color: '#764ba2'
-                            },
-                            ticks: {
-                                color: '#666',
-                                font: { size: 12 }
-                            },
-                            grid: {
-                                drawOnChartArea: false
-                            }
-                        },
-                        x: {
-                            ticks: {
-                                color: '#666',
-                                font: { size: 12 }
-                            },
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // ═══════════════════════════════════════════════════════════════════════════════
-        // Update Product Trend Chart
-        // ═══════════════════════════════════════════════════════════════════════════════
-        function updateProductChart() {
-            const sales = getSalesData();
-            
-            if (sales.length === 0) return;
-
-            const selectedProduct = document.getElementById('productTrendSelect').value;
-
-            // Filter sales
-            const filteredSales = selectedProduct 
-                ? sales.filter(s => s.product === selectedProduct)
-                : sales;
-
-            if (filteredSales.length === 0) return;
-
-            // Group by product and date
-            let productDateData = {};
-
-            if (selectedProduct) {
-                // Single product view - aggregate amounts
-                filteredSales.forEach(sale => {
-                    if (!productDateData[sale.date]) {
-                        productDateData[sale.date] = 0;
-                    }
-                    productDateData[sale.date] += (sale.amount || 0);
-                });
-            } else {
-                // All products view - organize by product (amounts)
-                const allProducts = [...new Set(sales.map(s => s.product))];
-                allProducts.forEach(product => {
-                    productDateData[product] = {};
-                    const productSales = sales.filter(s => s.product === product);
-                    productSales.forEach(sale => {
-                        if (!productDateData[product][sale.date]) {
-                            productDateData[product][sale.date] = 0;
-                        }
-                        productDateData[product][sale.date] += (sale.amount || 0);
-                    });
-                });
-            }
-
-            const ctx = document.getElementById('productTrendChart');
-
-            if (productTrendChart) {
-                productTrendChart.destroy();
-            }
-
-            let chartConfig;
-
-            if (selectedProduct) {
-                // Single product - Bar chart (amount per day)
-                const sortedDates = Object.keys(productDateData).sort();
-                const amounts = sortedDates.map(date => productDateData[date]);
-
-                chartConfig = {
-                    type: 'bar',
-                    data: {
-                        labels: sortedDates.map(d => formatDate(d)),
-                        datasets: [{
-                            label: selectedProduct,
-                            data: amounts,
-                            backgroundColor: 'rgba(230, 126, 34, 0.6)',
-                            borderColor: '#e67e22',
-                            borderWidth: 2,
-                            borderRadius: 6,
-                            pointRadius: 5,
-                            tension: 0.4
-                        }]
-                    }
-                };
-            } else {
-                // All products - Multi-line chart
-                const allProducts = [...new Set(sales.map(s => s.product))].sort();
-                const allDates = [...new Set(sales.map(s => s.date))].sort();
-
-                const colors = [
-                    '#667eea', '#e67e22', '#e74c3c', '#f39c12',
-                    '#27ae60', '#3498db', '#9b59b6', '#1abc9c'
-                ];
-
-                const datasets = allProducts.map((product, index) => {
-                    const productSales = sales.filter(s => s.product === product);
-                    const dataSales = {};
-                    
-                    allDates.forEach(date => {
-                        dataSales[date] = productSales
-                            .filter(s => s.date === date)
-                            .reduce((sum, s) => sum + (s.amount || 0), 0);
-                    });
-
-                    return {
-                        label: product,
-                        data: allDates.map(date => dataSales[date] || 0),
-                        borderColor: colors[index % colors.length],
-                        backgroundColor: colors[index % colors.length] + '15',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.4,
-                        pointRadius: 4,
-                        pointBackgroundColor: colors[index % colors.length],
-                        pointBorderColor: '#fff',
-                        pointBorderWidth: 2
-                    };
-                });
-
-                chartConfig = {
-                    type: 'line',
-                    data: {
-                        labels: allDates.map(d => formatDate(d)),
-                        datasets: datasets
-                    }
-                };
-            }
-
-            // Common options
-            chartConfig.options = {
-                responsive: true,
-                maintainAspectRatio: false,
-                interaction: {
-                    mode: 'index',
-                    intersect: false
-                },
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'top',
-                        labels: {
-                            font: { size: 13, weight: 'bold' },
-                            color: '#333',
-                            padding: 15,
-                            usePointStyle: true,
-                            boxWidth: 10
-                        }
-                    },
-                    tooltip: {
-                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                        padding: 12,
-                        titleFont: { size: 14, weight: 'bold' },
-                        bodyFont: { size: 13 },
-                        borderColor: '#667eea',
-                        borderWidth: 1,
-                            callbacks: {
-                            label: function(context) {
-                                return context.dataset.label + ': ₹ ' + context.parsed.y.toFixed(2);
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Amount (₹)',
-                            font: { size: 12, weight: 'bold' },
-                            color: '#333'
-                        },
-                        ticks: {
-                            color: '#666',
-                            font: { size: 12 }
-                        },
-                        grid: {
-                            color: 'rgba(0, 0, 0, 0.05)'
-                        }
-                    },
-                    x: {
-                        ticks: {
-                            color: '#666',
-                            font: { size: 12 }
-                        },
-                        grid: {
-                            color: 'rgba(0, 0, 0, 0.05)'
-                        }
-                    }
-                }
-            };
-
-            productTrendChart = new Chart(ctx, chartConfig);
-        }
-
-        // ═══════════════════════════════════════════════════════════════════════════════
-        // Helper Functions
-        // ═══════════════════════════════════════════════════════════════════════════════
-        function showAdmin() {
-            loginContainer.classList.add('hidden');
-            adminContainer.classList.add('visible');
-        }
-
-        function formatDate(dateStr) {
-            const date = new Date(dateStr + 'T00:00:00');
-            return date.toLocaleDateString('en-IN', { 
-                year: 'numeric', 
-                month: 'short', 
-                day: 'numeric' 
-            });
-        }
-    </script>
+    function formatDate(dateStr) {
+      const date = new Date(dateStr + 'T00:00:00');
+      return date.toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' });
+    }
+  </script>
 </body>
 </html>
