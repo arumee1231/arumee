@@ -255,10 +255,41 @@ function checkRateLimit(ip) {
 function doGet(e) {
   // If called with ?createSales=true this will create the Sales tab if missing
   try {
-    if (e && e.parameter && (e.parameter.createSales === 'true' || e.parameter.setup === 'true')) {
-      var ss = SpreadsheetApp.openById(SHEET_ID);
-      ensureSalesSheetExists(ss);
-      return ContentService.createTextOutput(JSON.stringify({ status: 'ok', message: 'Sales sheet ensured' })).setMimeType(ContentService.MimeType.JSON);
+    if (e && e.parameter) {
+      if (e.parameter.createSales === 'true' || e.parameter.setup === 'true') {
+        var ss = SpreadsheetApp.openById(SHEET_ID);
+        ensureSalesSheetExists(ss);
+        return ContentService.createTextOutput(JSON.stringify({ status: 'ok', message: 'Sales sheet ensured' })).setMimeType(ContentService.MimeType.JSON);
+      }
+
+      // Public API: return all sales as JSON when called with ?action=getSales
+      if (String(e.parameter.action || '') === 'getSales') {
+        try {
+          var ss2 = SpreadsheetApp.openById(SHEET_ID);
+          var sheet = ss2.getSheetByName('Sales');
+          if (!sheet) {
+            return ContentService.createTextOutput(JSON.stringify({ status: 'ok', sales: [] })).setMimeType(ContentService.MimeType.JSON);
+          }
+
+          var data = sheet.getDataRange().getValues(); // includes header row
+          var sales = [];
+          for (var i = 1; i < data.length; i++) {
+            var row = data[i];
+            // Expected columns: Date, Product, Amount (₹), Recorded At
+            var date = row[0] ? Utilities.formatDate(new Date(row[0]), Session.getScriptTimeZone(), 'yyyy-MM-dd') : '';
+            var product = row[1] ? String(row[1]) : '';
+            var amount = row[2] ? parseFloat(row[2]) : 0;
+            var recordedAt = row[3] ? (row[3] instanceof Date ? row[3].toISOString() : String(row[3])) : '';
+            // Provide an id (use recordedAt timestamp or row number fallback)
+            var id = recordedAt ? (new Date(recordedAt)).getTime() : (i + 1);
+            sales.push({ id: id, date: date, product: product, amount: amount, recordedAt: recordedAt });
+          }
+
+          return ContentService.createTextOutput(JSON.stringify({ status: 'ok', sales: sales })).setMimeType(ContentService.MimeType.JSON);
+        } catch (gsErr) {
+          return ContentService.createTextOutput(JSON.stringify({ status: 'error', message: gsErr.message })).setMimeType(ContentService.MimeType.JSON);
+        }
+      }
     }
   } catch (err) {
     // fall through to basic status response
