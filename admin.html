@@ -13,14 +13,30 @@
             box-sizing: border-box;
         }
 
+        /* Desktop-specific override: keep buttons inline and compact */
+        @media (min-width: 769px) {
+            .button-group {
+                flex-direction: row;
+            }
+            .button-group button {
+                width: auto !important;
+                flex: 0 0 auto !important;
+            }
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             padding: 20px;
+        }
+
+        body.sheet-open {
+            overflow: hidden;
+            touch-action: none;
         }
 
         .login-container {
@@ -32,6 +48,7 @@
             max-width: 400px;
             text-align: center;
             animation: slideDown 0.5s ease-out;
+            margin: auto;
         }
 
         @keyframes slideDown {
@@ -120,13 +137,14 @@
         /* Admin Dashboard Styles */
         .admin-container {
             background: white;
-            border-radius: 10px;
+            border-radius: 14px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
             width: 100%;
             max-width: 1200px;
             overflow: hidden;
             display: none;
             animation: slideDown 0.5s ease-out;
+            margin: 0 auto;
         }
 
         .admin-container.visible {
@@ -141,6 +159,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 12px;
         }
 
         .admin-header h1 {
@@ -167,6 +186,9 @@
             display: flex;
             background: #f8f9fa;
             border-bottom: 2px solid #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 20;
         }
 
         .tab {
@@ -180,6 +202,7 @@
             transition: all 0.3s ease;
             border-bottom: 3px solid transparent;
             margin-bottom: -2px;
+            white-space: nowrap;
         }
 
         .tab:hover {
@@ -194,7 +217,7 @@
         .tab-content {
             display: none;
             padding: 30px;
-            min-height: 500px;
+            min-height: 420px;
         }
 
         .tab-content.active {
@@ -239,6 +262,11 @@
             transition: border-color 0.3s ease;
         }
 
+        /* mobile-only helper: hidden on desktop by default */
+        .mobile-only {
+            display: none;
+        }
+
         .form-field input:focus,
         .form-field select:focus {
             outline: none;
@@ -253,37 +281,62 @@
             display: flex;
             gap: 10px;
             margin-top: 20px;
+            align-items: center;
         }
 
+        /* Desktop: buttons are compact; Mobile override below makes them full-width */
         .submit-btn {
-            flex: 1;
-            padding: 12px;
+            flex: 0 0 auto;
+            min-width: 220px;
+            max-width: 360px;
+            height: 46px;
+            padding: 0 20px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px !important;
             font-size: 16px;
             font-weight: 600;
+            line-height: 1.2;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.18s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            white-space: nowrap;
+            width: auto !important;
+            appearance: none;
+            -webkit-appearance: none;
         }
 
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        .submit-btn.loading,
+        .sheet-submit.loading {
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+            position: relative;
+            /* keep width while loading */
+            min-width: 220px;
+            height: 46px;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.2;
         }
 
         .reset-btn {
-            flex: 1;
-            padding: 12px;
+            flex: 0 0 auto;
+            min-width: 120px;
+            padding: 10px 16px;
             background: #e9ecef;
             color: #333;
             border: 2px solid #ddd;
-            border-radius: 6px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.18s ease;
+            width: auto;
         }
 
         .reset-btn:hover {
@@ -346,6 +399,8 @@
 
         .table-responsive {
             overflow-x: auto;
+            border: 1px solid #eee;
+            border-radius: 8px;
         }
 
         table {
@@ -364,12 +419,14 @@
             font-weight: 600;
             color: #333;
             border-bottom: 2px solid #ddd;
+            white-space: nowrap;
         }
 
         td {
             padding: 12px;
             border-bottom: 1px solid #ddd;
             color: #666;
+            vertical-align: middle;
         }
 
         tr:hover {
@@ -421,12 +478,19 @@
             border-radius: 8px;
             margin-bottom: 30px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #eee;
         }
 
         .chart-wrapper {
             position: relative;
             height: 400px;
             margin-bottom: 20px;
+        }
+
+        .dashboard-note {
+            color: #999;
+            font-size: 13px;
+            margin: 0;
         }
 
         .chart-header {
@@ -512,7 +576,7 @@
             cursor: pointer;
             background: #f9f9f9;
             transition: all 0.3s ease;
-            min-height: 160px;
+            min-height: 170px;
             text-align: center;
         }
 
@@ -534,6 +598,33 @@
             font-size: 48px;
             margin-bottom: 10px;
             display: block;
+        }
+
+        .product-image {
+            width: 72px;
+            height: 72px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+
+        .product-name {
+            display: block;
+            text-align: center;
+            font-size: 13px;
+            color: #222;
+            margin-top: 6px;
+            line-height: 1.2;
+            /* allow wrap but clamp to two lines with ellipsis */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-break: break-word;
+            white-space: normal;
+            max-width: 100%;
         }
         
 
@@ -558,31 +649,78 @@
         }
 
         @media (max-width: 768px) {
+            body {
+                padding: 0;
+            }
+
             .login-container {
                 padding: 30px 20px;
+                margin: auto 16px;
+            }
+
+            .admin-container {
+                border-radius: 0;
+                min-height: 100vh;
+                max-width: none;
             }
 
             .admin-header {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
+                padding: 14px 16px;
+                position: sticky;
+                top: 0;
+                z-index: 30;
+            }
+
+            .admin-header h1 {
+                font-size: 18px;
             }
 
             .tabs {
-                flex-direction: column;
+                position: sticky;
+                top: 64px;
+                z-index: 25;
+                overflow-x: auto;
+            }
+
+            .tab {
+                min-width: 50%;
+                font-size: 14px;
+                padding: 14px 12px;
             }
 
             .form-grid {
                 grid-template-columns: 1fr;
+                gap: 12px;
             }
 
             .dashboard-grid {
                 grid-template-columns: 1fr;
+                gap: 12px;
             }
 
             .tab-content {
-                padding: 20px;
+                padding: 16px;
                 min-height: 400px;
+            }
+
+            .button-group {
+                display: none;
+            }
+
+            .submit-btn,
+            .reset-btn,
+            .logout-btn {
+                min-height: 44px;
+            }
+
+            .sheet-actions {
+                gap: 8px;
+            }
+
+            .sheet-actions button {
+                font-size: 14px;
+                padding: 12px 10px;
+                min-height: 44px;
             }
 
             .product-grid {
@@ -603,9 +741,30 @@
             .product-name {
                 font-size: 11px;
             }
+
+            .chart-container {
+                padding: 14px;
+                margin-bottom: 16px;
+            }
+
+            .chart-wrapper {
+                height: 280px;
+                margin-bottom: 12px;
+            }
+
+            .chart-header h3 {
+                font-size: 16px;
+            }
+
+            th,
+            td {
+                padding: 10px 8px;
+                font-size: 13px;
+            }
+
             /* Mobile-only adjustments */
             .product-card small.product-price { display: none !important; }
-            label[for="amount"], #amount { display: none !important; }
+            .mobile-only { display: block !important; }
             .desktop-only { display: none !important; }
         }
 
@@ -617,33 +776,36 @@
             width: 100%;
             height: 100%;
             background: rgba(0,0,0,0.4);
-            display: none;
+            opacity: 0;
+            pointer-events: none;
             z-index: 1200;
             transition: opacity 0.25s ease;
         }
 
         .sheet-overlay.open {
-            display: block;
+            opacity: 1;
+            pointer-events: auto;
         }
 
         .bottom-sheet {
             position: fixed;
             left: 0;
             right: 0;
-            bottom: -100%;
+            bottom: 0;
             background: #fff;
             border-top-left-radius: 12px;
             border-top-right-radius: 12px;
             box-shadow: 0 -8px 30px rgba(0,0,0,0.15);
             z-index: 1300;
             padding: 24px;
-            transition: bottom 0.3s ease;
+            transform: translateY(110%);
+            transition: transform 0.3s ease;
             max-height: 85%;
             overflow: auto;
         }
 
         .bottom-sheet.open {
-            bottom: 0;
+            transform: translateY(0);
         }
 
         .sheet-handle {
@@ -666,6 +828,23 @@
             border-radius: 8px;
             font-weight: 700;
             border: none;
+            width: auto;
+            min-width: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 420px) {
+            .sheet-actions {
+                flex-direction: column;
+            }
+
+            .sheet-actions button {
+                width: 100%;
+            }
         }
 
         .sheet-cancel { background: #e9ecef; color: #333; }
@@ -699,9 +878,9 @@
             <button class="logout-btn" id="logoutBtn">Logout</button>
         </div>
 
-        <div class="tabs">
-            <div class="tab active" data-tab="entry">📝 Sales Entry</div>
-            <div class="tab" data-tab="dashboard">📈 Dashboard</div>
+        <div class="tabs" role="tablist" aria-label="Sales sections">
+            <div class="tab active" data-tab="entry" role="tab" aria-selected="true" tabindex="0">📝 Sales Entry</div>
+            <div class="tab" data-tab="dashboard" role="tab" aria-selected="false" tabindex="0">📈 Dashboard</div>
         </div>
 
         <!-- Sales Entry Tab -->
@@ -726,27 +905,15 @@
                 <!-- Price and Amount Fields (date auto-set by system). Price visible on desktop only -->
                 <div class="form-grid">
                     <div class="form-field desktop-only">
-                        <label for="pricePerUnit">🔖 Price per unit (₹)</label>
-                        <input type="number" id="pricePerUnit" placeholder="Price per unit" step="0.01" min="0" readonly>
-                    </div>
-
-                    <div class="form-field">
-                        <label for="amount">💰 Amount (₹) *</label>
-                        <input 
-                            type="number" 
-                            id="amount" 
-                            placeholder="Enter total amount"
-                            step="0.01"
-                            min="0"
-                            required
-                        >
+                        <label for="pricePerUnit">🔖 Price (₹) *</label>
+                        <input type="number" id="pricePerUnit" placeholder="Enter price (per unit)" step="0.01" min="0">
                     </div>
 
                     <!-- Date input removed: system date will be used when recording sales -->
                 </div>
 
                 <div class="button-group">
-                    <button type="submit" class="submit-btn">💾 Record Sale</button>
+                    <button type="submit" class="submit-btn" id="recordSaleBtn">💾 Record Sale</button>
                     <button type="reset" class="reset-btn">Clear</button>
                 </div>
             </form>
@@ -764,7 +931,7 @@
 
                     <div class="sheet-actions">
                         <button class="sheet-cancel" onclick="closeBottomSheet()" type="button">Cancel</button>
-                        <button class="sheet-submit" onclick="recordSaleFromBottomSheet()" type="button">Record</button>
+                        <button class="sheet-submit" id="sheetRecordBtn" onclick="recordSaleFromBottomSheet()" type="button">Record</button>
                     </div>
                 </div>
             </div>
@@ -818,7 +985,7 @@
                 <div class="chart-wrapper">
                     <canvas id="totalSalesChart"></canvas>
                 </div>
-                <p style="color: #999; font-size: 13px; margin: 0;">Shows daily sales amount and cumulative revenue over time</p>
+                <p class="dashboard-note">Shows daily sales amount and cumulative revenue over time</p>
             </div>
 
             <!-- Individual Product Trend Chart -->
@@ -835,7 +1002,7 @@
                 <div class="chart-wrapper">
                     <canvas id="productTrendChart"></canvas>
                 </div>
-                <p style="color: #999; font-size: 13px; margin: 0;">Select a product to view its daily sales trend, or view all products combined</p>
+                <p class="dashboard-note">Select a product to view its daily sales trend, or view all products combined</p>
             </div>
 
             <div style="margin-top: 30px;">
@@ -853,7 +1020,7 @@
                         </thead>
                         <tbody id="dashboardTableBody">
                             <tr class="no-data">
-                                <td colspan="4">No sales data available</td>
+                                <td colspan="5">No sales data available</td>
                             </tr>
                         </tbody>
                     </table>
@@ -873,14 +1040,15 @@
         // Product Data with Icons and Pricing
         // ═══════════════════════════════════════════════════════════════════════════════
         const PRODUCTS = [
-            { name: 'Coconut Oil', icon: '🥥', color: '#FFE5B4', price: 400, unit: 'L' },
-            { name: 'Gingelly Oil', icon: '🌾', color: '#D4AF7A', price: 400, unit: 'L' },
-            { name: 'Groundnut Oil', icon: '🥜', color: '#E8B74F', price: 240, unit: 'L' },
-            { name: 'Groundnut Cattle Feed', icon: '🐄', color: '#8B6F47', price: null, unit: 'kg' },
-            { name: 'Dosa Batter', icon: '🥘', color: '#C4A57B', price: null, unit: 'kg' },
-            { name: 'Chilli Powder', icon: '🌶️', color: '#E74C3C', price: null, unit: 'kg' },
-            { name: 'Cow Feed', icon: '🐮', color: '#9B8B7E', price: null, unit: 'kg' },
-            { name: 'Groundnut Breaking', icon: '🔨', color: '#B8860B', price: null, unit: 'kg' }
+            { name: 'Coconut Oil', displayName: 'தேங்காய் எண்ணெய்', icon: '🥥', image: 'arumee_assets/Coconut.webp', color: '#FFE5B4', price: 400, unit: 'L' },
+            { name: 'Gingelly Oil', displayName: 'நல்லெண்ணெய்', icon: '🌾', image: 'arumee_assets/Sesame.webp', color: '#D4AF7A', price: 400, unit: 'L' },
+            { name: 'Groundnut Oil', displayName: 'கடலை எண்ணெய்', icon: '🥜', image: 'arumee_assets/groundnut.webp', color: '#E8B74F', price: 240, unit: 'L' },
+            { name: 'Groundnut Cattle Feed', displayName: 'மாட்டுத்தீவனம்', icon: '🐄', image: 'arumee_assets/cow.webp', color: '#8B6F47', price: null, unit: 'kg' },
+            { name: 'Dosa Batter', displayName: 'தோசை மாவு', icon: '🥘', image: 'arumee_assets/Dosa Batter.webp', color: '#C4A57B', price: null, unit: 'kg' },
+            { name: 'Chilli Powder', displayName: 'மிளகாய்த் தூள்', icon: '🌶️', image: 'arumee_assets/Chilli Powder.webp', color: '#E74C3C', price: null, unit: 'kg' },
+            { name: 'Cow Feed', displayName: 'கடலை புண்ணாக்கு', icon: '🐮', image: 'arumee_assets/Kadalai Punnakku.webp', color: '#9B8B7E', price: null, unit: 'kg' },
+            { name: 'Groundnut Breaking', icon: '🔨', image: 'arumee_assets/Groundnut_Shelling.webp', color: '#B8860B', price: null, unit: 'kg' },
+            { name: 'Wheat', displayName: 'கோதுமை மாவு', icon: '🌾', image: 'arumee_assets/wheat.webp', color: '#F5DEB3', price: null, unit: 'kg' }
         ];
 
         // ═══════════════════════════════════════════════════════════════════════════════
@@ -899,6 +1067,25 @@
         const entryError = document.getElementById('entryError');
         const productGrid = document.getElementById('productGrid');
         const productInput = document.getElementById('product');
+        const recordSaleBtn = document.getElementById('recordSaleBtn');
+        const sheetRecordBtn = document.getElementById('sheetRecordBtn');
+
+        let isSubmittingMain = false;
+        let isSubmittingSheet = false;
+
+        function setButtonLoading(button, isLoading, loadingText, defaultText) {
+            if (!button) return;
+            if (isLoading) {
+                const currentWidth = Math.ceil(button.getBoundingClientRect().width);
+                button.style.width = `${currentWidth}px`;
+            }
+            button.disabled = isLoading;
+            button.classList.toggle('loading', isLoading);
+            button.textContent = isLoading ? loadingText : defaultText;
+            if (!isLoading) {
+                button.style.width = '';
+            }
+        }
 
         // ═══════════════════════════════════════════════════════════════════════════════
         // Initialize
@@ -935,13 +1122,15 @@
         function renderProductGrid() {
             productGrid.innerHTML = PRODUCTS.map((product, index) => {
                 let priceInfo = '';
+                const displayName = product.displayName || product.name;
                 if (product.price) {
                     priceInfo = `<small class="product-price" style="font-size: 11px; color: #27ae60; font-weight: 600; margin-top: 3px; display: block;">₹${product.price}/${product.unit}</small>`;
                 }
+                const imgHtml = product.image ? `<img src="${product.image}" class="product-image" alt="${displayName}">` : `<span class="product-icon">${product.icon}</span>`;
                 return `
                     <div class="product-card" data-product="${product.name}" onclick="selectProduct(this, '${product.name}', ${product.price || 'null'})">
-                        <span class="product-icon">${product.icon}</span>
-                        <span class="product-name">${product.name}</span>
+                        ${imgHtml}
+                        <span class="product-name">${displayName}</span>
                         ${priceInfo}
                         <span class="checkmark">✓</span>
                     </div>
@@ -963,7 +1152,10 @@
 
             // Update hidden input
             productInput.value = productName;
-            document.getElementById('pricePerUnit').value = price || '';
+
+            // Determine display name (use displayName if provided for UI-only display)
+            const productObj = PRODUCTS.find(p => p.name === productName);
+            const displayName = (productObj && productObj.displayName) ? productObj.displayName : productName;
 
             // Optional: Add a subtle feedback
             element.style.animation = 'none';
@@ -971,9 +1163,9 @@
                 element.style.animation = '';
             }, 10);
 
-            // If on mobile, open bottom sheet for quick entry
+            // If on mobile, open bottom sheet for quick entry (use displayName for UI)
             if (window.innerWidth <= 768) {
-                openBottomSheet(productName, price);
+                openBottomSheet(displayName, price);
             }
         }
 
@@ -988,27 +1180,34 @@
 
             document.getElementById('sheetOverlay').classList.add('open');
             document.getElementById('bottomSheet').classList.add('open');
+            document.body.classList.add('sheet-open');
+            setTimeout(() => document.getElementById('bs_amount').focus(), 120);
         }
 
         function closeBottomSheet() {
             document.getElementById('sheetOverlay').classList.remove('open');
             document.getElementById('bottomSheet').classList.remove('open');
+            document.body.classList.remove('sheet-open');
         }
 
         // Submit from bottom sheet (mobile)
         function recordSaleFromBottomSheet() {
+            if (isSubmittingSheet) return;
+
             const productName = productInput.value; // already set by selectProduct
             const amount = parseFloat(document.getElementById('bs_amount').value);
             // use system date (YYYY-MM-DD)
             const date = new Date().toISOString().slice(0,10);
 
-            if (!productName || !amount) {
+            if (!productName || Number.isNaN(amount) || amount <= 0) {
                 alert('Please select product and enter amount');
                 return;
             }
 
             // replicate submission behavior
             (async function(){
+                isSubmittingSheet = true;
+                setButtonLoading(sheetRecordBtn, true, 'Saving...', 'Record');
                 try {
                     const formData = new FormData();
                     formData.append('action', 'recordSale');
@@ -1027,6 +1226,9 @@
                 } catch(err) {
                     console.error(err);
                     alert('Error recording sale. Try again.');
+                } finally {
+                    isSubmittingSheet = false;
+                    setButtonLoading(sheetRecordBtn, false, 'Saving...', 'Record');
                 }
             })();
         }
@@ -1073,16 +1275,32 @@
                 // Remove active class from all tabs and contents
                 tabs.forEach(t => t.classList.remove('active'));
                 tabContents.forEach(tc => tc.classList.remove('active'));
+                tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
 
                 // Add active class to clicked tab and corresponding content
                 tab.classList.add('active');
+                tab.setAttribute('aria-selected', 'true');
                 document.getElementById(tabName + 'Tab').classList.add('active');
 
                 // Refresh dashboard when switching to it
                 if (tabName === 'dashboard') {
+                    closeBottomSheet();
                     updateDashboard();
                 }
             });
+
+            tab.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    tab.click();
+                }
+            });
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                closeBottomSheet();
+            }
         });
 
         // ═══════════════════════════════════════════════════════════════════════════════
@@ -1090,19 +1308,34 @@
         // ═══════════════════════════════════════════════════════════════════════════════
         salesForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            if (isSubmittingMain) return;
+
+            if (window.innerWidth <= 768) {
+                entryError.textContent = '⚠️ Tap a product card to enter amount in the bottom sheet';
+                entryError.classList.add('show');
+                return;
+            }
 
             const product = productInput.value;
-            const amount = parseFloat(document.getElementById('amount').value);
-            // use system date (YYYY-MM-DD)
+            // Determine amount source: mobile uses #amount (entered total), desktop uses pricePerUnit as the sale amount
             const saleDate = new Date().toISOString().slice(0,10);
+            let amount;
+            if (window.innerWidth <= 768) {
+                amount = parseFloat(document.getElementById('amount')?.value || NaN);
+            } else {
+                amount = parseFloat(document.getElementById('pricePerUnit')?.value || NaN);
+            }
 
-            if (!product || !amount) {
-                entryError.textContent = '⚠️ Please select a product and enter amount';
+            if (!product || Number.isNaN(amount) || amount <= 0) {
+                entryError.textContent = '⚠️ Please select a product and enter price';
                 entryError.classList.add('show');
                 return;
             }
 
             try {
+                isSubmittingMain = true;
+                setButtonLoading(recordSaleBtn, true, 'Saving...', '💾 Record Sale');
+
                 // Send to Google Apps Script
                 const formData = new FormData();
                 formData.append('action', 'recordSale');
@@ -1138,6 +1371,9 @@
                 console.error('Error:', error);
                 entryError.textContent = '❌ Error recording sale. Please try again.';
                 entryError.classList.add('show');
+            } finally {
+                isSubmittingMain = false;
+                setButtonLoading(recordSaleBtn, false, 'Saving...', '💾 Record Sale');
             }
         });
 
