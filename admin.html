@@ -948,7 +948,8 @@
 
       if (sessionStorage.getItem('adminLoggedIn') === 'true') {
         showAdmin();
-        loadSalesData();
+        const savedTab = sessionStorage.getItem('adminActiveTab') || 'entry';
+        setActiveTab(savedTab);
       }
 
       // Enter key to submit from bottom sheet
@@ -1136,7 +1137,8 @@
       if (enteredPassword === ADMIN_PASSWORD) {
         sessionStorage.setItem('adminLoggedIn', 'true');
         showAdmin();
-        loadSalesData();
+        const savedTab = sessionStorage.getItem('adminActiveTab') || 'entry';
+        setActiveTab(savedTab);
       } else {
         loginError.textContent = '❌ Incorrect password. Try again.';
         loginError.style.display = 'block';
@@ -1150,11 +1152,34 @@
     // ═══════════════════════════════════════════════════════════════════════════════
     logoutBtn.addEventListener('click', () => {
       sessionStorage.removeItem('adminLoggedIn');
+      sessionStorage.removeItem('adminActiveTab');
       loginContainer.classList.remove('hidden');
       adminContainer.classList.remove('visible');
       passwordInput.value = '';
       loginError.style.display = 'none';
     });
+
+    function setActiveTab(tabName) {
+      const safeTab = (tabName === 'dashboard') ? 'dashboard' : 'entry';
+
+      tabs.forEach(t => {
+        const isActive = t.getAttribute('data-tab') === safeTab;
+        t.classList.toggle('active', isActive);
+        t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+
+      tabContents.forEach(tc => tc.classList.remove('active'));
+      document.getElementById(safeTab + 'Tab').classList.add('active');
+
+      sessionStorage.setItem('adminActiveTab', safeTab);
+
+      if (safeTab === 'dashboard') {
+        closeBottomSheet();
+        updateDashboard();
+      } else {
+        loadSalesData();
+      }
+    }
 
     // ═══════════════════════════════════════════════════════════════════════════════
     // Tab Navigation
@@ -1162,23 +1187,7 @@
     tabs.forEach((tab) => {
       tab.addEventListener('click', () => {
         const tabName = tab.getAttribute('data-tab');
-
-        tabs.forEach(t => t.classList.remove('active'));
-        tabContents.forEach(tc => tc.classList.remove('active'));
-        tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
-
-        tab.classList.add('active');
-        tab.setAttribute('aria-selected', 'true');
-        document.getElementById(tabName + 'Tab').classList.add('active');
-
-        if (tabName === 'dashboard') {
-          closeBottomSheet();
-          updateDashboard();
-        }
-
-        if (tabName === 'entry') {
-          loadSalesData();
-        }
+        setActiveTab(tabName);
       });
 
       tab.addEventListener('keydown', (event) => {
