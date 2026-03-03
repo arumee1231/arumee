@@ -1051,6 +1051,19 @@
       clearProductSelection();
       const amt = document.getElementById('bs_amount');
       if (amt) amt.value = '';
+      try {
+        // Re-render product grid to ensure no stale selected state remains
+        renderProductGrid();
+
+        // Blur any focused control to avoid accidental activation of underlying cards
+        if (document.activeElement && typeof document.activeElement.blur === 'function') {
+          document.activeElement.blur();
+        }
+
+        // Move focus to a safe control (record button or product grid) without scrolling
+        const safeFocus = document.getElementById('recordSaleBtn') || document.getElementById('productGrid');
+        if (safeFocus && typeof safeFocus.focus === 'function') safeFocus.focus({ preventScroll: true });
+      } catch (err) {}
     }
 
     // Remove selection/tick from product cards and clear hidden product input
