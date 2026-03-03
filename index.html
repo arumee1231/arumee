@@ -3220,7 +3220,7 @@ h2.section-title {
 <span>ARUMEE</span>
 </div>
 <div class="nav-actions">
-<a class="nav-btn" href="#oilsDeliveryInfo" id="navOilsBtn" style="display: none;">Our Oils</a>
+<a class="nav-btn" href="#oilsDeliveryInfo" id="navOilsBtn" style="display: none;">Our Products</a>
 <button class="nav-btn primary" id="navCartBtn" onclick="toggleCart()" style="display: none;">
 <span>🛒</span>
 <span>View Cart</span>
@@ -3262,7 +3262,7 @@ h2.section-title {
 <div aria-hidden="true" id="heroTabsSentinel"></div>
 <div class="hero-tabs-wrapper">
 <nav aria-label="Primary site sections" class="hero-nav" role="tablist">
-<a aria-selected="true" class="hero-nav-tab active" href="index.html" role="tab">Our Oils</a>
+<a aria-selected="true" class="hero-nav-tab active" href="index.html" role="tab">Our Products</a>
 <a aria-selected="false" class="hero-nav-tab" href="combo.html" role="tab">Combo Offers</a>
 <a aria-selected="false" class="hero-nav-tab" href="benefits.html" role="tab">Benefits</a>
 <a aria-selected="false" class="hero-nav-tab" href="about.html" role="tab">About Us</a>
@@ -3323,14 +3323,31 @@ h2.section-title {
     }
   }
 
+  function shouldIgnoreInitialHash() {
+    var hash = (window.location.hash || '').toLowerCase();
+    if (!hash) return false;
+    return hash === '#oils' || hash === '#oilsdeliveryinfo';
+  }
+
   setTop();
   centerActive();
   updatePinnedTabs();
   if (window.location.hash) {
-    window.requestAnimationFrame(function(){
-      alignHashTarget();
-      window.requestAnimationFrame(alignHashTarget);
-    });
+    if (shouldIgnoreInitialHash()) {
+      try {
+        window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      } catch (e) {}
+      try {
+        window.scrollTo({ top: 0, behavior: 'auto' });
+      } catch (e) {
+        window.scrollTo(0, 0);
+      }
+    } else {
+      window.requestAnimationFrame(function(){
+        alignHashTarget();
+        window.requestAnimationFrame(alignHashTarget);
+      });
+    }
   }
   var resizeRaf = 0;
   function onResize(){
