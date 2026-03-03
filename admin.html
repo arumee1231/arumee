@@ -1114,7 +1114,7 @@
 
           // Toast + highlight new row
           showToast('Sale Recorded ✓', { undo: true });
-          loadSalesData({ highlightId: savedId });
+          loadSalesData({ highlightId: savedId, sync: false });
 
         } catch (err) {
           console.error(err);
@@ -1175,6 +1175,10 @@
           closeBottomSheet();
           updateDashboard();
         }
+
+        if (tabName === 'entry') {
+          loadSalesData();
+        }
       });
 
       tab.addEventListener('keydown', (event) => {
@@ -1233,7 +1237,7 @@
         renderProductGrid();
 
         showToast('Sale Recorded ✓', { undo: true });
-        loadSalesData({ highlightId: savedId });
+        loadSalesData({ highlightId: savedId, sync: false });
 
       } catch (error) {
         console.error('Error:', error);
@@ -1298,7 +1302,7 @@
         let sales = getSalesData();
         sales = sales.filter(sale => sale.id !== id);
         localStorage.setItem('arumee_sales', JSON.stringify(sales));
-        loadSalesData();
+        loadSalesData({ sync: false });
       }
     }
 
@@ -1307,7 +1311,7 @@
       const beforeLen = sales.length;
       sales = sales.filter(sale => sale.id !== id);
       localStorage.setItem('arumee_sales', JSON.stringify(sales));
-      loadSalesData();
+      loadSalesData({ sync: false });
 
       if (sales.length !== beforeLen) {
         showToast('Undone ✓');
@@ -1317,7 +1321,10 @@
     // ═══════════════════════════════════════════════════════════════════════════════
     // Load and Display Sales Data
     // ═══════════════════════════════════════════════════════════════════════════════
-    function loadSalesData({ highlightId = null } = {}) {
+    async function loadSalesData({ highlightId = null, sync = true } = {}) {
+      if (sync) {
+        try { await fetchSalesFromServer(); } catch (e) {}
+      }
       const sales = getSalesData();
       const tbody = document.getElementById('recentSalesBody');
 
