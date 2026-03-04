@@ -3323,10 +3323,21 @@ h2.section-title {
     }
   }
 
+  var allowInitialOilsAnchor = false;
+  try {
+    allowInitialOilsAnchor = sessionStorage.getItem('allowInitialOilsAnchor') === 'true';
+    if (allowInitialOilsAnchor) {
+      sessionStorage.removeItem('allowInitialOilsAnchor');
+    }
+  } catch (e) {}
+
   function shouldIgnoreInitialHash() {
     var hash = (window.location.hash || '').toLowerCase();
     if (!hash) return false;
-    return hash === '#oils' || hash === '#oilsdeliveryinfo';
+    if (hash === '#oils' || hash === '#oilsdeliveryinfo') {
+      return !allowInitialOilsAnchor;
+    }
+    return false;
   }
 
   setTop();
@@ -5449,29 +5460,22 @@ h2.section-title {
       // Check if we need to show clear toast (when coming from benefits page)
       if (sessionStorage.getItem('showClearToast') === 'true') {
         sessionStorage.removeItem('showClearToast');
-        // Wait for page to fully render, then scroll to oils section and show toast
+        // Wait for page to fully render, then show toast
         setTimeout(() => {
-          const oilsSection = document.getElementById('oils');
-          if (oilsSection) {
-            oilsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-          // Show toast after scroll
-          setTimeout(() => {
-            if (typeof showToast === 'function') {
-              showToast('Cart cleared successfully!');
-            } else {
-              var toast = document.getElementById('toast');
-              if (!toast) {
-                toast = document.createElement('div');
-                toast.id = 'toast';
-                toast.className = 'toast';
-                document.body.appendChild(toast);
-              }
-              toast.textContent = 'Cart cleared successfully!';
-              toast.classList.add('show');
-              setTimeout(function() { toast.classList.remove('show'); }, 3000);
+          if (typeof showToast === 'function') {
+            showToast('Cart cleared successfully!');
+          } else {
+            var toast = document.getElementById('toast');
+            if (!toast) {
+              toast = document.createElement('div');
+              toast.id = 'toast';
+              toast.className = 'toast';
+              document.body.appendChild(toast);
             }
-          }, 600);
+            toast.textContent = 'Cart cleared successfully!';
+            toast.classList.add('show');
+            setTimeout(function() { toast.classList.remove('show'); }, 3000);
+          }
         }, 300);
       }
       
