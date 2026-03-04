@@ -357,7 +357,7 @@
         <span>ARUMEE</span>
       </div>
       <div class="nav-actions">
-        <a href="index.html#oilsDeliveryInfo" class="nav-btn">Our Oils</a>
+        <a href="index.html#oilsDeliveryInfo" class="nav-btn" onclick="sessionStorage.setItem('allowInitialOilsAnchor','true')">Our Products</a>
         <button class="nav-btn primary" onclick="console.log('Cart clicked!'); toggleCart();">
           🛒
           <span class="nav-cart-count" id="navCartCount">0</span>
@@ -368,7 +368,7 @@
 
   <div class="hero-tabs-wrapper">
     <nav class="hero-nav" role="tablist" aria-label="Primary site sections">
-      <a href="index.html#oilsDeliveryInfo" class="hero-nav-tab" role="tab" aria-selected="false">Our Oils</a>
+      <a href="index.html#oilsDeliveryInfo" class="hero-nav-tab" role="tab" aria-selected="false" onclick="sessionStorage.setItem('allowInitialOilsAnchor','true')">Our Products</a>
       <a href="combo.html" class="hero-nav-tab" role="tab" aria-selected="false">Combo Offers</a>
       <a href="benefits.html" class="hero-nav-tab active" role="tab" aria-selected="true">Benefits</a>
       <a href="about.html" class="hero-nav-tab" role="tab" aria-selected="false">About Us</a>
