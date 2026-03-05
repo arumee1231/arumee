@@ -884,8 +884,14 @@
     const loginError = document.getElementById('loginError');
     const logoutBtn = document.getElementById('logoutBtn');
 
-    const tabs = document.querySelectorAll('.tab');
+    const tabsContainer = document.querySelector('.tabs');
+    const tabs = Array.from(document.querySelectorAll('.tab'));
     const tabContents = document.querySelectorAll('.tab-content');
+    const TAB_ORDER = ['entry', 'dashboard'];
+
+    let wheelTabSwitchLocked = false;
+    let tabsTouchStartX = null;
+    let tabsTouchStartY = null;
 
     const salesForm = document.getElementById('salesForm');
     const successMessage = document.getElementById('successMessage');
@@ -1159,8 +1165,16 @@
       loginError.style.display = 'none';
     });
 
+    function scrollActiveTabIntoView(tabName, behavior = 'smooth') {
+      if (!tabsContainer) return;
+      const activeTabEl = tabsContainer.querySelector(`[data-tab="${tabName}"]`);
+      if (!activeTabEl) return;
+
+      activeTabEl.scrollIntoView({ behavior, block: 'nearest', inline: 'center' });
+    }
+
     function setActiveTab(tabName) {
-      const safeTab = (tabName === 'dashboard') ? 'dashboard' : 'entry';
+      const safeTab = TAB_ORDER.includes(tabName) ? tabName : 'entry';
 
       tabs.forEach(t => {
         const isActive = t.getAttribute('data-tab') === safeTab;
@@ -1170,6 +1184,7 @@
 
       tabContents.forEach(tc => tc.classList.remove('active'));
       document.getElementById(safeTab + 'Tab').classList.add('active');
+      scrollActiveTabIntoView(safeTab);
 
       sessionStorage.setItem('adminActiveTab', safeTab);
 
@@ -1179,6 +1194,18 @@
       } else {
         loadSalesData();
       }
+    }
+
+    function switchTabByDirection(direction) {
+      const activeTab = document.querySelector('.tab.active')?.getAttribute('data-tab') || 'entry';
+      const currentIndex = TAB_ORDER.indexOf(activeTab);
+      if (currentIndex === -1 || TAB_ORDER.length < 2) return false;
+
+      const nextIndex = (currentIndex + direction + TAB_ORDER.length) % TAB_ORDER.length;
+      if (nextIndex === currentIndex) return false;
+
+      setActiveTab(TAB_ORDER[nextIndex]);
+      return true;
     }
 
     // ═══════════════════════════════════════════════════════════════════════════════
@@ -1197,6 +1224,64 @@
         }
       });
     });
+
+    if (tabsContainer) {
+      tabsContainer.addEventListener('wheel', (event) => {
+        if (!adminContainer.classList.contains('visible')) return;
+        if (document.body.classList.contains('sheet-open')) return;
+
+        const absDeltaX = Math.abs(event.deltaX);
+        const absDeltaY = Math.abs(event.deltaY);
+        const hasHorizontalIntent = absDeltaX > 14 && absDeltaX >= absDeltaY;
+        const hasShiftWheelIntent = event.shiftKey && absDeltaY > 18;
+
+        if (!hasHorizontalIntent && !hasShiftWheelIntent) return;
+
+        const movement = hasHorizontalIntent ? event.deltaX : event.deltaY;
+        const direction = movement > 0 ? 1 : -1;
+
+        if (wheelTabSwitchLocked) {
+          event.preventDefault();
+          return;
+        }
+
+        const switched = switchTabByDirection(direction);
+        if (!switched) return;
+
+        event.preventDefault();
+        wheelTabSwitchLocked = true;
+        window.setTimeout(() => { wheelTabSwitchLocked = false; }, 320);
+      }, { passive: false });
+
+      tabsContainer.addEventListener('touchstart', (event) => {
+        if (!adminContainer.classList.contains('visible')) return;
+        if (document.body.classList.contains('sheet-open')) return;
+        if (!event.touches || event.touches.length !== 1) return;
+
+        tabsTouchStartX = event.touches[0].clientX;
+        tabsTouchStartY = event.touches[0].clientY;
+      }, { passive: true });
+
+      tabsContainer.addEventListener('touchend', (event) => {
+        if (tabsTouchStartX === null || tabsTouchStartY === null) return;
+        const touch = event.changedTouches && event.changedTouches[0];
+        if (!touch) {
+          tabsTouchStartX = null;
+          tabsTouchStartY = null;
+          return;
+        }
+
+        const deltaX = touch.clientX - tabsTouchStartX;
+        const deltaY = touch.clientY - tabsTouchStartY;
+        tabsTouchStartX = null;
+        tabsTouchStartY = null;
+
+        if (Math.abs(deltaX) < 45 || Math.abs(deltaX) <= Math.abs(deltaY)) return;
+
+        const direction = deltaX < 0 ? 1 : -1;
+        switchTabByDirection(direction);
+      }, { passive: true });
+    }
 
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') closeBottomSheet();
@@ -1357,13 +1442,12 @@
         `;
       }).join('');
 
-      // Highlight newly added row briefly
+      // Highlight newly added row briefly (without auto-scrolling)
       if (highlightId) {
         const row = tbody.querySelector(`tr[data-id="${highlightId}"]`);
         if (row) {
           row.style.background = 'rgba(102,126,234,0.10)';
           setTimeout(() => { row.style.background = ''; }, 1200);
-          row.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       }
     }
