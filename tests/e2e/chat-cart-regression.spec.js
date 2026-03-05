@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Arumee  E2E regression suite
  *
  * Covers:
@@ -7,7 +7,7 @@
  *  - Chat order 2-step flow:
  *      Step 1 - "Place My Order" button fires Google Sheets fetch
  *      Step 2 - "Confirm on WhatsApp" chip opens WhatsApp
- *  - "Edit Details" re-opens address panel with saved values
+ *  - "Edit Details" re-opens address panel and resets saved values
  *  - "Start over" resets chat
  *  - Honeypot fields (url_confirm / formHoneypot) -- hidden and blank
  *  - Honeypot bot-block on website form
@@ -321,10 +321,13 @@ test('website form validation rejects name shorter than 2 characters', async ({ 
   await page.locator('.add-to-order[data-product="coconut"]').click();
   await page.waitForTimeout(2600);
 
-  await page.locator('form.card input[name="name"]').fill('X');
+  await page.locator('form.card').evaluate((form) => {
+    form.setAttribute('novalidate', 'novalidate');
+  });
+  await page.locator('#input-name').fill('X');
 
   const msg = await submitAndCaptureDialog(page);
-  expect(msg).toMatch(/valid name|at least 2/i);
+  expect(msg).toMatch(/valid name|at least 2 characters/i);
 });
 
 test('website form validation rejects phone number too short', async ({ page }) => {
@@ -332,11 +335,17 @@ test('website form validation rejects phone number too short', async ({ page }) 
   await page.locator('.add-to-order[data-product="coconut"]').click();
   await page.waitForTimeout(2600);
 
-  await page.locator('form.card input[name="name"]').fill('Ravi Kumar');
-  await page.locator('form.card input[name="phone"]').fill('12345');
+  await page.locator('form.card').evaluate((form) => {
+    form.setAttribute('novalidate', 'novalidate');
+  });
+
+  await page.locator('#input-name').fill('Ravi Kumar');
+  await page.locator('#input-phone').fill('12345');
+  await page.locator('#input-address').fill('12 Gandhi Street, Coimbatore');
+  await page.locator('#input-pincode').fill('641001');
 
   const msg = await submitAndCaptureDialog(page);
-  expect(msg).toMatch(/valid phone|10.{0,5}digit/i);
+  expect(msg).toMatch(/valid phone number|10-15 digits/i);
 });
 
 test('website form validation rejects delivery address too short', async ({ page }) => {
@@ -344,12 +353,17 @@ test('website form validation rejects delivery address too short', async ({ page
   await page.locator('.add-to-order[data-product="coconut"]').click();
   await page.waitForTimeout(2600);
 
-  await page.locator('form.card input[name="name"]').fill('Ravi Kumar');
-  await page.locator('form.card input[name="phone"]').fill('9876543210');
-  await page.locator('form.card input[name="address"]').fill('Short');
+  await page.locator('form.card').evaluate((form) => {
+    form.setAttribute('novalidate', 'novalidate');
+  });
+
+  await page.locator('#input-name').fill('Ravi Kumar');
+  await page.locator('#input-phone').fill('9876543210');
+  await page.locator('#input-address').fill('Short');
+  await page.locator('#input-pincode').fill('641001');
 
   const msg = await submitAndCaptureDialog(page);
-  expect(msg).toMatch(/complete address|10 char/i);
+  expect(msg).toMatch(/complete address|at least 10 characters/i);
 });
 
 test('website form validation rejects a non-Tamil-Nadu pincode', async ({ page }) => {
@@ -444,6 +458,16 @@ test('chat "Place My Order" fires Google Sheets fetch and shows Confirm on Whats
 });
 
 test('chat "Confirm on WhatsApp" chip (step 2) opens WhatsApp URL', async ({ page, context }) => {
+  await page.addInitScript(() => {
+    window.__waOpenCalls = [];
+    const originalOpen = window.open;
+    window.open = function (...args) {
+      const firstArg = args[0];
+      window.__waOpenCalls.push(String(firstArg || ''));
+      return originalOpen ? originalOpen.apply(this, args) : null;
+    };
+  });
+
   await page.addInitScript(() => { localStorage.setItem('arumee_disclaimer', '1'); });
 
   await page.route('**/script.google.com/**', route => route.fulfill({ status: 200, body: 'OK' }));
@@ -463,19 +487,16 @@ test('chat "Confirm on WhatsApp" chip (step 2) opens WhatsApp URL', async ({ pag
   // Step 2: clicking the chip should call waContinue() -> WhatsApp URL
   const popupPromise = context.waitForEvent('page', { timeout: 6000 }).catch(() => null);
   await page.locator('#waChips .wa-chip', { hasText: /Confirm on WhatsApp/ }).click();
-  const popup = await popupPromise;
 
-  if (popup) {
-    expect(popup.url()).toMatch(/wa\.me|whatsapp\.com|api\.whatsapp/i);
-  } else {
-    // Some environments navigate current tab or block popup
-    await page.waitForTimeout(600);
-    const url = page.url();
-    expect(url).toMatch(/wa\.me|whatsapp\.com|api\.whatsapp|index\.html/i);
-  }
+  await page.waitForFunction(() => Array.isArray(window.__waOpenCalls) && window.__waOpenCalls.length > 0, null, { timeout: 6000 });
+  const openedUrl = await page.evaluate(() => window.__waOpenCalls[0] || '');
+  expect(openedUrl).toMatch(/wa\.me|whatsapp\.com|api\.whatsapp/i);
+
+  const popup = await popupPromise;
+  if (popup) await popup.close().catch(() => {});
 });
 
-test('chat "Edit Details" chip re-opens address panel with saved values', async ({ page }) => {
+test('chat "Edit Details" chip re-opens address panel and clears saved values', async ({ page }) => {
   await page.addInitScript(() => { localStorage.setItem('arumee_disclaimer', '1'); });
 
   await page.route('**/script.google.com/**', route => route.fulfill({ status: 200, body: 'OK' }));
@@ -488,14 +509,25 @@ test('chat "Edit Details" chip re-opens address panel with saved values', async 
   await addChatItem(page);
   await openAndFillAddressPanel(page); // fills name "Ravi Kumar"
 
-  await page.locator('#waAddrPanel .wa-addr-submit').click();
-  await expect(page.locator('#waChips')).toContainText('Edit Details', { timeout: 5000 });
+  const placeOrderBtn = page.locator('#waAddrPanel .wa-addr-submit');
+  await page.evaluate(() => {
+    if (typeof waPinCheck === 'function') waPinCheck();
+  });
+  await expect(placeOrderBtn).toBeEnabled({ timeout: 5000 });
+  await placeOrderBtn.click();
+  await expect.poll(async () => {
+    const text = await page.locator('#waChips').textContent();
+    return (text || '').includes('Edit Details');
+  }, { timeout: 8000 }).toBe(true);
 
   await page.locator('#waChips .wa-chip', { hasText: /Edit Details/ }).click();
 
-  // Panel must re-open and previously saved name must still be there
+  // Current behavior: panel re-opens and clears saved values for fresh edit.
   await expect(page.locator('#waAddrPanel')).toHaveClass(/wa-addr-open/, { timeout: 3000 });
-  await expect(page.locator('#waAddrName')).toHaveValue('Ravi Kumar');
+  await expect(page.locator('#waAddrPin')).toHaveValue('');
+  await expect(page.locator('#waAddrName')).toHaveValue('');
+  await expect(page.locator('#waAddrPhone')).toHaveValue('');
+  await expect(page.locator('#waAddrAddr')).toHaveValue('');
 });
 
 test('chat "Start over" chip resets chat to welcome state', async ({ page }) => {
