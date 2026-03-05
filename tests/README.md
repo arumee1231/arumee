@@ -23,3 +23,4 @@ Current suite covers high-priority chat/cart regressions:
 - Chat-added cart line uses normalized product names
 - Full-chat header `X` exits full-chat page
 - Clear-chat button resets visible conversation
+- Admin mobile swipe gesture switches between Sales Entry and Dashboard tabs
