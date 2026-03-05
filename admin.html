@@ -889,9 +889,9 @@
     const tabContents = document.querySelectorAll('.tab-content');
     const TAB_ORDER = ['entry', 'dashboard'];
 
-    let wheelTabSwitchLocked = false;
-    let tabsTouchStartX = null;
-    let tabsTouchStartY = null;
+    let tabSwitchLocked = false;
+    let swipeStartX = null;
+    let swipeStartY = null;
 
     const salesForm = document.getElementById('salesForm');
     const successMessage = document.getElementById('successMessage');
@@ -1208,6 +1208,26 @@
       return true;
     }
 
+    function trySwitchTabWithLock(direction) {
+      if (tabSwitchLocked) return false;
+
+      const switched = switchTabByDirection(direction);
+      if (!switched) return false;
+
+      tabSwitchLocked = true;
+      window.setTimeout(() => { tabSwitchLocked = false; }, 320);
+      return true;
+    }
+
+    function shouldHandleSwipe(target) {
+      if (!adminContainer.classList.contains('visible')) return false;
+      if (document.body.classList.contains('sheet-open')) return false;
+      if (!target) return true;
+      if (target.closest('#bottomSheet, #sheetOverlay')) return false;
+      if (target.closest('input, textarea, select')) return false;
+      return true;
+    }
+
     // ═══════════════════════════════════════════════════════════════════════════════
     // Tab Navigation
     // ═══════════════════════════════════════════════════════════════════════════════
@@ -1240,46 +1260,84 @@
         const movement = hasHorizontalIntent ? event.deltaX : event.deltaY;
         const direction = movement > 0 ? 1 : -1;
 
-        if (wheelTabSwitchLocked) {
-          event.preventDefault();
-          return;
-        }
-
-        const switched = switchTabByDirection(direction);
+        const switched = trySwitchTabWithLock(direction);
         if (!switched) return;
 
         event.preventDefault();
-        wheelTabSwitchLocked = true;
-        window.setTimeout(() => { wheelTabSwitchLocked = false; }, 320);
       }, { passive: false });
 
       tabsContainer.addEventListener('touchstart', (event) => {
-        if (!adminContainer.classList.contains('visible')) return;
-        if (document.body.classList.contains('sheet-open')) return;
+        if (!shouldHandleSwipe(event.target)) return;
         if (!event.touches || event.touches.length !== 1) return;
 
-        tabsTouchStartX = event.touches[0].clientX;
-        tabsTouchStartY = event.touches[0].clientY;
+        swipeStartX = event.touches[0].clientX;
+        swipeStartY = event.touches[0].clientY;
       }, { passive: true });
 
       tabsContainer.addEventListener('touchend', (event) => {
-        if (tabsTouchStartX === null || tabsTouchStartY === null) return;
+        if (swipeStartX === null || swipeStartY === null) return;
+
         const touch = event.changedTouches && event.changedTouches[0];
         if (!touch) {
-          tabsTouchStartX = null;
-          tabsTouchStartY = null;
+          swipeStartX = null;
+          swipeStartY = null;
           return;
         }
 
-        const deltaX = touch.clientX - tabsTouchStartX;
-        const deltaY = touch.clientY - tabsTouchStartY;
-        tabsTouchStartX = null;
-        tabsTouchStartY = null;
+        const deltaX = touch.clientX - swipeStartX;
+        const deltaY = touch.clientY - swipeStartY;
+        swipeStartX = null;
+        swipeStartY = null;
 
-        if (Math.abs(deltaX) < 45 || Math.abs(deltaX) <= Math.abs(deltaY)) return;
+        const absDeltaX = Math.abs(deltaX);
+        const absDeltaY = Math.abs(deltaY);
+        if (absDeltaX < 30 || absDeltaX < (absDeltaY * 1.15)) return;
 
         const direction = deltaX < 0 ? 1 : -1;
-        switchTabByDirection(direction);
+        trySwitchTabWithLock(direction);
+      }, { passive: true });
+
+      tabsContainer.addEventListener('touchcancel', () => {
+        swipeStartX = null;
+        swipeStartY = null;
+      }, { passive: true });
+    }
+
+    if (adminContainer) {
+      adminContainer.addEventListener('touchstart', (event) => {
+        if (!shouldHandleSwipe(event.target)) return;
+        if (!event.touches || event.touches.length !== 1) return;
+
+        swipeStartX = event.touches[0].clientX;
+        swipeStartY = event.touches[0].clientY;
+      }, { passive: true });
+
+      adminContainer.addEventListener('touchend', (event) => {
+        if (swipeStartX === null || swipeStartY === null) return;
+
+        const touch = event.changedTouches && event.changedTouches[0];
+        if (!touch) {
+          swipeStartX = null;
+          swipeStartY = null;
+          return;
+        }
+
+        const deltaX = touch.clientX - swipeStartX;
+        const deltaY = touch.clientY - swipeStartY;
+        swipeStartX = null;
+        swipeStartY = null;
+
+        const absDeltaX = Math.abs(deltaX);
+        const absDeltaY = Math.abs(deltaY);
+        if (absDeltaX < 30 || absDeltaX < (absDeltaY * 1.15)) return;
+
+        const direction = deltaX < 0 ? 1 : -1;
+        trySwitchTabWithLock(direction);
+      }, { passive: true });
+
+      adminContainer.addEventListener('touchcancel', () => {
+        swipeStartX = null;
+        swipeStartY = null;
       }, { passive: true });
     }
 
