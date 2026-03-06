@@ -19,6 +19,7 @@ var SHEET_ID        = '1yp9QEk0nr0f2_QPDQ104l1DLxx9bhWCChyCKHmEQgsI';
 var ORDERS_TAB      = 'Orders';       // sheet tab where orders are written
 var RATE_LIMIT_TAB  = 'RateLimit';    // sheet tab used for rate limiting
 var MAX_PER_HOUR    = 5;              // max submissions per IP per hour
+var TELEGRAM_ENABLED = true;          // set false to disable Telegram alerts
 // ────────────────────────────────────────────────────────────────────────────
 
 /**
@@ -108,6 +109,22 @@ function handleSaleTracking(e, response) {
     var ts = new Date();
     sheet.appendRow([date, product, amount, ts]);
 
+    // Send Telegram alert (non-blocking)
+    if (TELEGRAM_ENABLED) {
+      try {
+        var message = [
+          '🧾 New Sale Recorded',
+          'Date: ' + date,
+          'Product: ' + product,
+          'Amount: ₹' + amount,
+          'Time: ' + ts.toLocaleString()
+        ].join('\n');
+        sendTelegramNotification_(message);
+      } catch (notifyErr) {
+        Logger.log('Telegram notify failed: ' + notifyErr.message);
+      }
+    }
+
     // Format the new row with alternating colors
     var lastRow = sheet.getLastRow();
     if (lastRow % 2 === 0) {
@@ -120,6 +137,182 @@ function handleSaleTracking(e, response) {
   }
 
   return response;
+}
+
+/**
+ * One-time setup helper.
+ * Run from Apps Script editor once:
+ * setupTelegramConfig('YOUR_BOT_TOKEN', 'YOUR_CHAT_ID')
+ */
+function setupTelegramConfig(botToken, chatId) {
+  var props = PropertiesService.getScriptProperties();
+  props.setProperty('TELEGRAM_BOT_TOKEN', normalizeTelegramToken_(botToken));
+  props.setProperty('TELEGRAM_CHAT_ID', String(chatId || '').trim().replace(/\s+/g, ''));
+}
+
+/**
+ * Normalizes token input to avoid common copy/paste mistakes.
+ * Accepts raw token, token with "bot" prefix, or full API URL.
+ */
+function normalizeTelegramToken_(tokenInput) {
+  var token = String(tokenInput || '').trim();
+  token = token.replace(/\s+/g, '');
+  if (!token) return '';
+
+  // If full URL is pasted, extract token from /bot<TOKEN>/...
+  if (/^https?:\/\//i.test(token)) {
+    var match = token.match(/\/bot([^\/?]+)(?:[\/?]|$)/i);
+    if (match && match[1]) token = match[1];
+  }
+
+  // Remove accidental "bot" prefix if present
+  if (token.toLowerCase().indexOf('bot') === 0) {
+    token = token.substring(3);
+  }
+
+  return token;
+}
+
+/**
+ * Returns masked token for safe debugging logs.
+ */
+function maskTelegramToken_(token) {
+  var val = String(token || '');
+  if (!val) return '';
+  if (val.length <= 12) return '***';
+  return val.substring(0, 8) + '...' + val.substring(val.length - 6);
+}
+
+/**
+ * Diagnostics helper to verify token/chat config from Apps Script side.
+ * Run this from editor and inspect returned object.
+ */
+function validateTelegramConfig() {
+  var props = PropertiesService.getScriptProperties();
+  var storedToken = String(props.getProperty('TELEGRAM_BOT_TOKEN') || '');
+  var token = normalizeTelegramToken_(storedToken);
+  var chatId = String(props.getProperty('TELEGRAM_CHAT_ID') || '').trim().replace(/\s+/g, '');
+
+  if (token !== storedToken) {
+    props.setProperty('TELEGRAM_BOT_TOKEN', token);
+  }
+
+  if (!token) {
+    return {
+      ok: false,
+      httpStatus: 0,
+      telegramOk: false,
+      chatIdConfigured: !!chatId,
+      chatId: chatId || '(not set)',
+      tokenPreview: '(missing)',
+      description: 'TELEGRAM_BOT_TOKEN is missing'
+    };
+  }
+
+  var result = UrlFetchApp.fetch('https://api.telegram.org/bot' + token + '/getMe', {
+    method: 'get',
+    muteHttpExceptions: true
+  });
+
+  var bodyText = result.getContentText() || '';
+  var parsed = {};
+  try { parsed = JSON.parse(bodyText); } catch (ignore) {}
+
+  return {
+    ok: result.getResponseCode() === 200 && parsed.ok === true,
+    httpStatus: result.getResponseCode(),
+    telegramOk: !!parsed.ok,
+    chatIdConfigured: !!chatId,
+    chatId: chatId || '(not set)',
+    tokenPreview: maskTelegramToken_(token),
+    description: parsed.description || ''
+  };
+}
+
+/**
+ * Sends a Telegram message using bot token/chat id from Script Properties.
+ */
+function sendTelegramNotification_(text) {
+  var props = PropertiesService.getScriptProperties();
+  var token = normalizeTelegramToken_(props.getProperty('TELEGRAM_BOT_TOKEN') || '');
+  var chatId = String(props.getProperty('TELEGRAM_CHAT_ID') || '').trim().replace(/\s+/g, '');
+
+  // Persist normalized values
+  props.setProperty('TELEGRAM_BOT_TOKEN', token);
+  props.setProperty('TELEGRAM_CHAT_ID', chatId);
+
+  if (!token) {
+    throw new Error('Missing TELEGRAM_BOT_TOKEN in Script Properties');
+  }
+
+  if (!chatId) {
+    chatId = resolveLatestTelegramChatId_(token);
+    if (chatId) {
+      props.setProperty('TELEGRAM_CHAT_ID', String(chatId));
+    }
+  }
+
+  if (!chatId) {
+    throw new Error('Missing TELEGRAM_CHAT_ID. Message your bot, then retry.');
+  }
+
+  var apiUrl = 'https://api.telegram.org/bot' + token + '/sendMessage';
+  var payload = {
+    chat_id: String(chatId),
+    text: String(text || ''),
+    disable_web_page_preview: true
+  };
+
+  var result = UrlFetchApp.fetch(apiUrl, {
+    method: 'post',
+    payload: payload,
+    muteHttpExceptions: true
+  });
+
+  var status = result.getResponseCode();
+  if (status < 200 || status >= 300) {
+    throw new Error('Telegram API error ' + status + ': ' + result.getContentText());
+  }
+}
+
+/**
+ * Tries to resolve latest chat id from bot updates.
+ */
+function resolveLatestTelegramChatId_(token) {
+  var apiUrl = 'https://api.telegram.org/bot' + token + '/getUpdates';
+  var result = UrlFetchApp.fetch(apiUrl, {
+    method: 'get',
+    muteHttpExceptions: true
+  });
+
+  if (result.getResponseCode() !== 200) return '';
+
+  var body = JSON.parse(result.getContentText() || '{}');
+  var updates = body.result || [];
+  if (!updates.length) return '';
+
+  for (var i = updates.length - 1; i >= 0; i--) {
+    var update = updates[i] || {};
+    var msg = update.message || update.edited_message || null;
+    if (msg && msg.chat && msg.chat.id !== undefined && msg.chat.id !== null) {
+      return String(msg.chat.id);
+    }
+  }
+  return '';
+}
+
+/**
+ * Manual test helper.
+ * Run from Apps Script editor after setupTelegramConfig(...).
+ */
+function testTelegramNotification() {
+  sendTelegramNotification_('✅ Telegram alert test from Arumee Apps Script');
+}
+
+function initTelegramNow() 
+{
+  setupTelegramConfig('8733559627:AAFjlkyWj3Oqzvm9TQ8yUbFBGooCv1RYF84', '6860397839');
+  return validateTelegramConfig();
 }
 
 /**
@@ -294,6 +487,8 @@ function doGet(e) {
   } catch (err) {
     // fall through to basic status response
   }
+
+
 
   return ContentService
     .createTextOutput(JSON.stringify({
