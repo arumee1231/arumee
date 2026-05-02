@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <script>document.documentElement.style.background='#FDFBF6';</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="view-transition" content="same-origin" />
+  <meta name="theme-color" content="#1B2620" />
+  <meta name="robots" content="index,follow" />
+  <title>Checkout | Arumee — Place Your Order</title>
+  <meta name="description" content="Complete your Arumee cold-pressed oil order. Fill in your delivery details and confirm via WhatsApp." />
+  <link rel="canonical" href="https://arumee.co.in/checkout.html" />
+  <link rel="icon" type="image/png" href="arumee_assets/favicon.png" />
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://arumee.co.in/"},{"@type":"ListItem","position":2,"name":"Checkout","item":"https://arumee.co.in/checkout.html"}]}
+  </script>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtK.woff2" crossorigin />
+  <link href="cormorant-fonts.css?v=2" rel="stylesheet"/>
+  <link rel="stylesheet" href="arumee_assets/cart.css" />
+  <link rel="stylesheet" href="arumee_assets/premium-subpages.css" />
+
+  <style>
+    :root{--green:#1A3328;--green-dark:#0E1F16;--gold:#C49A6C;--gold-light:#D4AC80;--cream:#FDFBF6;--ink:#162B20}
+    body.subpage{font-family:'Inter','Inter Fallback',sans-serif;font-size:15px;font-weight:300;color:var(--ink);background:radial-gradient(circle at 12% 6%,rgba(196,154,108,0.06),transparent 26%),linear-gradient(180deg,#FDFBF6 0%,#F5EFE4 100%)}
+    @font-face{font-family:'Cormorant Garamond Fallback';src:local('Times New Roman');size-adjust:119%;ascent-override:83%;descent-override:20%;line-gap-override:0%}
+    @font-face{font-family:'Inter Fallback';src:local('Arial');size-adjust:107%;ascent-override:90%;descent-override:22%;line-gap-override:0%}
+
+    /* Checkout page layout */
+    .checkout-container{max-width:1140px;margin:0 auto;padding:0 20px}
+    .checkout-hero{padding:36px 0 32px;text-align:center}
+    .checkout-hero .hero-eyebrow{display:inline-block;padding:6px 16px;border-radius:999px;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;font-weight:600;background:rgba(196,154,108,0.14);color:var(--gold);margin-bottom:16px}
+    .checkout-hero h1{font-family:'Cormorant Garamond','Cormorant Garamond Fallback',serif;font-size:clamp(32px,5vw,44px);font-weight:700;line-height:1.1;letter-spacing:-0.03em;color:var(--green);margin:0 0 12px}
+    .checkout-hero p{font-size:15px;line-height:1.72;color:rgba(24,33,29,0.66);max-width:580px;margin:0 auto}
+
+    /* Two-column layout */
+    .checkout-shell{display:grid;grid-template-columns:minmax(240px,0.66fr) minmax(0,1.34fr);gap:28px;align-items:start;margin-bottom:60px}
+    .checkout-note{padding:30px 26px;border-radius:22px;background:linear-gradient(180deg,rgba(26,51,40,0.97),rgba(14,31,22,0.99));color:rgba(253,251,246,0.90);box-shadow:0 24px 52px rgba(14,31,22,0.20);position:sticky;top:108px;align-self:start}
+    .checkout-note-label{margin:0 0 10px;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(231,218,206,0.78)}
+    .checkout-note h3{margin:0;font-family:'Cormorant Garamond','Cormorant Garamond Fallback',serif;font-size:clamp(2rem,4vw,2.6rem);line-height:0.96;letter-spacing:-0.03em;color:#FDFBF6}
+    .checkout-note p{margin:14px 0 0;font-size:0.86rem;line-height:1.8;color:rgba(249,247,242,0.76)}
+    .checkout-points{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:12px}
+    .checkout-points li{position:relative;padding-left:18px;font-size:0.84rem;line-height:1.7;color:rgba(249,247,242,0.74)}
+    .checkout-points li::before{content:'';position:absolute;left:0;top:0.72em;width:8px;height:8px;border-radius:50%;background:var(--gold-light)}
+
+    /* Form styles */
+    .checkout-form-wrap{min-width:0;align-self:start}
+    .checkout-form{padding:34px clamp(20px,4vw,42px);border-radius:22px;background:#fff;border:1px solid rgba(27,38,32,0.14);box-shadow:0 4px 16px rgba(14,31,22,0.08),0 16px 40px rgba(14,31,22,0.05);display:flex;flex-direction:column;gap:0}
+    .flat-section{padding:22px 0;border-bottom:1px dashed rgba(211,196,173,0.5)}
+    .flat-section:first-child{padding-top:0}
+    .flat-section:last-child{border-bottom:none;padding-bottom:0}
+    .checkout-step-eyebrow{margin:0;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#a97941;font-weight:700}
+    .checkout-grid{display:grid;gap:18px}
+    .checkout-grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .checkout-grid-1{grid-template-columns:1fr}
+    .form-field-wrap{display:grid}
+    .form-field-wrap label{margin:0;font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#2a3b30}
+    .form-field-wrap input,
+    .form-field-wrap textarea{margin-top:12px;padding:14px 16px;background:rgba(250,248,244,0.6);border:1px solid rgba(211,201,183,0.7);border-radius:14px;color:#3a4a41;font-family:'Inter','Inter Fallback',sans-serif;font-size:0.91rem;font-weight:300;transition:border-color 0.2s ease,box-shadow 0.2s ease}
+    .form-field-wrap input::placeholder,
+    .form-field-wrap textarea::placeholder{color:rgba(95,109,101,0.55)}
+    .form-field-wrap input:focus,
+    .form-field-wrap textarea:focus{background:#fff;border-color:rgba(196,154,108,0.7);box-shadow:0 0 0 3px rgba(196,154,108,0.1);outline:none}
+    .form-note-inline{font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#92a093}
+    .district-readonly{background:rgba(250,248,244,0.6) !important;color:#3a6e4a !important;font-weight:600 !important;border:1px solid rgba(211,201,183,0.7) !important;border-radius:14px !important;cursor:default !important}
+    .pin-status{font-size:12px;margin:8px 0 0;line-height:1.5;color:#6f7d73}
+
+    /* Cart preview */
+    .order-cart-preview{margin-top:12px;border-radius:16px;background:#fff;border:1px solid rgba(211,201,183,0.38);overflow:hidden;box-shadow:0 2px 12px rgba(14,31,22,0.04)}
+    .order-cart-empty{padding:38px 18px;margin:0;font-size:15px;text-align:center;color:rgba(103,117,108,0.84);font-style:italic}
+    .ocp-lines{padding:8px 0}
+    .ocp-line{display:flex;align-items:center;gap:14px;padding:14px 20px;border-bottom:1px solid rgba(211,196,173,0.3);font-size:14px;transition:background 0.15s ease}
+    .ocp-line:last-child{border-bottom:none}
+    .ocp-line:hover{background:rgba(196,154,108,0.04)}
+    .ocp-name{flex:1;color:#2a3b30;font-weight:600;font-size:14px;line-height:1.45}
+    .ocp-size{font-size:11px;font-weight:600;letter-spacing:0.04em;color:var(--gold);background:rgba(196,154,108,0.12);padding:2px 8px;border-radius:6px;white-space:nowrap;margin-left:-6px}
+    .ocp-qty{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;font-size:13px;font-weight:700;color:var(--green);background:rgba(26,51,40,0.07);border-radius:8px;white-space:nowrap;padding:0 6px}
+    .ocp-times{font-size:11px;color:rgba(0,0,0,0.3);margin:0 -4px}
+    .ocp-price{font-weight:700;color:#18392b;white-space:nowrap;min-width:68px;text-align:right;font-size:15px;font-variant-numeric:tabular-nums}
+    .ocp-remove{background:none;border:none;color:rgba(0,0,0,0.25);font-size:16px;cursor:pointer;padding:4px;border-radius:6px;transition:all 0.2s ease;line-height:1;display:flex;align-items:center;justify-content:center;width:28px;height:28px;flex-shrink:0}
+    .ocp-remove:hover{background:rgba(220,53,69,0.08);color:#c33}
+    .ocp-total{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:linear-gradient(135deg,rgba(26,51,40,0.04),rgba(196,154,108,0.06));border-top:1px solid rgba(26,51,40,0.08);font-size:15px;font-weight:700;color:#18392b}
+    .ocp-total-label{display:flex;align-items:center;gap:6px}
+    .ocp-total-count{font-size:11px;font-weight:600;color:rgba(0,0,0,0.4);background:rgba(0,0,0,0.05);padding:2px 8px;border-radius:6px}
+    .ocp-total-val{font-size:18px;font-variant-numeric:tabular-nums}
+    .ocp-free{font-size:11px;font-weight:500;color:rgba(26,51,40,0.45);margin-left:4px}
+    .ocp-edit-link{display:inline-flex;align-items:center;gap:4px;margin-top:12px;font-size:13px;color:var(--gold);text-decoration:none;font-weight:600;transition:color 0.2s ease}
+    .ocp-edit-link:hover{color:var(--gold-light);text-decoration:underline}
+    @media (max-width:480px){.ocp-line{padding:12px 14px;gap:10px}.ocp-name{font-size:13px}.ocp-price{font-size:14px;min-width:58px}}
+
+    /* Confirm & submit */
+    .confirm-check{display:flex;align-items:flex-start;gap:12px;margin-top:18px;font-size:0.9rem;line-height:1.7;color:rgba(92,102,93,0.92);letter-spacing:0;text-transform:none;cursor:pointer}
+    .confirm-check input{margin:4px 0 0;width:18px;height:18px;accent-color:#345945}
+    .checkout-submit-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-top:16px}
+    .checkout-submit-row .btn{min-height:44px;min-width:170px;justify-content:center;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;border:none;cursor:pointer;padding:14px 28px;display:inline-flex;align-items:center}
+    .checkout-submit-row .btn.outline{background:rgba(255,252,246,0.92);border:1px solid rgba(210,195,171,0.95);color:#6d786f;box-shadow:none}
+    .checkout-submit-row .btn.fill{background:linear-gradient(180deg,#355b47,#264533);border:1px solid rgba(38,69,51,0.9);color:#f8f3e9;box-shadow:0 10px 22px rgba(38,69,51,0.18)}
+    .checkout-submit-row .btn.fill:hover{background:linear-gradient(180deg,#3a624d,#294936)}
+    .btn-spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.6s linear infinite;margin-right:8px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* Progress bar */
+    #orderProgressBar{position:fixed;top:0;left:0;width:100%;height:3px;z-index:99999;opacity:0;pointer-events:none}
+    #orderProgressBar.active{opacity:1}
+    #orderProgressBar span{display:block;width:0;height:100%;background:var(--gold);animation:progress-bar 2.5s ease-in-out infinite}
+    @keyframes progress-bar{0%{width:0}50%{width:70%}100%{width:100%}}
+
+    /* Success modal */
+    .modal-overlay{position:fixed;inset:0;z-index:50000;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity 0.3s ease,visibility 0.3s ease;padding:20px}
+    .modal-overlay.show{opacity:1;visibility:visible}
+    .modal-content{background:#fff;border-radius:20px;padding:32px 28px;max-width:480px;width:100%;box-shadow:0 24px 48px rgba(0,0,0,0.15);text-align:center}
+    .modal-icon{font-size:48px;margin-bottom:12px}
+    .modal-title{font-family:'Cormorant Garamond','Cormorant Garamond Fallback',serif;font-size:22px;font-weight:700;color:var(--green);margin:0 0 16px}
+    .modal-message{text-align:left;font-size:14px;color:rgba(0,0,0,0.7);line-height:1.6}
+    .modal-buttons{display:flex;gap:12px;margin-top:20px;justify-content:center;flex-wrap:wrap}
+    .modal-btn{padding:12px 24px;border-radius:12px;border:none;cursor:pointer;font-size:14px;font-weight:600}
+    .modal-btn.primary{background:var(--green);color:#fff}
+    .modal-btn.secondary{background:rgba(0,0,0,0.05);color:rgba(0,0,0,0.6)}
+
+    /* Toast */
+    .page-toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--green);color:#fff;padding:12px 24px;border-radius:12px;font-size:14px;font-weight:500;opacity:0;visibility:hidden;transition:all 0.3s ease;z-index:60000;white-space:nowrap}
+    .page-toast.show{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+
+    /* Responsive */
+    @media (max-width:980px){
+      .checkout-shell{grid-template-columns:1fr}
+      .checkout-note{position:static}
+    }
+    @media (max-width:720px){
+      .checkout-hero{padding:20px 16px 20px}
+      .checkout-hero h1{font-size:28px}
+      .checkout-container{padding:0 16px}
+      .checkout-form{padding:24px 18px;border-radius:18px}
+      .checkout-grid-2{grid-template-columns:1fr}
+      .checkout-submit-row{flex-direction:column;align-items:stretch}
+      .checkout-submit-row .btn{width:100%;min-width:0}
+    }
+  </style>
+</head>
+<body class="subpage" data-active-nav="checkout">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <nav class="sticky-nav" id="stickyNav">
+    <div class="nav-content">
+      <a class="nav-brand" href="index.html" aria-label="Go to Arumee home" onclick="sessionStorage.setItem('arumee_scrolltop','1')">
+        <img src="arumee_assets/logo.webp" alt="Arumee" width="40" height="40" />
+        <span>ARUMEE</span>
+      </a>
+      <div class="nav-actions">
+        <div class="desktop-nav-links" aria-label="Primary navigation">
+          <a class="desktop-nav-link" data-nav="home" href="index.html" onclick="sessionStorage.setItem('arumee_scrolltop','1')">Home</a>
+          <a class="desktop-nav-link" data-nav="shop" href="index.html#oilsGrid">Shop</a>
+          <a class="desktop-nav-link" data-nav="story" href="about.html">Our Story</a>
+          <a class="desktop-nav-link" data-nav="faq" href="index.html#faq">FAQ</a>
+          <a class="desktop-nav-link" data-nav="contact" href="contact.html">Contact</a>
+        </div>
+        <button class="hamburger-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay" role="dialog" aria-label="Site navigation" aria-hidden="true">
+    <div class="mmo-backdrop" onclick="closeMobileMenu()" aria-hidden="true"></div>
+    <div class="mmo-inner">
+      <div class="mmo-header">
+        <div class="mmo-brand-row">
+          <img src="arumee_assets/arumee-logo.png" alt="Arumee" class="mmo-logo" width="36" height="36">
+          <div class="mmo-brand-name-row">
+            <span class="mmo-brand-name">Arumee</span>
+            <span class="mmo-brand-tag">Pure Ancestral Oils</span>
+          </div>
+        </div>
+        <button class="mmo-close" onclick="closeMobileMenu()" aria-label="Close menu">&#x2715;</button>
+      </div>
+      <nav class="mmo-nav">
+        <a class="mmo-link" href="index.html" onclick="sessionStorage.setItem('arumee_scrolltop','1');closeMobileMenu()"><span class="mmo-link-icon">🏠</span>Home</a>
+        <a class="mmo-link" href="index.html#oilsGrid" onclick="closeMobileMenu()"><span class="mmo-link-icon">🛍</span>Shop</a>
+        <a class="mmo-link" href="benefits.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">🌿</span>Benefits</a>
+        <a class="mmo-link" href="index.html#faq" onclick="closeMobileMenu()"><span class="mmo-link-icon">💬</span>FAQ</a>
+        <a class="mmo-link" href="about.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">📖</span>Our Story</a>
+        <a class="mmo-link" href="contact.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">✉</span>Contact</a>
+      </nav>
+      <div class="mmo-footer">
+        <a class="mmo-cta-btn" href="index.html#order" onclick="closeMobileMenu()">Order Now</a>
+        <span class="mmo-footer-sub">Namakkal &middot; Est. 1987</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="cartTab" class="cart-tab" role="button" aria-label="Shopping cart" aria-expanded="false" tabindex="0">
+    <span class="cart-icon" aria-hidden="true">🛒</span>
+    <span class="cart-count" id="cartCount" aria-live="polite">0</span>
+  </div>
+
+  <div id="cartDropdown" class="cart-dropdown" role="dialog" aria-modal="true" aria-labelledby="cartHeader" tabindex="-1">
+    <div class="cart-header">
+      <h2 id="cartHeader"><span>🛒</span> Your Cart</h2>
+      <button class="cart-close" type="button" aria-label="Close cart" onclick="toggleCart()">x</button>
+    </div>
+    <div class="cart-content" id="cartContent">
+      <p class="empty-cart">Your cart is empty</p>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none;">
+      <div class="cart-total-section">
+        <span class="cart-total-label">Total Amount</span>
+        <span class="cart-total-amount" id="cartTotal">Rs 0</span>
+      </div>
+      <div class="cart-actions">
+        <button class="cart-clear-btn" type="button" onclick="clearSubCart()">Clear Cart</button>
+        <button class="cart-proceed-btn" type="button" onclick="proceedToOrder()">Proceed to Order</button>
+      </div>
+    </div>
+  </div>
+  <div id="cartBackdrop" class="cart-backdrop"></div>
+
+  <main class="page-main" id="main-content">
+    <section class="checkout-hero">
+      <div class="checkout-container">
+        <p class="hero-eyebrow">Checkout</p>
+        <h1>Place Your Order</h1>
+        <p>Fill in your details below. We confirm every order on WhatsApp before dispatch and only then share the UPI payment step.</p>
+      </div>
+    </section>
+
+    <section class="checkout-container">
+      <div class="checkout-shell">
+        <aside class="checkout-note">
+          <p class="checkout-note-label">How it works</p>
+          <h3>Every order is reviewed by the mill before it leaves.</h3>
+          <p>This keeps the experience personal, ensures the freshest batch is packed, and makes payment feel like a confirmation rather than a checkout queue.</p>
+          <ul class="checkout-points">
+            <li>WhatsApp confirmation before dispatch.</li>
+            <li>UPI payment only after order review.</li>
+            <li>Delivery currently across Tamil Nadu.</li>
+          </ul>
+        </aside>
+
+        <div class="checkout-form-wrap">
+          <form autocapitalize="none" autocomplete="off" class="checkout-form" id="checkoutForm" novalidate spellcheck="false">
+
+            <!-- Cart preview -->
+            <div class="flat-section">
+              <p class="checkout-step-eyebrow">Your Order</p>
+              <div class="order-cart-preview" id="order-cart-preview">
+                <p class="order-cart-empty">No items yet — <a href="index.html#oilsGrid">add oils</a> and they'll appear here.</p>
+              </div>
+              <a class="ocp-edit-link" href="index.html#oilsGrid">← Edit cart / Add more oils</a>
+            </div>
+
+            <!-- Contact -->
+            <div class="flat-section">
+              <p class="checkout-step-eyebrow">Contact</p>
+              <div class="checkout-grid checkout-grid-2">
+                <div class="form-field-wrap">
+                  <label for="input-name">Full Name</label>
+                  <input autocomplete="off" id="input-name" maxlength="50" minlength="2" name="name" pattern="[A-Za-z\s]+" placeholder="Your full name" required type="text" title="Please enter a valid name (letters and spaces only)" />
+                </div>
+                <div class="form-field-wrap">
+                  <label for="input-phone">Phone / WhatsApp</label>
+                  <input autocomplete="off" id="input-phone" inputmode="tel" maxlength="15" name="phone" pattern="[\+]?[0-9\s\-]{10,15}" placeholder="+91..." required type="tel" title="Please enter a valid phone number (10-15 digits)" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Delivery -->
+            <div class="flat-section">
+              <p class="checkout-step-eyebrow">Delivery Address</p>
+              <div class="checkout-grid checkout-grid-1">
+                <div class="form-field-wrap">
+                  <label for="input-address">Street Address</label>
+                  <input autocomplete="off" id="input-address" maxlength="200" minlength="10" name="address" placeholder="Door no, street, area, city" required type="text" title="Please enter your delivery address" />
+                </div>
+                <div class="checkout-grid checkout-grid-2">
+                  <div class="form-field-wrap">
+                    <label for="input-pincode">Pincode <span class="form-note-inline">(Tamil Nadu only)</span></label>
+                    <input autocomplete="off" id="input-pincode" inputmode="numeric" maxlength="6" name="pincode" placeholder="6-digit pincode" required type="text" title="Enter your 6-digit Tamil Nadu pincode" oninput="checkPagePincode(this.value)" />
+                    <div class="pin-status" id="page-pin-status"></div>
+                  </div>
+                  <div class="form-field-wrap" id="page-district-wrap" style="display:none;">
+                    <label for="input-district">District <span class="form-note-inline">(auto-filled)</span></label>
+                    <input class="district-readonly" id="input-district" name="district" readonly type="text" />
+                  </div>
+                </div>
+                <div class="form-field-wrap">
+                  <label for="input-notes">Additional Notes <span class="form-note-inline">(optional)</span></label>
+                  <textarea autocomplete="off" id="input-notes" name="notes" placeholder="Apartment details, preferred timing, or delivery instructions..." rows="2"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hidden fields -->
+            <textarea id="orderDetails" name="orderDetails" readonly style="display:none;"></textarea>
+            <input id="totalAmount" name="totalAmount" type="hidden" value="0" />
+            <!-- Honeypot -->
+            <div style="position:absolute;left:-9999px;top:-9999px;width:0;height:0;overflow:hidden;" aria-hidden="true">
+              <input type="text" name="url_confirm" id="formHoneypot" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <!-- Confirm & Submit -->
+            <div class="flat-section">
+              <label class="confirm-check" for="paymentConfirm">
+                <input id="paymentConfirm" type="checkbox" />
+                I understand payment is completed only after Arumee confirms my order on WhatsApp.
+              </label>
+              <div class="checkout-submit-row">
+                <button class="btn outline" type="button" onclick="window.location.href='index.html#oilsGrid'">← Back to Shop</button>
+                <button class="btn fill checkout-submit" type="submit">Submit Order Request</button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <div id="orderProgressBar"><span></span></div>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span data-year></span> Arumee&trade; &bull; Mani Flour &amp; Oil Mill &nbsp;&bull;&nbsp; FSSAI: 22425133000137 &nbsp;&bull;&nbsp; <a href="tel:9751425598">9751425598</a> / <a href="tel:9443342098">9443342098</a></p>
+  </footer>
+
+  <!-- Success Modal -->
+  <div class="modal-overlay" id="successModal">
+    <div class="modal-content" style="max-width:460px;">
+      <div class="modal-icon">✅</div>
+      <h3 class="modal-title">Order Received — Confirm on WhatsApp</h3>
+      <div class="modal-message">
+        <div id="successOrderSummary"></div>
+        <div style="margin-top:12px;background:#fff8e1;border-left:3px solid #f59e0b;padding:10px 12px;border-radius:6px;font-size:13px;color:#78350f;line-height:1.5;">
+          ⚠️ <strong>WhatsApp confirmation is required.</strong><br>
+          Your order is <strong>not confirmed</strong> until you message us. We will share UPI payment details and delivery date on WhatsApp.
+        </div>
+      </div>
+      <div class="modal-buttons">
+        <button class="modal-btn secondary" onclick="closeModal()" style="opacity:0.65;font-size:13px;">I'll do it later</button>
+        <button class="modal-btn primary" onclick="openWhatsApp()" style="gap:6px;">📲 Confirm on WhatsApp →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-toast" id="pageToast" role="status" aria-live="polite"></div>
+
+  <script src="arumee_assets/subpage-cart.js"></script>
+  <script src="arumee_assets/premium-subpages.js"></script>
+
+  <script>
+  (function () {
+    var STORAGE_KEY = 'arumeeCart';
+    var FORM_LOADED_AT = Date.now();
+    var orderItems = [];
+    var pendingWhatsAppUrl = '';
+
+    var oilOptions = [
+      {id:'coconut-1L',name:'Cold-Pressed Coconut Oil (1L)',price:449},
+      {id:'coconut-2L',name:'Cold-Pressed Coconut Oil (2L)',price:869},
+      {id:'coconut-5L',name:'Cold-Pressed Coconut Oil (5L)',price:2199},
+      {id:'coconut-8L',name:'Cold-Pressed Coconut Oil (8L)',price:3399},
+      {id:'groundnut-1L',name:'Wooden Cold-Pressed Groundnut Oil (1L)',price:329},
+      {id:'groundnut-2L',name:'Wooden Cold-Pressed Groundnut Oil (2L)',price:639},
+      {id:'groundnut-5L',name:'Wooden Cold-Pressed Groundnut Oil (5L)',price:1549},
+      {id:'gingelly-1L',name:'Wooden Cold-Pressed Gingelly Oil (1L)',price:499},
+      {id:'gingelly-2L',name:'Wooden Cold-Pressed Gingelly Oil (2L)',price:969},
+      {id:'gingelly-5L',name:'Wooden Cold-Pressed Gingelly Oil (5L)',price:2395},
+      {id:'gingelly-8L',name:'Wooden Cold-Pressed Gingelly Oil (8L)',price:3799}
+    ];
+
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"]/g, function (c) {
+        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];
+      });
+    }
+
+    function readCart() {
+      try {
+        var saved = localStorage.getItem(STORAGE_KEY);
+        if (!saved) return [];
+        var parsed = JSON.parse(saved);
+        if (!Array.isArray(parsed)) return [];
+        return parsed.filter(function (item) { return item && typeof item === 'object'; });
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function renderCartPreview() {
+      orderItems = readCart();
+      var preview = document.getElementById('order-cart-preview');
+      var detailsField = document.getElementById('orderDetails');
+      var totalField = document.getElementById('totalAmount');
+      if (!preview) return;
+
+      if (!orderItems.length) {
+        preview.innerHTML = '<p class="order-cart-empty">No items yet — <a href="index.html#oilsGrid">add oils</a> and they\'ll appear here.</p>';
+        if (detailsField) detailsField.value = '';
+        if (totalField) totalField.value = '0';
+        return;
+      }
+
+      var html = '<div class="ocp-lines">';
+      var total = 0;
+      var detailsText = '';
+
+      orderItems.forEach(function (item, idx) {
+        var lineTotal = (item.price || 0) * (item.qty || 1);
+        var qty = item.qty || 1;
+        total += lineTotal;
+        html += '<div class="ocp-line">';
+        html += '<span class="ocp-name">' + escapeHtml(item.productName) + '</span>';
+        html += '<span class="ocp-qty">' + qty + '</span>';
+        html += '<span class="ocp-times">×</span>';
+        html += '<span class="ocp-price">₹' + lineTotal.toLocaleString('en-IN') + '</span>';
+        html += '<button class="ocp-remove" type="button" onclick="removeCheckoutItem(' + idx + ')" title="Remove" aria-label="Remove ' + escapeHtml(item.productName) + '">×</button>';
+        html += '</div>';
+        detailsText += (idx + 1) + '. ' + item.productName + ' = ₹' + item.price + ' × ' + qty + ' = ₹' + lineTotal + '\n';
+      });
+
+      html += '</div>';
+      html += '<div class="ocp-total"><span class="ocp-total-label">Total <span class="ocp-total-count">' + orderItems.length + (orderItems.length === 1 ? ' item' : ' items') + '</span></span><span class="ocp-total-val">₹' + total.toLocaleString('en-IN') + '<span class="ocp-free">— Free Delivery</span></span></div>';
+      preview.innerHTML = html;
+
+      detailsText += '\nTotal Amount: ₹' + total + '\nDelivery: Free';
+      if (detailsField) detailsField.value = detailsText;
+      if (totalField) totalField.value = String(total);
+    }
+
+    function removeCheckoutItem(idx) {
+      if (idx < 0 || idx >= orderItems.length) return;
+      var name = orderItems[idx].productName;
+      orderItems.splice(idx, 1);
+      try { localStorage.setItem('arumeeCart', JSON.stringify(orderItems)); } catch (e) {}
+      renderCartPreview();
+      showToast(name + ' removed');
+    }
+
+    function showToast(msg) {
+      var t = document.getElementById('pageToast');
+      if (!t) return;
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(function () { t.classList.remove('show'); }, 3000);
+    }
+
+    function showSuccessModal(url) {
+      pendingWhatsAppUrl = url;
+      try {
+        var summaryEl = document.getElementById('successOrderSummary');
+        if (summaryEl) {
+          var html = '';
+          if (orderItems.length) {
+            var grandTotal = orderItems.reduce(function (s, i) { return s + (i.price || 0) * (i.qty || 1); }, 0);
+            html += '<div style="font-size:13px;background:#f4efe7;border:1px solid rgba(27,38,32,0.08);border-radius:8px;padding:12px 14px;margin-bottom:4px;">';
+            html += '<div style="font-weight:700;color:#1b2620;margin-bottom:8px;">🛒 Your Order</div>';
+            orderItems.forEach(function (item) {
+              var lt = (item.price || 0) * (item.qty || 1);
+              html += '<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #ded3c7;">';
+              html += '<span style="color:#374151;">' + escapeHtml(item.productName) + (item.qty > 1 ? ' &times; ' + item.qty : '') + '</span>';
+              html += '<span style="font-weight:600;color:#1b2620;">&#8377;' + lt.toLocaleString('en-IN') + '</span>';
+              html += '</div>';
+            });
+            html += '<div style="display:flex;justify-content:space-between;margin-top:10px;font-weight:700;color:#1b2620;font-size:14px;">';
+            html += '<span>Total &nbsp;<span style="font-weight:400;font-size:11px;color:#6b7c74;">(Free Delivery)</span></span>';
+            html += '<span>&#8377;' + grandTotal.toLocaleString('en-IN') + '</span>';
+            html += '</div></div>';
+          }
+          var nameVal = (document.getElementById('input-name') || {}).value || '';
+          var phoneVal = (document.getElementById('input-phone') || {}).value || '';
+          var addrVal = (document.getElementById('input-address') || {}).value || '';
+          var pinVal = (document.getElementById('input-pincode') || {}).value || '';
+          var distVal = (document.getElementById('input-district') || {}).value || '';
+          var fullAddr = addrVal + (pinVal ? ', ' + pinVal : '') + (distVal ? ' (' + distVal + ', TN)' : '');
+          if (nameVal || fullAddr) {
+            html += '<div style="font-size:12px;color:#4b5563;margin-top:8px;line-height:1.6;padding:0 2px;">';
+            if (nameVal) html += '<strong>' + escapeHtml(nameVal) + '</strong>';
+            if (phoneVal) html += ' &nbsp;|&nbsp; 📞 ' + escapeHtml(phoneVal);
+            if (fullAddr) html += '<br>&#x1F4CD; ' + escapeHtml(fullAddr);
+            html += '</div>';
+          }
+          summaryEl.innerHTML = html;
+        }
+      } catch (e) {}
+      document.getElementById('successModal').classList.add('show');
+    }
+
+    window.closeModal = function () {
+      document.getElementById('successModal').classList.remove('show');
+      pendingWhatsAppUrl = '';
+      window.location.href = 'index.html#oilsGrid';
+    };
+
+    window.openWhatsApp = function () {
+      if (pendingWhatsAppUrl) window.open(pendingWhatsAppUrl, '_blank');
+      window.closeModal();
+    };
+
+    // Pincode checking
+    var _pinsCache = null;
+    var _pinsLoading = null;
+    var __pagePinCheckSeq = 0;
+
+    function loadTnPins() {
+      if (window._tnPinsData) return Promise.resolve(window._tnPinsData);
+      if (_pinsCache) return Promise.resolve(_pinsCache);
+      if (_pinsLoading) return _pinsLoading;
+      _pinsLoading = fetch('/arumee_assets/tn_pins.json', { cache: 'force-cache' })
+        .catch(function () { return fetch('arumee_assets/tn_pins.json', { cache: 'force-cache' }); })
+        .then(function (r) { return r.json(); })
+        .then(function (data) { _pinsCache = data; window._tnPinsData = data; return data; });
+      return _pinsLoading;
+    }
+
+    window.checkPagePincode = function (val) {
+      var clean = val.replace(/\D/g, '');
+      var seq = ++__pagePinCheckSeq;
+      var status = document.getElementById('page-pin-status');
+      var distWrap = document.getElementById('page-district-wrap');
+      var distInput = document.getElementById('input-district');
+
+      if (!status) return;
+      if (clean.length < 6) {
+        status.style.cssText = 'font-size:12px;border-radius:7px;padding:0;margin:0;line-height:1.45;';
+        status.innerHTML = '';
+        if (distInput) distInput.value = '';
+        if (distWrap) distWrap.style.display = 'none';
+        return;
+      }
+
+      status.style.cssText = 'font-size:12px;border-radius:7px;padding:8px 11px;margin:0;line-height:1.45;color:#6b7c74;background:#f3f3f3;';
+      status.innerHTML = '— Checking pincode—';
+
+      loadTnPins().then(function (data) {
+        if (seq !== __pagePinCheckSeq) return;
+        if (!data) {
+          status.style.cssText = 'font-size:12px;border-radius:7px;padding:8px 11px;margin:0;line-height:1.45;color:#6b7c74;background:#f3f3f3;';
+          status.innerHTML = 'Unable to check pincode right now. Please try again.';
+          if (distInput) distInput.value = '';
+          if (distWrap) distWrap.style.display = 'none';
+          return;
+        }
+        var district = data[clean];
+        if (district) {
+          status.style.cssText = 'font-size:12px;border-radius:7px;padding:8px 11px;margin:0;line-height:1.45;color:#1a6e3c;background:#e3f5ea;font-weight:600;';
+          status.innerHTML = 'âœ“ Tamil Nadu — Delivery available!';
+          if (distInput) distInput.value = district;
+          if (distWrap) distWrap.style.display = '';
+        } else {
+          status.style.cssText = 'font-size:12px;border-radius:7px;padding:8px 11px;margin:0;line-height:1.45;color:#b03020;background:#fdf0ee;font-weight:500;';
+          status.innerHTML = 'âœ— Sorry, we currently deliver only within Tamil Nadu. Please enter a Tamil Nadu pincode.';
+          if (distInput) distInput.value = '';
+          if (distWrap) distWrap.style.display = 'none';
+        }
+      }).catch(function () {
+        if (seq !== __pagePinCheckSeq) return;
+        status.style.cssText = 'font-size:12px;border-radius:7px;padding:8px 11px;margin:0;line-height:1.45;color:#6b7c74;background:#f3f3f3;';
+        status.innerHTML = 'Unable to check pincode right now. Please try again.';
+      });
+    };
+
+    // Form submission
+    var form = document.getElementById('checkoutForm');
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Anti-bot checks
+        try {
+          var honeypot = (e.target && e.target.url_confirm) ? String(e.target.url_confirm.value || '') : '';
+          if (honeypot.trim()) { alert('Unable to submit. Please try again.'); return; }
+          if (Date.now() - FORM_LOADED_AT < 2500) { alert('Please wait a moment and try again.'); return; }
+          var lastTs = parseInt(localStorage.getItem('arumee_last_submit_ts') || '0', 10) || 0;
+          if (lastTs && Date.now() - lastTs < 3000) return;
+        } catch (ex) {}
+
+        var nameVal = (form.name.value || '').trim();
+        var phoneVal = (form.phone.value || '').trim();
+        var addressVal = (form.address.value || '').trim();
+        var pincodeVal = form.pincode ? form.pincode.value.trim() : '';
+
+        // Validation
+        if (!nameVal || nameVal.length < 2) { alert('Please enter a valid name (at least 2 characters).'); form.name.focus(); return; }
+        if (!/^[A-Za-z\s]+$/.test(nameVal)) { alert('Name should contain only letters and spaces.'); form.name.focus(); return; }
+        if (!phoneVal) { alert('Please enter your phone number.'); form.phone.focus(); return; }
+        var digits = phoneVal.replace(/\D/g, '');
+        if (digits.length < 10 || digits.length > 15) { alert('Please enter a valid phone number (10-15 digits).'); form.phone.focus(); return; }
+        if (!addressVal || addressVal.length < 10) { alert('Please enter a complete address (at least 10 characters).'); form.address.focus(); return; }
+        if (!pincodeVal || !/^\d{6}$/.test(pincodeVal)) { alert('Please enter a valid 6-digit pincode.'); document.getElementById('input-pincode').focus(); return; }
+
+        // Pincode validation
+        var submitBtn = form.querySelector('button[type="submit"]');
+        var pinsData = _pinsCache || window._tnPinsData || null;
+
+        function doSubmit(pData) {
+          if (pData && !pData[pincodeVal]) {
+            alert('Sorry, we currently deliver only within Tamil Nadu. Please enter a valid Tamil Nadu pincode.');
+            document.getElementById('input-pincode').focus();
+            return;
+          }
+          try {
+            var distEl = document.getElementById('input-district');
+            if (distEl && pData) distEl.value = pData[pincodeVal] || '';
+          } catch (ex) {}
+
+          if (!orderItems.length) { alert('Please select at least one oil before placing your order.'); return; }
+
+          var confirm = document.getElementById('paymentConfirm');
+          if (!confirm || !confirm.checked) { alert('Please confirm the WhatsApp and UPI payment step before submitting your order.'); if (confirm) confirm.focus(); return; }
+
+          // Submit
+          submitBtn.classList.add('loading');
+          submitBtn.disabled = true;
+          var spinHtml = '<span class="btn-spinner"></span>';
+          var msgs = ['Placing your order...', 'Sending to Arumee...', 'Almost there!', 'Hang tight!'];
+          var mi = 0;
+          submitBtn.innerHTML = spinHtml + msgs[0];
+          var interval = setInterval(function () { mi = (mi + 1) % msgs.length; submitBtn.innerHTML = spinHtml + msgs[mi]; }, 1800);
+
+          var bar = document.getElementById('orderProgressBar');
+          if (bar) bar.classList.add('active');
+
+          try { localStorage.setItem('arumee_last_submit_ts', String(Date.now())); } catch (ex) {}
+
+          var fd = new FormData(e.target);
+          var params = new URLSearchParams();
+          params.append('name', fd.get('name'));
+          params.append('phone', fd.get('phone'));
+          params.append('address', fd.get('address'));
+          params.append('pincode', fd.get('pincode') || '');
+          params.append('items', fd.get('orderDetails'));
+          params.append('total', fd.get('totalAmount') || '0');
+          params.append('notes', fd.get('notes') || '');
+          params.append('source', 'website');
+          params.append('url_confirm', '');
+
+          fetch('https://script.google.com/macros/s/AKfycbwpKpqtx9jqE3zAFy8F_MBcEc9F8mFIp8FmxkJCxfDXd3sxczYDvy-zmNW8uDGMMtdhfA/exec', {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: params.toString()
+          }).then(function () {
+            clearInterval(interval);
+            submitBtn.classList.remove('loading');
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Order Request';
+            if (bar) bar.classList.remove('active');
+
+            var district = pData && pincodeVal && pData[pincodeVal] || '';
+            var notesVal = fd.get('notes') || 'None';
+            var itemsSummary = orderItems.map(function (item) {
+              var name = item.productName || 'Oil';
+              if (!item.isFixedBundle) {
+                name = name.replace(/^Wooden\s+Cold[-â€‘]Pressed\s+/i, '').replace(/^Cold[-â€‘]Pressed\s+/i, '');
+              }
+              return item.qty > 1 ? name + ' — ' + item.qty : name;
+            }).join('\n');
+            var totalVal = fd.get('totalAmount') || '0';
+            var fullAddr = addressVal + (pincodeVal ? ', ' + pincodeVal : '') + (district ? ' (' + district + ', TN)' : '');
+
+            var waText = 'Hi, I want to order:\n\n' + itemsSummary + '\n\nTotal: ₹' + totalVal + '\nDelivery: Free\n\nName: ' + nameVal + '\nPhone: ' + phoneVal + '\nAddress: ' + fullAddr;
+            if (notesVal && notesVal !== 'None') waText += '\nNotes: ' + notesVal;
+
+            showSuccessModal('https://wa.me/918925295844?text=' + encodeURIComponent(waText));
+
+            setTimeout(function () {
+              form.reset();
+              orderItems = [];
+              localStorage.removeItem('arumeeCart');
+              localStorage.removeItem('arumee_cart');
+              localStorage.removeItem('arumee_chat');
+              localStorage.removeItem('arumee_delivery');
+              renderCartPreview();
+              var dwrap = document.getElementById('page-district-wrap');
+              var dinput = document.getElementById('input-district');
+              var pstatus = document.getElementById('page-pin-status');
+              if (dwrap) dwrap.style.display = 'none';
+              if (dinput) dinput.value = '';
+              if (pstatus) { pstatus.style.cssText = 'font-size:12px;border-radius:7px;padding:0;margin:0;line-height:1.45;'; pstatus.innerHTML = ''; }
+            }, 1000);
+          }).catch(function (err) {
+            clearInterval(interval);
+            submitBtn.classList.remove('loading');
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Order Request';
+            if (bar) bar.classList.remove('active');
+            console.error('Submission error:', err);
+            alert('There was an error submitting your order. Please try again or contact us directly.');
+          });
+        }
+
+        if ('file:' === location.protocol) {
+          doSubmit(null);
+        } else if (pinsData) {
+          doSubmit(pinsData);
+        } else {
+          loadTnPins().then(function (data) { doSubmit(data); }).catch(function () {
+            alert('Unable to validate pincode right now. Please check your internet connection and try again.');
+            document.getElementById('input-pincode').focus();
+          });
+        }
+      });
+
+      // Input filters
+      var nameInput = document.getElementById('input-name');
+      var phoneInput = document.getElementById('input-phone');
+      if (nameInput) nameInput.addEventListener('input', function (e) { e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, ''); });
+      if (phoneInput) phoneInput.addEventListener('input', function (e) { e.target.value = e.target.value.replace(/[^\d\+\s\-]/g, ''); });
+    }
+
+    // Render cart on load
+    renderCartPreview();
+
+    // Listen for cart updates from subpage-cart.js
+    window.addEventListener('storage', function (e) {
+      if (e.key === STORAGE_KEY) renderCartPreview();
+    });
+
+    // Also re-render when returning from another tab
+    window.addEventListener('focus', renderCartPreview);
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) renderCartPreview();
+    });
+
+    // Mobile menu functions
+    window.toggleMobileMenu = function () {
+      var overlay = document.getElementById('mobileMenuOverlay');
+      var btn = document.getElementById('mobileMenuBtn');
+      if (!overlay) return;
+      var isOpen = overlay.classList.contains('open');
+      overlay.classList.toggle('open', !isOpen);
+      if (btn) { btn.classList.toggle('open', !isOpen); btn.setAttribute('aria-expanded', String(!isOpen)); }
+      overlay.setAttribute('aria-hidden', String(isOpen));
+      document.body.style.overflow = isOpen ? '' : 'hidden';
+    };
+    window.closeMobileMenu = function () {
+      var overlay = document.getElementById('mobileMenuOverlay');
+      var btn = document.getElementById('mobileMenuBtn');
+      if (!overlay) return;
+      overlay.classList.remove('open');
+      if (btn) { btn.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    };
+  })();
+  </script>
+</body>
+</html>

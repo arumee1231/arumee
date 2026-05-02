@@ -22,6 +22,18 @@ module.exports = defineConfig({
       use: isCI
         ? { ...devices['Desktop Chrome'] }
         : { ...devices['Desktop Chrome'], channel: 'chrome' }
+    },
+    {
+      name: 'mobile-chrome',
+      use: { ...devices['Pixel 5'] }
+    },
+    {
+      name: 'mobile-safari',
+      use: { ...devices['iPhone 13'] }
+    },
+    {
+      name: 'desktop-firefox',
+      use: { ...devices['Desktop Firefox'] }
     }
   ],
   webServer: {

@@ -5,7 +5,7 @@
   • New SW version → old cache is automatically wiped on activation
   ───────────────────────────────────────────────────────────────────────── */
 
-const CACHE_NAME = 'arumee-v7';
+const CACHE_NAME = 'arumee-v23';
 
 // Allow the page to force-activate a waiting SW
 self.addEventListener('message', event => {
@@ -23,8 +23,18 @@ const PRECACHE = [
   '/contact.html',
   '/cart.css',
   '/arumee_assets/cart.css',
+  '/arumee_assets/main.css',
+  '/arumee_assets/premium-subpages.css',
   '/arumee_assets/chat-widget.js',
+  '/arumee_assets/subpage-cart.js',
+  '/arumee_assets/logo.webp',
   '/arumee_assets/logo.png',
+  '/arumee_assets/mockup_coconut.webp',
+  '/arumee_assets/mockup_groundnut.webp',
+  '/arumee_assets/mockup_gingelly.webp',
+  '/arumee_assets/mockup_coconut_sm.webp',
+  '/arumee_assets/mockup_groundnut_sm.webp',
+  '/arumee_assets/mockup_gingelly_sm.webp',
   '/arumee_assets/mockup_coconut.png',
   '/arumee_assets/mockup_groundnut.png',
   '/arumee_assets/mockup_gingelly.png',
@@ -114,13 +124,13 @@ self.addEventListener('fetch', event => {
         return networkFirst(event, cache);
       }
 
-      // JS scripts: always fetch fresh so code changes apply immediately
-      if (req.destination === 'script') {
-        return networkFirst(event, cache);
+      // JS and CSS: stale-while-revalidate for faster loads
+      if (req.destination === 'script' || req.destination === 'style') {
+        return staleWhileRevalidate(req, cache);
       }
 
-      // Other static assets (css, images, fonts, json): fast stale-while-revalidate
-      if (['style', 'image', 'font'].includes(req.destination) || req.url.endsWith('.json')) {
+      // Other static assets (images, fonts, json): fast stale-while-revalidate
+      if (['image', 'font'].includes(req.destination) || req.url.endsWith('.json')) {
         return staleWhileRevalidate(req, cache);
       }
 

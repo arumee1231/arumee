@@ -1,420 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="icon" type="image/png" href="arumee_assets/favicon.png" />
-<title>Benefits of Cold-Pressed Oils | Why Wood-Pressed Is Healthier — Arumee</title>
-<meta name="description" content="Discover why cold-pressed oils are healthier. Wood-pressed oils retain natural vitamins, omega fatty acids &amp; antioxidants lost in refined oil. Coconut, groundnut &amp; gingelly."/>
-<meta name="keywords" content="benefits of cold pressed oil, why cold pressed oil is better, wood pressed oil health benefits, cold pressed vs refined oil, sesame oil benefits, coconut oil health benefits, groundnut oil nutrition"/>
-<meta name="robots" content="index,follow"/>
-<link rel="canonical" href="https://arumee.co.in/benefits.html"/>
-<meta property="og:title" content="Benefits of Cold-Pressed Oils | Why Wood-Pressed Is Healthier — Arumee"/>
-<meta property="og:description" content="Cold-pressed oils retain full nutrition, natural aroma and health properties lost in refined oil. Discover the Arumee difference."/>
-<meta property="og:type" content="article"/>
-<meta property="og:url" content="https://arumee.co.in/benefits.html"/>
-<meta property="og:image" content="https://arumee.co.in/arumee_assets/logo.png"/>
-<meta property="og:site_name" content="Arumee"/>
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="Benefits of Cold-Pressed Oils — Arumee"/>
-<meta name="twitter:description" content="Why cold-pressed wood-pressed oils are healthier than refined. Vitamins, antioxidants and natural flavour intact."/>
-<meta name="twitter:image" content="https://arumee.co.in/arumee_assets/logo.png"/>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://arumee.co.in/"},{"@type":"ListItem","position":2,"name":"Benefits","item":"https://arumee.co.in/benefits.html"}]}
-</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://www.google.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="arumee_assets/cart.css">
-<style>
-  :root {
-    --green: #1e4d32;
-    /* unified header spacing for non-Oils pages */
-    --site-header-height: 56px;
-    --site-header-height-mobile: 90px;
-    --green-dark: #153d28;
-    --gold: #c09b3a;
-    --gold-light: #d4af50;
-    --cream: #faf8f5;
-    --ink: #0a2817;
-  }
-  * { box-sizing: border-box; }
-  html {
-    overflow-y: scroll;
-    scrollbar-gutter: stable;
-  }
-  .skip-link { position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden; }
-  .skip-link:focus { position:fixed; left:16px; top:16px; width:auto; height:auto; padding:10px 14px; background:#000; color:#fff; z-index:10001; border-radius:8px; }
-  :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
-  body { 
-    margin: 0; 
-    font-family: 'Inter', sans-serif; 
-    color: var(--ink); 
-    background: var(--cream); 
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      animation: none !important;
-      transition: none !important;
-      scroll-behavior: auto !important;
-    }
-  }
-  main.container { flex: 1; }
-  .container { max-width: 1200px; margin: 0 auto; padding: 60px 4vw 32px; }
-  
-  /* STICKY NAVIGATION BAR */
-  .sticky-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(30, 77, 50, 0.08);
-    z-index: 9998;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    display: none; /* Hidden on desktop */
-  }
-  
-  /* Show sticky nav only on mobile */
-  @media (max-width: 768px) {
-    .sticky-nav {
-      display: block;
-    }
-  }
-  .sticky-nav .nav-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 4vw;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-  .sticky-nav .nav-brand {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'Playfair Display', serif;
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--green);
-    text-decoration: none;
-  }
-  .sticky-nav .nav-brand img {
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
-  }
-  .sticky-nav .nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .sticky-nav .nav-btn {
-    padding: 6px 16px;
-    border-radius: 20px;
-    border: 1.5px solid var(--green);
-    background: white;
-    color: var(--green);
-    font-weight: 600;
-    font-size: 13px;
-    line-height: 1.2;
-    letter-spacing: 0.01em;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;    white-space: nowrap;  }
-  .sticky-nav .nav-btn.primary {
-    background: var(--green);
-    color: white;
-    border-color: var(--green);
-  }
-  .sticky-nav .nav-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(30, 77, 50, 0.15);
-  }
-  .nav-cart-count {
-    background: var(--gold);
-    color: white;
-    border-radius: 50%;
-    min-width: 18px;
-    height: 18px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 0 5px;
-  }
-  
-  /* NAVIGATION TABS */
-  .hero-tabs-wrapper { 
-    position: sticky; 
-    top: 0; /* Back to top: 0 for desktop */
-    background: linear-gradient(90deg, rgba(14,40,31,0.85), rgba(30,77,50,0.85)); 
-    backdrop-filter: blur(14px) saturate(140%); 
-    -webkit-backdrop-filter: blur(14px) saturate(140%); 
-    border-bottom: 2px solid rgba(157, 124, 42, 0.4); 
-    box-shadow: 0 4px 20px -4px rgba(0,0,0,0.35);
-    z-index: 1200; 
-  }
-  
-  /* Mobile: all 5 tabs horizontally scrollable */
-  @media (max-width: 768px) {
-    .hero-tabs-wrapper {
-      top: calc(44px + env(safe-area-inset-top, 0px));
-      overflow-x: auto;
-      overflow-y: hidden;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .hero-tabs-wrapper::-webkit-scrollbar { display: none; }
-    .hero-nav {
-      justify-content: flex-start;
-      width: max-content;
-      min-width: 100%;
-      margin: 0;
-    }
-    .hero-nav-tab {
-      padding: 11px 16px;
-      font-size: 12px;
-      flex-shrink: 0;
-      min-height: 44px;
-      display: inline-flex;
-      align-items: center;
-      line-height: 1.2;
-    }
-    .hero-nav-tab.active::after {
-      bottom: 2px;
-      height: 3px;
-      left: 8px;
-      right: 8px;
-    }
-  }
-  .hero-nav {
-    display: flex;
-    justify-content: center;
-    gap: 0;
-    padding: 0;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-  /* Apply consistent top spacing so header area appears uniform across pages */
-  main.container { padding-top: var(--site-header-height,120px); }
-  .hero-nav-tab { 
-    padding: 12px 24px; 
-    background: rgba(255, 255, 255, 0.07); 
-    border-right: 1px solid rgba(255, 255, 255, 0.1); 
-    color: rgba(255, 255, 255, 0.9); 
-    font-size: 13px; 
-    font-weight: 700; 
-    transition: none; 
-    text-decoration: none; 
-    white-space: nowrap;
-  }
-  .hero-nav-tab:first-child {
-    border-radius: 0;
-  }
-  .hero-nav-tab:last-child {
-    border-right: none;
-  }
-  .hero-nav-tab:hover { 
-    background: rgba(255, 255, 255, 0.12); 
-    color: #ffffff; 
-  }
-  .hero-nav-tab.active { 
-    /* stronger active tab styles for clear differentiation */
-    background: linear-gradient(180deg, rgba(21,61,40,1), rgba(30,77,50,1));
-    color: #fff;
-    font-weight: 700;
-    position: relative;
-    box-shadow: 0 6px 18px rgba(16,45,33,0.18);
-    pointer-events: none;
-    cursor: default;
-  }
-  .hero-nav-tab.active::after {
-    content: '';
-    position: absolute;
-    left: 12px;
-    right: 12px;
-    bottom: -8px;
-    height: 4px;
-    border-radius: 4px;
-    background: linear-gradient(90deg, var(--gold-light), var(--gold));
-    box-shadow: 0 4px 12px rgba(157,124,42,0.18);
-  }
-  .hero-nav-tab:focus {
-    outline: 3px solid rgba(157,124,42,0.18);
-    outline-offset: 4px;
-    border-radius: 6px;
-  }
-  
-  h1, h2 { 
-    font-family: 'Playfair Display', serif; 
-    font-size: 48px; 
-    margin: 0 0 12px; 
-    color: var(--green); 
-    text-align: center;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1.14;
-  }
-  p.lead { 
-    font-size: 19px; 
-    line-height: 1.6; 
-    margin: 0 auto 48px; 
-    text-align: center;
-    max-width: 800px;
-    color: #1a4a2f;
-    font-weight: 500;
-  }
-  .grid { display: grid; gap: 20px; grid-template-columns: repeat(3, 1fr); }
-  @media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
-  /* Remove persistent card shadow; reveal on hover (pointer devices) and on keyboard focus */
-  .card { 
-    background: #fff; 
-    border: 2px solid rgba(30,77,50,.1); 
-    padding: 24px; 
-    border-radius: 20px; 
-    box-shadow: none; 
-    transition: box-shadow 0.25s ease, transform 0.25s ease; 
-  }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  <meta name="view-transition" content="same-origin" />
+  <meta name="theme-color" content="#1B2620" />
+  <meta name="robots" content="index,follow" />
+  <title>Benefits of Cold-Pressed Oils | Arumee</title>
+  <meta name="description" content="Understand why cold-pressed oils are a better everyday choice. Arumee oils preserve natural nutrients, aroma, and flavor without chemical refining." />
+  <link rel="canonical" href="https://arumee.co.in/benefits.html" />
+  <link rel="icon" type="image/png" href="arumee_assets/favicon.png" />
 
-  @media (hover: hover) and (pointer: fine) {
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 40px rgba(30, 77, 50, 0.15);
-      border-color: var(--gold);
-    }
-  }
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://arumee.co.in/"},{"@type":"ListItem","position":2,"name":"Benefits","item":"https://arumee.co.in/benefits.html"}]}
+  </script>
 
-  .card:focus-within {
-    box-shadow: 0 10px 30px rgba(30,77,50,0.12);
-    transform: translateY(-2px);
-  }
-  .card h3 { margin: 0 0 12px; font-size: 18px; color: var(--green); font-weight: 700; line-height: 1.28; letter-spacing: -0.01em; }
-  .card p { margin: 0; font-size: 15px; line-height: 1.6; color: #2d4a3e; }
-  footer { background: linear-gradient(135deg,rgba(30,77,50,.08),rgba(157,124,42,.05)); border-top:1px solid rgba(30,77,50,0.15); text-align:center; padding:16px 20px; color:var(--green); font-size:13px; }
-
-  /* ─── MOBILE-FIRST ────────────────────────────────── */
-  .sticky-nav { padding-top: env(safe-area-inset-top, 0px); }
-
-  @media (max-width: 768px) {
-    main.container { padding-top: var(--site-header-height-mobile,110px); }
-    .container { padding-top: 20px; padding-bottom: 20px; }
-
-    h1, h2 { font-size: clamp(24px, 7.5vw, 36px); letter-spacing: -.5px; margin-bottom: 8px; }
-    p.lead { font-size: 15px; margin-bottom: 28px; }
-
-    /* 2-column grid on tablets before collapsing to 1 */
-    .grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
-
-    footer { padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
-  }
-
-  @media (max-width: 500px) {
-    .grid { grid-template-columns: 1fr; }
-    h1, h2 { font-size: 22px; }
-    p.lead { font-size: 14px; }
-    .card { padding: 18px 16px; border-radius: 16px; }
-    .card h3 { font-size: 16px; }
-    .card p { font-size: 14px; line-height: 1.55; }
-  }
-
-  /* Cross-document view transitions — prevents header blink on tab navigation */
-  @view-transition { navigation: auto; }
-  .hero-tabs-wrapper { view-transition-name: site-tabs; }
-  .cart-tab          { view-transition-name: site-cart; }
-  ::view-transition-old(site-tabs),
-  ::view-transition-new(site-tabs),
-  ::view-transition-old(site-cart),
-  ::view-transition-new(site-cart) { animation: none; mix-blend-mode: normal; }
-  ::view-transition-group(site-tabs),
-  ::view-transition-group(site-cart) { z-index: 2147483647; }
-  ::view-transition-group(root) { z-index: 2147483646; }
-  ::view-transition-old(root),
-  ::view-transition-new(root) { animation: none; }
-</style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtK.woff2" crossorigin />
+  <link href="cormorant-fonts.css?v=2" rel="stylesheet"/>
+  <link rel="stylesheet" href="arumee_assets/cart.css?v=2" />
+  <link rel="stylesheet" href="arumee_assets/premium-subpages.css?v=3" />
 </head>
-<body>
+<body class="subpage" data-active-nav="shop">
   <a class="skip-link" href="#main-content">Skip to main content</a>
-  <nav class="sticky-nav">
+
+  <nav class="sticky-nav" id="stickyNav">
     <div class="nav-content">
-      <div class="nav-brand">
-        <picture>
-          <source srcset="arumee_assets/logo.webp" type="image/webp"/>
-          <img src="arumee_assets/logo.png" alt="Arumee" width="40" height="40" />
-        </picture>
+      <a class="nav-brand" href="index.html" aria-label="Go to Arumee home">
+        <img src="arumee_assets/logo.webp" alt="Arumee" width="40" height="40" />
         <span>ARUMEE</span>
-      </div>
+      </a>
       <div class="nav-actions">
-        <a href="index.html#oilsDeliveryInfo" class="nav-btn" onclick="sessionStorage.setItem('allowInitialOilsAnchor','true')">Our Products</a>
-        <button class="nav-btn primary" onclick="console.log('Cart clicked!'); toggleCart();">
-          🛒
-          <span class="nav-cart-count" id="navCartCount">0</span>
-        </button>
+        <div class="desktop-nav-links" aria-label="Primary navigation">
+          <a class="desktop-nav-link" data-nav="home" href="index.html" onclick="sessionStorage.setItem('arumee_scrolltop','1')">Home</a>
+          <a class="desktop-nav-link" data-nav="shop" href="index.html#oilsGrid">Shop</a>
+          <a class="desktop-nav-link" data-nav="story" href="about.html">Our Story</a>
+          <a class="desktop-nav-link" data-nav="faq" href="index.html#faq">FAQ</a>
+          <a class="desktop-nav-link" data-nav="contact" href="contact.html">Contact</a>
+        </div>
+        <button class="hamburger-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
       </div>
     </div>
   </nav>
-
-  <div class="hero-tabs-wrapper">
-    <nav class="hero-nav" role="tablist" aria-label="Primary site sections">
-      <a href="index.html#oilsDeliveryInfo" class="hero-nav-tab" role="tab" aria-selected="false" onclick="sessionStorage.setItem('allowInitialOilsAnchor','true')">Our Products</a>
-      <a href="combo.html" class="hero-nav-tab" role="tab" aria-selected="false">Combo Offers</a>
-      <a href="benefits.html" class="hero-nav-tab active" role="tab" aria-selected="true">Benefits</a>
-      <a href="about.html" class="hero-nav-tab" role="tab" aria-selected="false">About Us</a>
-      <a href="contact.html" class="hero-nav-tab" role="tab" aria-selected="false">Contact Us</a>
-    </nav>
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay" role="dialog" aria-label="Site navigation" aria-hidden="true">
+    <div class="mmo-backdrop" onclick="closeMobileMenu()" aria-hidden="true"></div>
+    <div class="mmo-inner">
+      <div class="mmo-header">
+        <div class="mmo-brand-row">
+          <img src="arumee_assets/arumee-logo.png" alt="Arumee" class="mmo-logo" width="36" height="36">
+          <div class="mmo-brand-name-row">
+            <span class="mmo-brand-name">Arumee</span>
+            <span class="mmo-brand-tag">Pure Ancestral Oils</span>
+          </div>
+        </div>
+        <button class="mmo-close" onclick="closeMobileMenu()" aria-label="Close menu">&#x2715;</button>
+      </div>
+      <nav class="mmo-nav">
+        <a class="mmo-link" href="index.html" onclick="sessionStorage.setItem('arumee_scrolltop','1');closeMobileMenu()"><span class="mmo-link-icon">🏠</span>Home</a>
+        <a class="mmo-link" href="index.html#oilsGrid" onclick="closeMobileMenu()"><span class="mmo-link-icon">🛍</span>Shop</a>
+        <a class="mmo-link" href="benefits.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">🌿</span>Benefits</a>
+        <a class="mmo-link" href="index.html#faq" onclick="closeMobileMenu()"><span class="mmo-link-icon">💬</span>FAQ</a>
+        <a class="mmo-link" href="about.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">📖</span>Our Story</a>
+        <a class="mmo-link" href="contact.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">✉</span>Contact</a>
+      </nav>
+      <div class="mmo-footer">
+        <a class="mmo-cta-btn" href="index.html#order" onclick="closeMobileMenu()">Order Now</a>
+        <span class="mmo-footer-sub">Namakkal &middot; Est. 1987</span>
+      </div>
+    </div>
   </div>
-  <script>
-  (function(){
-    var stickyNav = document.querySelector('.sticky-nav');
-    var tabsWrapper = document.querySelector('.hero-tabs-wrapper');
-    var heroNav = document.querySelector('.hero-nav');
-    var activeTab = document.querySelector('.hero-nav-tab.active');
-    function setTop() {
-      if (!tabsWrapper) return;
-      var navVisible = stickyNav && window.getComputedStyle(stickyNav).display !== 'none';
-      tabsWrapper.style.top = (navVisible ? stickyNav.offsetHeight : 0) + 'px';
-    }
-    function centerActive() {
-      if (!activeTab) return;
-      var scroller = (tabsWrapper && tabsWrapper.scrollWidth > tabsWrapper.clientWidth) ? tabsWrapper : heroNav;
-      if (!scroller) return;
-      var tabLeft = activeTab.offsetLeft;
-      var tabWidth = activeTab.offsetWidth;
-      var viewWidth = scroller.clientWidth;
-      var target = tabLeft - (viewWidth / 2) + (tabWidth / 2);
-      scroller.scrollLeft = Math.max(0, target);
-    }
-    setTop();
-    centerActive();
-    window.addEventListener('resize', function(){ setTop(); centerActive(); });
-    /* Re-measure after fonts finish loading — prevents jump from font-swap changing nav height */
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(function(){ setTop(); });
-    }
-    window.addEventListener('load', function(){ setTop(); });
-  }());
-  </script>
-  <!-- Unified Cart Components -->
+
   <div id="cartTab" class="cart-tab" role="button" aria-label="Shopping cart" aria-expanded="false" tabindex="0">
     <span class="cart-icon" aria-hidden="true">🛒</span>
     <span class="cart-count" id="cartCount" aria-live="polite">0</span>
   </div>
+
   <div id="cartDropdown" class="cart-dropdown" role="dialog" aria-modal="true" aria-labelledby="cartHeader" tabindex="-1">
     <div class="cart-header">
       <h2 id="cartHeader"><span>🛒</span> Your Cart</h2>
-      <button class="cart-close" type="button" aria-label="Close cart" onclick="toggleCart()">×</button>
+      <button class="cart-close" type="button" aria-label="Close cart" onclick="toggleCart()">x</button>
     </div>
     <div class="cart-content" id="cartContent">
       <p class="empty-cart">Your cart is empty</p>
@@ -422,197 +87,106 @@
     <div class="cart-footer" id="cartFooter" style="display:none;">
       <div class="cart-total-section">
         <span class="cart-total-label">Total Amount</span>
-        <span class="cart-total-amount" id="cartTotal">₹0</span>
+        <span class="cart-total-amount" id="cartTotal">Rs 0</span>
       </div>
       <div class="cart-actions">
-        <button class="cart-clear-btn" onclick="clearSubCart()"><span>🗑️</span><span>Clear All</span></button>
-        <button class="cart-proceed-btn" onclick="proceedToOrder()"><span>Proceed to Order</span><span>→</span></button>
+        <button class="cart-clear-btn" type="button" onclick="clearSubCart()">Clear Cart</button>
+        <button class="cart-proceed-btn" type="button" onclick="proceedToOrder()">Proceed to Order</button>
       </div>
     </div>
   </div>
-  <div id="cartBackdrop" class="cart-backdrop" onclick="toggleCart()"></div>
-  <main class="container" id="main-content">
-    <h1>Benefits</h1>
-    <p class="lead">Why choose cold-pressed oils for your everyday wellness</p>
+  <div id="cartBackdrop" class="cart-backdrop"></div>
 
-    <div class="grid">
-      <div class="card"><h3>Retained Nutrients</h3><p>Low-heat pressing keeps vitamins, antioxidants, and natural aroma intact.</p></div>
-      <div class="card"><h3>No Chemicals</h3><p>Pure extraction — no bleaching, deodorizing, or solvent use.</p></div>
-      <div class="card"><h3>Authentic Flavor</h3><p>Real seed and nut taste that enhances every dish naturally.</p></div>
-      <div class="card"><h3>Fresh &amp; Stable</h3><p>Pressed fresh in small runs to preserve purity and freshness.</p></div>
-      <div class="card"><h3>Ethical Sourcing</h3><p>Seeds sourced directly from trusted, sustainable farmers.</p></div>
-      <div class="card"><h3>Pure &amp; Honest</h3><p>No added colors, fragrances, or preservatives — just natural goodness.</p></div>
-    </div>
+  <main class="page-main" id="main-content">
+    <section class="page-hero reveal" aria-labelledby="benefits-hero-title">
+      <p class="hero-eyebrow">Wellness first</p>
+      <h1 id="benefits-hero-title">Why cold-pressed oils make a real difference for your family.</h1>
+      <p>Heavily refined oils go through heat, bleach, and chemical treatment that strips away the natural goodness. At Arumee, we keep things gentle — so what comes out of the press is exactly what goes into your kitchen.</p>
+      <div class="hero-pill-row">
+        <span class="hero-pill">No chemical solvents</span>
+        <span class="hero-pill">No high-heat refining</span>
+        <span class="hero-pill">Natural aroma and flavor</span>
+      </div>
+    </section>
+
+    <section class="section-block reveal" aria-labelledby="benefit-grid-title">
+      <div class="section-head">
+        <h2 class="section-title" id="benefit-grid-title">Real benefits in every bottle</h2>
+        <p class="section-copy">Our pressing method protects both nutrition and taste, so your food feels cleaner, richer, and more like it was always meant to.</p>
+      </div>
+      <div class="card-grid">
+        <article class="page-card">
+          <h3>Nutrients retained</h3>
+          <p>Our low-temperature pressing keeps natural antioxidants and Vitamin E right where they should be — in your oil, not burned off in a refinery.</p>
+        </article>
+        <article class="page-card">
+          <h3>No artificial treatment</h3>
+          <p>No bleaching. No deodorizing. No synthetic fragrances. Your oil stays as close to its natural source as possible — exactly how it should be.</p>
+        </article>
+        <article class="page-card">
+          <h3>Better flavour depth</h3>
+          <p>Cold-pressed groundnut and gingelly oils carry rich, traditional aromas that make your everyday cooking taste the way it always should have.</p>
+        </article>
+        <article class="page-card">
+          <h3>Gentle processing</h3>
+          <p>Slow pressing is kind to the oil. No aggressive industrial heat cycles, no shortcuts — just consistent quality and taste you can rely on, batch after batch.</p>
+        </article>
+        <article class="page-card">
+          <h3>Cleaner ingredient confidence</h3>
+          <p>You know exactly what's in your bottle: pure oil. Nothing added to mask it, alter it, or make it last longer than it naturally would.</p>
+        </article>
+        <article class="page-card">
+          <h3>Fresh small-batch output</h3>
+          <p>Small batches mean your oil isn't sitting in a warehouse for months. It arrives closer to the pressing date — fresh, aromatic, and full of life.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-block reveal" aria-labelledby="compare-title">
+      <div class="page-card">
+        <h2 id="compare-title">How we compare: refined oils vs. Arumee</h2>
+        <div class="card-grid" style="margin-top:14px;">
+          <article class="page-card" style="padding:14px; box-shadow:none; background:#fffdf8;">
+            <h3>Typical refined oils</h3>
+            <ul class="info-list">
+              <li>High heat processing</li>
+              <li>Chemical deodorizing steps</li>
+              <li>Neutralized smell and flavor</li>
+              <li>Mass storage before retail</li>
+            </ul>
+          </article>
+          <article class="page-card" style="padding:14px; box-shadow:none; background:#f7fbf7;">
+            <h3>Arumee cold-pressed oils</h3>
+            <ul class="info-list">
+              <li>Low-temperature extraction</li>
+              <li>No solvent-based refining</li>
+              <li>Natural aroma and profile retained</li>
+              <li>Small-batch freshness approach</li>
+            </ul>
+          </article>
+        </div>
+        <div class="action-row">
+          <a class="action-btn primary" href="index.html#oilsGrid">Explore Oils</a>
+          <a class="action-btn secondary" href="combo.html">See Combo Offers</a>
+        </div>
+      </div>
+    </section>
+
   </main>
-  <footer style="border-top:1px solid rgba(30,77,50,0.12);padding:16px 20px;text-align:center;">
-    <p style="font-size:13px;color:rgba(10,40,23,0.5);margin:0;font-weight:500;">&copy; <span id="year"></span> Arumee&trade; &bull; Mani Flour &amp; Oil Mill &nbsp;&middot;&nbsp; FSSAI: 22425133000137 &nbsp;&middot;&nbsp; <a href="tel:9751425598" style="color:var(--green);text-decoration:none;font-weight:600;">9751425598</a> / <a href="tel:9443342098" style="color:var(--green);text-decoration:none;font-weight:600;">9443342098</a></p>
+
+  <footer class="site-footer">
+    <p>&copy; <span data-year></span> Arumee&trade; &bull; Mani Flour &amp; Oil Mill &nbsp;&bull;&nbsp; FSSAI: 22425133000137 &nbsp;&bull;&nbsp; <a href="tel:9751425598">9751425598</a> / <a href="tel:9443342098">9443342098</a></p>
   </footer>
-  <script>
-    console.log('Benefits page script starting...');
-    document.getElementById('year').textContent=new Date().getFullYear();
-    
-    let isCartOpen = false;
-    let lastCartToggleTime = 0;
-    
-    // Cart toggle function - COPIED FROM index.html
-    window.toggleCart = function toggleCart(event) {
-      // Prevent double firing on mobile (touchend then click)
-      const now = Date.now();
-      if (now - lastCartToggleTime < 300) {
-        return; // ignore rapid second invocation
-      }
-      lastCartToggleTime = now;
 
-      if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
+  <div class="page-toast" id="pageToast" role="status" aria-live="polite"></div>
 
-      const cartDropdown = document.getElementById('cartDropdown');
-      const backdrop = document.getElementById('cartBackdrop');
-      const cartTab = document.getElementById('cartTab');
-
-      isCartOpen = !isCartOpen;
-
-      // Update ARIA attribute
-      if (cartTab) {
-        cartTab.setAttribute('aria-expanded', isCartOpen);
-      }
-
-      if (isCartOpen) {
-        if (cartDropdown) cartDropdown.classList.add('open');
-        if (backdrop) backdrop.classList.add('visible');
-        if (window.matchMedia('(max-width:768px)').matches) { document.body.classList.add('cart-open'); }
-        updateCartDisplay();
-      } else {
-        if (cartDropdown) cartDropdown.classList.remove('open');
-        if (backdrop) backdrop.classList.remove('visible');
-        if (window.matchMedia('(max-width:768px)').matches) { document.body.classList.remove('cart-open'); }
-      }
-    };
-    
-  // Unified cart logic (mirrors main page) – legacy floating indicator removed
-    let orderItems = [];
-    function loadCart(){
-      const saved = localStorage.getItem('arumeeCart');
-      orderItems = [];
-      if(saved){ try { const arr = JSON.parse(saved); if(Array.isArray(arr)) orderItems = arr; } catch(e){} }
-    }
-    function saveCart(){ localStorage.setItem('arumeeCart', JSON.stringify(orderItems)); }
-    function updateCartDisplay(){
-      loadCart();
-      const cartCount = document.getElementById('cartCount');
-      const navCartCount = document.getElementById('navCartCount');
-      const cartContent = document.getElementById('cartContent');
-      const cartFooter = document.getElementById('cartFooter');
-      const cartTotal = document.getElementById('cartTotal');
-      const cartTab = document.getElementById('cartTab');
-      cartCount.textContent = orderItems.length;
-      if(navCartCount) navCartCount.textContent = orderItems.length;
-      // Toggle body class so mobile cart button only appears when items exist
-      document.body.classList.toggle('has-cart-items', orderItems.length > 0);
-      if(cartTab){
-        if(orderItems.length === 0 && window.matchMedia('(min-width:769px)').matches){
-          cartTab.classList.add('hidden');
-        } else {
-          cartTab.classList.remove('hidden');
-        }
-      }
-      if(!orderItems.length){ cartContent.innerHTML='<p class="empty-cart">Your cart is empty</p>'; cartFooter.style.display='none'; return; }
-      let html=''; let grand=0;
-      orderItems.forEach((item,i)=>{
-        const lineTotal = item.total || (item.price*item.qty);
-        grand += lineTotal;
-        html += '<div class="cart-item">'
-          + '<div class="cart-item-info">'
-            + '<div class="cart-item-name">'+escapeHtml(item.productName || item.originalName || 'Item')+'</div>'
-            + '<div class="cart-item-details">₹'+item.price+' × '+item.qty+'</div>'
-            + '<div class="cart-item-price">₹'+lineTotal+'</div>'
-          + '</div>'
-          + '<div class="cart-item-controls">'
-            + '<div class="cart-stepper">'
-              + '<button class="qty-btn-cart" data-index="'+i+'" data-action="dec" aria-label="Decrease quantity">−</button>'
-              + '<input type="number" value="'+item.qty+'" min="1" max="10" readonly />'
-              + '<button class="qty-btn-cart" data-index="'+i+'" data-action="inc" aria-label="Increase quantity">+</button>'
-            + '</div>'
-            + '<button class="cart-item-remove" data-index="'+i+'" title="Remove">Remove</button>'
-          + '</div>'
-        + '</div>';
-      });
-      cartContent.innerHTML = html;
-      cartTotal.textContent = '₹'+grand;
-      cartFooter.style.display='flex';
-    }
-    function changeQty(i,d){ if(i<0||i>=orderItems.length) return; const it=orderItems[i]; const q=Math.max(1,Math.min(10,it.qty+d)); if(q!==it.qty){ it.qty=q; it.total=it.price*q; saveCart(); updateCartDisplay(); } }
-    function removeItem(i){ if(i<0||i>=orderItems.length) return; orderItems.splice(i,1); saveCart(); updateCartDisplay(); }
-    window.clearSubCart = function(){ 
-      orderItems=[]; 
-      saveCart(); 
-      try {
-        localStorage.removeItem('arumee_cart');
-        localStorage.removeItem('arumee_chat');
-        localStorage.removeItem('arumee_delivery');
-      } catch(e) {}
-      updateCartDisplay(); 
-      // Navigate to homepage oils section and show toast
-      sessionStorage.setItem('showClearToast', 'true');
-      window.location.href='index.html#oilsDeliveryInfo';
-    };
-    window.proceedToOrder = function(){ 
-      if(!orderItems.length){ return; } 
-      toggleCart(); 
-      // Navigate to Our Oils page with order hash and trigger scroll
-      window.location.href='index.html#order';
-      // Store flag in sessionStorage to trigger scroll on the target page
-      sessionStorage.setItem('scrollToOrder', 'true');
-    };
-    function escapeHtml(str){ return String(str).replace(/[&<>"]/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[s])); }
-  /* Removed legacy subCartOverlay helpers (openSubCart/closeSubCart/goToOrderPage) */
-    // Event delegation for cart quantity and remove buttons
-    document.addEventListener('click', function(e){
-      const target = e.target;
-      if(target.classList && target.classList.contains('qty-btn-cart')){
-        const index = parseInt(target.dataset.index, 10);
-        const action = target.dataset.action;
-        if(!isNaN(index) && action){
-          changeQty(index, action === 'inc' ? 1 : -1);
-        }
-        e.stopPropagation();
-        return;
-      }
-      if(target.classList && target.classList.contains('cart-item-remove')){
-        const index = parseInt(target.dataset.index, 10);
-        if(!isNaN(index)){
-          removeItem(index);
-        }
-        e.stopPropagation();
-        return;
-      }
-    });
-    // Open via cart tab
-    document.getElementById('cartTab').addEventListener('click', toggleCart);
-    // Click outside cart to close (robust – ignores any interactive cart element clicks)
-    document.addEventListener('click', function(e){
-      const panel = document.getElementById('cartDropdown');
-      if(!panel || !panel.classList.contains('open')) return; // not open, ignore
-      const tab = document.getElementById('cartTab');
-      const backdrop = document.getElementById('cartBackdrop');
-      const t = e.target;
-      // If clicking backdrop, allow toggle (acts like close button)
-      if(t === backdrop){ toggleCart(); return; }
-      // If click is inside panel or tab button, do nothing
-      if(panel.contains(t) || tab.contains(t)) return;
-      // Extra guard: if somehow the event target is a descendant via closest lookups
-      if(t.closest && (t.closest('.cart-item') || t.closest('.cart-stepper') || t.closest('.cart-actions'))) return;
-      // Otherwise it's an outside click
-      toggleCart();
-    });
-    window.addEventListener('storage', function(e){ if(e.key==='arumeeCart'){ updateCartDisplay(); }});
-    // Initial load
-    updateCartDisplay();
-    console.log('Benefits page script loaded. toggleCart is:', typeof window.toggleCart);
-  </script>
+  <script src="arumee_assets/subpage-cart.js"></script>
+  <script src="arumee_assets/premium-subpages.js"></script>
   <script src="arumee_assets/chat-widget.js"></script>
-<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('/service-worker.js');</script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js');
+    }
+  </script>
 </body>
 </html>
