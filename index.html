@@ -398,7 +398,7 @@
 </div>
 <div class="nav-actions">
 <div class="desktop-nav-links" aria-label="Primary navigation">
-<a class="desktop-nav-link active" data-nav="home" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" aria-current="page">Home</a>
+<a class="desktop-nav-link active" data-nav="home" href="#" onclick="if(window.location.hash){history.replaceState(null,'',window.location.pathname + window.location.search);window.dispatchEvent(new Event('hashchange'));}window.scrollTo({top:0,behavior:'smooth'});return false;" aria-current="page">Home</a>
 <a class="desktop-nav-link" data-nav="shop" href="#oilsGrid">Shop</a>
 <a class="desktop-nav-link" data-nav="story" href="about.html">Our Story</a>
 <a class="desktop-nav-link" data-nav="faq" href="#faq">FAQ</a>
@@ -431,7 +431,7 @@
       <button class="mmo-close" onclick="closeMobileMenu()" aria-label="Close menu">&#x2715;</button>
     </div>
     <nav class="mmo-nav">
-      <a class="mmo-link" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});closeMobileMenu();return false;"><span class="mmo-link-icon">🏠</span>Home</a>
+      <a class="mmo-link" href="#" onclick="if(window.location.hash){history.replaceState(null,'',window.location.pathname + window.location.search);window.dispatchEvent(new Event('hashchange'));}window.scrollTo({top:0,behavior:'smooth'});closeMobileMenu();return false;"><span class="mmo-link-icon">🏠</span>Home</a>
       <a class="mmo-link" href="#oilsGrid" onclick="closeMobileMenu()"><span class="mmo-link-icon">🛍</span>Shop</a>
       <a class="mmo-link" href="#benefits" onclick="closeMobileMenu()"><span class="mmo-link-icon">🌿</span>Benefits</a>
       <a class="mmo-link" href="#faq" onclick="closeMobileMenu()"><span class="mmo-link-icon">💬</span>FAQ</a>
@@ -470,7 +470,7 @@
 </header>
 
 <nav class="mobile-app-bar" aria-label="Mobile quick navigation">
-<a class="app-item active" href="#mainContent">
+<a class="app-item active" href="#mainContent" onclick="if(window.location.hash){history.replaceState(null,'',window.location.pathname + window.location.search);window.dispatchEvent(new Event('hashchange'));}">
 <span class="app-item-icon">⌂</span>
 <span>Home</span>
 </a>
