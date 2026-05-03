@@ -634,12 +634,7 @@
           params.append('source', 'website');
           params.append('url_confirm', '');
 
-          fetch('https://script.google.com/macros/s/AKfycbwpKpqtx9jqE3zAFy8F_MBcEc9F8mFIp8FmxkJCxfDXd3sxczYDvy-zmNW8uDGMMtdhfA/exec', {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: params.toString()
-          }).then(function () {
+          submitOrderRequest('https://script.google.com/macros/s/AKfycbwpKpqtx9jqE3zAFy8F_MBcEc9F8mFIp8FmxkJCxfDXd3sxczYDvy-zmNW8uDGMMtdhfA/exec', params).then(function () {
             clearInterval(interval);
             submitBtn.classList.remove('loading');
             submitBtn.disabled = false;
@@ -702,6 +697,29 @@
       });
 
       // Input filters
+
+      function submitOrderRequest(url, params) {
+        var body = params.toString();
+
+        if (navigator.sendBeacon) {
+          try {
+            var beaconPayload = new Blob([body], { type: 'application/x-www-form-urlencoded;charset=UTF-8' });
+            if (navigator.sendBeacon(url, beaconPayload)) {
+              return Promise.resolve({ transport: 'beacon' });
+            }
+          } catch (beaconErr) {}
+        }
+
+        return fetch(url, {
+          method: 'POST',
+          mode: 'no-cors',
+          keepalive: true,
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: body
+        }).then(function () {
+          return { transport: 'fetch' };
+        });
+      }
       var nameInput = document.getElementById('input-name');
       var phoneInput = document.getElementById('input-phone');
       if (nameInput) nameInput.addEventListener('input', function (e) { e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, ''); });

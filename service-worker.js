@@ -5,7 +5,7 @@
   • New SW version → old cache is automatically wiped on activation
   ───────────────────────────────────────────────────────────────────────── */
 
-const CACHE_NAME = 'arumee-v23';
+const CACHE_NAME = 'arumee-v24';
 
 // Allow the page to force-activate a waiting SW
 self.addEventListener('message', event => {
