@@ -30,7 +30,7 @@ function doPost(e) {
   response.setMimeType(ContentService.MimeType.JSON);
 
   try {
-    var params = e.parameter;
+    var params = parseRequestParams_(e);
     var action = (params.action || 'order').trim();
 
     // Handle sales tracking action
@@ -39,7 +39,7 @@ function doPost(e) {
     }
 
     // Handle regular order submission (default behavior)
-    return handleOrderSubmission(params, response);
+    return handleOrderSubmission(e, response);
 
   } catch (err) {
     response.setContent(JSON.stringify({ status: 'error', message: 'Server error: ' + err.message }));
@@ -122,6 +122,11 @@ function handleSaleTracking(e, response) {
         sendTelegramNotification_(message);
       } catch (notifyErr) {
         Logger.log('Telegram notify failed: ' + notifyErr.message);
+        logSystemEvent_('telegram-sale-failure', notifyErr.message, {
+          date: date,
+          product: product,
+          amount: amount
+        });
       }
     }
 
@@ -309,6 +314,32 @@ function testTelegramNotification() {
   sendTelegramNotification_('✅ Telegram alert test from Arumee Apps Script');
 }
 
+function testOrderTelegramNotification() {
+  var message = [
+    '🛒 New Website Order',
+    '',
+    'Customer',
+    '• Name: Test Customer',
+    '• Phone: 9876543210',
+    '• Source: website',
+    '',
+    'Delivery',
+    '• 12 Demo Street, Namakkal, 637001',
+    '',
+    'Order Items',
+    '• 1L Groundnut Oil — 1',
+    '• 1L Coconut Oil — 2',
+    '',
+    'Summary',
+    '• Total: ₹1227',
+    '• Notes: Telegram order alert test',
+    '',
+    'Time: ' + new Date().toLocaleString()
+  ].join('\n');
+
+  sendTelegramNotification_(message);
+}
+
 function initTelegramNow() 
 {
   setupTelegramConfig('8733559627:AAFjlkyWj3Oqzvm9TQ8yUbFBGooCv1RYF84', '6860397839');
@@ -319,6 +350,8 @@ function initTelegramNow()
  * Handles regular order submission from website/chat
  */
 function handleOrderSubmission(params, response) {
+  params = parseRequestParams_(params);
+
   // 1. Honeypot check — bots fill the 'url_confirm' field, humans don't
   if (params.url_confirm && params.url_confirm.length > 0) {
     response.setContent(JSON.stringify({ status: 'ok' })); // silent reject
@@ -334,7 +367,24 @@ function handleOrderSubmission(params, response) {
   var total   = (params.total   || '').trim();
   var source  = (params.source  || 'website').trim(); // 'website' or 'chat'
 
+  logSystemEvent_('order-request-received', 'Incoming order request received', {
+    name: name,
+    phone: phone,
+    source: source,
+    hasItems: !!items,
+    total: total,
+    rawKeys: Object.keys(params || {})
+  });
+
   if (!name || !phone || !address || !pincode || !items) {
+    logSystemEvent_('order-request-invalid', 'Missing required fields', {
+      name: name,
+      phone: phone,
+      address: address,
+      pincode: pincode,
+      hasItems: !!items,
+      source: source
+    });
     response.setContent(JSON.stringify({ status: 'error', message: 'Missing required fields' }));
     return response;
   }
@@ -344,12 +394,21 @@ function handleOrderSubmission(params, response) {
   if (cleanPhone.length === 12 && cleanPhone.startsWith('91')) cleanPhone = cleanPhone.slice(2);
   if (cleanPhone.length === 11 && cleanPhone.startsWith('0'))  cleanPhone = cleanPhone.slice(1);
   if (!/^[6-9]\d{9}$/.test(cleanPhone)) {
+    logSystemEvent_('order-request-invalid', 'Invalid phone number', {
+      phone: phone,
+      cleanPhone: cleanPhone,
+      source: source
+    });
     response.setContent(JSON.stringify({ status: 'error', message: 'Invalid phone number' }));
     return response;
   }
 
   // 4. Pincode validation — must be 6 digits
   if (!/^\d{6}$/.test(pincode)) {
+    logSystemEvent_('order-request-invalid', 'Invalid pincode', {
+      pincode: pincode,
+      source: source
+    });
     response.setContent(JSON.stringify({ status: 'error', message: 'Invalid pincode' }));
     return response;
   }
@@ -379,6 +438,78 @@ function handleOrderSubmission(params, response) {
     ts, name, cleanPhone, address, pincode,
     items, total, source, notes
   ]);
+
+  logSystemEvent_('order-sheet-write-success', 'Order written to Orders sheet', {
+    name: name,
+    phone: cleanPhone,
+    source: source,
+    total: total,
+    timestamp: ts.toISOString()
+  });
+
+  if (TELEGRAM_ENABLED) {
+    try {
+      var orderAddress = [address, pincode].filter(function(value) {
+        return value;
+      }).join(', ');
+      var orderLines = String(items || '')
+        .split(/\r?\n/)
+        .map(function(line) {
+          return String(line || '').trim();
+        })
+        .filter(function(line) {
+          return !!line;
+        })
+        .map(function(line) {
+          return '• ' + line;
+        });
+      var orderMessage = [
+        '🛒 New Website Order',
+        '',
+        'Customer',
+        '• Name: ' + name,
+        '• Phone: ' + cleanPhone,
+        '• Source: ' + source,
+        '',
+        'Delivery',
+        '• ' + orderAddress,
+        '',
+        'Order Items'
+      ];
+
+      if (orderLines.length) {
+        orderMessage = orderMessage.concat(orderLines);
+      }
+
+      orderMessage.push('');
+      orderMessage.push('Summary');
+      orderMessage.push('• Total: ₹' + (total || '0'));
+
+      if (notes) {
+        orderMessage.push('• Notes: ' + notes);
+      }
+
+      orderMessage.push('');
+      orderMessage.push('Time: ' + ts.toLocaleString());
+      sendTelegramNotification_(orderMessage.join('\n'));
+      logSystemEvent_('telegram-order-success', 'Telegram order notification sent', {
+        name: name,
+        phone: cleanPhone,
+        source: source,
+        total: total,
+        timestamp: ts.toISOString()
+      });
+    } catch (notifyErr) {
+      Logger.log('Telegram order notify failed: ' + notifyErr.message);
+      logSystemEvent_('telegram-order-failure', notifyErr.message, {
+        name: name,
+        phone: cleanPhone,
+        source: source,
+        total: total,
+        timestamp: ts.toISOString()
+      });
+    }
+  }
 
   // Format the new row
   var lastRow = sheet.getLastRow();
@@ -515,4 +646,69 @@ function ensureSalesSheetExists(ss) {
     } catch (ignore) {}
   }
   return sheet;
+}
+
+function parseRequestParams_(input) {
+  if (!input) {
+    return {};
+  }
+
+  if (input.parameter && typeof input.parameter === 'object') {
+    var mergedParams = {};
+    Object.keys(input.parameter).forEach(function(key) {
+      mergedParams[key] = input.parameter[key];
+    });
+
+    if (Object.keys(mergedParams).length > 0) {
+      return mergedParams;
+    }
+  }
+
+  if (!input.postData || !input.postData.contents) {
+    return input.parameter ? {} : input;
+  }
+
+  var body = String(input.postData.contents || '');
+  if (!body) {
+    return {};
+  }
+
+  try {
+    return JSON.parse(body);
+  } catch (jsonErr) {}
+
+  var parsed = {};
+  body.split('&').forEach(function(part) {
+    if (!part) {
+      return;
+    }
+
+    var kv = part.split('=');
+    var key = decodeURIComponent(String(kv[0] || '').replace(/\+/g, ' '));
+    var value = decodeURIComponent(String(kv.slice(1).join('=') || '').replace(/\+/g, ' '));
+    if (key) {
+      parsed[key] = value;
+    }
+  });
+
+  return parsed;
+}
+
+function logSystemEvent_(eventType, message, details) {
+  try {
+    var ss = SpreadsheetApp.openById(SHEET_ID);
+    var sheet = ss.getSheetByName('SystemLogs');
+    if (!sheet) {
+      sheet = ss.insertSheet('SystemLogs');
+      sheet.appendRow(['Timestamp', 'Event Type', 'Message', 'Details']);
+      sheet.getRange(1, 1, 1, 4).setFontWeight('bold').setBackground('#5b6770').setFontColor('#ffffff');
+    }
+
+    sheet.appendRow([
+      new Date(),
+      String(eventType || ''),
+      String(message || ''),
+      JSON.stringify(details || {})
+    ]);
+  } catch (ignore) {}
 }
