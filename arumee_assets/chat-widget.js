@@ -1584,12 +1584,35 @@
         _fd.append('total',   String(_total));
         _fd.append('source',  'chat');
         _fd.append('url_confirm', ''); // honeypot — always blank for real users
-        fetch(_ENDPOINT, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: _fd.toString() }).catch(function(){});
+        submitOrderRequest_(_ENDPOINT, _fd).catch(function(){});
       } catch(gsErr) {}
 
       setChips(['📲 Confirm on WhatsApp', '✏️ Edit Details', '🗑️ Start over']);
       updateWaBtn();
     }, 750);
+  }
+
+  function submitOrderRequest_(url, params) {
+    var body = params.toString();
+
+    if (navigator.sendBeacon) {
+      try {
+        var beaconPayload = new Blob([body], { type: 'application/x-www-form-urlencoded;charset=UTF-8' });
+        if (navigator.sendBeacon(url, beaconPayload)) {
+          return Promise.resolve({ transport: 'beacon' });
+        }
+      } catch (beaconErr) {}
+    }
+
+    return fetch(url, {
+      method: 'POST',
+      mode: 'no-cors',
+      keepalive: true,
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body
+    }).then(function() {
+      return { transport: 'fetch' };
+    });
   }
 
   // ── Refresh guard functions ──────────────────────────────────────────
