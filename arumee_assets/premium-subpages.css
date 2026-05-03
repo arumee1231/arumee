@@ -256,7 +256,7 @@ body.subpage {
   z-index: 1;
   width: min(1180px, 92vw);
   margin: 0 auto;
-  padding: calc(var(--header-height-mobile) + 28px) 0 58px;
+  padding: calc(var(--header-height-mobile) + 14px) 0 58px;
 }
 
 .page-toast {
@@ -289,6 +289,7 @@ body.subpage {
   overflow: hidden;
   display: grid;
   align-content: center;
+  text-align: center;
   border-radius: 30px;
   padding: 48px 48px;
   background:
@@ -337,7 +338,7 @@ body.subpage {
 }
 
 .page-hero p {
-  margin: 12px 0 0;
+  margin: 12px auto 0;
   max-width: 64ch;
   color: rgba(248, 243, 232, 0.84);
   font-size: clamp(0.9rem, 3.4vw, 0.98rem);
@@ -350,6 +351,7 @@ body.subpage {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  justify-content: center;
 }
 
 .hero-pill {
