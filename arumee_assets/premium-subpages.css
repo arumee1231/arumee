@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --forest: #1A3328;
   --forest-soft: #243D32;
   --forest-deep: #0E1F16;
@@ -1406,8 +1406,9 @@ body.subpage {
   .mobile-nav-cart { display: flex; }
 }
 
-/* â”€â”€ Cross-document View Transitions (smooth page switches) â”€â”€ */
-@view-transition { navigation: auto; }
+/* Disable cross-document view transitions on subpages; mobile browsers were
+  occasionally leaving the previous page snapshot stuck during Home nav. */
+@view-transition { navigation: none; }
 
 .sticky-nav { view-transition-name: site-nav; }
 
