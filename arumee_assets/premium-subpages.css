@@ -132,16 +132,16 @@ body.subpage {
   gap: 12px;
   text-decoration: none;
   font-family: 'Cormorant Garamond', 'Cormorant Garamond Fallback', serif;
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 600;
   color: var(--green);
-  letter-spacing: 0.08em;
+  letter-spacing: 0.07em;
   line-height: 1;
 }
 
 .nav-brand img {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   border-radius: 8px;
   object-fit: cover;
 }
@@ -997,14 +997,14 @@ body.subpage {
   }
 
   .nav-brand {
-    font-size: 18px;
-    gap: 9px;
-    letter-spacing: 0.12em;
+    font-size: 20px;
+    gap: 10px;
+    letter-spacing: 0.08em;
   }
 
   .nav-brand img {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     border-radius: 10px;
   }
 
@@ -1094,13 +1094,13 @@ body.subpage {
   }
 
   .nav-brand img {
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
   }
 
   .nav-brand {
-    font-size: 24px;
-    letter-spacing: 2px;
+    font-size: 26px;
+    letter-spacing: 1.5px;
   }
 
   .subpage .cart-tab {
@@ -1286,8 +1286,8 @@ body.subpage {
   gap: 10px;
 }
 .mmo-logo {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 10px;
   object-fit: cover;
   flex-shrink: 0;
