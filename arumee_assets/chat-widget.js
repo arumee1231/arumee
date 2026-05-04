@@ -627,7 +627,7 @@
   <!-- Fixed chat panel -->
   <div aria-label="Arumee Chat Assistant" aria-modal="true" id="waChatPanel" role="dialog">
     <div class="wa-head">
-      <img alt="Arumee" class="wa-head-logo" src="arumee_assets/logo.png"/>
+      <img alt="Arumee" class="wa-head-logo" src="arumee_assets/logo.webp"/>
       <div class="wa-head-info">
         <span class="wa-head-name">Arumee Oils</span>
         <span class="wa-head-sub">&#x25CF; Online &middot; Replies instantly</span>
@@ -1574,7 +1574,7 @@
           return i.label + ' ' + i.size + (i.qty > 1 ? ' \u00d7 ' + i.qty : '') + ' \u2014 \u20b9' + i.price.toLocaleString('en-IN');
         }).join('\n');
         var _addrFull = addr + (district ? ', ' + district : '') + ' ' + pin;
-        var _ENDPOINT = 'https://script.google.com/macros/s/AKfycbwpKpqtx9jqE3zAFy8F_MBcEc9F8mFIp8FmxkJCxfDXd3sxczYDvy-zmNW8uDGMMtdhfA/exec';
+        var _ENDPOINT = 'https://script.google.com/macros/s/AKfycbyVXRfITudWEyii7rQxbNakPJ-TmK3Tq-0-RGjoqcHtjKTRNEXEJ_Xn-fUQ199VKJsE3w/exec';
         var _fd = new URLSearchParams();
         _fd.append('name',    name);
         _fd.append('phone',   phone);
@@ -1584,35 +1584,12 @@
         _fd.append('total',   String(_total));
         _fd.append('source',  'chat');
         _fd.append('url_confirm', ''); // honeypot — always blank for real users
-        submitOrderRequest_(_ENDPOINT, _fd).catch(function(){});
+        fetch(_ENDPOINT, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: _fd.toString() }).catch(function(){});
       } catch(gsErr) {}
 
       setChips(['📲 Confirm on WhatsApp', '✏️ Edit Details', '🗑️ Start over']);
       updateWaBtn();
     }, 750);
-  }
-
-  function submitOrderRequest_(url, params) {
-    var body = params.toString();
-
-    if (navigator.sendBeacon) {
-      try {
-        var beaconPayload = new Blob([body], { type: 'application/x-www-form-urlencoded;charset=UTF-8' });
-        if (navigator.sendBeacon(url, beaconPayload)) {
-          return Promise.resolve({ transport: 'beacon' });
-        }
-      } catch (beaconErr) {}
-    }
-
-    return fetch(url, {
-      method: 'POST',
-      mode: 'no-cors',
-      keepalive: true,
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: body
-    }).then(function() {
-      return { transport: 'fetch' };
-    });
   }
 
   // ── Refresh guard functions ──────────────────────────────────────────
