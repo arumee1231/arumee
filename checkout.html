@@ -634,7 +634,7 @@
           params.append('source', 'website');
           params.append('url_confirm', '');
 
-          submitOrderRequest('https://script.google.com/macros/s/AKfycbwpKpqtx9jqE3zAFy8F_MBcEc9F8mFIp8FmxkJCxfDXd3sxczYDvy-zmNW8uDGMMtdhfA/exec', params).then(function () {
+          submitOrderRequest('https://script.google.com/macros/s/AKfycbyVXRfITudWEyii7rQxbNakPJ-TmK3Tq-0-RGjoqcHtjKTRNEXEJ_Xn-fUQ199VKJsE3w/exec', params).then(function () {
             clearInterval(interval);
             submitBtn.classList.remove('loading');
             submitBtn.disabled = false;
@@ -700,15 +700,6 @@
 
       function submitOrderRequest(url, params) {
         var body = params.toString();
-
-        if (navigator.sendBeacon) {
-          try {
-            var beaconPayload = new Blob([body], { type: 'application/x-www-form-urlencoded;charset=UTF-8' });
-            if (navigator.sendBeacon(url, beaconPayload)) {
-              return Promise.resolve({ transport: 'beacon' });
-            }
-          } catch (beaconErr) {}
-        }
 
         return fetch(url, {
           method: 'POST',
