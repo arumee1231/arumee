@@ -113,6 +113,42 @@ async function submitAndCaptureDialog(page, clickSelector = 'form.card button[ty
   return dialogMessage;
 }
 
+async function seedCheckoutCart(page) {
+  await page.addInitScript(() => {
+    localStorage.setItem('arumeeCart', JSON.stringify([
+      {
+        productName: 'Wooden Cold-Pressed Groundnut Oil (1L)',
+        originalName: 'Wooden Cold-Pressed Groundnut Oil',
+        size: '1L',
+        qty: 1,
+        price: 329,
+        total: 329,
+        itemKey: 'groundnut-1L',
+      },
+    ]));
+  });
+}
+
+async function openCheckoutWithCart(page) {
+  await seedCheckoutCart(page);
+  await page.goto('/checkout.html');
+  await expect(page.locator('#order-cart-preview')).toContainText('Wooden Cold-Pressed Groundnut Oil (1L)');
+}
+
+async function fillCheckoutForm(page, {
+  name = 'Ravi Kumar',
+  phone = '9876543210',
+  address = '12 Gandhi Street, Coimbatore City',
+  pin = '641001',
+} = {}) {
+  await page.locator('#input-name').fill(name);
+  await page.locator('#input-phone').fill(phone);
+  await page.locator('#input-address').fill(address);
+  await page.locator('#input-pincode').fill(pin);
+  await page.waitForTimeout(2600);
+  await page.locator('#paymentConfirm').check();
+}
+
 //  EXISTING TESTS (updated selectors / honeypot field name) 
 
 test('refresh modal clear removes cart + chat storage', async ({ page }) => {
@@ -423,6 +459,64 @@ test('website submit button enters loading state on valid submission', async ({ 
   // After fetch resolves: loading state cleared, button re-enabled
   await expect(submitBtn).not.toHaveClass(/loading/, { timeout: 10000 });
   await expect(submitBtn).toBeEnabled({ timeout: 5000 });
+});
+
+test('checkout page submits orders through fetch to Apps Script', async ({ page }) => {
+  await page.route('**/tn_pins.json', route =>
+    route.fulfill({ contentType: 'application/json', body: MOCK_TN_PINS }),
+  );
+
+  let requestPayload = '';
+  await page.route('https://script.google.com/**', async route => {
+    requestPayload = route.request().postData() || '';
+    await route.fulfill({ status: 200, contentType: 'text/plain', body: 'OK' });
+  });
+
+  await openCheckoutWithCart(page);
+  await fillCheckoutForm(page);
+
+  await page.locator('#checkoutForm button[type="submit"]').click();
+
+  await expect(page.locator('#successModal')).toHaveClass(/show/, { timeout: 10000 });
+  await expect.poll(() => requestPayload, { timeout: 8000 }).toContain('name=Ravi+Kumar');
+  expect(requestPayload).toContain('phone=9876543210');
+  expect(requestPayload).toContain('pincode=641001');
+  expect(requestPayload).toContain('source=website');
+  expect(requestPayload).toContain('items=');
+  expect(requestPayload).toContain('total=329');
+});
+
+test('checkout page does not use sendBeacon shortcut when submitting orders', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.__sendBeaconCalls = [];
+    const originalSendBeacon = navigator.sendBeacon ? navigator.sendBeacon.bind(navigator) : null;
+    navigator.sendBeacon = function (...args) {
+      window.__sendBeaconCalls.push(args.map(arg => String(arg || '')));
+      return true;
+    };
+    window.__originalSendBeacon = originalSendBeacon;
+  });
+
+  await page.route('**/tn_pins.json', route =>
+    route.fulfill({ contentType: 'application/json', body: MOCK_TN_PINS }),
+  );
+
+  let fetchRequestCount = 0;
+  await page.route('https://script.google.com/**', async route => {
+    fetchRequestCount += 1;
+    await route.fulfill({ status: 200, contentType: 'text/plain', body: 'OK' });
+  });
+
+  await openCheckoutWithCart(page);
+  await fillCheckoutForm(page, { name: 'Beacon Guard' });
+
+  await page.locator('#checkoutForm button[type="submit"]').click();
+
+  await expect(page.locator('#successModal')).toHaveClass(/show/, { timeout: 10000 });
+  await expect.poll(() => fetchRequestCount, { timeout: 8000 }).toBe(1);
+
+  const sendBeaconCalls = await page.evaluate(() => window.__sendBeaconCalls || []);
+  expect(sendBeaconCalls).toHaveLength(0);
 });
 
 //  CHAT ORDER 2-STEP FLOW 
