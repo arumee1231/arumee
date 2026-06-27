@@ -660,6 +660,135 @@
       .sheet-actions { flex-direction: column; }
       .sheet-actions button { width: 100%; }
     }
+
+    /* ── Pricing Tab ── */
+    .pricing-product-card {
+      background: #f9f9f9;
+      border: 1px solid #e5e5e5;
+      border-radius: 14px;
+      padding: 22px 20px 20px;
+      margin-bottom: 22px;
+    }
+
+    .pricing-product-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .pricing-product-img {
+      width: 52px;
+      height: 52px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    }
+
+    .pricing-product-header h3 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 700;
+      color: #222;
+    }
+
+    .pricing-section-label {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 14px;
+    }
+
+    .pricing-calc-result {
+      background: linear-gradient(135deg, rgba(102,126,234,0.07), rgba(118,75,162,0.07));
+      border: 1px solid rgba(102,126,234,0.18);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 13.5px;
+      color: #444;
+      margin: 12px 0;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+
+    .pricing-autofill-btn {
+      width: auto;
+      padding: 8px 18px;
+      background: rgba(102,126,234,0.10);
+      color: #667eea;
+      border: 1.5px solid rgba(102,126,234,0.28);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+
+    .pricing-autofill-btn:hover { background: rgba(102,126,234,0.18); transform: none; box-shadow: none; }
+
+    .pricing-divider { border: none; border-top: 1px solid #eee; margin: 18px 0; }
+
+    .pricing-prices-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 14px;
+    }
+
+    .pricing-price-item { display: flex; flex-direction: column; gap: 8px; }
+
+    .pricing-size-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .pricing-input-wrap {
+      display: flex;
+      align-items: center;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      padding: 10px 12px;
+      gap: 6px;
+      background: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .pricing-input-wrap:focus-within {
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102,126,234,0.10);
+    }
+
+    .pricing-rupee { font-weight: 900; font-size: 15px; color: #555; line-height: 1; }
+
+    .pricing-price-input {
+      border: none;
+      outline: none;
+      width: 100%;
+      font-size: 20px;
+      font-weight: 800;
+      color: #111;
+      background: transparent;
+    }
+
+    .pricing-action-bar { display: flex; gap: 10px; margin-top: 4px; flex-wrap: wrap; }
+
+    @media (max-width: 768px) {
+      .pricing-product-card { padding: 16px; margin-bottom: 16px; }
+      .pricing-prices-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .pricing-price-input { font-size: 18px; }
+    }
+
+    @media (max-width: 480px) {
+      .pricing-action-bar { flex-direction: column; }
+      .pricing-action-bar button { width: 100%; }
+    }
   </style>
 </head>
 
@@ -699,6 +828,7 @@
     <div class="tabs" role="tablist" aria-label="Sales sections">
       <div class="tab active" data-tab="entry" role="tab" aria-selected="true" tabindex="0">📝 Sales Entry</div>
       <div class="tab" data-tab="dashboard" role="tab" aria-selected="false" tabindex="0">📈 Dashboard</div>
+      <div class="tab" data-tab="pricing" role="tab" aria-selected="false" tabindex="0">💰 Pricing</div>
     </div>
 
     <!-- Sales Entry Tab -->
@@ -850,6 +980,212 @@
         </div>
       </div>
     </div>
+
+    <!-- Pricing Tab -->
+    <div class="tab-content" id="pricingTab">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:24px;">
+        <div>
+          <h2 style="margin:0 0 6px;color:#333;">💰 Price Management</h2>
+          <p style="margin:0;color:#888;font-size:13px;line-height:1.6;">Enter cost breakdown to calculate selling prices. Changes apply live on the website once saved.</p>
+        </div>
+        <div id="pricingLastUpdated" style="font-size:12px;color:#aaa;white-space:nowrap;padding-top:4px;"></div>
+      </div>
+
+      <div class="success-message" id="pricingSuccess"></div>
+
+      <!-- Coconut Oil -->
+      <div class="pricing-product-card">
+        <div class="pricing-product-header">
+          <img src="arumee_assets/Coconut.webp" alt="" class="pricing-product-img">
+          <div>
+            <h3>Coconut Oil <span style="font-size:13px;font-weight:400;color:#888;">/ தேங்காய் எண்ணெய்</span></h3>
+          </div>
+        </div>
+
+        <div class="pricing-section-label">📊 Cost Calculator</div>
+        <div class="form-grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;">
+          <div class="form-field">
+            <label for="coconut_oilCost">Raw Oil Cost (₹/L)</label>
+            <input type="number" id="coconut_oilCost" placeholder="e.g. 350" min="0" step="1" oninput="calcOilPrices('coconut')">
+          </div>
+          <div class="form-field">
+            <label for="coconut_bottleCost">Bottle Cost (₹)</label>
+            <input type="number" id="coconut_bottleCost" placeholder="e.g. 40" min="0" step="1" oninput="calcOilPrices('coconut')">
+          </div>
+          <div class="form-field">
+            <label for="coconut_packagingCost">Parcel/Packaging (₹)</label>
+            <input type="number" id="coconut_packagingCost" placeholder="e.g. 15" min="0" step="1" oninput="calcOilPrices('coconut')">
+          </div>
+          <div class="form-field">
+            <label for="coconut_margin">Profit Margin (%)</label>
+            <input type="number" id="coconut_margin" placeholder="e.g. 20" min="0" max="500" step="1" oninput="calcOilPrices('coconut')">
+          </div>
+        </div>
+        <div class="pricing-calc-result" id="coconut_calcResult">Enter cost details above to see calculated price →</div>
+        <button type="button" class="pricing-autofill-btn" onclick="fillFromCalc('coconut')">⬇ Auto-fill prices from calculation</button>
+
+        <hr class="pricing-divider">
+        <div class="pricing-section-label">🏷️ Final Selling Prices</div>
+        <div class="pricing-prices-grid">
+          <div class="pricing-price-item">
+            <div class="pricing-size-label">1 Litre</div>
+            <div class="pricing-input-wrap">
+              <span class="pricing-rupee">₹</span>
+              <input type="number" id="coconut_price_1L" class="pricing-price-input" placeholder="449" min="0">
+            </div>
+          </div>
+          <div class="pricing-price-item">
+            <div class="pricing-size-label">2 Litres</div>
+            <div class="pricing-input-wrap">
+              <span class="pricing-rupee">₹</span>
+              <input type="number" id="coconut_price_2L" class="pricing-price-input" placeholder="869" min="0">
+            </div>
+          </div>
+          <div class="pricing-price-item">
+            <div class="pricing-size-label">5 Litres</div>
+            <div class="pricing-input-wrap">
+              <span class="pricing-rupee">₹</span>
+              <input type="number" id="coconut_price_5L" class="pricing-price-input" placeholder="2199" min="0">
+            </div>
+          </div>
+          <div class="pricing-price-item">
+            <div class="pricing-size-label">8 Litres</div>
+            <div class="pricing-input-wrap">
+              <span class="pricing-rupee">₹</span>
+              <input type="number" id="coconut_price_8L" class="pricing-price-input" placeholder="3399" min="0">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Groundnut Oil -->
+      <div class="pricing-product-card">
+        <div class="pricing-product-header">
+          <img src="arumee_assets/groundnut.webp" alt="" class="pricing-product-img">
+          <div>
+            <h3>Groundnut Oil <span style="font-size:13px;font-weight:400;color:#888;">/ கடலை எண்ணெய்</span></h3>
+          </div>
+        </div>
+
+        <div class="pricing-section-label">📊 Cost Calculator</div>
+        <div class="form-grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;">
+          <div class="form-field">
+            <label for="groundnut_oilCost">Raw Oil Cost (₹/L)</label>
+            <input type="number" id="groundnut_oilCost" placeholder="e.g. 240" min="0" step="1" oninput="calcOilPrices('groundnut')">
+          </div>
+          <div class="form-field">
+            <label for="groundnut_bottleCost">Bottle Cost (₹)</label>
+            <input type="number" id="groundnut_bottleCost" placeholder="e.g. 40" min="0" step="1" oninput="calcOilPrices('groundnut')">
+          </div>
+          <div class="form-field">
+            <label for="groundnut_packagingCost">Parcel/Packaging (₹)</label>
+            <input type="number" id="groundnut_packagingCost" placeholder="e.g. 15" min="0" step="1" oninput="calcOilPrices('groundnut')">
+          </div>
+          <div class="form-field">
+            <label for="groundnut_margin">Profit Margin (%)</label>
+            <input type="number" id="groundnut_margin" placeholder="e.g. 20" min="0" max="500" step="1" oninput="calcOilPrices('groundnut')">
+          </div>
+        </div>
+        <div class="pricing-calc-result" id="groundnut_calcResult">Enter cost details above to see calculated price →</div>
+        <button type="button" class="pricing-autofill-btn" onclick="fillFromCalc('groundnut')">⬇ Auto-fill prices from calculation</button>
+
+        <hr class="pricing-divider">
+        <div class="pricing-section-label">🏷️ Final Selling Prices</div>
+        <div class="pricing-prices-grid">
+          <div class="pricing-price-item">
+            <div class="pricing-size-label">1 Litre</div>
+            <div class="pricing-input-wrap">
+              <span class="pricing-rupee">₹</span>
+              <input type="number" id="groundnut_price_1L" class="pricing-price-input" placeholder="329" min="0">
+            </div>
+          </div>
+          <div class="pricing-price-item">
+            <div class="pricing-size-label">2 Litres</div>
+            <div class="pricing-input-wrap">
+              <span class="pricing-rupee">₹</span>
+              <input type="number" id="groundnut_price_2L" class="pricing-price-input" placeholder="639" min="0">
+            </div>
+          </div>
+          <div class="pricing-price-item">
+            <div class="pricing-size-label">5 Litres</div>
+            <div class="pricing-input-wrap">
+              <span class="pricing-rupee">₹</span>
+              <input type="number" id="groundnut_price_5L" class="pricing-price-input" placeholder="1549" min="0">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gingelly Oil -->
+      <div class="pricing-product-card">
+        <div class="pricing-product-header">
+          <img src="arumee_assets/Sesame.webp" alt="" class="pricing-product-img">
+          <div>
+            <h3>Gingelly Oil <span style="font-size:13px;font-weight:400;color:#888;">/ நல்லெண்ணெய்</span></h3>
+          </div>
+        </div>
+
+        <div class="pricing-section-label">📊 Cost Calculator</div>
+        <div class="form-grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;">
+          <div class="form-field">
+            <label for="gingelly_oilCost">Raw Oil Cost (₹/L)</label>
+            <input type="number" id="gingelly_oilCost" placeholder="e.g. 380" min="0" step="1" oninput="calcOilPrices('gingelly')">
+          </div>
+          <div class="form-field">
+            <label for="gingelly_bottleCost">Bottle Cost (₹)</label>
+            <input type="number" id="gingelly_bottleCost" placeholder="e.g. 40" min="0" step="1" oninput="calcOilPrices('gingelly')">
+          </div>
+          <div class="form-field">
+            <label for="gingelly_packagingCost">Parcel/Packaging (₹)</label>
+            <input type="number" id="gingelly_packagingCost" placeholder="e.g. 15" min="0" step="1" oninput="calcOilPrices('gingelly')">
+          </div>
+          <div class="form-field">
+            <label for="gingelly_margin">Profit Margin (%)</label>
+            <input type="number" id="gingelly_margin" placeholder="e.g. 20" min="0" max="500" step="1" oninput="calcOilPrices('gingelly')">
+          </div>
+        </div>
+        <div class="pricing-calc-result" id="gingelly_calcResult">Enter cost details above to see calculated price →</div>
+        <button type="button" class="pricing-autofill-btn" onclick="fillFromCalc('gingelly')">⬇ Auto-fill prices from calculation</button>
+
+        <hr class="pricing-divider">
+        <div class="pricing-section-label">🏷️ Final Selling Prices</div>
+        <div class="pricing-prices-grid">
+          <div class="pricing-price-item">
+            <div class="pricing-size-label">1 Litre</div>
+            <div class="pricing-input-wrap">
+              <span class="pricing-rupee">₹</span>
+              <input type="number" id="gingelly_price_1L" class="pricing-price-input" placeholder="499" min="0">
+            </div>
+          </div>
+          <div class="pricing-price-item">
+            <div class="pricing-size-label">2 Litres</div>
+            <div class="pricing-input-wrap">
+              <span class="pricing-rupee">₹</span>
+              <input type="number" id="gingelly_price_2L" class="pricing-price-input" placeholder="969" min="0">
+            </div>
+          </div>
+          <div class="pricing-price-item">
+            <div class="pricing-size-label">5 Litres</div>
+            <div class="pricing-input-wrap">
+              <span class="pricing-rupee">₹</span>
+              <input type="number" id="gingelly_price_5L" class="pricing-price-input" placeholder="2395" min="0">
+            </div>
+          </div>
+          <div class="pricing-price-item">
+            <div class="pricing-size-label">8 Litres</div>
+            <div class="pricing-input-wrap">
+              <span class="pricing-rupee">₹</span>
+              <input type="number" id="gingelly_price_8L" class="pricing-price-input" placeholder="3799" min="0">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pricing-action-bar">
+        <button type="button" class="submit-btn" onclick="savePricing()">💾 Save All Prices</button>
+        <button type="button" class="reset-btn" onclick="resetPricingToDefaults()">Reset to Defaults</button>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -887,7 +1223,7 @@
     const tabsContainer = document.querySelector('.tabs');
     const tabs = Array.from(document.querySelectorAll('.tab'));
     const tabContents = document.querySelectorAll('.tab-content');
-    const TAB_ORDER = ['entry', 'dashboard'];
+    const TAB_ORDER = ['entry', 'dashboard', 'pricing'];
 
     let tabSwitchLocked = false;
     let swipeStartX = null;
@@ -1191,6 +1527,9 @@
       if (safeTab === 'dashboard') {
         closeBottomSheet();
         updateDashboard();
+      } else if (safeTab === 'pricing') {
+        closeBottomSheet();
+        loadPricing();
       } else {
         loadSalesData();
       }
@@ -1825,6 +2164,167 @@
     function formatDate(dateStr) {
       const date = new Date(dateStr + 'T00:00:00');
       return date.toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' });
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════════
+    // Pricing Management
+    // ═══════════════════════════════════════════════════════════════════════════════
+    const DEFAULT_PRICES = {
+      coconut:   { '1L': 449,  '2L': 869,  '5L': 2199, '8L': 3399 },
+      groundnut: { '1L': 329,  '2L': 639,  '5L': 1549              },
+      gingelly:  { '1L': 499,  '2L': 969,  '5L': 2395, '8L': 3799 }
+    };
+
+    function loadPricing() {
+      let saved = null;
+      try { saved = JSON.parse(localStorage.getItem('arumee_pricing') || 'null'); } catch(e) {}
+
+      ['coconut', 'groundnut', 'gingelly'].forEach(oil => {
+        const data = (saved && saved[oil]) || {};
+        const prices = (data.prices && Object.keys(data.prices).length) ? data.prices : DEFAULT_PRICES[oil];
+
+        if (data.oilCostPerL)    document.getElementById(oil + '_oilCost').value      = data.oilCostPerL;
+        if (data.bottleCost)     document.getElementById(oil + '_bottleCost').value    = data.bottleCost;
+        if (data.packagingCost)  document.getElementById(oil + '_packagingCost').value = data.packagingCost;
+        if (data.profitMargin)   document.getElementById(oil + '_margin').value        = data.profitMargin;
+
+        ['1L', '2L', '5L'].forEach(sz => {
+          const el = document.getElementById(oil + '_price_' + sz);
+          if (el && prices[sz]) el.value = prices[sz];
+        });
+        const el8 = document.getElementById(oil + '_price_8L');
+        if (el8 && prices['8L']) el8.value = prices['8L'];
+
+        calcOilPrices(oil);
+      });
+
+      const lastUpdEl = document.getElementById('pricingLastUpdated');
+      if (lastUpdEl) {
+        lastUpdEl.textContent = (saved && saved.lastUpdated)
+          ? 'Last saved: ' + formatDate(saved.lastUpdated)
+          : '';
+      }
+    }
+
+    function calcOilPrices(oil) {
+      const oilCost   = parseFloat(document.getElementById(oil + '_oilCost').value)      || 0;
+      const bottleCost= parseFloat(document.getElementById(oil + '_bottleCost').value)   || 0;
+      const packaging = parseFloat(document.getElementById(oil + '_packagingCost').value) || 0;
+      const margin    = parseFloat(document.getElementById(oil + '_margin').value)        || 0;
+      const resultEl  = document.getElementById(oil + '_calcResult');
+      if (!resultEl) return;
+
+      if (!oilCost && !bottleCost && !packaging) {
+        resultEl.textContent = 'Enter cost details above to see calculated price →';
+        return;
+      }
+
+      const totalCost   = oilCost + bottleCost + packaging;
+      const suggestedRaw= totalCost * (1 + margin / 100);
+      const suggested   = Math.ceil(suggestedRaw / 10) * 10;
+      const marginAmt   = suggestedRaw - totalCost;
+
+      resultEl.innerHTML =
+        '<strong>Total Cost/L:</strong> ₹' + totalCost.toFixed(2) +
+        ' &nbsp;|&nbsp; <strong>Margin Amount:</strong> ₹' + marginAmt.toFixed(2) +
+        ' &nbsp;|&nbsp; <strong>Suggested 1L Price:</strong> ' +
+        '<span style="color:#667eea;font-size:16px;font-weight:800;">₹' + suggested + '</span>';
+    }
+
+    function fillFromCalc(oil) {
+      const oilCost   = parseFloat(document.getElementById(oil + '_oilCost').value)      || 0;
+      const bottleCost= parseFloat(document.getElementById(oil + '_bottleCost').value)   || 0;
+      const packaging = parseFloat(document.getElementById(oil + '_packagingCost').value) || 0;
+      const margin    = parseFloat(document.getElementById(oil + '_margin').value)        || 0;
+      const totalCost = oilCost + bottleCost + packaging;
+
+      if (totalCost <= 0) {
+        alert('Please enter cost details first.');
+        return;
+      }
+
+      const price1L = Math.ceil(totalCost * (1 + margin / 100) / 10) * 10;
+      document.getElementById(oil + '_price_1L').value = price1L;
+      document.getElementById(oil + '_price_2L').value = Math.ceil(price1L * 2 * 0.97 / 10) * 10;  // ~3% bulk discount
+      document.getElementById(oil + '_price_5L').value = Math.ceil(price1L * 5 * 0.95 / 10) * 10;  // ~5% bulk discount
+      const el8 = document.getElementById(oil + '_price_8L');
+      if (el8) el8.value = Math.ceil(price1L * 8 * 0.93 / 10) * 10;  // ~7% bulk discount
+    }
+
+    function savePricing() {
+      const pricing = { lastUpdated: new Date().toISOString().slice(0, 10) };
+
+      ['coconut', 'groundnut', 'gingelly'].forEach(oil => {
+        pricing[oil] = {
+          oilCostPerL:   parseFloat(document.getElementById(oil + '_oilCost').value)      || null,
+          bottleCost:    parseFloat(document.getElementById(oil + '_bottleCost').value)   || null,
+          packagingCost: parseFloat(document.getElementById(oil + '_packagingCost').value) || null,
+          profitMargin:  parseFloat(document.getElementById(oil + '_margin').value)        || null,
+          prices: {}
+        };
+
+        ['1L', '2L', '5L'].forEach(sz => {
+          const el  = document.getElementById(oil + '_price_' + sz);
+          const val = el ? parseFloat(el.value) : NaN;
+          if (val > 0) pricing[oil].prices[sz] = val;
+        });
+        const el8  = document.getElementById(oil + '_price_8L');
+        if (el8) {
+          const val8 = parseFloat(el8.value);
+          if (val8 > 0) pricing[oil].prices['8L'] = val8;
+        }
+      });
+
+      try {
+        localStorage.setItem('arumee_pricing', JSON.stringify(pricing));
+
+        // Sync to Google Sheet so ALL visitors get the new prices
+        const formData = new FormData();
+        formData.append('action', 'savePrices');
+        formData.append('prices', JSON.stringify(pricing));
+
+        const successEl = document.getElementById('pricingSuccess');
+        const lastUpdEl = document.getElementById('pricingLastUpdated');
+
+        successEl.textContent = '⏳ Saving to Google Sheet…';
+        successEl.classList.add('show');
+
+        fetch(APPS_SCRIPT_URL, { method: 'POST', body: formData, mode: 'no-cors' })
+          .then(() => {
+            successEl.textContent = '✓ Prices saved to Google Sheet! All visitors will see the new prices.';
+            setTimeout(() => successEl.classList.remove('show'), 4000);
+            showToast('Prices saved to website ✓');
+          })
+          .catch(() => {
+            successEl.textContent = '⚠ Saved locally. Google Sheet sync failed — check your connection.';
+            setTimeout(() => successEl.classList.remove('show'), 4000);
+            showToast('Prices saved locally (offline)');
+          });
+
+        if (lastUpdEl) lastUpdEl.textContent = 'Last saved: ' + formatDate(pricing.lastUpdated);
+      } catch(e) {
+        alert('Error saving prices: ' + e.message);
+      }
+    }
+
+    function resetPricingToDefaults() {
+      if (!confirm('Reset all prices to the original defaults? This will also clear any cost breakdown you entered.')) return;
+
+      ['coconut', 'groundnut', 'gingelly'].forEach(oil => {
+        ['_oilCost', '_bottleCost', '_packagingCost', '_margin'].forEach(suffix => {
+          const el = document.getElementById(oil + suffix);
+          if (el) el.value = '';
+        });
+        calcOilPrices(oil);
+
+        const defaults = DEFAULT_PRICES[oil];
+        ['1L', '2L', '5L'].forEach(sz => {
+          const el = document.getElementById(oil + '_price_' + sz);
+          if (el) el.value = defaults[sz] || '';
+        });
+        const el8 = document.getElementById(oil + '_price_8L');
+        if (el8) el8.value = defaults['8L'] || '';
+      });
     }
   </script>
 </body>
