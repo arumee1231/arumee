@@ -367,6 +367,39 @@
       {id:'gingelly-5L',name:'Wooden Cold-Pressed Gingelly Oil (5L)',price:2395},
       {id:'gingelly-8L',name:'Wooden Cold-Pressed Gingelly Oil (8L)',price:3799}
     ];
+    // Apply admin price overrides — fetches from Google Sheet, falls back to localStorage
+    (function(){
+      var PRICE_URL='https://script.google.com/macros/s/AKfycbwpKpqtx9jqE3zAFy8F_MBcEc9F8mFIp8FmxkJCxfDXd3sxczYDvy-zmNW8uDGMMtdhfA/exec?action=getPrices';
+
+      function patchOilOptions(cfg){
+        oilOptions.forEach(function(o){
+          var m=(o.id||'').match(/^(coconut|groundnut|gingelly)-(\d+L)$/);
+          if(!m)return;
+          var oil=m[1],sz=m[2];
+          var p=cfg[oil]&&cfg[oil].prices&&cfg[oil].prices[sz];
+          if(p)o.price=p;
+        });
+      }
+
+      // Apply cached prices immediately
+      var cached=null;
+      try{cached=JSON.parse(localStorage.getItem('arumee_pricing')||'null')}catch(e){}
+      if(cached)patchOilOptions(cached);
+
+      // Fetch latest from Google Sheet
+      fetch(PRICE_URL)
+        .then(function(r){return r.json();})
+        .then(function(data){
+          if(!data||!data.prices||!Object.keys(data.prices).length)return;
+          var cfg={};
+          ['coconut','groundnut','gingelly'].forEach(function(oil){
+            if(data.prices[oil])cfg[oil]={prices:data.prices[oil]};
+          });
+          try{localStorage.setItem('arumee_pricing',JSON.stringify(cfg))}catch(e){}
+          patchOilOptions(cfg);
+        })
+        .catch(function(){/* use cached */});
+    })();
 
     function escapeHtml(str) {
       return String(str).replace(/[&<>"]/g, function (c) {
