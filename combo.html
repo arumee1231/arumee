@@ -245,7 +245,8 @@
     (function () {
       var buttons = document.querySelectorAll('.combo-add-btn');
       buttons.forEach(function (button) {
-        button.addEventListener('click', function () {
+        button.addEventListener('click', function (e) {
+          e.stopPropagation();
           if (typeof window.subpageCartAddItem !== 'function') {
             return;
           }
