@@ -981,18 +981,43 @@ body.subpage {
   transform: none;
 }
 
-.subpage .cart-tab {
+/* Combo page cart button — clean, independent of cart.css */
+.combo-cart-btn {
   display: none;
-}
-
-.subpage.has-cart-items .cart-tab {
-  display: inline-flex !important;
-  position: static !important;
-  top: auto !important;
-  right: auto !important;
-  box-shadow: none;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(18,53,34,0.2);
   background: var(--surface, #f9f7f2);
   color: var(--forest, #1b2620);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.18s ease, border-color 0.18s ease;
+  user-select: none;
+  position: relative;
+}
+.combo-cart-btn:hover { transform: translateY(-1px); border-color: rgba(18,53,34,0.4); }
+
+.combo-cart-count {
+  min-width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--gold, #c49a6c);
+  color: var(--forest, #1a3d28);
+  font-size: 11px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+}
+
+.subpage.has-cart-items .combo-cart-btn {
+  display: inline-flex !important;
 }
 
 @media (max-width: 768px) {
@@ -1012,18 +1037,7 @@ body.subpage {
     border-radius: 10px;
   }
 
-  .subpage .cart-tab {
-    display: none;
-  }
-
-  .subpage.has-cart-items .cart-tab {
-    display: inline-flex !important;
-    position: static !important;
-    top: auto !important;
-    right: auto !important;
-  }
-
-  .subpage.has-cart-items .cart-tab .cart-tab-label {
+  .subpage.has-cart-items .combo-cart-btn .combo-cart-label {
     display: none;
   }
 }
@@ -1118,9 +1132,6 @@ body.subpage {
     letter-spacing: 1.5px;
   }
 
-  .subpage .cart-tab {
-    top: calc(var(--header-height) + 10px);
-  }
 
   .page-main {
     width: min(1220px, 94vw);
