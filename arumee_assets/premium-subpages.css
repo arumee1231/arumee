@@ -988,7 +988,7 @@ body.subpage {
 }
 
 .subpage.has-cart-items .cart-tab {
-  display: flex;
+  display: flex !important;
 }
 
 @media (max-width: 768px) {
