@@ -294,7 +294,6 @@
     renderCart();
 
     showToast((normalizedItem.productName || 'Item') + ' added to cart.');
-    openCart();
   };
 
   if (dom.navCartBtn) {
