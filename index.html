@@ -911,6 +911,57 @@
 <style id="mobile-only-phrase">.mobile-only{display:none !important}@media (max-width:768px){.mobile-only{display:inline !important}}</style>
 
 <script>(function () { function wrapPhrase() { var phrase = 'Tradionally Cold-Pressed Oil'; if (!phrase) return; var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false); var nodes = []; while (walker.nextNode()) { var nv = walker.currentNode.nodeValue; if (nv && nv.indexOf(phrase) !== -1) nodes.push(walker.currentNode); } nodes.forEach(function (textNode) { var idx = textNode.nodeValue.indexOf(phrase); if (idx === -1) return; var after = textNode.splitText(idx); var rest = after.splitText(phrase.length); var span = document.createElement('span'); span.className = 'mobile-only'; span.textContent = phrase; after.parentNode.replaceChild(span, after); }); } if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wrapPhrase); else wrapPhrase(); })(); function toggleMobileMenu() { var overlay = document.getElementById('mobileMenuOverlay'); var btn = document.getElementById('mobileMenuBtn'); if (!overlay) return; var isOpen = overlay.classList.contains('open'); overlay.classList.toggle('open', !isOpen); if (btn) { btn.classList.toggle('open', !isOpen); btn.setAttribute('aria-expanded', String(!isOpen)); } overlay.setAttribute('aria-hidden', String(isOpen)); document.body.style.overflow = isOpen ? '' : 'hidden'; } function closeMobileMenu() { var overlay = document.getElementById('mobileMenuOverlay'); var btn = document.getElementById('mobileMenuBtn'); if (!overlay) return; overlay.classList.remove('open'); if (btn) { btn.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); } overlay.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; }</script>
+<!-- Price sync: inline so it always runs fresh from network regardless of JS cache -->
+<script>
+window.addEventListener('load', function () {
+  var PRICE_URL = 'https://script.google.com/macros/s/AKfycbzUPnEWOz5ToHLwlSd-MGsEGw2_K7mmw9vKzrrl1pEv_n1FExmsNrCqYzkEADS_6BWbvQ/exec?action=getPrices';
+
+  function patchPrices(cfg) {
+    if (!cfg) return;
+    // Patch oilOptions array if app.js has defined it
+    if (typeof oilOptions !== 'undefined' && Array.isArray(oilOptions)) {
+      oilOptions.forEach(function (o) {
+        var m = (o.id || '').match(/^(coconut|groundnut|gingelly)-(\d+L)$/i);
+        if (!m) return;
+        var p = cfg[m[1]] && cfg[m[1]].prices && cfg[m[1]].prices[m[2]];
+        if (p) o.price = p;
+      });
+    }
+    // Patch size-option data-price attributes and visible price display
+    document.querySelectorAll('.size-option[data-product][data-size]').forEach(function (el) {
+      var oil = el.dataset.product, sz = el.dataset.size;
+      var p = cfg[oil] && cfg[oil].prices && cfg[oil].prices[sz];
+      if (!p) return;
+      el.dataset.price = p;
+      if (el.classList.contains('active')) {
+        var priceEl = document.getElementById(oil + '-price');
+        if (priceEl) priceEl.innerHTML = '&#8377;' + p + ' <span class="unit product-card__unit">/ ' + sz + '</span>';
+      }
+    });
+  }
+
+  // 1. Apply localStorage cache immediately
+  try {
+    var cached = JSON.parse(localStorage.getItem('arumee_pricing') || 'null');
+    if (cached) patchPrices(cached);
+  } catch (e) {}
+
+  // 2. Fetch fresh from Google Sheet and apply
+  fetch(PRICE_URL)
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (!data || !data.prices) return;
+      var cfg = {};
+      ['coconut', 'groundnut', 'gingelly'].forEach(function (oil) {
+        if (data.prices[oil]) cfg[oil] = { prices: data.prices[oil] };
+      });
+      try { localStorage.setItem('arumee_pricing', JSON.stringify(cfg)); } catch (e) {}
+      patchPrices(cfg);
+    })
+    .catch(function () {});
+});
+</script>
+
 <!-- chat-widget: lazy-loaded on first user interaction to avoid unused-JS penalty -->
 <script>(function(){ var loaded=false; function loadChat(){ if(loaded)return;loaded=true; var s=document.createElement('script'); s.src='arumee_assets/chat-widget.js?v=9'; document.body.appendChild(s); } ['scroll','click','touchstart','keydown'].forEach(function(e){ window.addEventListener(e,loadChat,{once:true,passive:true}); }); if('requestIdleCallback' in window){ requestIdleCallback(loadChat,{timeout:8000}); } else { setTimeout(loadChat,8000); } })();</script>
 <script>if ('serviceWorker' in navigator) { navigator.serviceWorker.getRegistrations().then(function(regs) { var unregAll = regs.map(function(r) { return r.unregister(); }); return Promise.all(unregAll); }).then(function() { return navigator.serviceWorker.register('/service-worker.js'); }).then(function(reg) { if (reg.waiting) { reg.waiting.postMessage({type:'SKIP_WAITING'}); } reg.addEventListener('updatefound', function() { var newSW = reg.installing; if (newSW) { newSW.addEventListener('statechange', function() { if (newSW.state === 'installed' && navigator.serviceWorker.controller) { newSW.postMessage({type:'SKIP_WAITING'}); } }); } }); }); }</script>
