@@ -983,12 +983,16 @@ body.subpage {
 
 .subpage .cart-tab {
   display: none;
-  top: calc(var(--header-height-mobile) + 10px);
-  right: 16px;
 }
 
 .subpage.has-cart-items .cart-tab {
-  display: flex !important;
+  display: inline-flex !important;
+  position: static !important;
+  top: auto !important;
+  right: auto !important;
+  box-shadow: none;
+  background: var(--surface, #f9f7f2);
+  color: var(--forest, #1b2620);
 }
 
 @media (max-width: 768px) {
@@ -1013,12 +1017,10 @@ body.subpage {
   }
 
   .subpage.has-cart-items .cart-tab {
-    display: flex !important;
-    position: fixed;
-    bottom: 20px;
-    right: 16px;
-    top: auto;
-    z-index: 1100;
+    display: inline-flex !important;
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
   }
 }
 
