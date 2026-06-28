@@ -1325,13 +1325,7 @@
       });
     }
 
-    // 1. Apply cached prices immediately (no flicker)
-    try {
-      var cached = JSON.parse(localStorage.getItem('arumee_pricing') || 'null');
-      if (cached) applyPriceCfg(cached);
-    } catch (e) {}
-
-    // 2. Fetch fresh prices from Google Sheet and re-apply if changed
+    // Always fetch from Google Sheet — single source of truth
     fetch(PRICE_URL)
       .then(function (r) { return r.json(); })
       .then(function (data) {
