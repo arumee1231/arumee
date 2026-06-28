@@ -1009,7 +1009,16 @@ body.subpage {
   }
 
   .subpage .cart-tab {
-    display: none !important;
+    display: none;
+  }
+
+  .subpage.has-cart-items .cart-tab {
+    display: flex !important;
+    position: fixed;
+    bottom: 20px;
+    right: 16px;
+    top: auto;
+    z-index: 1100;
   }
 }
 

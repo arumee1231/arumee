@@ -294,10 +294,7 @@
     renderCart();
 
     showToast((normalizedItem.productName || 'Item') + ' added to cart.');
-
-    if (window.matchMedia('(min-width: 901px)').matches) {
-      openCart();
-    }
+    openCart();
   };
 
   if (dom.navCartBtn) {
