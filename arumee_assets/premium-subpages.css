@@ -1022,6 +1022,10 @@ body.subpage {
     top: auto !important;
     right: auto !important;
   }
+
+  .subpage.has-cart-items .cart-tab .cart-tab-label {
+    display: none;
+  }
 }
 
 @media (min-width: 760px) {
