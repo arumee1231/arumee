@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -41,11 +41,11 @@
           <a class="desktop-nav-link" data-nav="contact" href="contact.html">Contact</a>
         </div>
         <button class="nav-btn primary" id="navCartBtn" onclick="toggleCart()" style="display:none;">
-          <span>🛒</span>
+          <span>ðŸ›’</span>
           <span>View Cart</span>
           <span class="nav-cart-count" id="navCartCount">0</span>
         </button>
-        <button class="mobile-nav-cart" id="mobileNavCart" onclick="toggleCart()" aria-label="View cart">🛒<span class="mnc-badge" id="mncBadge">0</span></button>
+        <button class="mobile-nav-cart" id="mobileNavCart" onclick="toggleCart()" aria-label="View cart">ðŸ›’<span class="mnc-badge" id="mncBadge">0</span></button>
         <button class="hamburger-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
       </div>
     </div>
@@ -64,12 +64,12 @@
         <button class="mmo-close" onclick="closeMobileMenu()" aria-label="Close menu">&#x2715;</button>
       </div>
       <nav class="mmo-nav">
-        <a class="mmo-link" href="index.html" onclick="sessionStorage.setItem('arumee_scrolltop','1');closeMobileMenu()"><span class="mmo-link-icon">🏠</span>Home</a>
-        <a class="mmo-link" href="index.html#oilsGrid" onclick="closeMobileMenu()"><span class="mmo-link-icon">🛍</span>Shop</a>
-        <a class="mmo-link" href="benefits.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">🌿</span>Benefits</a>
-        <a class="mmo-link" href="index.html#faq" onclick="closeMobileMenu()"><span class="mmo-link-icon">💬</span>FAQ</a>
-        <a class="mmo-link" href="about.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">📖</span>Our Story</a>
-        <a class="mmo-link" href="contact.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">✉</span>Contact</a>
+        <a class="mmo-link" href="index.html" onclick="sessionStorage.setItem('arumee_scrolltop','1');closeMobileMenu()"><span class="mmo-link-icon">ðŸ </span>Home</a>
+        <a class="mmo-link" href="index.html#oilsGrid" onclick="closeMobileMenu()"><span class="mmo-link-icon">ðŸ›</span>Shop</a>
+        <a class="mmo-link" href="benefits.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">ðŸŒ¿</span>Benefits</a>
+        <a class="mmo-link" href="index.html#faq" onclick="closeMobileMenu()"><span class="mmo-link-icon">ðŸ’¬</span>FAQ</a>
+        <a class="mmo-link" href="about.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">ðŸ“–</span>Our Story</a>
+        <a class="mmo-link" href="contact.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">âœ‰</span>Contact</a>
       </nav>
       <div class="mmo-footer">
         <a class="mmo-cta-btn" href="index.html#order" onclick="closeMobileMenu()">Order Now</a>
@@ -79,13 +79,13 @@
   </div>
 
   <div id="cartTab" class="cart-tab" role="button" aria-label="Shopping cart" aria-expanded="false" tabindex="0">
-    <span class="cart-icon" aria-hidden="true">🛒</span>
+    <span class="cart-icon" aria-hidden="true">ðŸ›’</span>
     <span class="cart-count" id="cartCount" aria-live="polite">0</span>
   </div>
 
   <div id="cartDropdown" class="cart-dropdown" role="dialog" aria-modal="true" aria-labelledby="cartHeader" tabindex="-1">
     <div class="cart-header">
-      <h2 id="cartHeader"><span>🛒</span> Your Cart</h2>
+      <h2 id="cartHeader"><span>ðŸ›’</span> Your Cart</h2>
       <button class="cart-close" type="button" aria-label="Close cart" onclick="toggleCart()">x</button>
     </div>
     <div class="cart-content" id="cartContent">
@@ -107,8 +107,8 @@
   <main class="page-main" id="main-content">
     <section class="page-hero page-hero-contact reveal" aria-labelledby="contact-hero-title">
       <p class="hero-eyebrow">Contact Arumee</p>
-      <h1 id="contact-hero-title">We're here to help — genuinely.</h1>
-      <p>Whether you're unsure which oil to pick, have a question about your order or delivery, or just want to say hello — we're happy to hear from you. Reach us on WhatsApp for the fastest response. We're a small family mill, and we personally handle every message.</p>
+      <h1 id="contact-hero-title">We're here to help â€” genuinely.</h1>
+      <p>Whether you're unsure which oil to pick, have a question about your order or delivery, or just want to say hello â€” we're happy to hear from you. Reach us on WhatsApp for the fastest response. We're a small family mill, and we personally handle every message.</p>
       <div class="hero-pill-row">
         <span class="hero-pill">WhatsApp-first support</span>
         <span class="hero-pill">Order clarifications in minutes</span>
@@ -119,7 +119,7 @@
     <section class="section-block reveal contact-layout contact-section" aria-labelledby="contact-details-title">
       <article class="page-card contact-card contact-card-info">
         <h2 id="contact-details-title">Get in touch</h2>
-        <p class="contact-intro">The quickest way to reach us is on WhatsApp. We're a small family mill — when you message us, you're talking to the people who actually press your oil. For order confirmations, please use WhatsApp so we can share our UPI QR code and get your order on its way.</p>
+        <p class="contact-intro">The quickest way to reach us is on WhatsApp. We're a small family mill â€” when you message us, you're talking to the people who actually press your oil. For order confirmations, please use WhatsApp so we can share our UPI QR code and get your order on its way.</p>
         <ul class="contact-link-list">
           <li><a class="contact-link-pill" href="https://wa.me/918925295844" target="_blank" rel="noopener noreferrer">WhatsApp: +91 89252 95844</a></li>
           <li><a class="contact-link-pill" href="tel:9751425598">Call: +91 97514 25598</a></li>
@@ -245,7 +245,7 @@
       });
     })();
   </script>
-  <script src="arumee_assets/chat-widget.js"></script>
+  <script src="arumee_assets/chat-widget.js?v=9"></script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/service-worker.js').then(function(reg) {
@@ -261,3 +261,4 @@
   </script>
 </body>
 </html>
+
