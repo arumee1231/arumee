@@ -258,6 +258,15 @@
             qty: 1,
             isFixedBundle: true
           });
+
+          // Visual feedback on button
+          var orig = button.textContent;
+          button.textContent = '✓ Added';
+          button.disabled = true;
+          setTimeout(function () {
+            button.textContent = orig;
+            button.disabled = false;
+          }, 1500);
         });
       });
     })();
