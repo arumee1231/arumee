@@ -5,7 +5,7 @@
   • New SW version → old cache is automatically wiped on activation
   ───────────────────────────────────────────────────────────────────────── */
 
-const CACHE_NAME = 'arumee-v26';
+const CACHE_NAME = 'arumee-v27';
 
 // Allow the page to force-activate a waiting SW
 self.addEventListener('message', event => {
@@ -124,8 +124,13 @@ self.addEventListener('fetch', event => {
         return networkFirst(event, cache);
       }
 
-      // JS and CSS: stale-while-revalidate for faster loads
-      if (req.destination === 'script' || req.destination === 'style') {
+      // JS files: always network-first so price/feature updates reach users immediately
+      if (req.destination === 'script') {
+        return networkFirst(event, cache);
+      }
+
+      // CSS: stale-while-revalidate (style changes are low risk)
+      if (req.destination === 'style') {
         return staleWhileRevalidate(req, cache);
       }
 
