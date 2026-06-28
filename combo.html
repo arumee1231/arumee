@@ -122,9 +122,9 @@
             <span class="combo-tag">Popular</span>
           </div>
           <ul class="combo-lines">
-            <li><span>Coconut Oil 1L</span><strong>Rs 449</strong></li>
-            <li><span>Groundnut Oil 1L</span><strong>Rs 329</strong></li>
-            <li><span>Gingelly Oil 1L</span><strong>Rs 499</strong></li>
+            <li data-oil="coconut" data-size="1L"><span>Coconut Oil 1L</span><strong>Rs 449</strong></li>
+            <li data-oil="groundnut" data-size="1L"><span>Groundnut Oil 1L</span><strong>Rs 329</strong></li>
+            <li data-oil="gingelly" data-size="1L"><span>Gingelly Oil 1L</span><strong>Rs 499</strong></li>
           </ul>
           <div class="combo-foot">
             <div class="combo-price"><span class="now">Rs 1219</span><span class="was">Rs 1277</span></div>
@@ -139,8 +139,8 @@
             <span class="combo-tag">Value</span>
           </div>
           <ul class="combo-lines">
-            <li><span>Groundnut Oil 5L</span><strong>Rs 1549</strong></li>
-            <li><span>Coconut Oil 1L</span><strong>Rs 449</strong></li>
+            <li data-oil="groundnut" data-size="5L"><span>Groundnut Oil 5L</span><strong>Rs 1549</strong></li>
+            <li data-oil="coconut" data-size="1L"><span>Coconut Oil 1L</span><strong>Rs 449</strong></li>
             <li><span>Free doorstep delivery</span><strong>Included</strong></li>
           </ul>
           <div class="combo-foot">
@@ -156,8 +156,8 @@
             <span class="combo-tag">Festive</span>
           </div>
           <ul class="combo-lines">
-            <li><span>Gingelly Oil 5L</span><strong>Rs 2395</strong></li>
-            <li><span>Groundnut Oil 1L</span><strong>Rs 329</strong></li>
+            <li data-oil="gingelly" data-size="5L"><span>Gingelly Oil 5L</span><strong>Rs 2395</strong></li>
+            <li data-oil="groundnut" data-size="1L"><span>Groundnut Oil 1L</span><strong>Rs 329</strong></li>
             <li><span>Temple-style flavor profile</span><strong>Best fit</strong></li>
           </ul>
           <div class="combo-foot">
@@ -173,9 +173,9 @@
             <span class="combo-tag">Smart mix</span>
           </div>
           <ul class="combo-lines">
-            <li><span>Coconut Oil 2L</span><strong>Rs 898</strong></li>
-            <li><span>Groundnut Oil 2L</span><strong>Rs 658</strong></li>
-            <li><span>Gingelly Oil 2L</span><strong>Rs 998</strong></li>
+            <li data-oil="coconut" data-size="1L" data-qty="2"><span>Coconut Oil 2L</span><strong>Rs 898</strong></li>
+            <li data-oil="groundnut" data-size="1L" data-qty="2"><span>Groundnut Oil 2L</span><strong>Rs 658</strong></li>
+            <li data-oil="gingelly" data-size="1L" data-qty="2"><span>Gingelly Oil 2L</span><strong>Rs 998</strong></li>
           </ul>
           <div class="combo-foot">
             <div class="combo-price"><span class="now">Rs 2399</span><span class="was">Rs 2554</span></div>
@@ -190,8 +190,8 @@
             <span class="combo-tag">Dual use</span>
           </div>
           <ul class="combo-lines">
-            <li><span>Coconut Oil 5L</span><strong>Rs 2199</strong></li>
-            <li><span>Gingelly Oil 1L</span><strong>Rs 499</strong></li>
+            <li data-oil="coconut" data-size="5L"><span>Coconut Oil 5L</span><strong>Rs 2199</strong></li>
+            <li data-oil="gingelly" data-size="1L"><span>Gingelly Oil 1L</span><strong>Rs 499</strong></li>
             <li><span>Ideal for cooking and wellness</span><strong>Recommended</strong></li>
           </ul>
           <div class="combo-foot">
@@ -207,9 +207,9 @@
             <span class="combo-tag">Best value</span>
           </div>
           <ul class="combo-lines">
-            <li><span>Groundnut Oil 5L</span><strong>Rs 1549</strong></li>
-            <li><span>Gingelly Oil 5L</span><strong>Rs 2395</strong></li>
-            <li><span>Coconut Oil 1L</span><strong>Rs 449</strong></li>
+            <li data-oil="groundnut" data-size="5L"><span>Groundnut Oil 5L</span><strong>Rs 1549</strong></li>
+            <li data-oil="gingelly" data-size="5L"><span>Gingelly Oil 5L</span><strong>Rs 2395</strong></li>
+            <li data-oil="coconut" data-size="1L"><span>Coconut Oil 1L</span><strong>Rs 449</strong></li>
           </ul>
           <div class="combo-foot">
             <div class="combo-price"><span class="now">Rs 4199</span><span class="was">Rs 4393</span></div>
@@ -262,6 +262,68 @@
       });
     })();
   </script>
+  <!-- Combo price patching from Google Sheet (same source as admin pricing tab) -->
+  <script>
+    (function () {
+      var PRICE_URL = 'https://script.google.com/macros/s/AKfycbzUPnEWOz5ToHLwlSd-MGsEGw2_K7mmw9vKzrrl1pEv_n1FExmsNrCqYzkEADS_6BWbvQ/exec?action=getPrices';
+
+      function applyComboPrice(cfg) {
+        if (!cfg) return;
+        document.querySelectorAll('.combo-card').forEach(function (card) {
+          var lineItems = card.querySelectorAll('li[data-oil]');
+          var wasTotal = 0;
+          var allPriced = lineItems.length > 0;
+
+          lineItems.forEach(function (li) {
+            var oil = li.dataset.oil;
+            var size = li.dataset.size;
+            var qty = parseInt(li.dataset.qty || '1', 10);
+            var prices = cfg[oil] && cfg[oil].prices;
+            if (!prices || !prices[size]) { allPriced = false; return; }
+            var linePrice = prices[size] * qty;
+            wasTotal += linePrice;
+            var strong = li.querySelector('strong');
+            if (strong) strong.textContent = 'Rs ' + linePrice.toLocaleString('en-IN');
+          });
+
+          if (!allPriced || wasTotal <= 0) return;
+
+          var wasEl = card.querySelector('.combo-price .was');
+          var nowEl = card.querySelector('.combo-price .now');
+          var saveEl = card.querySelector('.combo-save');
+          if (wasEl) wasEl.textContent = 'Rs ' + wasTotal.toLocaleString('en-IN');
+          if (nowEl && saveEl) {
+            var nowPrice = parseInt(nowEl.textContent.replace(/[^0-9]/g, ''), 10);
+            if (!isNaN(nowPrice) && wasTotal > nowPrice) {
+              saveEl.textContent = 'Save Rs ' + (wasTotal - nowPrice).toLocaleString('en-IN');
+            }
+          }
+        });
+      }
+
+      // 1. Apply cached prices immediately (no flicker)
+      try {
+        var cached = JSON.parse(localStorage.getItem('arumee_pricing') || 'null');
+        if (cached) applyComboPrice(cached);
+      } catch (e) {}
+
+      // 2. Fetch fresh prices from Google Sheet
+      fetch(PRICE_URL)
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (data && data.prices && Object.keys(data.prices).length) {
+            var cfg = {};
+            ['coconut', 'groundnut', 'gingelly'].forEach(function (oil) {
+              if (data.prices[oil]) cfg[oil] = { prices: data.prices[oil] };
+            });
+            try { localStorage.setItem('arumee_pricing', JSON.stringify(cfg)); } catch (e) {}
+            applyComboPrice(cfg);
+          }
+        })
+        .catch(function () {});
+    })();
+  </script>
+
   <script src="arumee_assets/chat-widget.js"></script>
   <script>
     if ('serviceWorker' in navigator) {

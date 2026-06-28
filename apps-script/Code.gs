@@ -38,6 +38,11 @@ function doPost(e) {
       return handleSaleTracking(e, response);
     }
 
+    // Handle pricing save from admin panel
+    if (action === 'savePrices') {
+      return handleSavePrices(e, response);
+    }
+
     // Handle regular order submission (default behavior)
     return handleOrderSubmission(e, response);
 
@@ -142,6 +147,76 @@ function handleSaleTracking(e, response) {
   }
 
   return response;
+}
+
+/**
+ * Saves pricing data from the admin pricing tab to the Pricing sheet.
+ * Called via POST with action=savePrices and prices=<JSON string>
+ */
+function handleSavePrices(e, response) {
+  try {
+    var params = parseRequestParams_(e);
+    var pricesRaw = (params.prices || '').trim();
+    if (!pricesRaw) {
+      response.setContent(JSON.stringify({ status: 'error', message: 'No prices data received' }));
+      return response;
+    }
+
+    var pricing;
+    try {
+      pricing = JSON.parse(pricesRaw);
+    } catch (parseErr) {
+      response.setContent(JSON.stringify({ status: 'error', message: 'Invalid JSON: ' + parseErr.message }));
+      return response;
+    }
+
+    var ss = SpreadsheetApp.openById(SHEET_ID);
+    var sheet = ensurePricingSheetExists(ss);
+
+    // Clear existing price rows (keep header)
+    var lastRow = sheet.getLastRow();
+    if (lastRow > 1) {
+      sheet.deleteRows(2, lastRow - 1);
+    }
+
+    var ts = new Date();
+    var oils = ['coconut', 'groundnut', 'gingelly'];
+    oils.forEach(function (oil) {
+      var oilData = pricing[oil];
+      if (!oilData || !oilData.prices) return;
+      var prices = oilData.prices;
+      Object.keys(prices).forEach(function (size) {
+        var price = parseFloat(prices[size]);
+        if (price > 0) {
+          sheet.appendRow([oil, size, price, ts]);
+        }
+      });
+    });
+
+    response.setContent(JSON.stringify({ status: 'ok', message: 'Prices saved' }));
+  } catch (err) {
+    response.setContent(JSON.stringify({ status: 'error', message: 'Error saving prices: ' + err.message }));
+  }
+  return response;
+}
+
+/**
+ * Ensure a `Pricing` sheet exists; if missing, create and initialize it.
+ */
+function ensurePricingSheetExists(ss) {
+  var sheet = ss.getSheetByName('Pricing');
+  if (!sheet) {
+    sheet = ss.insertSheet('Pricing');
+    sheet.appendRow(['Oil', 'Size', 'Price (₹)', 'Last Updated']);
+    try {
+      sheet.getRange(1, 1, 1, 4).setFontWeight('bold').setBackground('#667eea').setFontColor('#ffffff');
+      sheet.setColumnWidth(1, 120);
+      sheet.setColumnWidth(2, 80);
+      sheet.setColumnWidth(3, 100);
+      sheet.setColumnWidth(4, 180);
+    } catch (ignore) {}
+  }
+  return sheet;
 }
 
 /**
@@ -584,6 +659,32 @@ function doGet(e) {
         var ss = SpreadsheetApp.openById(SHEET_ID);
         ensureSalesSheetExists(ss);
         return ContentService.createTextOutput(JSON.stringify({ status: 'ok', message: 'Sales sheet ensured' })).setMimeType(ContentService.MimeType.JSON);
+      }
+
+      // Public API: return current prices as JSON when called with ?action=getPrices
+      if (String(e.parameter.action || '') === 'getPrices') {
+        try {
+          var ss3 = SpreadsheetApp.openById(SHEET_ID);
+          var pricingSheet = ss3.getSheetByName('Pricing');
+          if (!pricingSheet || pricingSheet.getLastRow() <= 1) {
+            return ContentService.createTextOutput(JSON.stringify({ status: 'ok', prices: {} })).setMimeType(ContentService.MimeType.JSON);
+          }
+
+          var pData = pricingSheet.getDataRange().getValues();
+          var prices = {};
+          for (var pi = 1; pi < pData.length; pi++) {
+            var oil = String(pData[pi][0] || '').trim().toLowerCase();
+            var size = String(pData[pi][1] || '').trim();
+            var price = parseFloat(pData[pi][2]) || 0;
+            if (!oil || !size || price <= 0) continue;
+            if (!prices[oil]) prices[oil] = {};
+            prices[oil][size] = price;
+          }
+
+          return ContentService.createTextOutput(JSON.stringify({ status: 'ok', prices: prices })).setMimeType(ContentService.MimeType.JSON);
+        } catch (gpErr) {
+          return ContentService.createTextOutput(JSON.stringify({ status: 'error', message: gpErr.message })).setMimeType(ContentService.MimeType.JSON);
+        }
       }
 
       // Public API: return all sales as JSON when called with ?action=getSales

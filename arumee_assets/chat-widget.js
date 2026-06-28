@@ -1274,6 +1274,79 @@
     }
   };
 
+  // ── Apply admin-set prices from Google Sheet (localStorage cache + fresh fetch) ──
+  (function () {
+    var PRICE_URL = 'https://script.google.com/macros/s/AKfycbzUPnEWOz5ToHLwlSd-MGsEGw2_K7mmw9vKzrrl1pEv_n1FExmsNrCqYzkEADS_6BWbvQ/exec?action=getPrices';
+    var OIL_MAP = {
+      '🥥 Coconut Oil':   'coconut',
+      '🥜 Groundnut Oil': 'groundnut',
+      '🌿 Gingelly Oil':  'gingelly'
+    };
+
+    function fmt(n) { return Number(n).toLocaleString('en-IN'); }
+
+    function applyPriceCfg(cfg) {
+      if (!cfg) return;
+      // Patch OILS sizes and OIL_COMBOS from the config
+      Object.keys(OIL_MAP).forEach(function (key) {
+        var oil = OIL_MAP[key];
+        var prices = cfg[oil] && cfg[oil].prices;
+        if (!prices) return;
+        if (prices['1L'] > 0) OILS[key].sizes['1L'] = prices['1L'];
+        if (prices['5L'] > 0) OILS[key].sizes['5L'] = prices['5L'];
+        if (OIL_COMBOS[key]) {
+          if (prices['2L'] > 0) {
+            OIL_COMBOS[key].twoL = prices['2L'];
+            if (prices['1L'] > 0) OIL_COMBOS[key].save2L = Math.max(0, prices['1L'] * 2 - prices['2L']);
+          }
+          if (prices['5L'] > 0 && prices['1L'] > 0) {
+            OIL_COMBOS[key].save5L = Math.max(0, prices['1L'] * 5 - prices['5L']);
+          }
+        }
+      });
+
+      // Rebuild KB price text entries from updated OILS/OIL_COMBOS
+      var c = OILS['🥥 Coconut Oil'].sizes;
+      var g = OILS['🥜 Groundnut Oil'].sizes;
+      var s = OILS['🌿 Gingelly Oil'].sizes;
+      var cc = OIL_COMBOS['🥥 Coconut Oil'];
+      var gc = OIL_COMBOS['🥜 Groundnut Oil'];
+      var sc = OIL_COMBOS['🌿 Gingelly Oil'];
+
+      var priceText = 'Our current prices 💰\n\n🥥 Coconut Oil (Cold-Pressed)\n  1L → ₹' + fmt(c['1L']) + '  |  5L → ₹' + fmt(c['5L']) + '\n\n🥜 Groundnut Oil (Wooden-Pressed)\n  1L → ₹' + fmt(g['1L']) + '  |  5L → ₹' + fmt(g['5L']) + '\n\n🌿 Gingelly Oil (Wooden-Pressed)\n  1L → ₹' + fmt(s['1L']) + '  |  5L → ₹' + fmt(s['5L']) + '\n\n🚚 Free delivery included on all orders!';
+
+      var comboText = 'Save more with bigger packs! 🎁\n\n🥥 Coconut Oil\n  2L → ₹' + fmt(cc.twoL) + ' (Save ₹' + fmt(cc.save2L) + ')\n  5L → ₹' + fmt(c['5L']) + ' (Save ₹' + fmt(cc.save5L) + ')\n\n🥜 Groundnut Oil\n  2L → ₹' + fmt(gc.twoL) + ' (Save ₹' + fmt(gc.save2L) + ')\n  5L → ₹' + fmt(g['5L']) + ' (Save ₹' + fmt(gc.save5L) + ')\n\n🌿 Gingelly Oil\n  2L → ₹' + fmt(sc.twoL) + ' (Save ₹' + fmt(sc.save2L) + ')\n  5L → ₹' + fmt(s['5L']) + ' (Save ₹' + fmt(sc.save5L) + ')\n\n🚚 Free delivery on all packs!';
+
+      ['💰 Prices & sizes', '💰 See prices', '💰 Single bottle prices'].forEach(function (k) {
+        if (KB[k]) KB[k].text = priceText;
+      });
+      ['🎁 Combo offers', '🎁 Combo packs', '🎁 Combo discounts'].forEach(function (k) {
+        if (KB[k]) KB[k].text = comboText;
+      });
+    }
+
+    // 1. Apply cached prices immediately (no flicker)
+    try {
+      var cached = JSON.parse(localStorage.getItem('arumee_pricing') || 'null');
+      if (cached) applyPriceCfg(cached);
+    } catch (e) {}
+
+    // 2. Fetch fresh prices from Google Sheet and re-apply if changed
+    fetch(PRICE_URL)
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data && data.prices && Object.keys(data.prices).length) {
+          var cfg = {};
+          ['coconut', 'groundnut', 'gingelly'].forEach(function (oil) {
+            if (data.prices[oil]) cfg[oil] = { prices: data.prices[oil] };
+          });
+          try { localStorage.setItem('arumee_pricing', JSON.stringify(cfg)); } catch (e) {}
+          applyPriceCfg(cfg);
+        }
+      })
+      .catch(function () {});
+  })();
+
   function now() {
     var d = new Date(), h = d.getHours(), m = d.getMinutes();
     return (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m;
