@@ -56,7 +56,7 @@ body.subpage {
   color: var(--ink);
   background:
     radial-gradient(circle at top left, rgba(196, 154, 108, 0.10), transparent 30%),
-    linear-gradient(180deg, #FDFBF6 0%, #F5EFE4 34%, #F0E9DA 100%);
+    linear-gradient(180deg, var(--cream) 0%, #F5EFE4 34%, var(--mist) 100%);
   min-height: 100vh;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -295,7 +295,7 @@ body.subpage {
   background:
     radial-gradient(circle at 20% 50%, rgba(157, 124, 42, 0.15), transparent 50%),
     radial-gradient(circle at 80% 20%, rgba(184, 148, 31, 0.1), transparent 40%),
-    linear-gradient(135deg, #0E1F16 0%, #1A3328 42%, #1E3D2E 100%);
+    linear-gradient(135deg, var(--forest-deep) 0%, var(--forest) 42%, #1E3D2E 100%);
   color: #f7f4ed;
   box-shadow: var(--shadow-soft);
   margin-bottom: 28px;
@@ -947,7 +947,7 @@ body.subpage {
 .site-footer {
   margin-top: 0;
   padding: 13px 20px;
-  background: linear-gradient(135deg, #0E1F16, #1A3328);
+  background: linear-gradient(135deg, var(--forest-deep), var(--forest));
   border-top: 2px solid rgba(196, 154, 108, 0.28);
   color: rgba(253, 251, 246, 0.52);
   font-size: 12px;
@@ -1006,8 +1006,8 @@ body.subpage {
   min-width: 20px;
   height: 20px;
   border-radius: 999px;
-  background: var(--gold, #c49a6c);
-  color: var(--forest, #1a3d28);
+  background: var(--gold, var(--gold));
+  color: var(--forest, var(--forest));
   font-size: 11px;
   font-weight: 800;
   display: inline-flex;
@@ -1162,9 +1162,9 @@ body.subpage {
 .nav-btn {
   padding: 8px 20px;
   border-radius: 999px;
-  border: 2px solid var(--green, #1a3d28);
+  border: 2px solid var(--green, var(--forest));
   background: white;
-  color: var(--green, #1a3d28);
+  color: var(--green, var(--forest));
   font-weight: 600;
   font-size: 14px;
   line-height: 1.2;
@@ -1179,7 +1179,7 @@ body.subpage {
   white-space: nowrap;
 }
 .nav-btn.primary {
-  background: var(--green, #1a3d28);
+  background: var(--green, var(--forest));
   color: white;
 }
 .nav-btn:hover {
@@ -1209,8 +1209,8 @@ body.subpage {
   min-width: 18px;
   height: 18px;
   border-radius: 999px;
-  background: var(--gold, #c49a6c);
-  color: var(--green, #1a3d28);
+  background: var(--gold, var(--gold));
+  color: var(--green, var(--forest));
   font-size: 10px;
   font-weight: 800;
   display: none;
@@ -1246,7 +1246,7 @@ body.subpage {
 .hamburger-btn span {
   display: block;
   height: 2px;
-  background: var(--green, #1a3d28);
+  background: var(--green, var(--forest));
   border-radius: 2px;
   transform-origin: center;
   transition: transform 0.28s ease, opacity 0.2s ease, width 0.2s ease;
@@ -1406,7 +1406,7 @@ body.subpage {
   text-align: center;
   padding: 13px 16px;
   border-radius: 12px;
-  background: linear-gradient(135deg, var(--gold, #C49A6C) 0%, #D4AC80 100%);
+  background: linear-gradient(135deg, var(--gold, var(--gold)) 0%, var(--gold-light) 100%);
   color: #2a1800;
   font-size: 14px;
   font-weight: 800;

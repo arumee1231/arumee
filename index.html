@@ -7,12 +7,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- Preload critical Latin woff2 fonts used above the fold -->
 <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtK.woff2">
-<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yygg_vb.woff2">
 <!-- Inline critical Latin @font-face so browser can use preloaded fonts immediately -->
-<style id="critical-fonts">@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:500 700;font-display:swap;src:url(https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtK.woff2) format('woff2');unicode-range:U+0-FF,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:300 600;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2) format('woff2');unicode-range:U+0-FF,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}</style>
+<style id="critical-fonts">@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:500 700;font-display:swap;src:url(https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtK.woff2) format('woff2');unicode-range:U+0-FF,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:300 600;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yygg_vb.woff2) format('woff2');unicode-range:U+0-FF,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}</style>
 <script>(function(){ document.documentElement.style.background='#FDFBF6'; if('scrollRestoration' in history){ history.scrollRestoration='manual'; } var forceTop=sessionStorage.getItem('arumee_scrolltop'); if(forceTop){ sessionStorage.removeItem('arumee_scrolltop'); sessionStorage.removeItem('showClearToast'); sessionStorage.removeItem('scrollToOrder'); window.__arumeeForceTop=true; window.scrollTo(0,0); var guard=function(){window.scrollTo(0,0);}; window.addEventListener('scroll',guard,true); setTimeout(function(){window.removeEventListener('scroll',guard,true);},1500); document.addEventListener('DOMContentLoaded',guard); window.addEventListener('load',guard); return; } var h=window.location.hash; if(!h||h==='#'){ window.scrollTo(0,0); var guard=function(){window.scrollTo(0,0);}; window.addEventListener('scroll',guard,true); document.addEventListener('DOMContentLoaded',function(){ window.scrollTo(0,0); }); window.addEventListener('load',function(){ window.scrollTo(0,0); setTimeout(function(){ window.scrollTo(0,0); window.removeEventListener('scroll',guard,true); },500); }); return; } function scrollToHash(){ var el=document.getElementById(h.slice(1)); if(el) el.scrollIntoView({behavior:'instant',block:'start'}); } if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded',scrollToHash); } else { scrollToHash(); } })();</script>
 <link rel="stylesheet" href="arumee_assets/main.css"/>
-<link rel="stylesheet" href="cormorant-fonts.css?v=2"/>
+<link rel="stylesheet" href="cormorant-fonts.css?v=5"/>
 <meta content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" name="viewport"/>
 <meta name="view-transition" content="same-origin" />
 <meta content="#1A3328" name="theme-color"/>
@@ -388,6 +388,8 @@ header.hero{background-color:#1a2a1a;min-height:100svh}
 #oils .grid .product-card .product-card__price,#oils .grid .product-card .product-card__price .new-price{font-size:22px !important}
 }</style>
 
+<link rel="stylesheet" href="arumee_assets/editorial.css?v=43"/>
+<script>(function(){try{if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('ed-motion');setTimeout(function(){document.documentElement.classList.add('ed-motion-fallback');},2500);}}catch(e){}})();</script>
 </head>
 <body class="page-our-oils">
 <!-- Sticky Navigation -->
@@ -440,8 +442,8 @@ header.hero{background-color:#1a2a1a;min-height:100svh}
       <a class="mmo-link" href="contact.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">✉</span>Contact</a>
     </nav>
     <div class="mmo-footer">
-      <a class="mmo-cta-btn" href="#order" onclick="closeMobileMenu()">Order Now</a>
-      <span class="mmo-footer-sub">Namakkal &middot; Est. 1987</span>
+      <a class="mmo-cta-btn" href="#oilsGrid" onclick="closeMobileMenu()">Order Now</a>
+      <span class="mmo-footer-sub">Namakkal, Tamil Nadu</span>
     </div>
   </div>
 </div>
@@ -464,6 +466,12 @@ header.hero{background-color:#1a2a1a;min-height:100svh}
       <div class="hero-cta">
         <a class="btn fill" href="#oilsDeliveryInfo">Shop Oils</a>
       </div>
+    </div>
+    <div class="hero-bottles" aria-hidden="true">
+      <img class="hero-bottle hero-bottle--coconut" src="arumee_assets/mockup_coconut.webp" alt="" width="220" height="596" decoding="async" fetchpriority="low"/>
+      <img class="hero-bottle hero-bottle--groundnut" src="arumee_assets/mockup_groundnut.webp" alt="" width="220" height="596" decoding="async" fetchpriority="high"/>
+      <img class="hero-bottle hero-bottle--gingelly" src="arumee_assets/mockup_gingelly.webp" alt="" width="220" height="596" decoding="async" fetchpriority="low"/>
+      <div class="hero-bottle-shadow"></div>
     </div>
   </div>
   <div aria-hidden="true" class="hero-scroll-indicator"><span>&darr;</span></div>
@@ -541,11 +549,14 @@ header.hero{background-color:#1a2a1a;min-height:100svh}
     <p class="important-info__text">We currently deliver within Tamil Nadu only. Expanding to other states very soon — stay tuned!</p>
   </div>
 </div>
-<div class="grid" id="oilsGrid">
+<div class="oils-stage">
+<button type="button" class="oils-nav oils-nav--prev" aria-label="Previous oil" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+<button type="button" class="oils-nav oils-nav--next" aria-label="Next oil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+<div class="grid" id="oilsGrid" aria-roledescription="carousel" aria-label="Our oils">
 <article aria-labelledby="prod-coconut-title" class="card product-card">
 <div class="product-badge product-card__badge">Cold Pressed</div>
 <div class="pic-wrap product-card__image-area"><picture>
-  <source srcset="arumee_assets/mockup_coconut_sm.webp 156w, arumee_assets/mockup_coconut.webp 220w" sizes="(max-width:768px) 80px, 120px" type="image/webp"/>
+  <source srcset="arumee_assets/mockup_coconut_sm.webp 156w, arumee_assets/mockup_coconut.webp 220w" sizes="220px" type="image/webp"/>
   <img alt="Cold‑Pressed Coconut Oil bottle" decoding="async" height="596" loading="lazy" src="arumee_assets/mockup_coconut.png" width="220"/>
 </picture></div>
 
@@ -588,7 +599,7 @@ header.hero{background-color:#1a2a1a;min-height:100svh}
 <article aria-labelledby="prod-groundnut-title" class="card product-card">
 <div class="product-badge product-card__badge">★ Best Seller</div>
 <div class="pic-wrap product-card__image-area"><picture>
-  <source srcset="arumee_assets/mockup_groundnut_sm.webp 128w, arumee_assets/mockup_groundnut.webp 172w" sizes="(max-width:768px) 66px, 100px" type="image/webp"/>
+  <source srcset="arumee_assets/mockup_groundnut_sm.webp 128w, arumee_assets/mockup_groundnut.webp 172w" sizes="220px" type="image/webp"/>
   <img alt="Cold‑Pressed Groundnut Oil bottle" decoding="async" height="568" loading="lazy" src="arumee_assets/mockup_groundnut.png" width="172"/>
 </picture></div>
 <div class="content product-card__body">
@@ -630,7 +641,7 @@ header.hero{background-color:#1a2a1a;min-height:100svh}
 <article aria-labelledby="prod-gingelly-title" class="card product-card">
 <div class="product-badge product-card__badge">Wooden Press</div>
 <div class="pic-wrap product-card__image-area"><picture>
-  <source srcset="arumee_assets/mockup_gingelly_sm.webp 128w, arumee_assets/mockup_gingelly.webp 170w" sizes="(max-width:768px) 66px, 100px" type="image/webp"/>
+  <source srcset="arumee_assets/mockup_gingelly_sm.webp 128w, arumee_assets/mockup_gingelly.webp 170w" sizes="220px" type="image/webp"/>
   <img alt="Cold‑Pressed Gingelly (Sesame) Oil bottle" decoding="async" height="567" loading="lazy" src="arumee_assets/mockup_gingelly.png" width="170"/>
 </picture></div>
 <div class="content product-card__body">
@@ -676,6 +687,7 @@ header.hero{background-color:#1a2a1a;min-height:100svh}
   <button class="dot" data-index="2" aria-label="Go to oil 3"></button>
 </div>
 </div>
+</div>
 </section>
 <div class="combo-promo-banner">
   <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;">
@@ -691,143 +703,140 @@ header.hero{background-color:#1a2a1a;min-height:100svh}
 <div class="container">
 <h2 class="section-title">Why Families Trust Arumee</h2>
 <p class="lead">Most supermarket oils are refined under high heat, bleached, and chemically treated until the real goodness is gone. Ours never are. Here's what makes every Arumee bottle genuinely different.</p>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 32px; margin-top: 40px;">
-<div class="benefit-card" style="text-align: center; padding: 24px; border-radius: 16px;">
-<div class="benefit-icon-frame is-green">
-<img alt="" aria-hidden="true" class="benefit-icon-image" decoding="async" loading="lazy" src="arumee_assets/cold_pressed_v2.webp"/>
-</div>
-<h3 class="benefit-card-title">Cold-Pressed at Low Temperature</h3>
-<p style="line-height: 1.6; margin: 0;">Heat destroys what nature puts in. We press cold — keeping every bit of natural Vitamin E, antioxidants, and that beautiful seed aroma exactly as it should be.</p>
-</div>
-<div class="benefit-card" style="text-align: center; padding: 24px; border-radius: 16px;">
-<div class="benefit-icon-frame is-gold">
-<img alt="" aria-hidden="true" class="benefit-icon-image benefit-icon-image--marachekku" decoding="async" loading="lazy" src="arumee_assets/marachekku.webp"/>
-</div>
-<h3 class="benefit-card-title">Ancestral Wooden Press (Marachekku)</h3>
-<p style="line-height: 1.6; margin: 0;">Our groundnut and gingelly oils are pressed the old way — on a wooden marachekku. Slow, gentle, and completely free of chemical solvents. Just as it has been for generations.</p>
-</div>
-<div class="benefit-card" style="text-align: center; padding: 24px; border-radius: 16px;">
-<div class="benefit-icon-frame is-green">
-<img alt="" aria-hidden="true" class="benefit-icon-image" decoding="async" loading="lazy" src="arumee_assets/Natural.webp"/>
-</div>
-<h3 class="benefit-card-title">Small-Batch, Always Fresh</h3>
-<p style="line-height: 1.6; margin: 0;">We press only what we can ship fresh. No warehousing lag, no stale stock — your bottle goes straight from the press to your doorstep.</p>
-</div>
-<div class="benefit-card" style="text-align: center; padding: 24px; border-radius: 16px;">
-<div class="benefit-icon-frame is-gold" style="font-size: 32px;">🚚</div>
-<h3 class="benefit-card-title">Fresh from the Mill</h3>
-<p style="line-height: 1.6; margin: 0;">Every bottle leaves Mani Flour &amp; Oil Mill in Namakkal carrying the same freshness, aroma, and purity we've proudly kept since 1987.</p>
-</div>
+<div class="why-story" id="whyStory">
+  <figure class="why-bottle" aria-hidden="true">
+    <div class="why-bottle__glass">
+      <img class="why-bottle__empty" src="arumee_assets/mockup_groundnut.webp" alt="" width="172" height="568" loading="lazy" decoding="async"/>
+      <img class="why-bottle__full" src="arumee_assets/mockup_groundnut.webp" alt="" width="172" height="568" loading="lazy" decoding="async"/>
+      <span class="why-bottle__level"></span>
+    </div>
+    <ol class="why-bottle__marks">
+      <li>Pressed cold</li>
+      <li>Wooden press</li>
+      <li>Small batch</li>
+      <li>From the mill</li>
+    </ol>
+  </figure>
+  <ol class="why-claims">
+    <li class="why-claim">
+      <h3 class="why-claim__title">Cold-Pressed at <em>Low Temperature</em></h3>
+      <p>Heat destroys what nature puts in. We press cold — keeping every bit of natural Vitamin E, antioxidants, and that beautiful seed aroma exactly as it should be.</p>
+    </li>
+    <li class="why-claim">
+      <h3 class="why-claim__title">Ancestral <em>Wooden Press</em> (Marachekku)</h3>
+      <p>Our groundnut and gingelly oils are pressed the old way — on a wooden marachekku. Slow, gentle, and completely free of chemical solvents. Just as it has been for generations.</p>
+    </li>
+    <li class="why-claim">
+      <h3 class="why-claim__title">Small-Batch, <em>Always Fresh</em></h3>
+      <p>We press only what we can ship fresh. No warehousing lag, no stale stock — your bottle goes straight from the press to your doorstep.</p>
+    </li>
+    <li class="why-claim">
+      <h3 class="why-claim__title">Fresh from <em>the Mill</em></h3>
+      <p>Every bottle leaves Mani Flour &amp; Oil Mill in Namakkal carrying the same freshness, aroma, and purity we've always proudly kept.</p>
+    </li>
+  </ol>
 </div>
 </div>
 </section>
 
 <!-- FAQ Section -->
-<style>.faq-item{background:var(--surface-soft);border:1px solid rgba(27,38,32,0.12);border-radius:14px;overflow:hidden;transition:transform 0.3s ease}.faq-item:hover{box-shadow:0 6px 24px rgba(27,38,32,0.1);border-color:rgba(27,38,32,0.2);transform:translateY(-1px)}.faq-q{font-family:'Cormorant Garamond','Cormorant Garamond Fallback',serif;font-size:clamp(16px,1.8vw,18px);font-weight:700;color:var(--green);margin:0;padding:20px 24px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;list-style:none;user-select:none;line-height:1.3;letter-spacing:-0.01em}.faq-q::after{content:'+';font-size:22px;font-weight:400;color:var(--gold);flex-shrink:0;transition:transform 0.3s ease;line-height:1}.faq-item.open .faq-q::after{transform:rotate(45deg)}.faq-a{max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.3s ease}.faq-item.open .faq-a{max-height:300px}.faq-a p{margin:0;padding:0 24px 20px;color:#444;font-size:15px;line-height:1.7;border-top:1px solid rgba(30,77,50,0.08);padding-top:14px}@media (max-width:600px){.faq-q{padding:16px 18px;font-size:15px}.faq-a p{padding:0 18px 16px;padding-top:12px}}</style>
 <section id="faq" aria-labelledby="faq-heading" style="border-top:1px solid rgba(0,0,0,0.06);">
 <div class="container">
 <h2 class="section-title" id="faq-heading">Frequently Asked Questions</h2>
 <p class="lead">Curious about our oils, how we press, or how to order? We've answered everything honestly below.</p>
-<div style="max-width:780px; margin:40px auto 0; display:flex; flex-direction:column; gap:12px;">
-
-  <div class="faq-item">
-    <h3 class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">What is Arumee?</h3>
-    <div class="faq-a">
+<div class="faq-wrap">
+<div class="faq-filters" role="group" aria-label="Filter questions">
+  <button type="button" class="faq-chip is-active" data-filter="all" aria-pressed="true">All</button>
+  <button type="button" class="faq-chip" data-filter="oils" aria-pressed="false">Our oils</button>
+  <button type="button" class="faq-chip" data-filter="orders" aria-pressed="false">Orders &amp; delivery</button>
+  <button type="button" class="faq-chip" data-filter="use" aria-pressed="false">Using the oils</button>
+</div>
+<div class="faq-list" id="faqList">
+  <div class="faq-item open" data-cat="oils">
+    <h3 class="faq-q"><button type="button" class="faq-toggle" id="faq-q-1" aria-expanded="true" aria-controls="faq-a-1"><span class="faq-num" aria-hidden="true">01</span><span class="faq-q-text">What is Arumee?</span><span class="faq-icon" aria-hidden="true"></span></button></h3>
+    <div class="faq-a" id="faq-a-1" role="region" aria-labelledby="faq-q-1"><div class="faq-a-inner">
       <p>Arumee is a premium oil brand based in Namakkal, Tamil Nadu. We produce pure cold-pressed coconut oil and wooden-pressed (marachekku) groundnut &amp; gingelly (sesame) oils at Mani Flour &amp; Oil Mill. All oils are FSSAI certified (licence 22425133000137), free of chemicals and preservatives, and delivered free within Tamil Nadu.</p>
-    </div>
+    </div></div>
   </div>
-
-  <div class="faq-item">
-    <h3 class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">Is Arumee oil truly cold-pressed?</h3>
-    <div class="faq-a">
+  <div class="faq-item" data-cat="oils">
+    <h3 class="faq-q"><button type="button" class="faq-toggle" id="faq-q-2" aria-expanded="false" aria-controls="faq-a-2"><span class="faq-num" aria-hidden="true">02</span><span class="faq-q-text">Is Arumee oil truly cold-pressed?</span><span class="faq-icon" aria-hidden="true"></span></button></h3>
+    <div class="faq-a" id="faq-a-2" role="region" aria-labelledby="faq-q-2"><div class="faq-a-inner">
       <p>Yes. All our oils are cold-pressed at low temperature — well below the threshold that destroys natural nutrients, antioxidants, and aroma. Our groundnut and gingelly oils are extracted using the traditional wooden marachekku press; our coconut oil is cold-pressed with no heat treatment, bleaching, or chemical solvents at any stage.</p>
-    </div>
+    </div></div>
   </div>
-
-  <div class="faq-item">
-    <h3 class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">Why is cold-pressed oil better than refined oil?</h3>
-    <div class="faq-a">
+  <div class="faq-item" data-cat="oils">
+    <h3 class="faq-q"><button type="button" class="faq-toggle" id="faq-q-3" aria-expanded="false" aria-controls="faq-a-3"><span class="faq-num" aria-hidden="true">03</span><span class="faq-q-text">Why is cold-pressed oil better than refined oil?</span><span class="faq-icon" aria-hidden="true"></span></button></h3>
+    <div class="faq-a" id="faq-a-3" role="region" aria-labelledby="faq-q-3"><div class="faq-a-inner">
       <p>Refined oils undergo high-heat processing, chemical bleaching, and deodorizing — stripping away natural vitamins, antioxidants, and flavour. Cold-pressed oils retain their full nutritional profile including Vitamin E, natural antioxidants like sesamol (in gingelly oil) and lauric acid (in coconut oil), along with authentic aroma and taste.</p>
-    </div>
+    </div></div>
   </div>
-
-  <div class="faq-item">
-    <h3 class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">Is delivery free? Where do you deliver?</h3>
-    <div class="faq-a">
+  <div class="faq-item" data-cat="orders">
+    <h3 class="faq-q"><button type="button" class="faq-toggle" id="faq-q-4" aria-expanded="false" aria-controls="faq-a-4"><span class="faq-num" aria-hidden="true">04</span><span class="faq-q-text">Is delivery free? Where do you deliver?</span><span class="faq-icon" aria-hidden="true"></span></button></h3>
+    <div class="faq-a" id="faq-a-4" role="region" aria-labelledby="faq-q-4"><div class="faq-a-inner">
       <p>Yes, all Arumee orders include free delivery within Tamil Nadu. We currently deliver only within Tamil Nadu. We&rsquo;ll expand to other states soon. We dispatch from our mill in Namakkal, Tamil Nadu. Most orders arrive within 3—5 business days.</p>
-    </div>
+    </div></div>
   </div>
-
-  <div class="faq-item">
-    <h3 class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">Why can online delivery pricing differ from direct mill purchase pricing?</h3>
-    <div class="faq-a">
+  <div class="faq-item" data-cat="orders">
+    <h3 class="faq-q"><button type="button" class="faq-toggle" id="faq-q-5" aria-expanded="false" aria-controls="faq-a-5"><span class="faq-num" aria-hidden="true">05</span><span class="faq-q-text">Why can online delivery pricing differ from direct mill purchase pricing?</span><span class="faq-icon" aria-hidden="true"></span></button></h3>
+    <div class="faq-a" id="faq-a-5" role="region" aria-labelledby="faq-q-5"><div class="faq-a-inner">
       <p>Online delivery pricing may differ from direct mill purchase pricing because it includes packaging, order handling, and transportation to your address. The total online amount covers these delivery-related costs for doorstep convenience.</p>
-    </div>
+    </div></div>
   </div>
-
-  <div class="faq-item">
-    <h3 class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">How do I pay for my order?</h3>
-    <div class="faq-a">
+  <div class="faq-item" data-cat="orders">
+    <h3 class="faq-q"><button type="button" class="faq-toggle" id="faq-q-6" aria-expanded="false" aria-controls="faq-a-6"><span class="faq-num" aria-hidden="true">06</span><span class="faq-q-text">How do I pay for my order?</span><span class="faq-icon" aria-hidden="true"></span></button></h3>
+    <div class="faq-a" id="faq-a-6" role="region" aria-labelledby="faq-q-6"><div class="faq-a-inner">
       <p>It's simple! Add your oils to the cart, fill in your details, and submit your order. We'll reach out on WhatsApp to confirm everything. Once confirmed, just scan our UPI QR code to pay — and your fresh oil gets packed and dispatched to you. Free delivery within Tamil Nadu.</p>
-    </div>
+    </div></div>
   </div>
-
-  <div class="faq-item">
-    <h3 class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">Is Arumee oil FSSAI certified?</h3>
-    <div class="faq-a">
+  <div class="faq-item" data-cat="oils">
+    <h3 class="faq-q"><button type="button" class="faq-toggle" id="faq-q-7" aria-expanded="false" aria-controls="faq-a-7"><span class="faq-num" aria-hidden="true">07</span><span class="faq-q-text">Is Arumee oil FSSAI certified?</span><span class="faq-icon" aria-hidden="true"></span></button></h3>
+    <div class="faq-a" id="faq-a-7" role="region" aria-labelledby="faq-q-7"><div class="faq-a-inner">
       <p>Yes. Arumee is licensed and certified by FSSAI (Food Safety and Standards Authority of India) under licence number 22425133000137, operated by Mani Flour &amp; Oil Mill, Namakkal, Tamil Nadu.</p>
-    </div>
+    </div></div>
   </div>
-
-  <div class="faq-item">
-    <h3 class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">What sizes and prices are available?</h3>
-    <div class="faq-a">
+  <div class="faq-item" data-cat="orders">
+    <h3 class="faq-q"><button type="button" class="faq-toggle" id="faq-q-8" aria-expanded="false" aria-controls="faq-a-8"><span class="faq-num" aria-hidden="true">08</span><span class="faq-q-text">What sizes and prices are available?</span><span class="faq-icon" aria-hidden="true"></span></button></h3>
+    <div class="faq-a" id="faq-a-8" role="region" aria-labelledby="faq-q-8"><div class="faq-a-inner">
       <p>All three oils are available in 1 litre and 5 litre packs. Cold-Pressed Coconut Oil — ₹449 (1L) / ₹2,199 (5L). Wooden Cold-Pressed Groundnut Oil — ₹329 (1L) / ₹1,549 (5L). Wooden Cold-Pressed Gingelly Oil — ₹499 (1L) / ₹2,395 (5L). Free delivery included on all orders.</p>
-    </div>
+    </div></div>
   </div>
-
-  <div class="faq-item">
-    <h3 class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">What is marachekku oil?</h3>
-    <div class="faq-a">
+  <div class="faq-item" data-cat="oils">
+    <h3 class="faq-q"><button type="button" class="faq-toggle" id="faq-q-9" aria-expanded="false" aria-controls="faq-a-9"><span class="faq-num" aria-hidden="true">09</span><span class="faq-q-text">What is marachekku oil?</span><span class="faq-icon" aria-hidden="true"></span></button></h3>
+    <div class="faq-a" id="faq-a-9" role="region" aria-labelledby="faq-q-9"><div class="faq-a-inner">
       <p>Marachekku oil is cooking oil extracted using a traditional wooden press called a &ldquo;marachekku&rdquo; in Tamil. The slow, cold extraction preserves natural nutrients, aroma, and flavour without chemicals or high heat. Arumee&rsquo;s groundnut and gingelly oils are made using this ancestral wooden press method at Mani Flour &amp; Oil Mill in Namakkal, Tamil Nadu.</p>
-    </div>
+    </div></div>
   </div>
-
-  <div class="faq-item">
-    <h3 class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">How should I store cold-pressed oil?</h3>
-    <div class="faq-a">
+  <div class="faq-item" data-cat="use">
+    <h3 class="faq-q"><button type="button" class="faq-toggle" id="faq-q-10" aria-expanded="false" aria-controls="faq-a-10"><span class="faq-num" aria-hidden="true">10</span><span class="faq-q-text">How should I store cold-pressed oil?</span><span class="faq-icon" aria-hidden="true"></span></button></h3>
+    <div class="faq-a" id="faq-a-10" role="region" aria-labelledby="faq-q-10"><div class="faq-a-inner">
       <p>Store cold-pressed oil in a cool, dry place away from direct sunlight and heat. Keep the bottle tightly sealed after use. Avoid storing near a stove or window. Cold-pressed oils do not contain preservatives, so proper storage helps retain freshness, aroma, and nutritional value for longer.</p>
-    </div>
+    </div></div>
   </div>
-
-  <div class="faq-item">
-    <h3 class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">What is the shelf life of cold-pressed oil?</h3>
-    <div class="faq-a">
+  <div class="faq-item" data-cat="use">
+    <h3 class="faq-q"><button type="button" class="faq-toggle" id="faq-q-11" aria-expanded="false" aria-controls="faq-a-11"><span class="faq-num" aria-hidden="true">11</span><span class="faq-q-text">What is the shelf life of cold-pressed oil?</span><span class="faq-icon" aria-hidden="true"></span></button></h3>
+    <div class="faq-a" id="faq-a-11" role="region" aria-labelledby="faq-q-11"><div class="faq-a-inner">
       <p>Cold-pressed oils typically have a shelf life of 6 to 12 months when stored correctly in a cool, dark place. Because Arumee oils are pressed in small batches and shipped fresh from the mill, they arrive with maximum shelf life remaining. Always check the best-before date on your bottle.</p>
-    </div>
+    </div></div>
   </div>
-
-  <div class="faq-item">
-    <h3 class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">Is cold-pressed coconut oil good for hair and skin?</h3>
-    <div class="faq-a">
+  <div class="faq-item" data-cat="use">
+    <h3 class="faq-q"><button type="button" class="faq-toggle" id="faq-q-12" aria-expanded="false" aria-controls="faq-a-12"><span class="faq-num" aria-hidden="true">12</span><span class="faq-q-text">Is cold-pressed coconut oil good for hair and skin?</span><span class="faq-icon" aria-hidden="true"></span></button></h3>
+    <div class="faq-a" id="faq-a-12" role="region" aria-labelledby="faq-q-12"><div class="faq-a-inner">
       <p>Yes. Cold-pressed coconut oil retains its natural lauric acid, Vitamin E, and medium-chain fatty acids, making it excellent for hair conditioning, scalp massage, and skin moisturising. Because it is unrefined and chemical-free, it is gentler than refined coconut oil for personal care use.</p>
-    </div>
+    </div></div>
   </div>
-
-  <div class="faq-item">
-    <h3 class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">Is cold-pressed groundnut oil suitable for deep frying?</h3>
-    <div class="faq-a">
+  <div class="faq-item" data-cat="use">
+    <h3 class="faq-q"><button type="button" class="faq-toggle" id="faq-q-13" aria-expanded="false" aria-controls="faq-a-13"><span class="faq-num" aria-hidden="true">13</span><span class="faq-q-text">Is cold-pressed groundnut oil suitable for deep frying?</span><span class="faq-icon" aria-hidden="true"></span></button></h3>
+    <div class="faq-a" id="faq-a-13" role="region" aria-labelledby="faq-q-13"><div class="faq-a-inner">
       <p>Yes. Cold-pressed groundnut oil has a naturally high smoke point and is widely used for deep frying in South Indian cooking. Its rich, nutty flavour enhances the taste of fried foods. However, for best nutrition, cold-pressed oils are ideal for low to medium-heat cooking and tempering.</p>
-    </div>
+    </div></div>
   </div>
-
-  <div class="faq-item">
-    <h3 class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">What is the difference between gingelly oil and sesame oil?</h3>
-    <div class="faq-a">
+  <div class="faq-item" data-cat="oils">
+    <h3 class="faq-q"><button type="button" class="faq-toggle" id="faq-q-14" aria-expanded="false" aria-controls="faq-a-14"><span class="faq-num" aria-hidden="true">14</span><span class="faq-q-text">What is the difference between gingelly oil and sesame oil?</span><span class="faq-icon" aria-hidden="true"></span></button></h3>
+    <div class="faq-a" id="faq-a-14" role="region" aria-labelledby="faq-q-14"><div class="faq-a-inner">
       <p>Gingelly oil and sesame oil are the same product &mdash; &ldquo;gingelly&rdquo; is the traditional South Indian name for sesame oil. Arumee&rsquo;s gingelly oil is extracted from sesame seeds using a wooden marachekku press, retaining its deep aroma, sesamol antioxidants, and Vitamin E content. It is commonly used in Tamil cooking, pickles, and Ayurvedic practices.</p>
-    </div>
+    </div></div>
   </div>
-
+</div>
 </div>
 </div>
 </section>
@@ -902,8 +911,12 @@ header.hero{background-color:#1a2a1a;min-height:100svh}
 
 
 <script>(function(){var ORDER_ENDPOINT='https://script.google.com/macros/s/AKfycbyVXRfITudWEyii7rQxbNakPJ-TmK3Tq-0-RGjoqcHtjKTRNEXEJ_Xn-fUQ199VKJsE3w/exec';var LEGACY_ORDER_ENDPOINT='https://script.google.com/macros/s/AKfycbzUPnEWOz5ToHLwlSd-MGsEGw2_K7mmw9vKzrrl1pEv_n1FExmsNrCqYzkEADS_6BWbvQ/exec';var originalFetch=window.fetch;if(typeof originalFetch!=='function')return;window.fetch=function(resource,options){var url=typeof resource==='string'?resource:(resource&&resource.url)||'';if((url===ORDER_ENDPOINT||url===LEGACY_ORDER_ENDPOINT)&&options&&String(options.method||'GET').toUpperCase()==='POST'){var nextOptions=Object.assign({},options,{keepalive:true});return originalFetch.call(this,ORDER_ENDPOINT,nextOptions);}return originalFetch.call(this,resource,options);};})();</script>
-<script src="arumee_assets/app.js?v=20260628" defer></script>
-<script>document.addEventListener("DOMContentLoaded", function () { var _carouselInit = function() { const carousel = document.querySelector("#oils .grid"); if (!carousel) return; if (window.innerWidth <= 768) { const cards = Array.from(carousel.querySelectorAll(".card")); if (!cards.length) return; const firstCard = cards[0]; const prevSnap = carousel.style.scrollSnapType; carousel.style.scrollSnapType = 'none'; carousel.scrollLeft = 0; const centerIt = () => { try { carousel.style.scrollSnapType = prevSnap || 'x mandatory'; firstCard.scrollIntoView({ behavior: 'auto', inline: 'center', block: 'nearest' }); } catch(e) { const targetLeft = firstCard.offsetLeft - (carousel.clientWidth - firstCard.clientWidth) / 2; carousel.scrollLeft = Math.max(0, targetLeft); } let mobileCarouselActivated = false; function activateMobileCarousel() { if (!mobileCarouselActivated) { mobileCarouselActivated = true; updateActiveSlide(); } } carousel.addEventListener('scroll', activateMobileCarousel, { once: true }); carousel.addEventListener('touchstart', activateMobileCarousel, { once: true }); window.addEventListener('keydown', (e) => { if (['ArrowRight','ArrowLeft'].includes(e.key)) activateMobileCarousel(); }, { once: true }); }; requestAnimationFrame(() => requestAnimationFrame(centerIt)); function throttle(fn, wait) { let ticking = false, lastArgs = null; return function (...args) { lastArgs = args; if (!ticking) { ticking = true; requestAnimationFrame(() => { fn.apply(this, lastArgs); ticking = false; }); } }; } function updateActiveSlide() { const center = carousel.scrollLeft + carousel.clientWidth / 2; let bestIdx = 0; let bestDist = Infinity; cards.forEach((card, idx) => { const cardCenter = card.offsetLeft + card.clientWidth / 2; const dist = Math.abs(cardCenter - center); if (dist < bestDist) { bestDist = dist; bestIdx = idx; } }); cards.forEach((card, idx) => { card.classList.toggle("active-slide", idx === bestIdx); }); } const throttledUpdate = throttle(updateActiveSlide, 80); carousel.addEventListener("scroll", throttledUpdate, { passive: true }); window.addEventListener("resize", throttledUpdate); window.addEventListener("orientationchange", throttledUpdate); cards.forEach((c) => { const img = c.querySelector("img"); if (img && !img.complete) img.addEventListener("load", throttledUpdate); }); } }; if ('requestIdleCallback' in window) { requestIdleCallback(_carouselInit, { timeout: 300 }); } else { setTimeout(_carouselInit, 100); } });</script>
+<script src="arumee_assets/app.js?v=20261018b" defer></script>
+<script src="arumee_assets/vendor/gsap.min.js" defer></script>
+<script src="arumee_assets/vendor/ScrollTrigger.min.js" defer></script>
+<script src="arumee_assets/vendor/lenis.min.js" defer></script>
+<script src="arumee_assets/motion.js?v=9" defer></script>
+<script>document.addEventListener("DOMContentLoaded", function () { var _carouselInit = function() { const carousel = document.querySelector("#oils .grid"); if (!carousel) return; if (window.innerWidth <= 768) { const cards = Array.from(carousel.querySelectorAll(".card")); if (!cards.length) return; const firstCard = cards[0]; const prevSnap = carousel.style.scrollSnapType; carousel.style.scrollSnapType = 'none'; carousel.scrollLeft = 0; const centerIt = () => { try { carousel.style.scrollSnapType = prevSnap || 'x mandatory'; carousel.scrollLeft = 0; /* slides are full width: start = first card centred; scrollIntoView could also scroll the page */ } catch(e) { const targetLeft = firstCard.offsetLeft - (carousel.clientWidth - firstCard.clientWidth) / 2; carousel.scrollLeft = Math.max(0, targetLeft); } let mobileCarouselActivated = false; function activateMobileCarousel() { if (!mobileCarouselActivated) { mobileCarouselActivated = true; updateActiveSlide(); } } carousel.addEventListener('scroll', activateMobileCarousel, { once: true }); carousel.addEventListener('touchstart', activateMobileCarousel, { once: true }); window.addEventListener('keydown', (e) => { if (['ArrowRight','ArrowLeft'].includes(e.key)) activateMobileCarousel(); }, { once: true }); }; requestAnimationFrame(() => requestAnimationFrame(centerIt)); function throttle(fn, wait) { let ticking = false, lastArgs = null; return function (...args) { lastArgs = args; if (!ticking) { ticking = true; requestAnimationFrame(() => { fn.apply(this, lastArgs); ticking = false; }); } }; } function updateActiveSlide() { const center = carousel.scrollLeft + carousel.clientWidth / 2; let bestIdx = 0; let bestDist = Infinity; cards.forEach((card, idx) => { const cardCenter = card.offsetLeft + card.clientWidth / 2; const dist = Math.abs(cardCenter - center); if (dist < bestDist) { bestDist = dist; bestIdx = idx; } }); cards.forEach((card, idx) => { card.classList.toggle("active-slide", idx === bestIdx); }); } const throttledUpdate = throttle(updateActiveSlide, 80); carousel.addEventListener("scroll", throttledUpdate, { passive: true }); window.addEventListener("resize", throttledUpdate); window.addEventListener("orientationchange", throttledUpdate); cards.forEach((c) => { const img = c.querySelector("img"); if (img && !img.complete) img.addEventListener("load", throttledUpdate); }); } }; if ('requestIdleCallback' in window) { requestIdleCallback(_carouselInit, { timeout: 300 }); } else { setTimeout(_carouselInit, 100); } });</script>
 <script>document.addEventListener('DOMContentLoaded', function(){ const cartDropdown = document.getElementById('cartDropdown'); const backdrop = document.getElementById('cartBackdrop'); if (backdrop) backdrop.addEventListener('click', function(){ if (preventCartClose) return; if (isCartOpen) toggleCart(); }); document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && isCartOpen && !preventCartClose) { toggleCart(); } }); });</script>
 <script>document.addEventListener('DOMContentLoaded', function(){ function cleanupActiveForDesktop(){ if (window.innerWidth > 768) { document.querySelectorAll('#oils .grid .card.active-slide').forEach(el => el.classList.remove('active-slide')); } } cleanupActiveForDesktop(); window.addEventListener('resize', cleanupActiveForDesktop); });</script>
 <script id="toast-normalize-guard">(function(){ var lastToastAt = 0; function showToastOnce(msg){ var now = Date.now(); if (now - lastToastAt < 350) return; lastToastAt = now; if (typeof showToast === 'function') return showToast(msg); var t = document.getElementById('toast') || document.querySelector('.toast'); if (!t) { t = document.createElement('div'); t.id = 'toast'; t.className = 'toast'; document.body.appendChild(t); } t.textContent = msg; t.classList.add('show'); setTimeout(function(){ t.classList.remove('show'); }, 3000); } if (typeof window.showAddToCartModal === 'function' && !window.showAddToCartModal.__normalized) { var orig = window.showAddToCartModal; window.showAddToCartModal = function(details){ try{ var text = String(details || ''); var m = text.match(/:\s*(.+?)\s*\(\s*([^)]+)\s*\)\s*—\s*(\d+)/); if (m){ var name = m[1] + ' ' + m[2]; var qty = m[3]; if (text.indexOf('Updated') === 0){ text = 'Updated — ' + name + ' — ' + qty; } else { text = 'Added — ' + name + ' — ' + qty; } } else { if (text.indexOf('Updated') === 0) text = 'Updated'; else if (text.indexOf('Added to cart') === 0) text = 'Added'; } showToastOnce(text); }catch(e){ showToastOnce('Added'); } return; }; window.showAddToCartModal.__normalized = true; } })();</script>
@@ -957,55 +970,136 @@ window.addEventListener('load', function () {
 });
 </script>
 
+<script>
+/* Closed cart panel: only faded and slid off-screen by app.js, so it stayed
+   in the accessibility tree as an open aria-modal dialog with tabbable
+   buttons. Mirror its 'open' class onto inert/aria-hidden. app.js moves
+   focus 30ms after opening; this observer runs before that. */
+(function(){
+  var cd=document.getElementById('cartDropdown');
+  if(!cd)return;
+  function sync(){ var open=cd.classList.contains('open'); cd.inert=!open; cd.setAttribute('aria-hidden',open?'false':'true'); }
+  new MutationObserver(sync).observe(cd,{attributes:true,attributeFilter:['class']});
+  sync();
+})();
+</script>
 <!-- chat-widget: lazy-loaded on first user interaction to avoid unused-JS penalty -->
 <script>(function(){ var loaded=false; function loadChat(){ if(loaded)return;loaded=true; var s=document.createElement('script'); s.src='arumee_assets/chat-widget.js?v=9'; document.body.appendChild(s); } ['scroll','click','touchstart','keydown'].forEach(function(e){ window.addEventListener(e,loadChat,{once:true,passive:true}); }); if('requestIdleCallback' in window){ requestIdleCallback(loadChat,{timeout:8000}); } else { setTimeout(loadChat,8000); } })();</script>
 <script>if ('serviceWorker' in navigator) { navigator.serviceWorker.getRegistrations().then(function(regs) { var unregAll = regs.map(function(r) { return r.unregister(); }); return Promise.all(unregAll); }).then(function() { return navigator.serviceWorker.register('/service-worker.js'); }).then(function(reg) { if (reg.waiting) { reg.waiting.postMessage({type:'SKIP_WAITING'}); } reg.addEventListener('updatefound', function() { var newSW = reg.installing; if (newSW) { newSW.addEventListener('statechange', function() { if (newSW.state === 'installed' && navigator.serviceWorker.controller) { newSW.postMessage({type:'SKIP_WAITING'}); } }); } }); }); }</script>
 <script>
-/* Oils carousel dot sync for mobile */
+/* FAQ: accordion + category filter */
 (function(){
-  var grid=document.getElementById('oilsGrid');
-  var dotsWrap=document.querySelector('.oils-carousel-dots');
-  if(!grid||!dotsWrap)return;
-  var dots=dotsWrap.querySelectorAll('.dot');
-  var cards=grid.querySelectorAll('.product-card');
-  if(!cards.length)return;
-  function getActiveIndex(){
-    var scrollL=grid.scrollLeft;
-    var gridW=grid.offsetWidth;
-    var best=0,bestDist=Infinity;
-    for(var i=0;i<cards.length;i++){
-      var cl=cards[i].offsetLeft-grid.offsetLeft;
-      var center=cl+cards[i].offsetWidth/2;
-      var dist=Math.abs(center-(scrollL+gridW/2));
-      if(dist<bestDist){bestDist=dist;best=i;}
-    }
-    return best;
+  var list=document.getElementById('faqList');
+  if(!list)return;
+  var wrap=list.closest('.faq-wrap');
+  var items=Array.prototype.slice.call(list.querySelectorAll('.faq-item'));
+  var chips=Array.prototype.slice.call(wrap.querySelectorAll('.faq-chip'));
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+  function setOpen(item,open){
+    item.classList.toggle('open',open);
+    item.querySelector('.faq-toggle').setAttribute('aria-expanded',open?'true':'false');
   }
-  function updateDots(){
-    var idx=getActiveIndex();
-    for(var i=0;i<dots.length;i++){
-      dots[i].classList.toggle('active',i===idx);
-    }
+  items.forEach(function(item){
+    item.querySelector('.faq-toggle').addEventListener('click',function(){ setOpen(item,!item.classList.contains('open')); });
+  });
+  function renumber(){
+    var n=0;
+    items.forEach(function(item){ if(item.hidden)return; n++; item.querySelector('.faq-num').textContent=(n<10?'0':'')+n; });
   }
-  var raf;
-  grid.addEventListener('scroll',function(){
-    if(raf)cancelAnimationFrame(raf);
-    raf=requestAnimationFrame(updateDots);
-  },{passive:true});
-  dots.forEach(function(dot){
-    dot.addEventListener('click',function(){
-      var idx=parseInt(dot.getAttribute('data-index'),10);
-      if(cards[idx]){
-        cards[idx].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  chips.forEach(function(chip){
+    chip.addEventListener('click',function(){
+      if(chip.classList.contains('is-active'))return;
+      var f=chip.getAttribute('data-filter');
+      chips.forEach(function(c){ var on=c===chip; c.classList.toggle('is-active',on); c.setAttribute('aria-pressed',on?'true':'false'); });
+      var shown=[];
+      items.forEach(function(item){
+        var show=f==='all'||item.getAttribute('data-cat')===f;
+        if(show&&item.hidden)shown.push(item);
+        item.hidden=!show;
+      });
+      renumber();
+      // Newly shown questions settle in, 40ms apart; a filter is an occasional
+      // action, so a short stagger reads as "the list changed" without delay.
+      if(!reduce.matches&&Element.prototype.animate){
+        shown.forEach(function(item,i){
+          item.animate([{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'translateY(0)'}],
+            {duration:220,delay:Math.min(i,6)*40,easing:'cubic-bezier(0.23, 1, 0.32, 1)',fill:'backwards'});
+        });
       }
     });
   });
-  /* Hide dots on desktop */
-  function checkWidth(){
-    dotsWrap.style.display=window.innerWidth<=720?'flex':'none';
+})();
+</script>
+<script>
+/* Oils showcase: dots + neighbour numbers, synced to the rail */
+(function(){
+  var grid=document.getElementById('oilsGrid');
+  var stage=grid&&grid.closest('.oils-stage');
+  if(!grid||!stage)return;
+  var cards=grid.querySelectorAll('.product-card');
+  var dots=stage.querySelectorAll('.oils-carousel-dots .dot');
+  var prev=stage.querySelector('.oils-nav--prev');
+  var next=stage.querySelector('.oils-nav--next');
+  if(!cards.length)return;
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+  var current=-1;
+  function activeIndex(){
+    var g=grid.getBoundingClientRect(),mid=g.left+g.width/2,best=0,bestDist=Infinity;
+    for(var i=0;i<cards.length;i++){
+      var r=cards[i].getBoundingClientRect(),d=Math.abs(r.left+r.width/2-mid);
+      if(d<bestDist){bestDist=d;best=i;}
+    }
+    return best;
   }
-  checkWidth();
-  window.addEventListener('resize',checkWidth,{passive:true});
+  function sync(){
+    var idx=activeIndex();
+    if(idx===current)return;
+    current=idx;
+    for(var i=0;i<dots.length;i++){
+      dots[i].classList.toggle('active',i===idx);
+      dots[i].setAttribute('aria-current',i===idx?'true':'false');
+    }
+    // Move focus off an arrow before it disables, so keyboard users keep their place.
+    if(prev){ if(idx===0&&document.activeElement===prev&&next)next.focus(); prev.disabled=idx===0; }
+    if(next){ if(idx===cards.length-1&&document.activeElement===next&&prev)prev.focus(); next.disabled=idx===cards.length-1; }
+  }
+  function go(idx,instant){
+    idx=Math.max(0,Math.min(cards.length-1,idx));
+    var g=grid.getBoundingClientRect(),r=cards[idx].getBoundingClientRect();
+    grid.scrollTo({left:grid.scrollLeft+(r.left+r.width/2)-(g.left+g.width/2),behavior:(instant||reduce.matches)?'auto':'smooth'});
+  }
+  /* Hero bottles open their oil: the rail switches first, off-screen,
+     so the right oil is already centred when the page arrives. */
+  Array.prototype.forEach.call(document.querySelectorAll('.hero-bottles .hero-bottle'),function(img){
+    var m=img.className.match(/hero-bottle--(\w+)/);
+    if(!m)return;
+    var idx=-1;
+    for(var i=0;i<cards.length;i++){ if(cards[i].querySelector('.add-to-order[data-product="'+m[1]+'"]')){idx=i;break;} }
+    if(idx<0)return;
+    img.addEventListener('click',function(){
+      go(idx,true);
+      // offsetTop ignores transforms, so a pending reveal offset can't skew the target.
+      var top=0; for(var el=stage;el;el=el.offsetParent)top+=el.offsetTop;
+      top=Math.max(0,top-84);
+      var lenis=window.__arumeeLenis;
+      if(lenis&&!reduce.matches) lenis.scrollTo(top,{duration:1.1});
+      else window.scrollTo({top:top,behavior:reduce.matches?'auto':'smooth'});
+    });
+  });
+  var raf;
+  grid.addEventListener('scroll',function(){ if(raf)cancelAnimationFrame(raf); raf=requestAnimationFrame(sync); },{passive:true});
+  window.addEventListener('resize',function(){ var i=current<0?0:current; current=-1; go(i); sync(); },{passive:true});
+  for(var k=0;k<dots.length;k++)(function(dot){
+    dot.addEventListener('click',function(){ go(parseInt(dot.getAttribute('data-index'),10)); });
+  })(dots[k]);
+  if(prev)prev.addEventListener('click',function(){ go(current-1); });
+  if(next)next.addEventListener('click',function(){ go(current+1); });
+  grid.addEventListener('keydown',function(e){
+    if(e.target.closest('input,select,textarea'))return;
+    if(e.key==='ArrowRight'){e.preventDefault();go(current+1);}
+    else if(e.key==='ArrowLeft'){e.preventDefault();go(current-1);}
+  });
+  sync();
 })();
 </script>
 </body>

@@ -17,9 +17,9 @@
   </script>
 
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yygg_vb.woff2" crossorigin />
   <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtK.woff2" crossorigin />
-  <link href="cormorant-fonts.css?v=2" rel="stylesheet"/>
+  <link href="cormorant-fonts.css?v=5" rel="stylesheet"/>
   <link rel="stylesheet" href="arumee_assets/cart.css" />
   <link rel="stylesheet" href="arumee_assets/premium-subpages.css" />
 
@@ -139,6 +139,7 @@
       .checkout-submit-row .btn{width:100%;min-width:0}
     }
   </style>
+  <link rel="stylesheet" href="arumee_assets/editorial.css?v=43" />
 </head>
 <body class="subpage" data-active-nav="checkout">
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -183,8 +184,8 @@
         <a class="mmo-link" href="contact.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">✉</span>Contact</a>
       </nav>
       <div class="mmo-footer">
-        <a class="mmo-cta-btn" href="index.html#order" onclick="closeMobileMenu()">Order Now</a>
-        <span class="mmo-footer-sub">Namakkal &middot; Est. 1987</span>
+        <a class="mmo-cta-btn" href="index.html#oilsGrid" onclick="closeMobileMenu()">Order Now</a>
+        <span class="mmo-footer-sub">Namakkal, Tamil Nadu</span>
       </div>
     </div>
   </div>
@@ -344,8 +345,12 @@
 
   <div class="page-toast" id="pageToast" role="status" aria-live="polite"></div>
 
-  <script src="arumee_assets/subpage-cart.js"></script>
+  <script src="arumee_assets/subpage-cart.js?v=3"></script>
   <script src="arumee_assets/premium-subpages.js"></script>
+  <script src="arumee_assets/vendor/gsap.min.js" defer></script>
+  <script src="arumee_assets/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="arumee_assets/vendor/lenis.min.js" defer></script>
+  <script src="arumee_assets/motion.js?v=9" defer></script>
 
   <script>
   (function () {
@@ -576,12 +581,12 @@
         var district = data[clean];
         if (district) {
           status.style.cssText = 'font-size:12px;border-radius:7px;padding:8px 11px;margin:0;line-height:1.45;color:#1a6e3c;background:#e3f5ea;font-weight:600;';
-          status.innerHTML = 'âœ“ Tamil Nadu — Delivery available!';
+          status.innerHTML = '✓ Tamil Nadu — Delivery available!';
           if (distInput) distInput.value = district;
           if (distWrap) distWrap.style.display = '';
         } else {
           status.style.cssText = 'font-size:12px;border-radius:7px;padding:8px 11px;margin:0;line-height:1.45;color:#b03020;background:#fdf0ee;font-weight:500;';
-          status.innerHTML = 'âœ— Sorry, we currently deliver only within Tamil Nadu. Please enter a Tamil Nadu pincode.';
+          status.innerHTML = '✗ Sorry, we currently deliver only within Tamil Nadu. Please enter a Tamil Nadu pincode.';
           if (distInput) distInput.value = '';
           if (distWrap) distWrap.style.display = 'none';
         }
@@ -679,7 +684,7 @@
             var itemsSummary = orderItems.map(function (item) {
               var name = item.productName || 'Oil';
               if (!item.isFixedBundle) {
-                name = name.replace(/^Wooden\s+Cold[-â€‘]Pressed\s+/i, '').replace(/^Cold[-â€‘]Pressed\s+/i, '');
+                name = name.replace(/^Wooden\s+Cold[-‑]Pressed\s+/i, '').replace(/^Cold[-‑]Pressed\s+/i, '');
               }
               return item.qty > 1 ? name + ' — ' + item.qty : name;
             }).join('\n');

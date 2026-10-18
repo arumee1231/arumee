@@ -1,0 +1,3064 @@
+/* =====================================================================
+   Arumee — Editorial design layer
+   Loaded LAST on every page. Adds a quieter, more editorial finish on top
+   of the existing palette/typography. No markup behaviour changes.
+   See DESIGN.md for the rationale and tokens.
+   ===================================================================== */
+
+:root {
+  --ed-forest: #1A3328;
+  --ed-forest-deep: #0E1F16;
+  --ed-forest-ink: #0A1A12;
+  --ed-gold: #C49A6C;
+  --ed-gold-light: #D4AC80;
+  --ed-gold-pale: #E8D4B8;
+  --ed-cream: #FDFBF6;
+  --ed-paper: #F6F0E4;
+  --ed-paper-deep: #F1EADC;
+  --ed-ink: #162B20;
+  --ed-muted: rgba(22, 43, 32, 0.72);
+  --ed-line: rgba(26, 51, 40, 0.14);
+  --ed-line-soft: rgba(26, 51, 40, 0.08);
+  --ed-serif: 'Cormorant Garamond', 'Cormorant Garamond Fallback', Georgia, serif;
+  --ed-sans: 'Inter', 'Inter Fallback', system-ui, sans-serif;
+  --ed-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ed-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ed-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+
+/* ---------- shared: eyebrow + labels ---------- */
+.ed-eyebrow,
+h2.section-title[data-eyebrow]::before {
+  font-family: var(--ed-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--ed-gold);
+}
+
+/* ---------- shared: nav polish ---------- */
+.ed-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  z-index: 10011;
+  background: linear-gradient(90deg, var(--ed-gold), var(--ed-gold-light));
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+.sticky-nav .nav-brand span {
+  letter-spacing: 0.22em !important;
+  font-weight: 500 !important;
+}
+.desktop-nav-link {
+  letter-spacing: 0.16em !important;
+  font-weight: 500 !important;
+}
+
+/* =====================================================================
+   HOME — HERO  (full-bleed forest band, copy left, bottles right)
+   ===================================================================== */
+html body.page-our-oils header.hero {
+  position: relative;
+  isolation: isolate;
+  margin: 0;
+  padding: calc(76px + clamp(40px, 7vw, 88px)) 0 clamp(48px, 7vw, 96px) !important;
+  background:
+    radial-gradient(120% 90% at 85% 10%, rgba(196, 154, 108, 0.18), transparent 55%),
+    radial-gradient(70% 60% at 10% 100%, rgba(30, 77, 50, 0.55), transparent 60%),
+    linear-gradient(160deg, #122A1F 0%, #1A3328 48%, #0E1F16 100%);
+  border-bottom: 1px solid rgba(196, 154, 108, 0.22) !important;
+  overflow: hidden;
+  min-height: 0;
+}
+html body.page-our-oils header.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: var(--ed-grain);
+  background-size: 160px 160px;
+  opacity: 0.07;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+html body.page-our-oils header.hero > .container {
+  width: min(1200px, 92vw);
+  display: block;
+}
+html body.page-our-oils .hero-shell {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr) !important;
+  align-items: center !important;
+  gap: clamp(28px, 5vw, 72px) !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  overflow: visible !important;
+  isolation: auto;
+}
+html body.page-our-oils .hero-shell::after,
+html body.page-our-oils header.hero::after,
+html body.page-our-oils .hero-heritage-image,
+html body.page-our-oils .oils-intro::before {
+  display: none !important;
+}
+
+/* copy column */
+html body.page-our-oils .hero-copy,
+html body.page-our-oils .hero-content {
+  max-width: 640px !important;
+  margin: 0 !important;
+  align-items: flex-start !important;
+  text-align: left !important;
+  gap: clamp(18px, 2.4vw, 26px) !important;
+}
+html body.page-our-oils .hero-copy::before { display: none; }
+
+html body.page-our-oils .hero-eyebrow {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 14px;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: var(--ed-gold-light) !important;
+  font-family: var(--ed-sans) !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.28em !important;
+  text-transform: uppercase;
+}
+html body.page-our-oils .hero-eyebrow::before {
+  content: '';
+  width: 34px;
+  height: 1px;
+  background: var(--ed-gold-light);
+  opacity: 0.8;
+}
+
+html body.page-our-oils .hero-title {
+  margin: 0 !important;
+  max-width: none !important;
+  width: 100% !important;
+  text-align: left !important;
+  font-family: var(--ed-serif) !important;
+  font-weight: 500 !important;
+  font-size: clamp(2.75rem, 4.7vw, 4.5rem) !important;
+  line-height: 1 !important;
+  letter-spacing: -0.025em !important;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'dlig' 1;
+  font-optical-sizing: auto;
+  color: var(--ed-cream) !important;
+  text-shadow: none !important;
+  white-space: normal !important;
+  text-wrap: balance !important;
+}
+html body.page-our-oils .hero-title span {
+  display: block !important;
+  white-space: normal !important;
+  text-align: left !important;
+}
+html body.page-our-oils .hero-title span:last-child {
+  font-style: italic;
+  font-synthesis: none;
+  font-weight: 500;
+  color: var(--ed-gold-light);
+  letter-spacing: -0.02em;
+  padding-right: 0.06em; /* keeps italic swash from clipping */
+}
+
+html body.page-our-oils .hero-summary {
+  margin: 0 !important;
+  max-width: 46ch !important;
+  text-align: left !important;
+  font-size: clamp(0.95rem, 1.05vw, 1.0625rem) !important;
+  font-weight: 400 !important;
+  line-height: 1.7 !important;
+  letter-spacing: 0.002em;
+  color: rgba(253, 251, 246, 0.78) !important;
+  text-wrap: pretty;
+}
+
+/* proof row — quiet inline markers instead of three boxes */
+html body.page-our-oils .hero-proof-grid {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 10px 0 !important;
+  width: auto !important;
+  margin: 0 !important;
+}
+html body.page-our-oils .hero-proof-item {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+html body.page-our-oils .hero-proof-item + .hero-proof-item::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--ed-gold);
+  margin: 0 14px;
+  opacity: 0.9;
+}
+html body.page-our-oils .hero-proof-item strong {
+  font-family: var(--ed-sans);
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.2em !important;
+  text-transform: uppercase;
+  color: rgba(253, 251, 246, 0.72) !important;
+  text-align: left !important;
+}
+
+/* CTA */
+html body.page-our-oils .hero-cta {
+  margin-top: 6px !important;
+  justify-content: flex-start !important;
+}
+html body.page-our-oils .hero-cta .btn.fill {
+  min-width: 0 !important;
+  min-height: 54px !important;
+  padding: 0 30px !important;
+  border-radius: 999px !important;
+  background: var(--ed-gold-light) !important;
+  color: var(--ed-forest-ink) !important;
+  border: 1px solid transparent !important;
+  box-shadow: 0 18px 40px -16px rgba(212, 172, 128, 0.7) !important;
+  font-family: var(--ed-sans);
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase;
+  text-shadow: none !important;
+  gap: 14px !important;
+  transition: transform 0.5s var(--ed-ease), background 0.3s ease, box-shadow 0.5s var(--ed-ease) !important;
+}
+html body.page-our-oils .hero-cta .btn.fill::after {
+  content: '→';
+  font-family: var(--ed-serif);
+  font-size: 20px;
+  line-height: 1;
+  font-weight: 500;
+  transition: transform 0.5s var(--ed-ease);
+}
+html body.page-our-oils .hero-cta .btn.fill:hover {
+  background: var(--ed-cream) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 22px 44px -16px rgba(253, 251, 246, 0.45) !important;
+}
+html body.page-our-oils .hero-cta .btn.fill:hover::after { transform: translateX(4px); }
+
+html body.page-our-oils .hero-scroll-indicator {
+  bottom: 18px;
+  opacity: 0.35;
+}
+
+/* bottle composition */
+.hero-bottles {
+  position: relative;
+  height: clamp(300px, 36vw, 520px);
+  width: 100%;
+  pointer-events: none;
+  user-select: none;
+}
+.hero-bottles::before {
+  /* warm glow */
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 56%;
+  width: 92%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(212, 172, 128, 0.28) 0%, rgba(212, 172, 128, 0.08) 38%, transparent 62%);
+  filter: blur(6px);
+}
+.hero-bottles::after {
+  /* hairline ring */
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 54%;
+  width: 78%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid rgba(212, 172, 128, 0.28);
+  box-shadow: 0 0 0 28px rgba(212, 172, 128, 0.04);
+}
+.hero-bottles .hero-bottle {
+  position: absolute;
+  bottom: 4%;
+  width: auto;
+  height: auto;
+  max-width: none;
+  filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.45));
+  will-change: transform;
+  z-index: 1;
+}
+/* Centred with auto margins, not translate: GSAP folds CSS `translate` into
+   its own transform (as px, measured once) and the bottle drifts off-centre
+   if that happens before the image has its final width. */
+/* Each hero bottle opens its oil in the showcase (index.html). */
+.hero-bottles .hero-bottle { pointer-events: auto; cursor: pointer; }
+@media (hover: hover) and (pointer: fine) {
+  .hero-bottles .hero-bottle { transition: filter 0.2s ease; }
+  /* Hovering one bottle quietly steps the others back. */
+  .hero-bottles:has(.hero-bottle:hover) .hero-bottle:not(:hover) {
+    filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.45)) brightness(0.72) saturate(0.85);
+  }
+}
+.hero-bottles .hero-bottle--groundnut { left: 0; right: 0; margin-inline: auto; height: 100%; z-index: 2; }
+.hero-bottles .hero-bottle--coconut   { left: 11%; height: 78%; }
+.hero-bottles .hero-bottle--gingelly  { right: 10%; height: 84%; }
+.hero-bottles .hero-bottle-shadow {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 70%;
+  height: 10%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.42), transparent 70%);
+  filter: blur(6px);
+}
+
+/* =====================================================================
+   HOME — SECTION INTROS (left-aligned editorial headers)
+   ===================================================================== */
+html body.page-our-oils h2.section-title {
+  display: block !important;
+  width: auto !important;
+  margin: 0 !important;
+  text-align: left !important;
+  font-family: var(--ed-serif) !important;
+  font-weight: 600 !important;
+  font-size: clamp(2.1rem, 3.8vw, 3.25rem) !important;
+  line-height: 1.04 !important;
+  letter-spacing: -0.02em !important;
+  color: var(--ed-forest) !important;
+  font-feature-settings: 'kern' 1, 'liga' 1;
+  text-wrap: balance;
+}
+html body.page-our-oils h2.section-title::after { display: none !important; }
+html body.page-our-oils h2.section-title[data-eyebrow]::before {
+  content: attr(data-eyebrow);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+html body.page-our-oils h2.section-title[data-eyebrow]::before {
+  /* small gold tick before the eyebrow text, drawn with a gradient */
+  padding-left: 28px;
+  background: linear-gradient(var(--ed-gold), var(--ed-gold)) no-repeat 0 50% / 18px 1px;
+}
+html body.page-our-oils h2.section-title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ed-gold);
+}
+
+html body.page-our-oils p.lead {
+  margin: 0 !important;
+  max-width: 54ch !important;
+  text-align: left !important;
+  font-family: var(--ed-sans) !important;
+  font-size: clamp(0.95rem, 1.05vw, 1.02rem) !important;
+  font-weight: 400 !important;
+  line-height: 1.72 !important;
+  text-wrap: pretty;
+  color: var(--ed-muted) !important;
+  letter-spacing: 0 !important;
+}
+
+/* generic section spacing */
+html body.page-our-oils section#oils.first-section-after-hero {
+  margin-top: 0 !important;
+  padding: clamp(64px, 8vw, 112px) 0 clamp(56px, 7vw, 96px) !important;
+  background: var(--ed-cream);
+}
+html body.page-our-oils section#oils .oils-intro {
+  display: block !important;
+  padding: 0 !important;
+  margin: 0 0 clamp(28px, 3.5vw, 44px) !important;
+}
+html body.page-our-oils section#oils .oils-intro > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 20px 64px;
+  align-items: end;
+}
+html body.page-our-oils section#oils .oils-intro > div > p.lead { justify-self: start; padding-bottom: 6px; }
+
+/* delivery notice — a slim inline note, not a card */
+html body.page-our-oils #oilsDeliveryInfo {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  max-width: none !important;
+  margin: 0 0 clamp(24px, 3vw, 36px) !important;
+  padding: 13px 18px !important;
+  border-radius: 12px !important;
+  background: rgba(196, 154, 108, 0.09) !important;
+  border: 1px solid rgba(196, 154, 108, 0.30) !important;
+  border-left-width: 1px !important;
+  box-shadow: none !important;
+}
+html body.page-our-oils #oilsDeliveryInfo .important-info__icon {
+  position: relative;
+  width: 26px !important;
+  height: 26px !important;
+  border-radius: 50% !important;
+  background: var(--ed-forest) !important;
+  color: var(--ed-cream);
+  font-size: 0 !important; /* hides the emoji glyph; the serif "i" below replaces it */
+  line-height: 1;
+}
+html body.page-our-oils #oilsDeliveryInfo .important-info__icon::before {
+  content: 'i';
+  font-family: var(--ed-serif);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1;
+  color: var(--ed-cream);
+}
+html body.page-our-oils #oilsDeliveryInfo .important-info__body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+}
+html body.page-our-oils #oilsDeliveryInfo .important-info__title {
+  margin: 0 !important;
+  font-size: 10.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.22em !important;
+  color: var(--ed-gold) !important;
+}
+html body.page-our-oils #oilsDeliveryInfo .important-info__text {
+  margin: 0 !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  color: var(--ed-ink) !important;
+  line-height: 1.5 !important;
+}
+
+/* =====================================================================
+   HOME — PRODUCT CARDS (quieter frame, warmer stage, serif price)
+   ===================================================================== */
+html body.page-our-oils #oils .grid .card {
+  border-radius: 24px !important;
+  border: 1px solid var(--ed-line-soft) !important;
+  background: #fff !important;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 24px 60px -30px rgba(14, 31, 22, 0.28) !important;
+  transition: transform 0.6s var(--ed-ease), box-shadow 0.6s var(--ed-ease), border-color 0.3s ease !important;
+}
+html body.page-our-oils #oils .grid .product-card:hover {
+  transform: translateY(-6px) !important;
+  border-color: rgba(196, 154, 108, 0.35) !important;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 40px 70px -30px rgba(14, 31, 22, 0.35) !important;
+}
+html body.page-our-oils #oils .grid .product-card .product-card__image-area {
+  background:
+    radial-gradient(ellipse 60% 45% at 50% 78%, rgba(196, 154, 108, 0.26), transparent 70%),
+    linear-gradient(180deg, #F7F1E5 0%, #FBF8F1 100%) !important;
+  border-bottom: 1px solid var(--ed-line-soft) !important;
+}
+html body.page-our-oils #oils .grid .product-card .product-card__image-area img {
+  filter: drop-shadow(0 18px 22px rgba(14, 31, 22, 0.22));
+  transition: transform 0.7s var(--ed-ease) !important;
+}
+html body.page-our-oils #oils .grid .product-card:hover .product-card__image-area img {
+  transform: scale(1.05) translateY(-4px) !important;
+}
+html body.page-our-oils #oils .grid .product-card .product-badge {
+  font-family: var(--ed-sans);
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.22em !important;
+  background: var(--ed-forest-deep) !important;
+  color: var(--ed-gold-pale) !important;
+  box-shadow: none !important;
+}
+html body.page-our-oils #oils .grid .product-card .product-card__meta .pill {
+  font-size: 10.5px !important;
+  letter-spacing: 0.2em !important;
+  color: var(--ed-gold) !important;
+  font-weight: 500 !important;
+}
+html body.page-our-oils #oils .grid .product-card .product-card__title {
+  font-family: var(--ed-serif) !important;
+  font-weight: 600 !important;
+  font-size: 26px !important;
+  letter-spacing: -0.02em !important;
+  text-transform: none !important;
+  color: var(--ed-forest) !important;
+}
+html body.page-our-oils #oils .grid .product-copy {
+  color: var(--ed-muted) !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 1.6 !important;
+  text-wrap: pretty;
+}
+html body.page-our-oils #oils .grid .product-card .product-card__footer {
+  border-top: 1px solid var(--ed-line-soft) !important;
+  padding-top: 14px !important;
+}
+html body.page-our-oils #oils .grid .product-card .product-card__price,
+html body.page-our-oils #oils .grid .product-card .product-card__price .new-price {
+  font-family: var(--ed-serif) !important;
+  font-size: 30px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em !important;
+  font-variant-numeric: lining-nums tabular-nums;
+  color: var(--ed-forest) !important;
+}
+html body.page-our-oils #oils .grid .product-card .add-to-order {
+  border-radius: 999px !important;
+  background: var(--ed-forest-deep) !important;
+  font-family: var(--ed-sans);
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.2em !important;
+  text-transform: uppercase;
+  box-shadow: 0 14px 28px -14px rgba(14, 31, 22, 0.6) !important;
+  transition: background 0.3s ease, transform 0.4s var(--ed-ease), color 0.3s ease !important;
+}
+html body.page-our-oils #oils .grid .product-card .add-to-order:hover {
+  background: var(--ed-gold-light) !important;
+  color: var(--ed-forest-ink) !important;
+  transform: translateY(-1px) !important;
+}
+html body.page-our-oils #oils .grid .product-card .size-option {
+  border-radius: 999px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.04em;
+}
+
+/* =====================================================================
+   HOME — COMBO BAND
+   ===================================================================== */
+html body.page-our-oils .combo-promo-banner {
+  background:
+    radial-gradient(60% 120% at 100% 50%, rgba(196, 154, 108, 0.16), transparent 60%),
+    var(--ed-forest-deep) !important;
+  border-top: 1px solid rgba(196, 154, 108, 0.26) !important;
+  border-bottom: 1px solid rgba(196, 154, 108, 0.26) !important;
+  padding: clamp(28px, 3.5vw, 40px) 0 !important;
+}
+html body.page-our-oils .combo-promo-title {
+  font-family: var(--ed-serif) !important;
+  font-weight: 500 !important;
+  font-size: clamp(24px, 2.8vw, 34px) !important;
+  letter-spacing: -0.02em !important;
+  color: var(--ed-cream) !important;
+}
+html body.page-our-oils .combo-promo-banner a[href="combo.html"] {
+  font-family: var(--ed-sans) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase;
+  padding: 16px 28px !important;
+  background: var(--ed-gold-light) !important;
+  color: var(--ed-forest-ink) !important;
+  transition: background 0.3s ease, transform 0.4s var(--ed-ease) !important;
+}
+html body.page-our-oils .combo-promo-banner a[href="combo.html"]:hover {
+  background: var(--ed-cream) !important;
+  transform: translateY(-2px);
+}
+
+/* =====================================================================
+   HOME — BENEFITS (numbered, hairline columns on warm paper)
+   ===================================================================== */
+html body.page-our-oils #benefits {
+  background: var(--ed-paper) !important;
+  border-top: 1px solid var(--ed-line-soft) !important;
+  padding: clamp(64px, 8vw, 112px) 0 clamp(64px, 8vw, 104px) !important;
+  overflow-x: hidden;
+}
+html body.page-our-oils #benefits > .container {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 20px 64px;
+  align-items: end;
+}
+html body.page-our-oils #benefits > .container > h2.section-title { grid-column: 1; }
+html body.page-our-oils #benefits > .container > p.lead { grid-column: 2; padding-bottom: 6px; }
+html body.page-our-oils #benefits > .container > div {
+  grid-column: 1 / -1;
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 0 !important;
+  margin-top: clamp(36px, 4vw, 56px) !important;
+  border-top: 1px solid var(--ed-line);
+  counter-reset: benefit;
+}
+html body.page-our-oils #benefits .benefit-card {
+  counter-increment: benefit;
+  position: relative;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-right: 1px solid var(--ed-line) !important;
+  border-radius: 0 !important;
+  padding: 32px 28px 12px 0 !important;
+  margin: 0 !important;
+  text-align: left !important;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start !important;
+  transform: none !important;
+}
+html body.page-our-oils #benefits .benefit-card:not(:first-child) { padding-left: 28px !important; }
+html body.page-our-oils #benefits .benefit-card:last-child { border-right: none !important; }
+html body.page-our-oils #benefits .benefit-card::before {
+  content: counter(benefit, decimal-leading-zero);
+  font-family: var(--ed-serif);
+  font-size: 15px;
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: 0.08em;
+  color: var(--ed-gold);
+  margin-bottom: 22px;
+}
+html body.page-our-oils #benefits .benefit-card .benefit-icon-frame {
+  width: 60px !important;
+  height: 60px !important;
+  margin: 0 0 22px !important;
+  box-shadow: none !important;
+  border: 1px solid rgba(196, 154, 108, 0.25) !important;
+  background: #fff !important;
+  font-size: 26px !important;
+}
+html body.page-our-oils #benefits .benefit-card .benefit-icon-frame.is-green {
+  border-color: transparent !important;
+  background: transparent !important;
+}
+html body.page-our-oils #benefits .benefit-card-title,
+html body.page-our-oils #benefits .benefit-card h3 {
+  font-family: var(--ed-serif) !important;
+  font-size: 23px !important;
+  font-weight: 600 !important;
+  text-wrap: balance;
+  line-height: 1.12 !important;
+  letter-spacing: -0.015em !important;
+  color: var(--ed-forest) !important;
+  margin: 0 0 12px !important;
+  text-align: left !important;
+}
+html body.page-our-oils #benefits .benefit-card p {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  text-wrap: pretty;
+  line-height: 1.7 !important;
+  color: var(--ed-muted) !important;
+  margin: 0 !important;
+  text-align: left !important;
+}
+
+/* =====================================================================
+   HOME — FAQ (sticky title, hairline list)
+   ===================================================================== */
+html body.page-our-oils #faq {
+  background: var(--ed-cream) !important;
+  border-top: 1px solid var(--ed-line-soft) !important;
+  padding: clamp(64px, 8vw, 112px) 0 clamp(72px, 8vw, 120px) !important;
+}
+html body.page-our-oils #faq > .container {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  grid-template-rows: auto auto 1fr;
+  column-gap: clamp(40px, 6vw, 96px);
+  row-gap: 18px;
+  align-items: start;
+}
+html body.page-our-oils #faq > .container > h2.section-title { grid-column: 1; grid-row: 1; }
+html body.page-our-oils #faq > .container > p.lead { grid-column: 1; grid-row: 2; }
+html body.page-our-oils #faq > .container > div {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  max-width: none !important;
+  margin: 0 !important;
+  gap: 0 !important;
+  border-bottom: 1px solid var(--ed-line);
+}
+html body.page-our-oils #faq .faq-item {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-top: 1px solid var(--ed-line) !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  transform: none !important;
+  transition: none !important;
+}
+html body.page-our-oils #faq .faq-q {
+  font-family: var(--ed-serif) !important;
+  font-size: clamp(19px, 1.5vw, 22px) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.25 !important;
+  color: var(--ed-forest) !important;
+  padding: 22px 0 !important;
+  gap: 20px;
+  transition: color 0.3s ease, padding-left 0.4s var(--ed-ease) !important;
+}
+html body.page-our-oils #faq .faq-q:hover { color: var(--ed-gold) !important; }
+html body.page-our-oils #faq .faq-q::after {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  border: 1px solid rgba(26, 51, 40, 0.22) !important;
+  background: transparent !important;
+  color: var(--ed-forest) !important;
+  font-size: 18px !important;
+  font-weight: 300 !important;
+  transition: transform 0.5s var(--ed-ease), background 0.3s ease, color 0.3s ease !important;
+}
+html body.page-our-oils #faq .faq-item.open .faq-q::after {
+  background: var(--ed-forest) !important;
+  color: var(--ed-cream) !important;
+  transform: rotate(45deg) !important;
+}
+html body.page-our-oils #faq .faq-a p {
+  padding: 0 56px 26px 0 !important;
+  font-size: 15px !important;
+  font-weight: 400 !important;
+  max-width: 62ch;
+  text-wrap: pretty;
+  line-height: 1.7 !important;
+  color: var(--ed-muted) !important;
+}
+
+/* =====================================================================
+   SHARED — FOOTER (watermark wordmark)
+   ===================================================================== */
+footer.site-footer {
+  position: relative;
+  overflow: hidden;
+  margin: 0 !important;
+  padding: clamp(56px, 7vw, 88px) 20px 64px !important;
+  background:
+    radial-gradient(80% 100% at 50% 120%, rgba(196, 154, 108, 0.14), transparent 60%),
+    var(--ed-forest-ink) !important;
+  border-top: 1px solid rgba(196, 154, 108, 0.22) !important;
+  text-align: center !important;
+  color: rgba(253, 251, 246, 0.55) !important;
+  font-size: 13px !important;
+}
+footer.site-footer::before {
+  content: 'Arumee';
+  position: absolute;
+  left: 50%;
+  bottom: -0.3em;
+  transform: translateX(-50%);
+  font-family: var(--ed-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(110px, 24vw, 300px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: rgba(253, 251, 246, 0.035);
+  white-space: nowrap;
+  pointer-events: none;
+}
+footer.site-footer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 56px;
+  height: 1px;
+  background: var(--ed-gold-light);
+}
+footer.site-footer p {
+  position: relative;
+  margin: 0 !important;
+  font-family: var(--ed-sans);
+  font-size: 12.5px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.04em !important;
+  line-height: 2 !important;
+  color: rgba(253, 251, 246, 0.55) !important;
+}
+footer.site-footer a {
+  color: var(--ed-gold-light) !important;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(212, 172, 128, 0.35);
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+footer.site-footer a:hover { color: var(--ed-cream) !important; border-color: var(--ed-cream); }
+
+/* =====================================================================
+   MOTION hooks — only when motion.js is going to run (html.ed-motion)
+   The fallback class is added by an inline timer so content is never
+   left invisible if the script fails to load.
+   ===================================================================== */
+html.ed-motion:not(.ed-motion-done) body.page-our-oils .hero-copy > *,
+html.ed-motion:not(.ed-motion-done) body.page-our-oils .hero-bottles .hero-bottle,
+html.ed-motion:not(.ed-motion-done) body.page-our-oils .hero-bottles::after {
+  opacity: 0;
+}
+html.ed-motion.ed-motion-fallback body.page-our-oils .hero-copy > *,
+html.ed-motion.ed-motion-fallback body.page-our-oils .hero-bottles .hero-bottle,
+html.ed-motion.ed-motion-fallback body.page-our-oils .hero-bottles::after {
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* =====================================================================
+   RESPONSIVE
+   ===================================================================== */
+@media (max-width: 1100px) {
+  html body.page-our-oils #benefits > .container > div {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  html body.page-our-oils #benefits .benefit-card:nth-child(2n) { border-right: none !important; }
+  html body.page-our-oils #benefits .benefit-card:nth-child(n+3) { border-top: 1px solid var(--ed-line) !important; }
+  html body.page-our-oils #benefits .benefit-card:nth-child(3) { padding-left: 0 !important; }
+}
+
+@media (max-width: 900px) {
+  html body.page-our-oils header.hero {
+    padding: calc(76px + 36px) 0 40px !important;
+  }
+  html body.page-our-oils .hero-shell {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 28px !important;
+  }
+  html body.page-our-oils .hero-copy,
+  html body.page-our-oils .hero-content {
+    max-width: 560px !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+  html body.page-our-oils .hero-title,
+  html body.page-our-oils .hero-title span,
+  html body.page-our-oils .hero-summary { text-align: center !important; }
+  html body.page-our-oils .hero-summary { margin: 0 auto !important; }
+  html body.page-our-oils .hero-proof-grid { justify-content: center; }
+  html body.page-our-oils .hero-cta { justify-content: center !important; }
+  .hero-bottles { height: clamp(220px, 52vw, 320px); max-width: 420px; margin: 0 auto; }
+
+  html body.page-our-oils section#oils .oils-intro > div,
+  html body.page-our-oils #benefits > .container,
+  html body.page-our-oils #faq > .container {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  html body.page-our-oils #benefits > .container > p.lead,
+  html body.page-our-oils #faq > .container > p.lead { grid-column: 1; }
+  html body.page-our-oils #faq > .container > div { grid-column: 1; grid-row: auto; margin-top: 16px !important; }
+  html body.page-our-oils #faq .faq-a p { padding-right: 24px !important; }
+}
+
+@media (min-width: 901px) {
+  html body.page-our-oils #faq > .container > h2.section-title,
+  html body.page-our-oils #faq > .container > p.lead { position: sticky; }
+  html body.page-our-oils #faq > .container > h2.section-title { top: 108px; }
+  html body.page-our-oils #faq > .container > p.lead { top: calc(108px + 7.2rem); }
+}
+
+@media (max-width: 768px) {
+  html body.page-our-oils header.hero {
+    padding: calc(var(--header-height-mobile, 124px) - 10px) 0 36px !important;
+  }
+  html body.page-our-oils .hero-title { font-size: clamp(2.4rem, 11vw, 3.2rem) !important; }
+  html body.page-our-oils .hero-proof-item + .hero-proof-item::before { margin: 0 10px; }
+  html body.page-our-oils .hero-proof-item strong { font-size: 10px !important; letter-spacing: 0.16em !important; }
+
+  html body.page-our-oils section#oils.first-section-after-hero { padding-top: 48px !important; }
+  html body.page-our-oils #oilsDeliveryInfo { align-items: flex-start !important; padding: 12px 14px !important; }
+  html body.page-our-oils #oilsDeliveryInfo .important-info__body { flex-direction: column; gap: 2px; }
+
+  html body.page-our-oils #benefits > .container > div {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  html body.page-our-oils #benefits .benefit-card {
+    border-right: none !important;
+    border-top: 1px solid var(--ed-line) !important;
+    padding: 24px 0 20px !important;
+  }
+  html body.page-our-oils #benefits .benefit-card:first-child { border-top: none !important; }
+  html body.page-our-oils #benefits .benefit-card:not(:first-child) { padding-left: 0 !important; }
+  html body.page-our-oils #benefits .benefit-card::before { margin-bottom: 14px; }
+  html body.page-our-oils #benefits .benefit-card .benefit-icon-frame { width: 52px !important; height: 52px !important; margin-bottom: 16px !important; }
+
+  html body.page-our-oils #faq .faq-q { font-size: 18px !important; padding: 18px 0 !important; }
+
+  footer.site-footer { padding-bottom: 112px !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.ed-motion body.page-our-oils .hero-copy > *,
+  html.ed-motion body.page-our-oils .hero-bottles .hero-bottle,
+  html.ed-motion body.page-our-oils .hero-bottles::after { opacity: 1 !important; }
+  .ed-progress { display: none; }
+}
+
+@media (max-width: 480px) {
+  html body.page-our-oils .hero-proof-grid { gap: 6px 0 !important; }
+  html body.page-our-oils .hero-proof-item strong { font-size: 9.5px !important; letter-spacing: 0.12em !important; }
+  html body.page-our-oils .hero-proof-item + .hero-proof-item::before { margin: 0 8px; width: 3px; height: 3px; }
+  html body.page-our-oils .hero-summary { font-size: 0.92rem !important; line-height: 1.65 !important; }
+  html body.page-our-oils .hero-copy,
+  html body.page-our-oils .hero-content { gap: 16px !important; }
+}
+
+/* The original page lazy-renders these sections with a 1200px placeholder,
+   which makes #faq / #benefits hash jumps land in the wrong place. The page is
+   short enough that always rendering them costs nothing noticeable. */
+html body.page-our-oils #benefits,
+html body.page-our-oils #faq {
+  content-visibility: visible !important;
+  contain-intrinsic-size: auto !important;
+}
+
+
+/* Typography system — shared rules */
+body { font-synthesis: none; text-rendering: optimizeLegibility; }
+h1, h2, h3 { font-synthesis: none; }
+html body.page-our-oils h2.section-title em,
+html body.page-our-oils .hero-title em { font-synthesis: none; }
+.ed-eyebrow,
+html body.page-our-oils .hero-eyebrow,
+html body.page-our-oils .hero-proof-item strong,
+html body.page-our-oils h2.section-title[data-eyebrow]::before,
+html body.page-our-oils #oilsDeliveryInfo .important-info__title,
+html body.page-our-oils #oils .grid .product-card .product-card__meta .pill,
+html body.page-our-oils #oils .grid .product-card .product-badge {
+  font-family: var(--ed-sans) !important;
+  font-weight: 500 !important;
+  font-size: 11px !important;
+  letter-spacing: 0.22em !important;
+  text-transform: uppercase;
+  font-variant-numeric: lining-nums;
+}
+html body.page-our-oils #oils .grid .product-card .product-badge { font-size: 10px !important; font-weight: 600 !important; }
+html body.page-our-oils .hero-cta .btn.fill,
+html body.page-our-oils #oils .grid .product-card .add-to-order,
+html body.page-our-oils .combo-promo-banner a[href="combo.html"] {
+  font-weight: 600 !important;
+  font-size: 12px !important;
+  letter-spacing: 0.18em !important;
+}
+/* Keep the hero title to its two intended lines on wide screens. */
+@media (min-width: 1100px) {
+  html body.page-our-oils .hero-title span { white-space: nowrap !important; }
+}
+
+
+/* ---------- Pass 3: Benefits + FAQ cleanup ---------- */
+/* FAQ rows: kill the legacy white panels on the question and answer. */
+html body.page-our-oils #faq .faq-q,
+html body.page-our-oils #faq .faq-a {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+html body.page-our-oils #faq .faq-q {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 24px !important;
+  margin: 0 !important;
+}
+html body.page-our-oils #faq .faq-q::after {
+  flex: 0 0 32px !important;
+  margin: 0 !important;
+  align-self: center !important;
+}
+html body.page-our-oils #faq .faq-a p {
+  max-width: none !important;
+  padding: 0 72px 26px 0 !important;
+  text-wrap: initial;
+}
+html body.page-our-oils #faq .faq-item.open .faq-a { max-height: 900px !important; }
+
+/* Benefits: one icon treatment, aligned baselines, no stray decorations. */
+html body.page-our-oils #benefits::before,
+html body.page-our-oils #benefits::after,
+html body.page-our-oils #benefits > .container::before,
+html body.page-our-oils #benefits > .container::after,
+html body.page-our-oils #faq > .container::before,
+html body.page-our-oils #faq > .container::after,
+html body.page-our-oils #benefits .benefit-card::after {
+  display: none !important;
+}
+html body.page-our-oils #benefits .benefit-card .benefit-icon-frame,
+html body.page-our-oils #benefits .benefit-card .benefit-icon-frame.is-green,
+html body.page-our-oils #benefits .benefit-card .benefit-icon-frame.is-gold {
+  width: 56px !important;
+  height: 56px !important;
+  margin: 0 0 22px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  background: #fff !important;
+  border: 1px solid rgba(26, 51, 40, 0.14) !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+  font-size: 22px !important;
+  line-height: 1 !important;
+  color: var(--ed-forest) !important;
+}
+html body.page-our-oils #benefits .benefit-card .benefit-icon-image,
+html body.page-our-oils #benefits .benefit-card .benefit-icon-frame.is-green .benefit-icon-image,
+html body.page-our-oils #benefits .benefit-card .benefit-icon-image--marachekku {
+  width: 32px !important;
+  height: 32px !important;
+  object-fit: contain !important;
+  mix-blend-mode: normal !important;
+}
+html body.page-our-oils #benefits .benefit-card .benefit-icon-frame.is-green .benefit-icon-image {
+  width: 56px !important;
+  height: 56px !important;
+  transform: scale(0.64);
+}
+html body.page-our-oils #benefits .benefit-card-title,
+html body.page-our-oils #benefits .benefit-card h3 {
+  min-height: calc(2 * 1.12em);
+  text-wrap: balance;
+}
+html body.page-our-oils #benefits .benefit-card p {
+  text-wrap: initial;
+  max-width: none !important;
+  font-size: 14px !important;
+  line-height: 1.7 !important;
+  color: var(--ed-muted) !important;
+}
+html body.page-our-oils #benefits .benefit-card { padding: 36px 32px 20px 0 !important; }
+html body.page-our-oils #benefits .benefit-card:not(:first-child) { padding-left: 32px !important; }
+@media (max-width: 1100px) {
+  html body.page-our-oils #benefits .benefit-card:nth-child(3) { padding-left: 0 !important; }
+}
+@media (max-width: 768px) {
+  html body.page-our-oils #benefits .benefit-card { padding: 26px 0 22px !important; }
+  html body.page-our-oils #benefits .benefit-card:not(:first-child) { padding-left: 0 !important; }
+  html body.page-our-oils #benefits .benefit-card-title,
+  html body.page-our-oils #benefits .benefit-card h3 { min-height: 0; }
+}
+
+/* =====================================================================
+   PASS 4 — Taste-skill rebrand (Editorial Luxury archetype)
+   ===================================================================== */
+:root {
+  --ed-sans: 'Plus Jakarta Sans', 'Inter', 'Inter Fallback', system-ui, sans-serif;
+  --ed-ease-out: cubic-bezier(0.32, 0.72, 0, 1);
+  --ico-bag: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 8h14l-1 12H6L5 8z'/%3E%3Cpath d='M9 8V6a3 3 0 0 1 6 0v2'/%3E%3C/svg%3E");
+  --ico-home: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 11l8-7 8 7v9H4z'/%3E%3Cpath d='M10 20v-6h4v6'/%3E%3C/svg%3E");
+  --ico-leaf: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 19c0-8 5-13 14-14-1 9-6 14-14 14z'/%3E%3Cpath d='M5 19c3-4 6-7 10-9'/%3E%3C/svg%3E");
+  --ico-chat: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 5h16v11H8l-4 4V5z'/%3E%3C/svg%3E");
+  --ico-book: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 5h7v14H4z'/%3E%3Cpath d='M13 5h7v14h-7z'/%3E%3C/svg%3E");
+  --ico-question: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7'/%3E%3Cpath d='M12 17h.01'/%3E%3C/svg%3E");
+  --ico-truck: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 7h11v9H3z'/%3E%3Cpath d='M14 10h4l3 3v3h-7z'/%3E%3Ccircle cx='7' cy='18' r='1.6'/%3E%3Ccircle cx='17' cy='18' r='1.6'/%3E%3C/svg%3E");
+  --ico-arrow-cream: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FDFBF6' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='M13 6l6 6-6 6'/%3E%3C/svg%3E");
+}
+
+/* ---- Body face: Plus Jakarta Sans everywhere Inter was used ---- */
+body, button, input, select, textarea { font-family: var(--ed-sans); }
+
+/* ---- Eyebrows: lowercase serif italic instead of shouting caps ---- */
+html body.page-our-oils h2.section-title[data-eyebrow]::before {
+  font-family: var(--ed-serif) !important;
+  font-style: italic;
+  font-weight: 500 !important;
+  font-size: 1.25rem !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  color: var(--ed-gold) !important;
+  margin-bottom: 14px;
+  padding-left: 30px;
+  background: linear-gradient(var(--ed-gold), var(--ed-gold)) no-repeat 0 55% / 20px 1px;
+}
+html body.page-our-oils .hero-eyebrow {
+  font-family: var(--ed-serif) !important;
+  font-style: italic;
+  font-weight: 500 !important;
+  font-size: 1.2rem !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  color: var(--ed-gold-light) !important;
+}
+
+/* ---- Primary CTA: nested arrow (button-in-button) ---- */
+html body.page-our-oils .hero-cta .btn.fill {
+  padding: 0 9px 0 28px !important;
+  min-height: 56px !important;
+  gap: 18px !important;
+}
+html body.page-our-oils .hero-cta .btn.fill::after {
+  content: '' !important;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--ed-forest-ink) var(--ico-arrow-cream) center / 18px 18px no-repeat;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: transform 0.6s var(--ed-ease-out), background-color 0.3s ease;
+}
+html body.page-our-oils .hero-cta .btn.fill:hover::after { transform: translate(2px, -1px) scale(1.04); }
+html body.page-our-oils .hero-cta .btn.fill:active { transform: scale(0.98) !important; }
+
+/* ---- Product cards: double-bezel tray ---- */
+html body.page-our-oils #oils .grid .card {
+  border-radius: 28px !important;
+  border: none !important;
+  box-shadow:
+    0 0 0 1px rgba(26, 51, 40, 0.08),
+    0 0 0 7px rgba(26, 51, 40, 0.035),
+    0 30px 60px -36px rgba(14, 31, 22, 0.35) !important;
+}
+html body.page-our-oils #oils .grid .product-card:hover {
+  box-shadow:
+    0 0 0 1px rgba(196, 154, 108, 0.35),
+    0 0 0 7px rgba(196, 154, 108, 0.08),
+    0 44px 72px -36px rgba(14, 31, 22, 0.4) !important;
+}
+html body.page-our-oils #oils .grid { gap: 28px !important; }
+html body.page-our-oils #oils .grid .product-card .add-to-order:active { transform: scale(0.98) !important; }
+
+/* ---- Benefits: numbered editorial rows (no four equal columns) ---- */
+html body.page-our-oils #benefits > .container > div {
+  grid-template-columns: minmax(0, 1fr) !important;
+  border-top: none;
+}
+html body.page-our-oils #benefits .benefit-card,
+html body.page-our-oils #benefits .benefit-card:not(:first-child),
+html body.page-our-oils #benefits .benefit-card:nth-child(n) {
+  display: grid !important;
+  grid-template-columns: 64px 80px minmax(0, 0.9fr) minmax(0, 1.5fr);
+  grid-template-areas: 'num icon title text';
+  align-items: start;
+  column-gap: 32px;
+  padding: 34px 0 !important;
+  border: none !important;
+  border-top: 1px solid var(--ed-line) !important;
+}
+html body.page-our-oils #benefits .benefit-card:last-child { border-bottom: 1px solid var(--ed-line) !important; }
+html body.page-our-oils #benefits .benefit-card::before {
+  grid-area: num;
+  margin: 0;
+  font-size: 1.15rem;
+  line-height: 1.3;
+  padding-top: 2px;
+}
+html body.page-our-oils #benefits .benefit-card .benefit-icon-frame,
+html body.page-our-oils #benefits .benefit-card .benefit-icon-frame.is-green,
+html body.page-our-oils #benefits .benefit-card .benefit-icon-frame.is-gold {
+  grid-area: icon;
+  margin: -6px 0 0 !important;
+}
+html body.page-our-oils #benefits .benefit-card-title,
+html body.page-our-oils #benefits .benefit-card h3 {
+  grid-area: title;
+  min-height: 0 !important;
+  margin: 0 !important;
+  font-size: 1.55rem !important;
+  line-height: 1.15 !important;
+  padding-right: 24px;
+}
+html body.page-our-oils #benefits .benefit-card p {
+  grid-area: text;
+  max-width: 58ch !important;
+  font-size: 15px !important;
+  line-height: 1.7 !important;
+  padding-top: 4px;
+}
+/* truck emoji → line icon */
+html body.page-our-oils #benefits .benefit-card .benefit-icon-frame.is-gold:not(:has(img)),
+html body.page-our-oils #benefits .benefit-card .benefit-icon-frame.is-green:not(:has(img)),
+html body.page-our-oils #benefits .benefit-card .benefit-icon-frame:not(:has(img)) {
+  font-size: 0 !important;
+  color: transparent !important;
+  position: relative;
+}
+html body.page-our-oils #benefits .benefit-card .benefit-icon-frame.is-gold:not(:has(img))::before,
+html body.page-our-oils #benefits .benefit-card .benefit-icon-frame.is-green:not(:has(img))::before,
+html body.page-our-oils #benefits .benefit-card .benefit-icon-frame:not(:has(img))::before {
+  content: '';
+  width: 26px;
+  height: 26px;
+  background: var(--ed-forest);
+  -webkit-mask: var(--ico-truck) center / contain no-repeat;
+  mask: var(--ico-truck) center / contain no-repeat;
+}
+@media (max-width: 900px) {
+  html body.page-our-oils #benefits .benefit-card,
+  html body.page-our-oils #benefits .benefit-card:not(:first-child),
+  html body.page-our-oils #benefits .benefit-card:nth-child(n) {
+    grid-template-columns: 48px minmax(0, 1fr);
+    grid-template-areas: 'num title' 'icon text';
+    column-gap: 20px;
+    row-gap: 14px;
+    padding: 26px 0 !important;
+  }
+  html body.page-our-oils #benefits .benefit-card .benefit-icon-frame,
+  html body.page-our-oils #benefits .benefit-card .benefit-icon-frame.is-green,
+  html body.page-our-oils #benefits .benefit-card .benefit-icon-frame.is-gold {
+    width: 44px !important;
+    height: 44px !important;
+    margin: 0 !important;
+  }
+  html body.page-our-oils #benefits .benefit-card .benefit-icon-image,
+  html body.page-our-oils #benefits .benefit-card .benefit-icon-image--marachekku { width: 24px !important; height: 24px !important; }
+  html body.page-our-oils #benefits .benefit-card .benefit-icon-frame.is-green .benefit-icon-image { width: 44px !important; height: 44px !important; }
+  html body.page-our-oils #benefits .benefit-card-title,
+  html body.page-our-oils #benefits .benefit-card h3 { font-size: 1.35rem !important; padding-right: 0; align-self: center; }
+  html body.page-our-oils #benefits .benefit-card p { padding-top: 0; }
+  html body.page-our-oils #benefits .benefit-card::before { align-self: center; }
+}
+
+/* ---- Emoji → line icons in the chrome (nav, cart, app bar, menu) ---- */
+.ed-ico::before { content: ''; display: inline-block; }
+.mobile-nav-cart, #heroCartFab, .cart-tab .cart-icon, .app-item-icon, .mmo-link-icon {
+  font-size: 0 !important;
+}
+.mobile-nav-cart::before, #heroCartFab::before, .cart-tab .cart-icon::before,
+.app-item-icon::before, .mmo-link-icon::before, #navCartBtn::before, .combo-cart-btn::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: currentColor;
+  -webkit-mask: var(--ico-bag) center / contain no-repeat;
+  mask: var(--ico-bag) center / contain no-repeat;
+  flex-shrink: 0;
+}
+.mobile-nav-cart { color: var(--ed-forest); }
+.mobile-nav-cart .mnc-badge, #heroCartFab span, .cart-tab .cart-count, .app-item .app-cart-count { font-size: 11px !important; }
+#heroCartFab { display: inline-flex; align-items: center; gap: 8px; color: var(--ed-cream); }
+#heroCartFab::before { background: currentColor; }
+#navCartBtn > span:first-child, .cart-header h2 > span:first-child, .cart-clear-btn > span:first-child { display: none !important; }
+#navCartBtn { display: inline-flex; align-items: center; gap: 10px; }
+#navCartBtn::before { width: 18px; height: 18px; }
+#navCartBtn[style*="display: none"], #navCartBtn[style*="display:none"] { display: none !important; }
+.cart-tab .cart-icon::before { width: 22px; height: 22px; }
+.app-item-icon::before { width: 20px; height: 20px; background: currentColor; }
+.mobile-app-bar .app-item:nth-child(1) .app-item-icon::before { -webkit-mask-image: var(--ico-home); mask-image: var(--ico-home); }
+.mobile-app-bar .app-item:nth-child(2) .app-item-icon::before { -webkit-mask-image: var(--ico-bag); mask-image: var(--ico-bag); }
+.mobile-app-bar .app-item:nth-child(3) .app-item-icon::before { -webkit-mask-image: var(--ico-question); mask-image: var(--ico-question); }
+.mobile-app-bar .app-item:nth-child(4) .app-item-icon::before { -webkit-mask-image: var(--ico-bag); mask-image: var(--ico-bag); }
+.mmo-link-icon::before { width: 18px; height: 18px; background: var(--ed-forest); opacity: 0.8; }
+.mmo-nav .mmo-link:nth-child(1) .mmo-link-icon::before { -webkit-mask-image: var(--ico-home); mask-image: var(--ico-home); }
+.mmo-nav .mmo-link:nth-child(2) .mmo-link-icon::before { -webkit-mask-image: var(--ico-bag); mask-image: var(--ico-bag); }
+.mmo-nav .mmo-link:nth-child(3) .mmo-link-icon::before { -webkit-mask-image: var(--ico-leaf); mask-image: var(--ico-leaf); }
+.mmo-nav .mmo-link:nth-child(4) .mmo-link-icon::before { -webkit-mask-image: var(--ico-chat); mask-image: var(--ico-chat); }
+.mmo-nav .mmo-link:nth-child(5) .mmo-link-icon::before { -webkit-mask-image: var(--ico-book); mask-image: var(--ico-book); }
+.mmo-nav .mmo-link:nth-child(6) .mmo-link-icon::before { -webkit-mask-image: var(--ico-chat); mask-image: var(--ico-chat); }
+.combo-cart-btn > span:first-child:not(.combo-cart-count) { display: none; }
+
+/* ---- Interaction states the audit asks for ---- */
+:focus-visible { outline: 2px solid var(--ed-gold); outline-offset: 3px; border-radius: 4px; }
+.btn:active, .add-to-order:active, .size-option:active, .nav-btn:active { transform: scale(0.98); }
+.desktop-nav-link, .btn, .add-to-order, .size-option, .faq-q, .nav-btn {
+  transition-timing-function: var(--ed-ease-out) !important;
+}
+
+/* The legacy .btn::after ripple is absolutely positioned; keep the nested
+   arrow in normal flow. */
+html body.page-our-oils .hero-cta .btn.fill::after {
+  position: static !important;
+  inset: auto !important;
+  transform: none !important;
+  opacity: 1 !important;
+  margin: 0 !important;
+  flex: 0 0 38px;
+}
+html body.page-our-oils .hero-cta .btn.fill:hover::after { transform: translate(2px, -1px) scale(1.04) !important; }
+@media (max-width: 900px) {
+  html body.page-our-oils #benefits .benefit-card::before { align-self: start; padding-top: 6px; }
+  html body.page-our-oils #benefits .benefit-card-title,
+  html body.page-our-oils #benefits .benefit-card h3 { align-self: start; }
+}
+
+/* =====================================================================
+   HOME — OILS SHOWCASE
+   One oil per screen: a swipeable full-height stage with the bottle at
+   centre stage, details around it and the cart controls in reach.
+   The existing product cards *are* the slides — every id, class and
+   handler app.js and the e2e tests rely on is unchanged.
+
+   Motion is scroll-driven (animation-timeline), so the swipe itself is
+   the animation: it follows the finger, can be reversed mid-way and runs
+   off the main thread. Browsers without scroll timelines get the same
+   layout as a plain snap carousel.
+   ===================================================================== */
+html body.page-our-oils #oils .oils-stage {
+  --stage-h: clamp(560px, calc(100svh - 88px), 860px);
+  --bottle-h: clamp(200px, 32svh, 340px);
+  position: relative;
+  margin-top: 28px;
+  border-radius: 32px;
+  overflow: hidden;
+  scroll-margin-top: 84px;
+  background:
+    radial-gradient(52% 46% at 50% 44%, var(--oil-glow), transparent 72%),
+    radial-gradient(120% 80% at 50% 120%, rgba(26, 51, 40, 0.06), transparent 60%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 100%),
+    var(--oil-wash);
+  box-shadow: 0 0 0 1px var(--ed-line-soft), 0 40px 80px -48px rgba(14, 31, 22, 0.35);
+}
+
+/* Per-oil colour. Registered so the colours interpolate while swiping:
+   coconut leans to its label green, groundnut to amber, gingelly to a
+   deep sesame brown. Defaults are the neutral gold for browsers without
+   scroll timelines. */
+@property --oil-glow { syntax: '<color>'; inherits: false; initial-value: rgba(212, 172, 128, 0.30); }
+@property --oil-wash { syntax: '<color>'; inherits: false; initial-value: #F3ECDF; }
+
+/* ---- the rail ---- */
+html body.page-our-oils #oils #oilsGrid {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  grid-template-columns: none !important;
+  gap: 0 !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scroll-snap-type: x mandatory !important;
+  scroll-padding-inline: 0 !important;
+  scrollbar-width: none !important;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+html body.page-our-oils #oils #oilsGrid::-webkit-scrollbar { display: none; }
+
+/* ---- a slide ---- */
+html body.page-our-oils #oils #oilsGrid > .product-card {
+  flex: 0 0 100% !important;
+  max-width: none !important;
+  width: 100% !important;
+  min-height: var(--stage-h) !important;
+  height: auto !important;
+  scroll-snap-align: center !important;
+  scroll-snap-stop: always;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "badge"
+    "pic"
+    "meta"
+    "title"
+    "copy"
+    "size"
+    "footer";
+  grid-template-rows: auto auto auto auto auto auto 1fr;
+  justify-items: center;
+  align-content: start;
+  padding: 26px 22px 24px !important;
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+  overflow: visible !important;
+  text-align: center;
+}
+html body.page-our-oils #oils #oilsGrid > .product-card:hover { transform: none !important; box-shadow: none !important; }
+html body.page-our-oils #oils #oilsGrid > .product-card .content,
+html body.page-our-oils #oils #oilsGrid > .product-card .card-top { display: contents !important; }
+
+html body.page-our-oils #oils #oilsGrid > .product-card .product-badge {
+  grid-area: badge;
+  position: static !important;
+  margin: 0 !important;
+  background: transparent !important;
+  color: var(--ed-forest) !important;
+  border: 1px solid var(--ed-line) !important;
+  padding: 7px 14px !important;
+}
+
+/* Bottle stage. The picture floats; the img carries the swipe motion —
+   separate elements so the two never fight over one transform. */
+html body.page-our-oils #oils #oilsGrid > .product-card .product-card__image-area {
+  grid-area: pic;
+  position: relative;
+  width: 100%;
+  height: calc(var(--bottle-h) + 36px) !important;
+  padding: 18px 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  background: none !important;
+  border: none !important;
+  overflow: visible !important;
+}
+html body.page-our-oils #oils #oilsGrid > .product-card .product-card__image-area picture {
+  display: block;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+  animation: ed-bottle-float 5.2s ease-in-out infinite alternate;
+}
+html body.page-our-oils #oils #oilsGrid > .product-card:nth-child(2) .product-card__image-area picture { animation-delay: -1.7s; }
+html body.page-our-oils #oils #oilsGrid > .product-card:nth-child(3) .product-card__image-area picture { animation-delay: -3.4s; }
+html body.page-our-oils #oils #oilsGrid > .product-card .product-card__image-area img {
+  height: 100% !important;
+  width: auto !important;
+  max-height: none !important;
+  max-width: none !important;
+  filter: drop-shadow(0 34px 30px rgba(14, 31, 22, 0.28)) !important;
+  transform: none !important;
+}
+/* Floor shadow that answers the float. */
+html body.page-our-oils #oils #oilsGrid > .product-card .product-card__image-area::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  width: min(46%, 170px);
+  height: 18px;
+  margin-left: max(-23%, -85px);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(14, 31, 22, 0.28), transparent 70%);
+  filter: blur(4px);
+  animation: ed-bottle-shadow 5.2s ease-in-out infinite alternate;
+}
+html body.page-our-oils #oils #oilsGrid > .product-card:nth-child(2) .product-card__image-area::after { animation-delay: -1.7s; }
+html body.page-our-oils #oils #oilsGrid > .product-card:nth-child(3) .product-card__image-area::after { animation-delay: -3.4s; }
+/* Oversized italic name behind the bottle. */
+html body.page-our-oils #oils #oilsGrid > .product-card .product-card__image-area::before {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--ed-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(5.5rem, 30vw, 13rem);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--ed-forest);
+  opacity: 0.06;
+  white-space: nowrap;
+  pointer-events: none;
+}
+html body.page-our-oils #oils #oilsGrid > .product-card:nth-child(1) .product-card__image-area::before { content: 'Coconut'; }
+html body.page-our-oils #oils #oilsGrid > .product-card:nth-child(2) .product-card__image-area::before { content: 'Groundnut'; }
+html body.page-our-oils #oils #oilsGrid > .product-card:nth-child(3) .product-card__image-area::before { content: 'Gingelly'; }
+
+html body.page-our-oils #oils #oilsGrid > .product-card .product-card__meta { grid-area: meta; margin: 6px 0 0 !important; justify-content: center; }
+html body.page-our-oils #oils #oilsGrid > .product-card .product-card__meta .card-mark { display: none; }
+html body.page-our-oils #oils #oilsGrid > .product-card .product-card__title {
+  grid-area: title;
+  margin: 6px 0 0 !important;
+  font-size: clamp(2.3rem, 10vw, 3.6rem) !important;
+  line-height: 1 !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  letter-spacing: -0.025em !important;
+  text-wrap: balance;
+}
+html body.page-our-oils #oils #oilsGrid > .product-card .product-card__description {
+  grid-area: copy;
+  max-width: 38ch;
+  margin: 10px auto 0 !important;
+  min-height: 0 !important;
+  -webkit-line-clamp: 2 !important;
+  line-clamp: 2 !important;
+}
+html body.page-our-oils #oils #oilsGrid > .product-card .product-card__pack-size {
+  grid-area: size;
+  width: min(100%, 300px);
+  margin: 18px 0 0 !important;
+}
+html body.page-our-oils #oils #oilsGrid > .product-card .product-card__pack-size > label { display: none; }
+html body.page-our-oils #oils #oilsGrid > .product-card .product-card__footer {
+  grid-area: footer;
+  align-self: end;
+  width: min(100%, 420px);
+  margin-top: 20px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  text-align: left;
+}
+html body.page-our-oils #oils #oilsGrid > .product-card .product-card__qty { display: flex; align-items: center; gap: 10px; }
+html body.page-our-oils #oils #oilsGrid > .product-card .qty-inline-label { display: none; }
+
+/* ---- arrow buttons ----
+   Clicked tens of times a session, so motion stays small and quick:
+   press feedback 120ms, hover nudge 200ms, end-of-rail fade 200ms. */
+html body.page-our-oils #oils .oils-nav {
+  position: absolute;
+  top: calc(26px + 32px + 18px + var(--bottle-h) / 2);
+  z-index: 3;
+  width: 44px;
+  height: 44px;
+  margin-top: -22px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--ed-line);
+  background: rgba(253, 251, 246, 0.72);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  color: var(--ed-forest);
+  box-shadow: 0 10px 24px -14px rgba(14, 31, 22, 0.45);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    opacity 0.2s var(--ed-ease-out),
+    transform 0.2s var(--ed-ease-out),
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    visibility 0s linear 0s;
+}
+html body.page-our-oils #oils .oils-nav--prev { left: 12px; }
+html body.page-our-oils #oils .oils-nav--next { right: 12px; }
+html body.page-our-oils #oils .oils-nav svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.2s var(--ed-ease-out);
+}
+html body.page-our-oils #oils .oils-nav:active { transform: scale(0.94); transition-duration: 0.12s; }
+/* At either end of the rail the arrow recedes instead of vanishing. */
+html body.page-our-oils #oils .oils-nav:disabled {
+  opacity: 0;
+  transform: scale(0.9);
+  visibility: hidden;
+  cursor: default;
+  transition:
+    opacity 0.2s var(--ed-ease-out),
+    transform 0.2s var(--ed-ease-out),
+    visibility 0s linear 0.2s;
+}
+html body.page-our-oils #oils .oils-nav:focus-visible { outline: 2px solid var(--ed-gold); outline-offset: 3px; }
+@media (hover: hover) and (pointer: fine) {
+  html body.page-our-oils #oils .oils-nav:hover {
+    background: var(--ed-forest-deep);
+    border-color: var(--ed-forest-deep);
+    color: var(--ed-cream);
+  }
+  html body.page-our-oils #oils .oils-nav--prev:hover svg { transform: translateX(-2px); }
+  html body.page-our-oils #oils .oils-nav--next:hover svg { transform: translateX(2px); }
+}
+
+html body.page-our-oils #oils .oils-carousel-dots {
+  position: absolute !important;
+  left: 0;
+  right: 0;
+  top: calc(26px + 32px + 18px + var(--bottle-h) + 14px);
+  z-index: 3;
+  display: flex !important;
+  justify-content: center;
+  gap: 0;
+  padding: 0 !important;
+  pointer-events: none;
+}
+html body.page-our-oils #oils .oils-carousel-dots .dot {
+  -webkit-appearance: none;
+  appearance: none;
+  /* 24px tap target, 8px visible dot. */
+  box-sizing: border-box !important;
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 8px !important;
+  border: none !important;
+  border-radius: 50% !important;
+  background-color: rgba(24, 51, 40, 0.18);
+  background-clip: content-box !important;
+  box-shadow: none !important;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: background-color 0.2s ease !important;
+}
+html body.page-our-oils #oils .oils-carousel-dots .dot.active { width: 24px !important; background-color: var(--ed-gold) !important; }
+/* Dots sit under the bottle; leave room for them above the meta line. */
+html body.page-our-oils #oils #oilsGrid > .product-card .product-card__meta { margin-top: 30px !important; }
+
+/* ---- desktop: details flank the bottle ---- */
+@media (min-width: 900px) {
+  html body.page-our-oils #oils .oils-stage {
+    --stage-h: clamp(540px, calc(100svh - 120px), 760px);
+    --bottle-h: clamp(340px, calc(100svh - 300px), 480px);
+  }
+  html body.page-our-oils #oils #oilsGrid > .product-card {
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 1fr) minmax(0, 1fr);
+    grid-template-rows: 1fr auto auto auto auto 1fr;
+    grid-template-areas:
+      ".     pic ."
+      "badge pic size"
+      "meta  pic size"
+      "title pic footer"
+      "copy  pic footer"
+      ".     pic .";
+    justify-items: start;
+    align-content: stretch;
+    column-gap: clamp(24px, 4vw, 64px);
+    padding: 40px clamp(72px, 8vw, 120px) !important;
+    text-align: left;
+  }
+  html body.page-our-oils #oils #oilsGrid > .product-card .product-card__image-area {
+    align-self: center;
+    height: calc(var(--bottle-h) + 36px) !important;
+  }
+  html body.page-our-oils #oils #oilsGrid > .product-card .product-card__image-area::before { font-size: clamp(8rem, 15vw, 15rem); }
+  html body.page-our-oils #oils #oilsGrid > .product-card .product-card__meta { margin-top: 18px !important; justify-content: flex-start; }
+  html body.page-our-oils #oils #oilsGrid > .product-card .product-card__description { margin: 14px 0 0 !important; -webkit-line-clamp: 4 !important; line-clamp: 4 !important; }
+  html body.page-our-oils #oils #oilsGrid > .product-card .product-card__pack-size,
+  html body.page-our-oils #oils #oilsGrid > .product-card .product-card__footer {
+    justify-self: stretch;
+    width: auto;
+  }
+  html body.page-our-oils #oils #oilsGrid > .product-card .product-card__pack-size { align-self: end; margin: 0 !important; }
+  html body.page-our-oils #oils #oilsGrid > .product-card .product-card__pack-size > label { display: block; }
+  html body.page-our-oils #oils #oilsGrid > .product-card .product-card__footer {
+    align-self: start;
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: 22px !important;
+  }
+  html body.page-our-oils #oils #oilsGrid > .product-card .product-card__qty { justify-content: space-between; }
+  html body.page-our-oils #oils .oils-nav { top: 50%; width: 52px; height: 52px; margin-top: -26px; }
+  html body.page-our-oils #oils .oils-nav--prev { left: 24px; }
+  html body.page-our-oils #oils .oils-nav--next { right: 24px; }
+  html body.page-our-oils #oils .oils-carousel-dots { top: auto; bottom: 18px; }
+}
+
+@media (max-width: 720px) {
+  /* Edge to edge on phones so the stage is the whole screen. */
+  html body.page-our-oils #oils .oils-stage {
+    margin-inline: calc(50% - 50vw);
+    border-radius: 0;
+    box-shadow: none;
+    border-block: 1px solid var(--ed-line-soft);
+  }
+}
+
+/* ---- swipe-linked motion ---- */
+@supports (animation-timeline: view()) {
+  html body.page-our-oils #oils { timeline-scope: --oils-x; }
+
+  /* The colour follows the swipe 1:1. Keyframe stops sit at 0/50/100%
+     because there are three oils — add a stop per oil if that changes. */
+  html body.page-our-oils section#oils {
+    animation: ed-oil-section linear both;
+    animation-timeline: --oils-x;
+  }
+  html body.page-our-oils #oils .oils-stage {
+    animation: ed-oil-stage linear both;
+    animation-timeline: --oils-x;
+  }
+  html body.page-our-oils #oils #oilsGrid { scroll-timeline: --oils-x inline; }
+  html body.page-our-oils #oils #oilsGrid > .product-card { view-timeline: --oil-slide inline; }
+
+  /* Bottle swings through: lags the slide, tilts, settles upright. */
+  html body.page-our-oils #oils #oilsGrid > .product-card .product-card__image-area img {
+    animation: ed-show-bottle linear both;
+    animation-timeline: --oil-slide;
+    animation-range: cover;
+  }
+  /* Watermark drifts the other way for depth. */
+  html body.page-our-oils #oils #oilsGrid > .product-card .product-card__image-area::before {
+    animation: ed-show-word linear both;
+    animation-timeline: --oil-slide;
+    animation-range: cover;
+  }
+  /* Copy arrives in layers: each line travels a little further, so the
+     swipe staggers them with no timers involved. */
+  html body.page-our-oils #oils #oilsGrid > .product-card :is(.product-badge, .product-card__meta, .product-card__title, .product-card__description, .product-card__pack-size, .product-card__footer) {
+    animation: ed-show-copy linear both;
+    animation-timeline: --oil-slide;
+    animation-range: cover;
+  }
+  html body.page-our-oils #oils #oilsGrid > .product-card .product-badge          { --copy-x: 16px; }
+  html body.page-our-oils #oils #oilsGrid > .product-card .product-card__meta     { --copy-x: 20px; }
+  html body.page-our-oils #oils #oilsGrid > .product-card .product-card__title    { --copy-x: 28px; }
+  html body.page-our-oils #oils #oilsGrid > .product-card .product-card__description { --copy-x: 34px; }
+  html body.page-our-oils #oils #oilsGrid > .product-card .product-card__pack-size { --copy-x: 38px; }
+  html body.page-our-oils #oils #oilsGrid > .product-card .product-card__footer   { --copy-x: 40px; }
+
+  /* One gold dot that tracks the swipe 1:1. */
+  html body.page-our-oils #oils .oils-carousel-dots .dot.active { background-color: rgba(24, 51, 40, 0.18) !important; }
+  html body.page-our-oils #oils .oils-carousel-dots::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: calc(50% - 28px);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--ed-gold);
+    animation: ed-show-indicator linear both;
+    animation-timeline: --oils-x;
+  }
+}
+
+@keyframes ed-show-bottle {
+  0%   { translate: -40px 0; rotate: 9deg;  scale: 0.84; opacity: 0.4; }
+  50%  { translate: 0 0;     rotate: 0deg;  scale: 1;    opacity: 1; }
+  100% { translate: 40px 0;  rotate: -9deg; scale: 0.84; opacity: 0.4; }
+}
+@keyframes ed-show-word {
+  from { translate: 40px 0; }
+  to   { translate: -40px 0; }
+}
+@keyframes ed-show-copy {
+  0%, 20%   { opacity: 0; translate: var(--copy-x, 24px) 0; }
+  50%       { opacity: 1; translate: 0 0; }
+  80%, 100% { opacity: 0; translate: calc(var(--copy-x, 24px) * -1) 0; }
+}
+@keyframes ed-oil-section {
+  0%   { background-color: #F1F2E9; }
+  50%  { background-color: #FAF0DE; }
+  100% { background-color: #F6E9E0; }
+}
+@keyframes ed-oil-stage {
+  0%   { --oil-glow: rgba(86, 150, 80, 0.24);  --oil-wash: #ECEFE2; }
+  50%  { --oil-glow: rgba(232, 152, 32, 0.34); --oil-wash: #F7E8CC; }
+  100% { --oil-glow: rgba(150, 64, 24, 0.28);  --oil-wash: #F2DFD1; }
+}
+@keyframes ed-show-indicator {
+  from { translate: 0 0; }
+  to   { translate: 48px 0; }
+}
+@keyframes ed-bottle-float {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-10px); }
+}
+@keyframes ed-bottle-shadow {
+  from { transform: scaleX(1);    opacity: 1; }
+  to   { transform: scaleX(0.86); opacity: 0.7; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Keep the crossfade that says which oil is in focus; drop movement. */
+  @keyframes ed-show-bottle {
+    0%, 100% { opacity: 0.4; }
+    50%      { opacity: 1; }
+  }
+  @keyframes ed-show-copy {
+    0%, 20%, 80%, 100% { opacity: 0; }
+    50%                { opacity: 1; }
+  }
+  html body.page-our-oils #oils #oilsGrid > .product-card .product-card__image-area picture,
+  html body.page-our-oils #oils #oilsGrid > .product-card .product-card__image-area::after,
+  html body.page-our-oils #oils #oilsGrid > .product-card .product-card__image-area::before { animation: none !important; }
+  html body.page-our-oils #oils .oils-carousel-dots::after { display: none; }
+  html body.page-our-oils #oils .oils-carousel-dots .dot.active { background-color: var(--ed-gold) !important; }
+  html body.page-our-oils #oils .oils-nav,
+  html body.page-our-oils #oils .oils-nav:active,
+  html body.page-our-oils #oils .oils-nav:disabled,
+  html body.page-our-oils #oils .oils-nav svg { transform: none !important; }
+}
+
+/* =====================================================================
+   TYPE SYSTEM — roles, not values
+   One sans (Plus Jakarta Sans; "Inter" is only an alias for it), one
+   serif (Cormorant Garamond). Roles:
+     body   16px / 400 / 1.65, max ~65 characters
+     lead   17px / 400 / 1.65, max ~60 characters
+     label  11px / 500 / caps / 0.2em   (badges 600)
+     small  12px / 500 — units, save notes; nothing renders under 11px
+     eyebrow  serif italic, gold, sentence case (see DESIGN.md)
+   Legacy rules carry !important at one id, so these use two-id or
+   html-body selectors to win without touching the old blocks.
+   ===================================================================== */
+:root {
+  --ed-body-size: 1rem;
+  --ed-lead-size: 1.0625rem;
+  --ed-body-leading: 1.65;
+  /* em, not ch: Jakarta's "0" is wide, so 62ch ran ~82 real characters.
+     34em ≈ 65 characters of running text, 32em ≈ 60 at lead size. */
+  --ed-measure: 34em;
+  --ed-lead-measure: 32em;
+  --ed-label-size: 11px;
+  --ed-label-track: 0.2em;
+}
+
+html body.page-our-oils,
+html body.subpage { font-family: var(--ed-sans) !important; font-weight: 400 !important; }
+
+/* ---- body ---- */
+html body.page-our-oils #benefits .benefit-card p,
+html body.page-our-oils #faq .faq-a p,
+html body.subpage .page-main .section-copy,
+html body.subpage .page-main .page-card > p,
+html body.subpage .page-main .page-card li,
+html body.subpage .page-main .contact-intro {
+  font-family: var(--ed-sans) !important;
+  font-size: var(--ed-body-size) !important;
+  font-weight: 400 !important;
+  line-height: var(--ed-body-leading) !important;
+  max-width: var(--ed-measure) !important;
+}
+html body.subpage .page-main .section-head-centered .section-copy { margin-inline: auto !important; }
+
+/* ---- lead ---- */
+html body.page-our-oils p.lead,
+html body.page-our-oils .hero-summary,
+html body.subpage .page-main .page-hero > p:not(.hero-eyebrow),
+html body.subpage .page-main p.lead {
+  font-family: var(--ed-sans) !important;
+  font-size: var(--ed-lead-size) !important;
+  font-weight: 400 !important;
+  line-height: var(--ed-body-leading) !important;
+  max-width: var(--ed-lead-measure) !important;
+}
+/* Light text on the dark hero: a touch more leading and tracking. */
+html body.page-our-oils .hero-summary { line-height: 1.72 !important; letter-spacing: 0.005em !important; }
+
+/* Dense product copy stays a step under body. */
+html body.page-our-oils #oils #oilsGrid .product-card__description,
+html body.page-our-oils #oilsDeliveryInfo .important-info__text {
+  font-size: 15px !important;
+  font-weight: 400 !important;
+  line-height: 1.6 !important;
+}
+
+/* ---- label ---- */
+html body.page-our-oils .hero-proof-item strong,
+html body.page-our-oils #oils #oilsGrid .product-card__meta .pill,
+html body.page-our-oils #oils #oilsGrid .price-note,
+html body.page-our-oils #oils #oilsGrid .product-card__pack-size > label,
+html body.page-our-oils #oilsDeliveryInfo .important-info__title,
+html body.page-our-oils #oils #oilsGrid .product-badge,
+html body.subpage .page-main .section-kicker,
+html body.subpage .page-main .viscosity-caption,
+html body.subpage .page-main .combo-tag,
+html body.subpage .page-main .combo-save {
+  font-family: var(--ed-sans) !important;
+  font-size: var(--ed-label-size) !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+  letter-spacing: var(--ed-label-track) !important;
+  text-transform: uppercase !important;
+}
+html body.page-our-oils #oils #oilsGrid .product-badge,
+html body.subpage .page-main .combo-tag,
+html body.subpage .page-main .combo-save { font-weight: 600 !important; }
+@media (max-width: 480px) {
+  /* Three proof markers share one line down to a 375px phone; narrower
+     screens let the last one wrap rather than shrink the type. */
+  html body.page-our-oils .hero-proof-item strong { letter-spacing: 0.08em !important; }
+}
+
+/* ---- small ---- */
+html body.page-our-oils #oils #oilsGrid .save-label {
+  font-size: var(--ed-label-size) !important;
+  line-height: 1.3 !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+}
+html body.page-our-oils #oils #oilsGrid .product-card__unit,
+html body.page-our-oils #oils #oilsGrid .price .unit {
+  font-family: var(--ed-sans) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.02em !important;
+}
+
+/* ---- eyebrow: subpages match the home hero ---- */
+html body.subpage .page-main .page-hero > p.hero-eyebrow {
+  font-family: var(--ed-serif) !important;
+  font-style: italic !important;
+  font-weight: 500 !important;
+  font-size: 1.2rem !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  color: var(--ed-gold) !important;
+}
+
+/* =====================================================================
+   HOME — SECTION HEADS
+   No numbered eyebrows: the heading already names the section. All three
+   heads share the benefit-row grid, so every lead starts on the same
+   column line as the benefit text and the FAQ answers below.
+   ===================================================================== */
+html body.page-our-oils section#oils .oils-intro > div > p.lead,
+html body.page-our-oils #benefits > .container > p.lead,
+html body.page-our-oils #faq > .container > p.lead {
+  text-wrap: pretty !important;
+  margin: 0 !important;
+  position: static !important;
+}
+html body.page-our-oils section#oils .oils-intro > div > h2.section-title,
+html body.page-our-oils #benefits > .container > h2.section-title,
+html body.page-our-oils #faq > .container > h2.section-title {
+  margin: 0 !important;
+  position: static !important;
+  text-wrap: balance;
+}
+@media (min-width: 901px) {
+  html body.page-our-oils section#oils .oils-intro > div,
+  html body.page-our-oils #benefits > .container,
+  html body.page-our-oils #faq > .container {
+    display: grid !important;
+    grid-template-columns: 64px 80px minmax(0, 0.9fr) minmax(0, 1.5fr) !important;
+    grid-template-rows: auto !important;
+    column-gap: 32px !important;
+    row-gap: 0 !important;
+    align-items: end !important;
+  }
+  html body.page-our-oils section#oils .oils-intro,
+  html body.page-our-oils section#oils .oils-intro > div { width: 100% !important; max-width: none !important; }
+  html body.page-our-oils section#oils .oils-intro > div > h2.section-title,
+  html body.page-our-oils #benefits > .container > h2.section-title,
+  html body.page-our-oils #faq > .container > h2.section-title { grid-column: 1 / 4 !important; grid-row: 1 !important; }
+  html body.page-our-oils section#oils .oils-intro > div > p.lead,
+  html body.page-our-oils #benefits > .container > p.lead,
+  html body.page-our-oils #faq > .container > p.lead {
+    grid-column: 4 !important;
+    grid-row: 1 !important;
+    justify-self: start !important;
+    padding-bottom: 8px !important;
+  }
+  html body.page-our-oils #benefits > .container > div { grid-column: 1 / -1 !important; grid-row: 2 !important; }
+  html body.page-our-oils #faq > .container > .faq-wrap { grid-column: 3 / -1 !important; grid-row: 2 !important; }
+}
+@media (max-width: 900px) {
+  html body.page-our-oils section#oils .oils-intro > div > p.lead,
+  html body.page-our-oils #benefits > .container > p.lead,
+  html body.page-our-oils #faq > .container > p.lead { margin-top: 14px !important; }
+}
+
+/* =====================================================================
+   HOME — FAQ
+   Numbered cards. Closed: a quiet tint. Open: lifts to white, the plus
+   turns to a cross, the number takes the gold. Opened a few times per
+   visit, so motion is short and functional:
+     height    grid-rows 0fr → 1fr, 260ms strong ease-out
+     content   fade + 4px settle, 200ms (no settle on close)
+     icon      45° turn, 220ms
+     surface   colour and shadow, 200ms
+   ===================================================================== */
+html body.page-our-oils #faq > .container > .faq-wrap {
+  margin: clamp(40px, 4.5vw, 64px) 0 0 !important;
+  border: none !important;
+  min-width: 0;
+}
+html body.page-our-oils #faq .faq-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+html body.page-our-oils #faq .faq-chip {
+  -webkit-appearance: none;
+  appearance: none;
+  border: 1px solid var(--ed-line);
+  border-radius: 999px;
+  padding: 9px 16px;
+  background: transparent;
+  color: var(--ed-forest);
+  font-family: var(--ed-sans);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.12s var(--ed-ease-out);
+}
+html body.page-our-oils #faq .faq-chip.is-active {
+  background: var(--ed-forest-deep);
+  border-color: var(--ed-forest-deep);
+  color: var(--ed-cream);
+}
+html body.page-our-oils #faq .faq-chip:active { transform: scale(0.97); }
+@media (hover: hover) and (pointer: fine) {
+  html body.page-our-oils #faq .faq-chip:not(.is-active):hover { border-color: rgba(26, 51, 40, 0.35); background: rgba(26, 51, 40, 0.04); }
+}
+
+html body.page-our-oils #faq #faqList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: none !important;
+}
+html body.page-our-oils #faq #faqList .faq-item {
+  --faq-pad: 24px;
+  --faq-num: 44px;
+  --faq-gap: 20px;
+  background: rgba(26, 51, 40, 0.04) !important;
+  border: none !important;
+  border-radius: 18px !important;
+  box-shadow: 0 0 0 1px transparent !important;
+  overflow: hidden;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+html body.page-our-oils #faq #faqList .faq-item[hidden] { display: none !important; }
+html body.page-our-oils #faq #faqList .faq-item.open {
+  background: #fff !important;
+  box-shadow:
+    0 0 0 1px var(--ed-line-soft),
+    0 22px 44px -30px rgba(14, 31, 22, 0.35) !important;
+}
+html body.page-our-oils #faq #faqList .faq-q {
+  margin: 0 !important;
+  padding: 0 !important;
+  font: inherit !important;
+}
+html body.page-our-oils #faq #faqList .faq-q::after { content: none !important; display: none !important; }
+html body.page-our-oils #faq #faqList .faq-toggle {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  display: grid;
+  grid-template-columns: var(--faq-num) minmax(0, 1fr) 36px;
+  column-gap: var(--faq-gap);
+  align-items: center;
+  padding: 20px var(--faq-pad);
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  color: var(--ed-forest);
+  -webkit-tap-highlight-color: transparent;
+}
+html body.page-our-oils #faq #faqList .faq-toggle:focus-visible { outline: 2px solid var(--ed-gold); outline-offset: -2px; border-radius: 18px; }
+html body.page-our-oils #faq #faqList .faq-num {
+  font-family: var(--ed-serif);
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1;
+  font-variant-numeric: lining-nums tabular-nums;
+  color: rgba(26, 51, 40, 0.24);
+  transition: color 0.2s ease;
+}
+html body.page-our-oils #faq #faqList .faq-item.open .faq-num { color: var(--ed-gold); }
+html body.page-our-oils #faq #faqList .faq-q-text {
+  font-family: var(--ed-serif);
+  font-size: clamp(19px, 1.5vw, 22px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  text-wrap: pretty;
+}
+html body.page-our-oils #faq #faqList .faq-icon {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(26, 51, 40, 0.07);
+  color: var(--ed-forest);
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.22s var(--ed-ease-out);
+}
+html body.page-our-oils #faq #faqList .faq-icon::before,
+html body.page-our-oils #faq #faqList .faq-icon::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 12px;
+  height: 1.5px;
+  margin: -0.75px 0 0 -6px;
+  border-radius: 1px;
+  background: currentColor;
+}
+html body.page-our-oils #faq #faqList .faq-icon::after { transform: rotate(90deg); }
+html body.page-our-oils #faq #faqList .faq-item.open .faq-icon {
+  transform: rotate(45deg);
+  background: var(--ed-forest-deep);
+  color: var(--ed-cream);
+}
+@media (hover: hover) and (pointer: fine) {
+  html body.page-our-oils #faq #faqList .faq-item:not(.open):hover { background: rgba(26, 51, 40, 0.07) !important; }
+  html body.page-our-oils #faq #faqList .faq-item:not(.open) .faq-toggle:hover .faq-icon { background: rgba(26, 51, 40, 0.12); }
+}
+
+/* Answer: animate the row track, not max-height, so any length opens at
+   the same speed. Closed answers are hidden from assistive tech once the
+   collapse finishes (visibility flips at the end). */
+html body.page-our-oils #faq #faqList .faq-a {
+  display: grid !important;
+  grid-template-rows: 0fr;
+  max-height: none !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  visibility: hidden;
+  transition: grid-template-rows 0.26s var(--ed-ease-out), visibility 0s linear 0.26s !important;
+}
+html body.page-our-oils #faq #faqList .faq-item.open .faq-a {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition: grid-template-rows 0.26s var(--ed-ease-out), visibility 0s linear 0s !important;
+}
+html body.page-our-oils #faq #faqList .faq-a-inner {
+  min-height: 0;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+html body.page-our-oils #faq #faqList .faq-item.open .faq-a-inner {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.2s ease 0.04s, transform 0.2s var(--ed-ease-out) 0.04s;
+}
+html body.page-our-oils #faq #faqList .faq-a p {
+  margin: 0 !important;
+  padding: 0 calc(var(--faq-pad) + 36px + var(--faq-gap)) 24px calc(var(--faq-pad) + var(--faq-num) + var(--faq-gap)) !important;
+  border: none !important;
+  box-sizing: content-box !important;
+  max-width: var(--ed-measure) !important;
+  color: var(--ed-muted) !important;
+}
+
+@media (max-width: 600px) {
+  html body.page-our-oils #faq #faqList .faq-item { --faq-pad: 16px; --faq-num: 30px; --faq-gap: 12px; }
+  html body.page-our-oils #faq #faqList .faq-num { font-size: 24px; }
+  html body.page-our-oils #faq #faqList .faq-q-text { font-size: 18px; }
+  html body.page-our-oils #faq #faqList .faq-toggle { padding-block: 16px; grid-template-columns: var(--faq-num) minmax(0, 1fr) 32px; }
+  html body.page-our-oils #faq #faqList .faq-icon { width: 32px; height: 32px; }
+  html body.page-our-oils #faq #faqList .faq-a p { padding: 0 var(--faq-pad) 20px calc(var(--faq-pad) + var(--faq-num) + var(--faq-gap)) !important; }
+  html body.page-our-oils #faq .faq-filters { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: -16px; padding-inline: 16px; }
+  html body.page-our-oils #faq .faq-chip { flex: 0 0 auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Keep the fade that shows the answer arrived; drop movement and growth. */
+  html body.page-our-oils #faq #faqList .faq-a,
+  html body.page-our-oils #faq #faqList .faq-item.open .faq-a { transition: none !important; }
+  html body.page-our-oils #faq #faqList .faq-a-inner,
+  html body.page-our-oils #faq #faqList .faq-item.open .faq-a-inner { transform: none; }
+  html body.page-our-oils #faq #faqList .faq-icon { transition: background-color 0.2s ease, color 0.2s ease; }
+}
+
+/* =====================================================================
+   HOME — WHY ARUMEE: the bottle fills as you read
+   One authored moment instead of four equal rows. A single groundnut
+   bottle stays pinned beside the claims; scrolling through them fills it
+   from empty glass to golden oil. The claim being read is at full
+   strength, the rest step back. Scroll-linked (animation-timeline), so it
+   follows the reader exactly and runs off the main thread. Without
+   scroll timelines, or with reduced motion, the bottle is simply full
+   and every claim is at full strength.
+   ===================================================================== */
+html body.page-our-oils #benefits #whyStory {
+  display: grid !important;
+  grid-template-columns: 64px 80px minmax(0, 0.9fr) minmax(0, 1.5fr) !important;
+  column-gap: 32px !important;
+  margin-top: clamp(40px, 5vw, 72px) !important;
+  border: none !important;
+  counter-reset: none;
+}
+html body.page-our-oils #benefits .why-claims { view-timeline: --why-story block; }
+html body.page-our-oils #benefits .why-bottle {
+  grid-column: 1 / 4;
+  grid-row: 1;
+  position: sticky;
+  top: calc(50svh - min(30svh, 260px));
+  align-self: start;
+  height: min(60svh, 520px);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+}
+/* Warm stage light behind the glass, same as the showcase. */
+html body.page-our-oils #benefits .why-bottle::before {
+  content: '';
+  position: absolute;
+  inset: 4% 10%;
+  background: radial-gradient(50% 50% at 50% 55%, rgba(212, 172, 128, 0.34), transparent 70%);
+  pointer-events: none;
+}
+html body.page-our-oils #benefits .why-bottle__glass {
+  position: relative;
+  height: 100%;
+  aspect-ratio: 172 / 568;
+}
+html body.page-our-oils #benefits .why-bottle__glass img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+/* The "empty" bottle: the same photograph drained of colour. */
+html body.page-our-oils #benefits .why-bottle__empty {
+  filter: grayscale(1) brightness(1.18) contrast(0.85);
+  opacity: 0.38;
+}
+/* Shadow lives on the wrapper: on the clipped image, clip-path would cut
+   it off in a hard-edged box. */
+html body.page-our-oils #benefits .why-bottle__glass { filter: drop-shadow(0 26px 26px rgba(14, 31, 22, 0.22)); }
+/* Oil level: a gold hairline riding the edge of the fill. */
+html body.page-our-oils #benefits .why-bottle__level {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+}
+html body.page-our-oils #benefits .why-bottle__level::before {
+  content: '';
+  position: absolute;
+  left: -14%;
+  right: -14%;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--ed-gold) 20%, var(--ed-gold) 80%, transparent);
+}
+/* Level marks: one per claim, bottom to top. */
+html body.page-our-oils #benefits .why-bottle__marks {
+  position: relative;
+  width: 132px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+html body.page-our-oils #benefits .why-bottle__marks li {
+  position: absolute;
+  left: 0;
+  bottom: var(--mark);
+  translate: 0 50%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--ed-sans);
+  font-size: var(--ed-label-size);
+  font-weight: 500;
+  letter-spacing: var(--ed-label-track);
+  text-transform: uppercase;
+  color: var(--ed-forest);
+  white-space: nowrap;
+}
+/* Mark heights = where the oil level sits when that claim is centred. */
+html body.page-our-oils #benefits .why-bottle__marks li:nth-child(1) { --mark: 25%; }
+html body.page-our-oils #benefits .why-bottle__marks li:nth-child(2) { --mark: 50%; }
+html body.page-our-oils #benefits .why-bottle__marks li:nth-child(3) { --mark: 75%; }
+html body.page-our-oils #benefits .why-bottle__marks li:nth-child(4) { --mark: 97%; }
+html body.page-our-oils #benefits .why-bottle__marks li::before {
+  content: '';
+  width: 18px;
+  height: 1px;
+  background: currentColor;
+}
+
+/* ---- claims ---- */
+html body.page-our-oils #benefits .why-claims {
+  grid-column: 4;
+  grid-row: 1;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+html body.page-our-oils #benefits .why-claim {
+  min-height: min(46svh, 420px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: 28px;
+  border-top: 1px solid var(--ed-line);
+}
+html body.page-our-oils #benefits .why-claim:last-child { border-bottom: 1px solid var(--ed-line); }
+html body.page-our-oils #benefits .why-claim__title {
+  margin: 0 0 14px !important;
+  font-family: var(--ed-serif) !important;
+  font-size: clamp(1.9rem, 3vw, 2.75rem) !important;
+  font-weight: 500 !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.02em !important;
+  color: var(--ed-forest) !important;
+  text-wrap: balance;
+}
+html body.page-our-oils #benefits .why-claim__title em {
+  font-style: italic;
+  font-weight: 500;
+}
+html body.page-our-oils #benefits .why-claim p {
+  margin: 0 !important;
+  max-width: var(--ed-lead-measure);
+  font-size: var(--ed-lead-size) !important;
+  line-height: var(--ed-body-leading) !important;
+  color: var(--ed-muted) !important;
+}
+
+/* ---- phones: the bottle becomes a slim rail beside the claims ---- */
+@media (max-width: 900px) {
+  html body.page-our-oils #benefits #whyStory {
+    grid-template-columns: 56px minmax(0, 1fr) !important;
+    column-gap: 18px !important;
+  }
+  html body.page-our-oils #benefits .why-bottle {
+    grid-column: 1;
+    top: 96px;
+    height: 190px;
+    justify-content: flex-start;
+  }
+  html body.page-our-oils #benefits .why-bottle::before { inset: 0 -30%; }
+  html body.page-our-oils #benefits .why-bottle__marks { display: none; }
+  html body.page-our-oils #benefits .why-claims { grid-column: 2; }
+  html body.page-our-oils #benefits .why-claim { min-height: 0; padding-block: 26px; }
+  html body.page-our-oils #benefits .why-claim__title { font-size: clamp(1.6rem, 7vw, 2rem) !important; }
+  html body.page-our-oils #benefits .why-claim p { font-size: var(--ed-body-size) !important; }
+}
+
+/* ---- the motion ---- */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    html body.page-our-oils #benefits { timeline-scope: --why-story; }
+
+    /* Fill runs from the first claim reaching the reading line to the last. */
+    html body.page-our-oils #benefits .why-bottle__full {
+      animation: ed-why-fill linear both;
+      animation-timeline: --why-story;
+      animation-range: cover 9.5% cover 74%;
+    }
+    html body.page-our-oils #benefits .why-bottle__level {
+      animation: ed-why-level linear both;
+      animation-timeline: --why-story;
+      animation-range: cover 9.5% cover 74%;
+    }
+    /* Each mark lights as the oil passes it. */
+    html body.page-our-oils #benefits .why-bottle__marks li {
+      animation: ed-why-mark linear both;
+      animation-timeline: --why-story;
+      animation-range: cover 9.5% cover 74%;
+    }
+    html body.page-our-oils #benefits .why-bottle__marks li:nth-child(1) { animation-name: ed-why-mark-1; }
+    html body.page-our-oils #benefits .why-bottle__marks li:nth-child(2) { animation-name: ed-why-mark-2; }
+    html body.page-our-oils #benefits .why-bottle__marks li:nth-child(3) { animation-name: ed-why-mark-3; }
+    html body.page-our-oils #benefits .why-bottle__marks li:nth-child(4) { animation-name: ed-why-mark-4; }
+
+    /* Reading focus: the claim at the centre of the screen leads. */
+    html body.page-our-oils #benefits .why-claim > * {
+      animation: ed-why-focus linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+  }
+}
+@keyframes ed-why-fill {
+  from { clip-path: inset(100% 0 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+@keyframes ed-why-level {
+  0%   { translate: 0 0;     opacity: 1; }
+  92%  { translate: 0 -92%;  opacity: 1; }
+  100% { translate: 0 -100%; opacity: 0; }
+}
+@keyframes ed-why-mark-1 { 0%, 23% { opacity: 0.32; color: var(--ed-forest); } 25%, 100% { opacity: 1; color: var(--ed-gold); } }
+@keyframes ed-why-mark-2 { 0%, 48% { opacity: 0.32; color: var(--ed-forest); } 50%, 100% { opacity: 1; color: var(--ed-gold); } }
+@keyframes ed-why-mark-3 { 0%, 73% { opacity: 0.32; color: var(--ed-forest); } 75%, 100% { opacity: 1; color: var(--ed-gold); } }
+@keyframes ed-why-mark-4 { 0%, 97% { opacity: 0.32; color: var(--ed-forest); } 99%, 100% { opacity: 1; color: var(--ed-gold); } }
+@keyframes ed-why-focus {
+  0%       { opacity: 0.3; }
+  38%, 62% { opacity: 1; }
+  100%     { opacity: 0.3; }
+}
+/* overflow-x:hidden made #benefits a scroll container, which breaks both
+   the sticky bottle and the scroll timeline. clip crops without that. */
+html body.page-our-oils section#benefits { overflow: clip !important; content-visibility: visible !important; }
+/* Same trap one level up: body{overflow-x:hidden} turns <body> into a
+   scroll container that never scrolls, freezing every view() timeline on
+   the page. clip still stops sideways scrolling. */
+html body.page-our-oils { overflow-x: clip !important; }
+
+/* =====================================================================
+   OUR STORY (about.html) — a narrative, not a stack of cards
+   Order: who & where → why → how (a real sequence, so numbered) →
+   what never goes in → invitation. Same four-track grid as the home
+   sections, so headings, leads and rules sit on the same verticals.
+   Photo slots (.story-photo) are optional: the page reads complete
+   without them and widens to take them when they are added.
+   ===================================================================== */
+html body.page-story { overflow-x: clip !important; }
+html body.page-story .page-main.story {
+  width: min(1200px, 92vw) !important;
+  padding-top: calc(var(--header-height-mobile, 72px) + clamp(48px, 7vw, 104px)) !important;
+  padding-bottom: 0 !important;
+}
+html body.page-story .story > section {
+  display: grid;
+  grid-template-columns: 64px 80px minmax(0, 0.9fr) minmax(0, 1.5fr);
+  column-gap: 32px;
+  align-items: end;
+}
+html body.page-story .story h1,
+html body.page-story .story h2 {
+  font-family: var(--ed-serif) !important;
+  color: var(--ed-forest) !important;
+  margin: 0 !important;
+  text-wrap: balance;
+  text-align: left !important;
+}
+html body.page-story .story h1 {
+  grid-column: 1 / 4;
+  font-size: clamp(2.75rem, 4.7vw, 4.5rem) !important;
+  font-weight: 500 !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.025em !important;
+}
+html body.page-story .story h2 {
+  grid-column: 1 / 4;
+  font-size: clamp(2.1rem, 3.8vw, 3.25rem) !important;
+  font-weight: 600 !important;
+  line-height: 1.04 !important;
+  letter-spacing: -0.02em !important;
+}
+html body.page-story .story p {
+  font-family: var(--ed-sans) !important;
+  font-size: var(--ed-body-size) !important;
+  font-weight: 400 !important;
+  line-height: var(--ed-body-leading) !important;
+  color: var(--ed-muted) !important;
+  margin: 0 !important;
+  max-width: var(--ed-measure) !important;
+  text-align: left !important;
+}
+html body.page-story .story .story-lead,
+html body.page-story .story .story-chapter__lead {
+  grid-column: 4;
+  font-size: var(--ed-lead-size) !important;
+  max-width: var(--ed-lead-measure) !important;
+  padding-bottom: 8px;
+  text-wrap: pretty;
+}
+
+/* ---- 1. opening ---- */
+html body.page-story .story-facts {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: clamp(48px, 6vw, 80px) 0 0;
+  border-top: 1px solid var(--ed-line);
+  border-bottom: 1px solid var(--ed-line);
+}
+html body.page-story .story-facts > div { padding: 22px 28px 24px 0; }
+html body.page-story .story-facts > div + div { padding-left: 28px; border-left: 1px solid var(--ed-line); }
+html body.page-story .story-facts dt {
+  font-family: var(--ed-sans);
+  font-size: var(--ed-label-size);
+  font-weight: 500;
+  letter-spacing: var(--ed-label-track);
+  text-transform: uppercase;
+  color: var(--ed-muted);
+  margin-bottom: 8px;
+}
+html body.page-story .story-facts dd {
+  margin: 0;
+  font-family: var(--ed-serif);
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ed-forest);
+  font-variant-numeric: lining-nums;
+}
+
+/* ---- shared chapter rhythm ---- */
+html body.page-story .story-chapter { padding-top: clamp(88px, 11vw, 160px); }
+
+/* ---- 2. why ---- */
+html body.page-story .story > .story-why { align-items: start; }
+html body.page-story .story-prose { grid-column: 4; display: grid; gap: 18px; padding-top: 10px; }
+html body.page-story .story-quote {
+  grid-column: 3 / -1;
+  margin: clamp(48px, 6vw, 80px) 0 0;
+  padding-top: 28px;
+  border-top: 1px solid var(--ed-gold);
+}
+html body.page-story .story .story-quote p {
+  font-family: var(--ed-serif) !important;
+  font-style: italic !important;
+  font-weight: 500 !important;
+  font-size: clamp(1.75rem, 3vw, 2.6rem) !important;
+  line-height: 1.18 !important;
+  letter-spacing: -0.015em !important;
+  color: var(--ed-forest) !important;
+  max-width: 26em !important;
+  text-wrap: balance;
+}
+
+/* ---- 3. how: the sequence ---- */
+html body.page-story .story-steps {
+  --rail-x: 7px;
+  grid-column: 3 / -1;
+  position: relative;
+  list-style: none;
+  margin: clamp(48px, 6vw, 72px) 0 0;
+  padding: 0 0 0 56px;
+  counter-reset: step;
+}
+/* The rail, and the gold line that travels it. */
+html body.page-story .story-steps::before,
+html body.page-story .story-steps::after {
+  content: '';
+  position: absolute;
+  left: var(--rail-x);
+  top: 34px;
+  bottom: 34px;
+  width: 1px;
+}
+html body.page-story .story-steps::before { background: var(--ed-line); }
+html body.page-story .story-steps::after {
+  background: var(--ed-gold);
+  transform-origin: top;
+  transform: scaleY(1);
+}
+html body.page-story .story-step {
+  counter-increment: step;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.5fr);
+  column-gap: 32px;
+  padding: 26px 0;
+  border-top: 1px solid var(--ed-line);
+}
+html body.page-story .story-step:last-child { border-bottom: 1px solid var(--ed-line); }
+html body.page-story .story-step::before {
+  content: '';
+  position: absolute;
+  left: calc(-56px + var(--rail-x) - 6px);
+  top: 34px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: 1px solid var(--ed-gold);
+  background: var(--ed-gold);
+  box-shadow: 0 0 0 5px var(--ed-cream);
+  z-index: 1;
+}
+html body.page-story .story-step h3 {
+  margin: 0 !important;
+  font-family: var(--ed-serif) !important;
+  font-size: 1.55rem !important;
+  font-weight: 600 !important;
+  line-height: 1.15 !important;
+  color: var(--ed-forest) !important;
+  text-wrap: balance;
+}
+html body.page-story .story-step h3::before {
+  content: counter(step, decimal-leading-zero);
+  display: block;
+  margin-bottom: 6px;
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--ed-gold);
+  font-variant-numeric: lining-nums;
+}
+html body.page-story .story-step p { padding-top: 22px; }
+
+/* ---- 4. what never goes in: the one dark band ---- */
+html body.page-story .story-never {
+  margin: clamp(88px, 11vw, 160px) calc(50% - 50vw) 0;
+  padding: clamp(72px, 9vw, 128px) max(4vw, calc(50vw - 600px));
+  background:
+    radial-gradient(60% 120% at 100% 50%, rgba(196, 154, 108, 0.16), transparent 60%),
+    var(--ed-forest-deep);
+}
+html body.page-story .story > .story-never { align-items: start; }
+html body.page-story .story .story-never h2 {
+  color: var(--ed-gold-pale) !important;
+  font-size: clamp(1.4rem, 2vw, 1.75rem) !important;
+  font-weight: 500 !important;
+  font-style: italic;
+  padding-top: 0.6em;
+}
+html body.page-story .story-never__list {
+  grid-column: 3 / -1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+html body.page-story .story-never__list li {
+  font-family: var(--ed-serif);
+  font-size: clamp(2.6rem, 6vw, 5.25rem);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  color: var(--ed-cream);
+}
+html body.page-story .story .story-never__close {
+  grid-column: 3 / -1;
+  margin-top: clamp(28px, 3vw, 40px) !important;
+  font-size: var(--ed-lead-size) !important;
+  color: rgba(253, 251, 246, 0.78) !important;
+}
+
+/* ---- 5. close ---- */
+html body.page-story .story-close {
+  padding: clamp(88px, 11vw, 144px) 0 clamp(88px, 10vw, 128px);
+}
+html body.page-story .story-close .action-row {
+  grid-column: 4;
+  justify-content: flex-start;
+  margin: 0 !important;
+  padding-bottom: 6px;
+}
+
+/* ---- optional photos ---- */
+html body.page-story .story-photo { margin: 0; border-radius: 16px; overflow: hidden; background: var(--ed-paper); }
+html body.page-story .story-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+html body.page-story .story-photo--open { grid-column: 1 / -1; margin-top: clamp(40px, 5vw, 64px); aspect-ratio: 16 / 7; }
+html body.page-story .story-photo--why { grid-column: 1 / 4; grid-row: 2 / span 2; margin-top: clamp(40px, 5vw, 64px); aspect-ratio: 4 / 5; }
+
+/* ---- the motion: the gold line travels the steps ----
+   The one authored moment on this page. The line draws down the rail as
+   the reader moves through the process and each step's marker fills as
+   the line reaches it. Scroll-linked, so it never runs ahead of the
+   reader. Default (no support / reduced motion): rail drawn, markers on. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    html body.page-story .story-steps::after {
+      animation: ed-story-rail linear both;
+      animation-timeline: view();
+      /* 0 when the list top reaches mid-screen, 1 when its bottom does. */
+      animation-range: cover 50vh cover calc(100% - 50vh);
+    }
+    html body.page-story .story-step::before {
+      animation: ed-story-mark linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 50%;
+    }
+  }
+}
+@keyframes ed-story-rail { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes ed-story-mark {
+  0%, 92% { background-color: var(--ed-cream); transform: scale(0.85); }
+  100%    { background-color: var(--ed-gold);  transform: scale(1); }
+}
+
+/* ---- narrow screens ---- */
+@media (max-width: 900px) {
+  html body.page-story .story > section { grid-template-columns: minmax(0, 1fr); }
+  html body.page-story .story h1,
+  html body.page-story .story h2,
+  html body.page-story .story .story-lead,
+  html body.page-story .story .story-chapter__lead,
+  html body.page-story .story-prose,
+  html body.page-story .story-quote,
+  html body.page-story .story-steps,
+  html body.page-story .story-never__list,
+  html body.page-story .story .story-never__close,
+  html body.page-story .story-close .action-row,
+  html body.page-story .story-facts,
+  html body.page-story .story-photo { grid-column: 1 !important; grid-row: auto !important; }
+  html body.page-story .story .story-lead,
+  html body.page-story .story .story-chapter__lead,
+  html body.page-story .story-prose { margin-top: 18px !important; }
+  html body.page-story .story-close .action-row { margin-top: 28px !important; }
+  html body.page-story .story-facts { grid-template-columns: minmax(0, 1fr); }
+  html body.page-story .story-facts > div + div { padding-left: 0; border-left: none; border-top: 1px solid var(--ed-line); }
+  html body.page-story .story-steps { padding-left: 40px; }
+  html body.page-story .story-step::before { left: calc(-40px + var(--rail-x) - 6px); }
+  html body.page-story .story-step { grid-template-columns: minmax(0, 1fr); }
+  html body.page-story .story-step p { padding-top: 10px; }
+  html body.page-story .story-never { padding-inline: 4vw; }
+}
+
+/* ---- Our Story: alignment pass ----
+   Three vertical lines only, the same as the home sections:
+     A  grid start      — headings, the quote, hairlines
+     C  third track     — step titles, the "never" list
+     D  fourth track    — every paragraph a visitor reads
+   Steps reuse the home benefit-row grid exactly: numeral | marker on the
+   rail | title | text. */
+@media (min-width: 901px) {
+  html body.page-story .story-facts {
+    grid-column: 4;
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: clamp(40px, 5vw, 64px);
+    border-bottom: none;
+  }
+  html body.page-story .story-facts > div,
+  html body.page-story .story-facts > div + div {
+    padding: 18px 0 20px;
+    border-left: none;
+    border-bottom: 1px solid var(--ed-line);
+  }
+  html body.page-story .story-quote { grid-column: 1 / -1; }
+  html body.page-story .story .story-quote p { max-width: 22em !important; }
+
+  html body.page-story .story-steps {
+    --rail-x: 136px; /* 64px numeral track + 32px gap + half the 80px marker track */
+    grid-column: 1 / -1;
+    padding-left: 0;
+  }
+  html body.page-story .story-step {
+    grid-template-columns: 64px 80px minmax(0, 0.9fr) minmax(0, 1.5fr);
+    column-gap: 32px;
+    padding: 30px 0;
+  }
+  html body.page-story .story-step::before { left: calc(var(--rail-x) - 6.5px); top: 38px; }
+  html body.page-story .story-steps::before,
+  html body.page-story .story-steps::after { top: 38px; bottom: 38px; }
+  html body.page-story .story-step::after {
+    content: counter(step, decimal-leading-zero);
+    grid-column: 1;
+    grid-row: 1;
+    font-family: var(--ed-serif);
+    font-size: 1.15rem;
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--ed-gold);
+    font-variant-numeric: lining-nums;
+    padding-top: 4px;
+  }
+  html body.page-story .story-step h3 { grid-column: 3; grid-row: 1; }
+  html body.page-story .story-step h3::before { content: none; }
+  html body.page-story .story-step p { grid-column: 4; grid-row: 1; padding-top: 4px; }
+}
+
+/* Footer phone/email links were 17px tall: grow the hit area to 44px
+   without moving the line (padding out, negative margin back). */
+footer.site-footer a {
+  display: inline-block;
+  padding: 13px 4px !important;
+  margin: -13px -4px !important;
+}
+
+/* =====================================================================
+   CONTACT — one panel: details on the left, the message form on the right.
+   Motion is feedback only (this is a working surface): field focus 150ms,
+   send press 120ms, sending/sent status 200ms. No decorative motion.
+   ===================================================================== */
+html body.page-contact { overflow-x: clip !important; }
+html body.page-contact .page-main.contact {
+  width: min(1200px, 92vw) !important;
+  padding-top: calc(var(--header-height-mobile, 72px) + clamp(28px, 4vw, 56px)) !important;
+  padding-bottom: clamp(48px, 6vw, 88px) !important;
+}
+html body.page-contact .contact-panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: clamp(40px, 6vw, 96px);
+  padding: clamp(40px, 5.5vw, 80px) clamp(28px, 5vw, 72px);
+  border-radius: 28px;
+  overflow: hidden;
+  background: var(--ed-paper);
+  box-shadow: 0 0 0 1px var(--ed-line-soft), 0 40px 80px -52px rgba(14, 31, 22, 0.4);
+}
+
+/* ---- left: details ---- */
+html body.page-contact .contact-info {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+html body.page-contact .contact h1 {
+  margin: 0 !important;
+  font-family: var(--ed-serif) !important;
+  font-size: clamp(2.75rem, 4.7vw, 4.25rem) !important;
+  font-weight: 500 !important;
+  line-height: 1 !important;
+  letter-spacing: -0.025em !important;
+  color: var(--ed-forest) !important;
+  text-align: left !important;
+}
+html body.page-contact .contact h1::after {
+  content: '';
+  display: block;
+  width: 56px;
+  height: 1px;
+  margin-top: 22px;
+  background: var(--ed-gold);
+}
+html body.page-contact .contact p {
+  font-family: var(--ed-sans) !important;
+  font-weight: 400 !important;
+  color: var(--ed-muted) !important;
+  text-align: left !important;
+}
+html body.page-contact .contact-info__intro {
+  margin: 22px 0 0 !important;
+  max-width: 30em !important;
+  font-size: var(--ed-body-size) !important;
+  line-height: var(--ed-body-leading) !important;
+}
+html body.page-contact .contact-details {
+  list-style: none;
+  margin: clamp(32px, 4vw, 48px) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 26px 28px;
+}
+html body.page-contact .contact-details li {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  column-gap: 14px;
+  align-items: start;
+  font-family: var(--ed-sans);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ed-ink);
+}
+html body.page-contact .contact-details__icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(196, 154, 108, 0.18);
+  color: var(--ed-forest);
+}
+html body.page-contact .contact-details__icon svg { width: 19px; height: 19px; }
+html body.page-contact .contact-details__label {
+  display: block;
+  margin-bottom: 2px;
+  font-size: var(--ed-label-size);
+  font-weight: 500;
+  letter-spacing: var(--ed-label-track);
+  text-transform: uppercase;
+  color: var(--ed-muted);
+}
+html body.page-contact .contact-details a {
+  color: var(--ed-forest);
+  text-decoration: underline;
+  text-decoration-color: rgba(196, 154, 108, 0.6);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.15s ease, color 0.15s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  html body.page-contact .contact-details a:hover { text-decoration-color: var(--ed-forest); }
+}
+
+
+/* ---- right: form ---- */
+html body.page-contact .contact-formwrap {
+  position: relative;
+  z-index: 1;
+}
+html body.page-contact .contact h2 {
+  margin: 8px 0 0 !important;
+  font-family: var(--ed-serif) !important;
+  font-size: clamp(1.9rem, 2.6vw, 2.4rem) !important;
+  font-weight: 600 !important;
+  line-height: 1.1 !important;
+  color: var(--ed-forest) !important;
+  text-align: left !important;
+}
+html body.page-contact .contact-formwrap__intro {
+  margin: 10px 0 0 !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+}
+html body.page-contact .contact-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 28px;
+}
+html body.page-contact .cf-field { position: relative; min-width: 0; }
+html body.page-contact .cf-field--wide,
+html body.page-contact .cf-send,
+html body.page-contact .cf-status,
+html body.page-contact .cf-note { grid-column: 1 / -1; }
+/* Labels are kept for screen readers; the placeholder is the visible cue,
+   as in the sample, so the label must never be removed. */
+html body.page-contact .cf-label {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+html body.page-contact .cf-icon,
+html body.page-contact .cf-chevron {
+  position: absolute;
+  top: 15px;
+  width: 18px;
+  height: 18px;
+  color: var(--ed-gold);
+  pointer-events: none;
+  transition: color 0.15s ease;
+}
+html body.page-contact .cf-icon { left: 16px; }
+html body.page-contact .cf-chevron { right: 14px; color: var(--ed-forest); }
+html body.page-contact .cf-icon svg,
+html body.page-contact .cf-chevron svg { width: 100%; height: 100%; display: block; }
+html body.page-contact .cf-input {
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 48px;
+  margin: 0;
+  padding: 13px 16px 13px 44px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--ed-ink);
+  font-family: var(--ed-sans);
+  font-size: 16px; /* ≥16px keeps iOS from zooming on focus */
+  line-height: 1.4;
+  box-shadow: 0 1px 2px rgba(14, 31, 22, 0.05);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+html body.page-contact .cf-input::placeholder { color: rgba(22, 43, 32, 0.5); }
+html body.page-contact .cf-select { padding-right: 40px; cursor: pointer; color: var(--ed-ink); }
+html body.page-contact .cf-select:invalid,
+html body.page-contact .cf-select:has(option[value=""]:checked) { color: rgba(22, 43, 32, 0.5); }
+html body.page-contact .cf-textarea { min-height: 148px; resize: vertical; }
+html body.page-contact .cf-input:focus {
+  outline: none;
+  border-color: var(--ed-gold);
+  box-shadow: 0 0 0 3px rgba(196, 154, 108, 0.22);
+}
+html body.page-contact .cf-field:focus-within .cf-icon { color: var(--ed-forest); }
+html body.page-contact .cf-input[aria-invalid="true"] {
+  border-color: #B4532A;
+  box-shadow: 0 0 0 3px rgba(180, 83, 42, 0.14);
+}
+html body.page-contact .cf-field:has([aria-invalid="true"]) .cf-icon { color: #B4532A; }
+
+html body.page-contact .cf-send {
+  -webkit-appearance: none;
+  appearance: none;
+  min-height: 52px;
+  margin-top: 4px;
+  border: none;
+  border-radius: 12px;
+  background: var(--ed-forest-deep);
+  color: var(--ed-cream);
+  font-family: var(--ed-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.12s var(--ed-ease-out), opacity 0.2s ease;
+}
+html body.page-contact .cf-send:active { transform: scale(0.98); }
+html body.page-contact .cf-send:disabled { opacity: 0.7; cursor: progress; }
+html body.page-contact .cf-send:focus-visible { outline: 2px solid var(--ed-gold); outline-offset: 3px; }
+@media (hover: hover) and (pointer: fine) {
+  html body.page-contact .cf-send:not(:disabled):hover { background: var(--ed-gold-light); color: var(--ed-forest-ink); }
+}
+html body.page-contact .cf-status {
+  margin: 0 !important;
+  min-height: 1.4em;
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+}
+html body.page-contact .cf-status:empty { min-height: 0; }
+html body.page-contact .cf-status[data-state="error"] { color: #9A4322 !important; }
+html body.page-contact .cf-status[data-state="sent"] { color: var(--ed-forest) !important; }
+html body.page-contact .cf-status:not(:empty) { animation: ed-cf-status 0.2s var(--ed-ease-out); }
+@keyframes ed-cf-status { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: none; } }
+html body.page-contact .cf-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 !important;
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+}
+html body.page-contact .cf-note svg { flex: 0 0 16px; width: 16px; height: 16px; color: var(--ed-gold); }
+html body.page-contact .cf-note a { color: var(--ed-forest); text-underline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html body.page-contact .cf-status:not(:empty) { animation: none; }
+}
+
+/* ---- narrow screens ---- */
+@media (max-width: 900px) {
+  html body.page-contact .contact-panel {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 32px 20px 0;
+    border-radius: 22px;
+  }
+  html body.page-contact .contact-details { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  html body.page-contact .contact-formwrap { padding: 40px 0 0; margin-top: 36px; border-top: 1px solid var(--ed-line); }
+}
+@media (max-width: 560px) {
+  html body.page-contact .contact-form { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* =====================================================================
+   COMBO — phone fix: the dark hero filled the whole first screen, so a
+   shopper saw no combo without scrolling. On phones the hero becomes a
+   compact intro and the first combo starts inside the first screen.
+   ===================================================================== */
+@media (max-width: 720px) {
+  html body.page-combo .page-main { padding-top: calc(var(--header-height-mobile, 124px) - 28px) !important; }
+  html body.page-combo .page-main .page-hero {
+    padding: 22px 20px !important;
+    margin-bottom: 14px !important;
+    border-radius: 20px !important;
+    text-align: left !important;
+    min-height: 0 !important;
+  }
+  html body.page-combo .page-main .page-hero > p.hero-eyebrow,
+  html body.page-combo .page-main .page-hero .hero-pill-row { display: none !important; }
+  html body.page-combo .page-main .page-hero h1 {
+    font-size: 1.85rem !important;
+    line-height: 1.06 !important;
+    text-align: left !important;
+  }
+  html body.page-combo .page-main .page-hero > p:not(.hero-eyebrow) {
+    margin: 10px 0 0 !important;
+    font-size: 15px !important;
+    line-height: 1.55 !important;
+    text-align: left !important;
+  }
+  html body.page-combo .page-main .section-block:first-of-type { padding-top: 0 !important; }
+  html body.page-combo .section-head { margin-bottom: 14px !important; }
+  html body.page-combo .section-head .section-copy { margin-top: 6px !important; font-size: 15px !important; }
+}
+
+/* Strikethrough "was" price: #8a7a61 measured 4.17:1 on the white card. */
+html body.page-combo .combo-price .was { color: var(--ed-muted) !important; }
+
+/* Cart line: "You save ₹58" under the discounted total. */
+.order-price .line-save {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--ed-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ed-forest);
+}
+
+/* Pack-size "Save ₹…" note: a legacy inline rule painted a grey box behind
+   it (no padding, so a tight rectangle) and greyed the text whenever its
+   size was selected. One look in both states; #6E4700 stays above 4.5:1
+   on the white button and on the selected button's tan gradient. */
+html body.page-our-oils #oils #oilsGrid .size-option .save-label,
+html body.page-our-oils #oils #oilsGrid .size-option.active .save-label {
+  background: none !important;
+  border: none !important;
+  color: #6E4700 !important;
+}

@@ -5,7 +5,7 @@
   • New SW version → old cache is automatically wiped on activation
   ───────────────────────────────────────────────────────────────────────── */
 
-const CACHE_NAME = 'arumee-v27';
+const CACHE_NAME = 'arumee-v44';
 
 // Allow the page to force-activate a waiting SW
 self.addEventListener('message', event => {
@@ -25,6 +25,11 @@ const PRECACHE = [
   '/arumee_assets/cart.css',
   '/arumee_assets/main.css',
   '/arumee_assets/premium-subpages.css',
+  '/arumee_assets/editorial.css',
+  '/arumee_assets/motion.js',
+  '/arumee_assets/vendor/gsap.min.js',
+  '/arumee_assets/vendor/ScrollTrigger.min.js',
+  '/arumee_assets/vendor/lenis.min.js',
   '/arumee_assets/chat-widget.js?v=9',
   '/arumee_assets/subpage-cart.js',
   '/arumee_assets/logo.webp',

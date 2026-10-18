@@ -163,8 +163,17 @@
     dom.cartFooter.style.display = 'flex';
   }
 
+  // The closed panel is only faded and slid off-screen, so without this it
+  // stays in the accessibility tree as an open aria-modal dialog and its
+  // buttons stay in the tab order.
+  function setCartReachable(open) {
+    dom.cartDropdown.inert = !open;
+    dom.cartDropdown.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+
   function openCart() {
     isCartOpen = true;
+    setCartReachable(true);
     dom.cartDropdown.classList.add('open');
     if (dom.cartBackdrop) {
       dom.cartBackdrop.classList.add('visible');
@@ -178,6 +187,7 @@
 
   function closeCart() {
     isCartOpen = false;
+    setCartReachable(false);
     dom.cartDropdown.classList.remove('open');
     if (dom.cartBackdrop) {
       dom.cartBackdrop.classList.remove('visible');
@@ -370,5 +380,6 @@
     }
   });
 
+  setCartReachable(false);
   renderCart();
 })();

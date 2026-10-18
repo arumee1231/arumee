@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -17,13 +17,14 @@
   </script>
 
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yygg_vb.woff2" crossorigin />
   <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtK.woff2" crossorigin />
-  <link href="cormorant-fonts.css?v=2" rel="stylesheet"/>
+  <link href="cormorant-fonts.css?v=5" rel="stylesheet"/>
   <link rel="stylesheet" href="arumee_assets/cart.css?v=2" />
-  <link rel="stylesheet" href="arumee_assets/premium-subpages.css?v=3" />
+  <link rel="stylesheet" href="arumee_assets/premium-subpages.css?v=4" />
+  <link rel="stylesheet" href="arumee_assets/editorial.css?v=43" />
 </head>
-<body class="subpage" data-active-nav="contact">
+<body class="subpage page-contact" data-active-nav="contact">
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <nav class="sticky-nav" id="stickyNav">
@@ -41,11 +42,11 @@
           <a class="desktop-nav-link" data-nav="contact" href="contact.html">Contact</a>
         </div>
         <button class="nav-btn primary" id="navCartBtn" onclick="toggleCart()" style="display:none;">
-          <span>ðŸ›’</span>
+          <span>🛒</span>
           <span>View Cart</span>
           <span class="nav-cart-count" id="navCartCount">0</span>
         </button>
-        <button class="mobile-nav-cart" id="mobileNavCart" onclick="toggleCart()" aria-label="View cart">ðŸ›’<span class="mnc-badge" id="mncBadge">0</span></button>
+        <button class="mobile-nav-cart" id="mobileNavCart" onclick="toggleCart()" aria-label="View cart">🛒<span class="mnc-badge" id="mncBadge">0</span></button>
         <button class="hamburger-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
       </div>
     </div>
@@ -66,26 +67,26 @@
       <nav class="mmo-nav">
         <a class="mmo-link" href="index.html" onclick="sessionStorage.setItem('arumee_scrolltop','1');closeMobileMenu()"><span class="mmo-link-icon">ðŸ </span>Home</a>
         <a class="mmo-link" href="index.html#oilsGrid" onclick="closeMobileMenu()"><span class="mmo-link-icon">ðŸ›</span>Shop</a>
-        <a class="mmo-link" href="benefits.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">ðŸŒ¿</span>Benefits</a>
-        <a class="mmo-link" href="index.html#faq" onclick="closeMobileMenu()"><span class="mmo-link-icon">ðŸ’¬</span>FAQ</a>
-        <a class="mmo-link" href="about.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">ðŸ“–</span>Our Story</a>
-        <a class="mmo-link" href="contact.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">âœ‰</span>Contact</a>
+        <a class="mmo-link" href="benefits.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">🌿</span>Benefits</a>
+        <a class="mmo-link" href="index.html#faq" onclick="closeMobileMenu()"><span class="mmo-link-icon">💬</span>FAQ</a>
+        <a class="mmo-link" href="about.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">📖</span>Our Story</a>
+        <a class="mmo-link" href="contact.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">✉</span>Contact</a>
       </nav>
       <div class="mmo-footer">
-        <a class="mmo-cta-btn" href="index.html#order" onclick="closeMobileMenu()">Order Now</a>
-        <span class="mmo-footer-sub">Namakkal &middot; Est. 1987</span>
+        <a class="mmo-cta-btn" href="index.html#oilsGrid" onclick="closeMobileMenu()">Order Now</a>
+        <span class="mmo-footer-sub">Namakkal, Tamil Nadu</span>
       </div>
     </div>
   </div>
 
   <div id="cartTab" class="cart-tab" role="button" aria-label="Shopping cart" aria-expanded="false" tabindex="0">
-    <span class="cart-icon" aria-hidden="true">ðŸ›’</span>
+    <span class="cart-icon" aria-hidden="true">🛒</span>
     <span class="cart-count" id="cartCount" aria-live="polite">0</span>
   </div>
 
   <div id="cartDropdown" class="cart-dropdown" role="dialog" aria-modal="true" aria-labelledby="cartHeader" tabindex="-1">
     <div class="cart-header">
-      <h2 id="cartHeader"><span>ðŸ›’</span> Your Cart</h2>
+      <h2 id="cartHeader"><span>🛒</span> Your Cart</h2>
       <button class="cart-close" type="button" aria-label="Close cart" onclick="toggleCart()">x</button>
     </div>
     <div class="cart-content" id="cartContent">
@@ -104,72 +105,89 @@
   </div>
   <div id="cartBackdrop" class="cart-backdrop"></div>
 
-  <main class="page-main" id="main-content">
-    <section class="page-hero page-hero-contact reveal" aria-labelledby="contact-hero-title">
-      <p class="hero-eyebrow">Contact Arumee</p>
-      <h1 id="contact-hero-title">We're here to help â€” genuinely.</h1>
-      <p>Whether you're unsure which oil to pick, have a question about your order or delivery, or just want to say hello â€” we're happy to hear from you. Reach us on WhatsApp for the fastest response. We're a small family mill, and we personally handle every message.</p>
-      <div class="hero-pill-row">
-        <span class="hero-pill">WhatsApp-first support</span>
-        <span class="hero-pill">Order clarifications in minutes</span>
-        <span class="hero-pill">Namakkal, Tamil Nadu</span>
-      </div>
-    </section>
+  <main class="page-main contact" id="main-content">
+    <section class="contact-panel" aria-labelledby="contact-title">
 
-    <section class="section-block reveal contact-layout contact-section" aria-labelledby="contact-details-title">
-      <article class="page-card contact-card contact-card-info">
-        <h2 id="contact-details-title">Get in touch</h2>
-        <p class="contact-intro">The quickest way to reach us is on WhatsApp. We're a small family mill â€” when you message us, you're talking to the people who actually press your oil. For order confirmations, please use WhatsApp so we can share our UPI QR code and get your order on its way.</p>
-        <ul class="contact-link-list">
-          <li><a class="contact-link-pill" href="https://wa.me/918925295844" target="_blank" rel="noopener noreferrer">WhatsApp: +91 89252 95844</a></li>
-          <li><a class="contact-link-pill" href="tel:9751425598">Call: +91 97514 25598</a></li>
-          <li><a class="contact-link-pill" href="tel:9443342098">Call: +91 94433 42098</a></li>
-          <li><a class="contact-link-pill" href="mailto:info@arumee.co.in">Email: info@arumee.co.in</a></li>
-          <li><a class="contact-link-pill" href="https://maps.app.goo.gl/1WXZprZKP8zBf8MQ8" target="_blank" rel="noopener noreferrer">Open our Namakkal shop location</a></li>
+      <div class="contact-info">
+        <h1 id="contact-title">Contact us</h1>
+        <p class="contact-info__intro">Unsure which oil to pick, a question about your order, or just want to say hello? We&rsquo;re a small family mill, and we personally handle every message.</p>
+
+        <ul class="contact-details">
+          <li>
+            <span class="contact-details__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></svg></span>
+            <span><span class="contact-details__label">Location</span>
+              Mani Flour &amp; Oil Mill, Namakkal<br/>
+              <a href="https://maps.app.goo.gl/1WXZprZKP8zBf8MQ8" target="_blank" rel="noopener noreferrer">Open in Maps</a></span>
+          </li>
+          <li>
+            <span class="contact-details__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span>
+            <span><span class="contact-details__label">Hours</span>
+              Mon – Sat<br/>9:00 AM – 6:00 PM<br/>Sunday closed</span>
+          </li>
+          <li>
+            <span class="contact-details__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 19.5l1.2-3.6A7.5 7.5 0 1 1 8.6 18.6z"/><path d="M9.2 9.6c.2 1.9 1.4 3.6 3.6 4.6l1.1-1 1.6.7"/></svg></span>
+            <span><span class="contact-details__label">WhatsApp · fastest</span>
+              <a href="https://wa.me/918925295844" target="_blank" rel="noopener noreferrer">+91 89252 95844</a></span>
+          </li>
+          <li>
+            <span class="contact-details__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4.5h3l1.5 4-2 1.3a10 10 0 0 0 6.7 6.7l1.3-2 4 1.5v3a1.5 1.5 0 0 1-1.6 1.5A16 16 0 0 1 3.5 6.1 1.5 1.5 0 0 1 5 4.5z"/></svg></span>
+            <span><span class="contact-details__label">Call</span>
+              <a href="tel:+919751425598">+91 97514 25598</a><br/>
+              <a href="tel:+919443342098">+91 94433 42098</a></span>
+          </li>
+          <li>
+            <span class="contact-details__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="M4 7l8 6 8-6"/></svg></span>
+            <span><span class="contact-details__label">Email</span>
+              <a href="mailto:info@arumee.co.in">info@arumee.co.in</a></span>
+          </li>
         </ul>
 
-        <div class="metric-row contact-hours">
-          <div class="metric">
-            <strong>Mon-Sat</strong>
-            <span>9:00 AM to 6:00 PM</span>
-          </div>
-          <div class="metric">
-            <strong>Sunday</strong>
-            <span>Closed</span>
-          </div>
-        </div>
-      </article>
+      </div>
 
-      <article class="page-card contact-card contact-card-form">
-        <h2>Send a message</h2>
-        <p class="contact-intro">Fill in the form below and we'll get back to you as soon as we can. For urgent queries or order confirmations, WhatsApp is always the fastest route.</p>
+      <div class="contact-formwrap">
+        <h2 id="form-title">Send us a message</h2>
+        <p class="contact-formwrap__intro">Fill in the form and we&rsquo;ll get back to you as soon as we can.</p>
 
-        <form class="contact-form" id="contactForm" novalidate>
-          <div>
-            <label class="form-label" for="cf-name">Name</label>
-            <input class="form-field" id="cf-name" name="name" type="text" placeholder="Your full name" required />
+        <form class="contact-form" id="contactForm" novalidate aria-labelledby="form-title">
+          <div class="cf-field">
+            <label class="cf-label" for="cf-name">Your name</label>
+            <span class="cf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 19.5a7 7 0 0 1 14 0"/></svg></span>
+            <input class="cf-input" id="cf-name" name="name" type="text" placeholder="Your name" autocomplete="name" required aria-describedby="cf-status"/>
           </div>
-
-          <div>
-            <label class="form-label" for="cf-email">Email</label>
-            <input class="form-field" id="cf-email" name="email" type="email" placeholder="you@example.com" required />
+          <div class="cf-field">
+            <label class="cf-label" for="cf-email">Your email</label>
+            <span class="cf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="M4 7l8 6 8-6"/></svg></span>
+            <input class="cf-input" id="cf-email" name="email" type="email" placeholder="Your email" autocomplete="email" required aria-describedby="cf-status"/>
           </div>
-
-          <div>
-            <label class="form-label" for="cf-message">Message</label>
-            <textarea class="form-field" id="cf-message" name="message" rows="5" placeholder="Tell us what you need..." required></textarea>
+          <div class="cf-field">
+            <label class="cf-label" for="cf-subject">Subject</label>
+            <span class="cf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 19.5l1.2-3.6A7.5 7.5 0 1 1 8.6 18.6z"/><path d="M9.2 9.6c.2 1.9 1.4 3.6 3.6 4.6l1.1-1 1.6.7"/></svg></span>
+            <select class="cf-input cf-select" id="cf-subject" name="subject">
+              <option value="">Select a subject</option>
+              <option>Choosing an oil</option>
+              <option>An order or delivery</option>
+              <option>Combo or bulk order</option>
+              <option>Something else</option>
+            </select>
+            <span class="cf-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10l5 5 5-5"/></svg></span>
           </div>
-
-          <div class="action-row contact-action-row">
-            <button class="action-btn primary" type="submit">Send Message</button>
+          <div class="cf-field">
+            <label class="cf-label" for="cf-phone">Phone (optional)</label>
+            <span class="cf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4.5h3l1.5 4-2 1.3a10 10 0 0 0 6.7 6.7l1.3-2 4 1.5v3a1.5 1.5 0 0 1-1.6 1.5A16 16 0 0 1 3.5 6.1 1.5 1.5 0 0 1 5 4.5z"/></svg></span>
+            <input class="cf-input" id="cf-phone" name="phone" type="tel" placeholder="Phone (optional)" autocomplete="tel" inputmode="tel"/>
           </div>
-
-          <p class="form-help" id="cf-status" role="status" aria-live="polite"></p>
-          <p class="form-help">If the form is unavailable, please email <a href="mailto:info@arumee.co.in">info@arumee.co.in</a>.</p>
+          <div class="cf-field cf-field--wide">
+            <label class="cf-label" for="cf-message">Your message</label>
+            <span class="cf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5l4 4L8 20H4v-4z"/><path d="M12.5 7.5l4 4"/></svg></span>
+            <textarea class="cf-input cf-textarea" id="cf-message" name="message" rows="5" placeholder="Your message" required aria-describedby="cf-status"></textarea>
+          </div>
+          <button class="cf-send" type="submit"><span class="cf-send__label">Send message</span></button>
+          <p class="cf-status" id="cf-status" role="status" aria-live="polite"></p>
+          <p class="cf-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 19.5l1.2-3.6A7.5 7.5 0 1 1 8.6 18.6z"/><path d="M9.2 9.6c.2 1.9 1.4 3.6 3.6 4.6l1.1-1 1.6.7"/></svg><span>For order confirmations and UPI payment, <a href="https://wa.me/918925295844" target="_blank" rel="noopener noreferrer">message us on WhatsApp</a>.</span></p>
         </form>
-      </article>
-    </section>
+      </div>
 
+    </section>
   </main>
 
   <footer class="site-footer">
@@ -178,8 +196,12 @@
 
   <div class="page-toast" id="pageToast" role="status" aria-live="polite"></div>
 
-  <script src="arumee_assets/subpage-cart.js?v=2"></script>
+  <script src="arumee_assets/subpage-cart.js?v=3"></script>
   <script src="arumee_assets/premium-subpages.js"></script>
+  <script src="arumee_assets/vendor/gsap.min.js" defer></script>
+  <script src="arumee_assets/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="arumee_assets/vendor/lenis.min.js" defer></script>
+  <script src="arumee_assets/motion.js?v=9" defer></script>
   <script>
     (function () {
       var form = document.getElementById('contactForm');
@@ -201,26 +223,52 @@
       iframe.style.display = 'none';
       document.body.appendChild(iframe);
 
+      var sendBtn = form.querySelector('.cf-send');
+      var sendLabel = form.querySelector('.cf-send__label');
+      // Clear a field's error as soon as the visitor fixes it.
+      ['cf-name', 'cf-email', 'cf-message'].forEach(function (id) {
+        document.getElementById(id).addEventListener('input', function () { this.removeAttribute('aria-invalid'); });
+      });
       form.addEventListener('submit', function (event) {
         event.preventDefault();
-
-        var name = document.getElementById('cf-name').value.trim();
-        var email = document.getElementById('cf-email').value.trim();
-        var message = document.getElementById('cf-message').value.trim();
-
-        if (!name || !email || !message) {
-          status.textContent = 'Please complete all fields before sending.';
+        var nameEl = document.getElementById('cf-name');
+        var emailEl = document.getElementById('cf-email');
+        var messageEl = document.getElementById('cf-message');
+        var name = nameEl.value.trim();
+        var email = emailEl.value.trim();
+        var body = messageEl.value.trim();
+        var invalid = [];
+        if (!name) invalid.push(nameEl);
+        if (!email || !emailEl.checkValidity()) invalid.push(emailEl);
+        if (!body) invalid.push(messageEl);
+        [nameEl, emailEl, messageEl].forEach(function (el) {
+          if (invalid.indexOf(el) > -1) el.setAttribute('aria-invalid', 'true'); else el.removeAttribute('aria-invalid');
+        });
+        if (invalid.length) {
+          status.dataset.state = 'error';
+          status.textContent = invalid.length === 1 && invalid[0] === emailEl && email
+            ? 'That email address doesn\u2019t look right. Please check it.'
+            : 'Please fill in your name, email and message.';
+          invalid[0].focus();
           return;
         }
-
-        status.textContent = 'Sending your message...';
-
+        // The Google Form only has name / email / message: fold the
+        // subject and phone into the top of the message.
+        var subject = document.getElementById('cf-subject').value;
+        var phone = document.getElementById('cf-phone').value.trim();
+        var extra = [];
+        if (subject) extra.push('Subject: ' + subject);
+        if (phone) extra.push('Phone: ' + phone);
+        var message = (extra.length ? extra.join('\n') + '\n\n' : '') + body;
+        status.dataset.state = 'sending';
+        status.textContent = 'Sending your message\u2026';
+        sendBtn.disabled = true;
+        sendLabel.textContent = 'Sending\u2026';
         var postForm = document.createElement('form');
         postForm.method = 'POST';
         postForm.action = formActionUrl;
         postForm.target = iframeName;
         postForm.style.display = 'none';
-
         [{ key: 'name', value: name }, { key: 'email', value: email }, { key: 'message', value: message }].forEach(function (entry) {
           var input = document.createElement('input');
           input.type = 'hidden';
@@ -228,15 +276,15 @@
           input.value = entry.value;
           postForm.appendChild(input);
         });
-
         document.body.appendChild(postForm);
         postForm.submit();
-
         setTimeout(function () {
-          status.textContent = 'Thanks. Your message was sent successfully.';
+          status.dataset.state = 'sent';
+          status.textContent = 'Thank you \u2014 your message is with us. We\u2019ll reply soon.';
+          sendBtn.disabled = false;
+          sendLabel.textContent = 'Send message';
           form.reset();
         }, 1100);
-
         setTimeout(function () {
           if (postForm.parentNode) {
             postForm.parentNode.removeChild(postForm);
@@ -245,17 +293,12 @@
       });
     })();
   </script>
-  <script src="arumee_assets/chat-widget.js?v=9"></script>
+  <!-- chat-widget: loaded on first interaction or when idle, like the home page -->
+  <script>(function(){ var loaded=false; function loadChat(){ if(loaded)return; loaded=true; var s=document.createElement('script'); s.src='arumee_assets/chat-widget.js?v=9'; document.body.appendChild(s); } ['scroll','click','touchstart','keydown'].forEach(function(e){ window.addEventListener(e,loadChat,{once:true,passive:true}); }); if('requestIdleCallback' in window){ requestIdleCallback(loadChat,{timeout:8000}); } else { setTimeout(loadChat,8000); } })();</script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/service-worker.js').then(function(reg) {
         if (reg.waiting) reg.waiting.postMessage({type:'SKIP_WAITING'});
-        reg.addEventListener('updatefound', function() {
-          var nw = reg.installing;
-          if (nw) nw.addEventListener('statechange', function() {
-            if (nw.state === 'activated') location.reload();
-          });
-        });
       });
     }
   </script>
