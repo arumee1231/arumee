@@ -3062,3 +3062,23 @@ html body.page-our-oils #oils #oilsGrid .size-option.active .save-label {
   border: none !important;
   color: #6E4700 !important;
 }
+
+/* =====================================================================
+   OVERLAYS ABOVE THE NAV
+   The sticky nav sits at z-index 10010. The chat widget (#waWidget,
+   10005) and the cart panel (10000) are below it, so the nav covered the
+   chat's header and close button (full-screen on phones) and the cart's
+   title and close button. While either is open, lift it above the nav;
+   the page toast (10020) still shows on top. When closed they drop back,
+   so the nav stays clickable.
+   ===================================================================== */
+/* Drop back under the nav only after the 0.38s close slide has finished. */
+#waWidget { transition: z-index 0s linear 0.4s; }
+#waWidget:has(#waChatPanel.wa-open),
+body.wa-chat-open #waWidget,
+body.wa-full-page #waWidget { z-index: 10015 !important; transition-delay: 0s; }
+#cartDropdown.open { z-index: 10015 !important; }
+#cartBackdrop.visible { z-index: 10012 !important; }
+/* Chat close (×) is drawn at 27px; give it a ~43px hit area. */
+#waChatPanel [aria-label="Close chat"] { position: relative; }
+#waChatPanel [aria-label="Close chat"]::after { content: ''; position: absolute; inset: -8px; }
