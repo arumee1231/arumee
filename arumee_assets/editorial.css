@@ -3082,3 +3082,39 @@ body.wa-full-page #waWidget { z-index: 10015 !important; transition-delay: 0s; }
 /* Chat close (×) is drawn at 27px; give it a ~43px hit area. */
 #waChatPanel [aria-label="Close chat"] { position: relative; }
 #waChatPanel [aria-label="Close chat"]::after { content: ''; position: absolute; inset: -8px; }
+
+/* =====================================================================
+   HOME — HERO CURTAIN (first visit per session)
+   Vertical columns lift away left to right to unveil the hero. Two warm
+   layers per column — pale gold leads, deeper gold follows — so the
+   lifting edge reads as a stepped two-tone line. No black.
+   html.ed-curtain (set in <head> before first paint) shows a flat pale
+   cover so the hero never flashes; motion.js swaps in the columns and
+   animates them. Reduced motion / repeat visits never get the class.
+   ===================================================================== */
+html.ed-curtain body.page-our-oils header.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  background: var(--ed-gold-pale);
+}
+body.page-our-oils .ed-curtain-cols {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  pointer-events: none;
+}
+body.page-our-oils .ed-curtain-cols > div {
+  position: relative;
+  flex: 1 1 0;
+  margin-right: -1px; /* no hairline gaps between columns */
+}
+body.page-our-oils .ed-curtain-cols span {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+body.page-our-oils .ed-curtain-cols .back  { background: var(--ed-gold); }
+body.page-our-oils .ed-curtain-cols .front { background: var(--ed-gold-pale); }

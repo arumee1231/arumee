@@ -18,6 +18,7 @@
   }
 
   if (reduce || !window.gsap) {
+    root.classList.remove('ed-curtain');
     finish();
     return;
   }
@@ -156,6 +157,53 @@
      4. HOME — hero entrance + bottle parallax
      ------------------------------------------------------------------ */
   if (isHome) {
+    /* Hero curtain (first visit per session; see editorial.css). Columns
+       lift left to right: pale gold leads, deeper gold follows 160ms
+       behind, uncovering the hero. On-screen movement, so a strong
+       ease-in-out; WAAPI keeps it off the main thread. Returns how long
+       to hold the hero entrance so copy rises as the columns clear. */
+    var curtainLead = (function () {
+      var hero = document.querySelector('header.hero');
+      if (!root.classList.contains('ed-curtain') || !hero || !Element.prototype.animate) {
+        root.classList.remove('ed-curtain');
+        return 0;
+      }
+      var count = window.innerWidth >= 900 ? 5 : window.innerWidth >= 600 ? 4 : 3;
+      var wrap = document.createElement('div');
+      wrap.className = 'ed-curtain-cols';
+      wrap.setAttribute('aria-hidden', 'true');
+      var layers = [];
+      for (var i = 0; i < count; i++) {
+        var col = document.createElement('div');
+        var back = document.createElement('span');
+        var front = document.createElement('span');
+        back.className = 'back';
+        front.className = 'front';
+        col.appendChild(back);
+        col.appendChild(front);
+        wrap.appendChild(col);
+        layers.push([front, back]);
+      }
+      hero.appendChild(wrap);
+      root.classList.remove('ed-curtain'); // flat cover off, columns now cover identically
+
+      var HOLD = 120, DUR = 760, STEP = 70, TRAIL = 160;
+      var EASE_IO = 'cubic-bezier(0.77, 0, 0.175, 1)';
+      var last = null;
+      layers.forEach(function (pair, i) {
+        pair.forEach(function (el, layer) {
+          last = el.animate(
+            [{ transform: 'translateY(0)' }, { transform: 'translateY(-101%)' }],
+            { duration: DUR, delay: HOLD + i * STEP + layer * TRAIL, easing: EASE_IO, fill: 'forwards' }
+          );
+        });
+      });
+      var done = function () { if (wrap.parentNode) wrap.parentNode.removeChild(wrap); };
+      if (last) last.onfinish = done;
+      setTimeout(done, HOLD + (count - 1) * STEP + TRAIL + DUR + 400); // safety
+      return (HOLD + DUR * 0.55) / 1000;
+    })();
+
     var copy = document.querySelector('.hero-copy');
     var bottles = document.querySelector('.hero-bottles');
     var bottleImgs = bottles ? bottles.querySelectorAll('.hero-bottle') : [];
@@ -163,9 +211,9 @@
     if (copy) {
       var items = Array.prototype.slice.call(copy.children);
       var tl = gsap.timeline({ defaults: { ease: EASE }, onComplete: finish });
-      tl.fromTo(items, { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 1.1, stagger: 0.09 }, 0.1);
+      tl.fromTo(items, { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 1.1, stagger: 0.09 }, 0.1 + curtainLead);
       if (bottleImgs.length) {
-        tl.fromTo(bottleImgs, { opacity: 0, y: 40, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 1.4, stagger: 0.1, clearProps: 'scale' }, 0.25);
+        tl.fromTo(bottleImgs, { opacity: 0, y: 40, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 1.4, stagger: 0.1, clearProps: 'scale' }, 0.25 + curtainLead);
       }
       // Set final inline opacity so the CSS hook never hides things again.
       tl.set(items, { opacity: 1 });

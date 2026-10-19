@@ -127,6 +127,13 @@ lines on desktop (spans are `nowrap` ≥1100px); section title
 
 - Lenis smooth scrolling runs only where `(hover: hover) and (pointer: fine)`.
   Touch devices keep native scrolling. Anchor handling stays with the app.
+- Hero curtain (first home visit per session, landing at the top, not
+  reduced motion): 5 / 4 / 3 columns (desktop / tablet / phone) lift
+  left to right, pale gold (`--ed-gold-pale`) leading and gold
+  (`--ed-gold`) 160ms behind, 760ms each, 70ms stagger,
+  `cubic-bezier(0.77, 0, 0.175, 1)`. A flat pale cover is set in <head>
+  before first paint so the hero never flashes; it self-removes at 2.6s
+  if motion.js never runs. The hero entrance below waits ~0.54s for it.
 - Hero entrance: copy children stagger 0.09s, 26px rise, 1.1s `power3.out`;
   bottles rise 40px and settle from 0.94 scale.
 - Scroll reveals use IntersectionObserver to fire a single GSAP tween per
