@@ -159,7 +159,11 @@
     if (!id || userMoved) return;
     var el = document.getElementById(id);
     if (!el) return;
-    if (lenis) lenis.scrollTo(el, { immediate: true, force: true });
+    // Lenis ignores scroll-padding-top and scroll-margin-top; pass their
+    // sum so it lands exactly where a native jump would.
+    var pad = (parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0) +
+      (parseFloat(getComputedStyle(el).scrollMarginTop) || 0);
+    if (lenis) lenis.scrollTo(el, { immediate: true, force: true, offset: -pad });
     else el.scrollIntoView({ behavior: 'instant', block: 'start' });
     setTimeout(revealInView, 50);
   }
@@ -316,7 +320,9 @@
     // The oils showcase animates its slides with scroll timelines
     // (editorial.css); reveal the stage as one piece so GSAP never writes
     // transforms onto the slides themselves.
-    reveal('#oils .oils-stage', { y: 36, duration: 1.1 });
+    // Fade only: a translate here would offset the box that Shop links
+    // scroll to, and the stage would drift under the nav as it settled.
+    reveal('#oils .oils-stage', { y: 0, duration: 0.9 });
     reveal('.combo-promo-banner .container > *', { y: 18, stagger: 0.1 });
     reveal('#benefits > .container > h2, #benefits > .container > p.lead', { y: 24, stagger: 0.12 });
     // #benefits has its own scroll-linked story (editorial.css); no per-row reveal.
@@ -383,10 +389,21 @@
       settle.watching = true;
       var onScroll = function () {
         if (userMoved) return;
-        if (Math.abs(target.getBoundingClientRect().top) > 150) alignHash();
+        // Re-align on any real miss (fonts/images above can shift the
+        // target 50–90px), measured against the target's scroll margin.
+        var margin = (parseFloat(getComputedStyle(target).scrollMarginTop) || 0) +
+          (parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0);
+        if (Math.abs(target.getBoundingClientRect().top - margin) > 6) alignHash();
       };
       window.addEventListener('scroll', onScroll, { passive: true });
-      setTimeout(function () { window.removeEventListener('scroll', onScroll); }, 2500);
+      // Content above can grow with no scroll event (images, fonts), so
+      // also re-check whenever the page's layout height changes.
+      var ro = window.ResizeObserver ? new ResizeObserver(onScroll) : null;
+      if (ro) ro.observe(document.body);
+      setTimeout(function () {
+        window.removeEventListener('scroll', onScroll);
+        if (ro) ro.disconnect();
+      }, 2500);
     }
   }
   if (document.readyState === 'complete') setTimeout(settle, 0);

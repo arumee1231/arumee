@@ -3154,3 +3154,13 @@ body.page-our-oils .ed-curtain-cols span {
 }
 body.page-our-oils .ed-curtain-cols .back  { background: var(--ed-gold); }
 body.page-our-oils .ed-curtain-cols .front { background: var(--ed-gold-pale); }
+
+/* Shop links (#oilsGrid) land with the whole showcase card in view: the
+   stage starts 72px down, just under the 65px nav, and on a phone its
+   height (100svh − 88px) then ends inside the screen. At ≤768px main.css
+   adds scroll-padding-top: 92px to the page, which browsers add to an
+   anchor's own margin, so the margin there is -20px (total 72px). */
+html body.page-our-oils #oilsGrid { scroll-margin-top: 72px !important; }
+@media (max-width: 768px) {
+  html body.page-our-oils #oilsGrid { scroll-margin-top: -20px !important; }
+}
