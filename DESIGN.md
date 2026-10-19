@@ -91,11 +91,16 @@ lines on desktop (spans are `nowrap` ≥1100px); section title
   `body` must stay `overflow-x: clip` (not hidden) or every scroll timeline
   on the page freezes.
 - Our Story (about.html): a narrative in five beats on the shared grid —
-  opening statement + facts row (mill, method, licence) → why (prose +
+  opening statement + facts ledger (full width under the heading: the
+  method in the wide cell from line A spanning two rows, mill and licence
+  stacked on line D) → why (prose +
   pull quote on a 1px gold rule) → from seed to bottle (a real sequence,
   so numbered; a gold line draws down the rail as you read, markers fill)
   → what never goes in (the page's one dark band, large serif lines) →
-  invitation. No cards, no kickers. Photo slots (`.story-photo--open`,
+  invitation. No cards, no kickers. Motion: the opening settles in on
+  load (hidden pre-paint via html.ed-motion, 2.5s fallback), the facts
+  ledger and the quote's gold rule draw left to right (clip-path), each
+  chapter and step rises as it is reached. Photo slots (`.story-photo--open`,
   `.story-photo--why`) are optional and documented in the markup.
 - Contact (contact.html): one paper panel. Left: "Contact us" with a 56px
   gold rule, intro, details (location, hours, WhatsApp, call, email) with

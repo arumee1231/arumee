@@ -827,6 +827,17 @@ html.ed-motion:not(.ed-motion-done) body.page-our-oils .hero-bottles .hero-bottl
 html.ed-motion:not(.ed-motion-done) body.page-our-oils .hero-bottles::after {
   opacity: 0;
 }
+html.ed-motion:not(.ed-motion-done) body.page-story .story-open h1,
+html.ed-motion:not(.ed-motion-done) body.page-story .story-open .story-lead,
+html.ed-motion:not(.ed-motion-done) body.page-story .story-facts > div {
+  opacity: 0;
+}
+html.ed-motion.ed-motion-fallback body.page-story .story-open h1,
+html.ed-motion.ed-motion-fallback body.page-story .story-open .story-lead,
+html.ed-motion.ed-motion-fallback body.page-story .story-facts > div {
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
 html.ed-motion.ed-motion-fallback body.page-our-oils .hero-copy > *,
 html.ed-motion.ed-motion-fallback body.page-our-oils .hero-bottles .hero-bottle,
 html.ed-motion.ed-motion-fallback body.page-our-oils .hero-bottles::after {
@@ -2693,18 +2704,43 @@ html body.page-story .story-photo--why { grid-column: 1 / 4; grid-row: 2 / span 
    Steps reuse the home benefit-row grid exactly: numeral | marker on the
    rail | title | text. */
 @media (min-width: 901px) {
+  /* Facts: a full-width ledger under the heading, on the same tracks —
+     the method (the defining fact) takes the wide cell from line A and
+     spans both rows; the mill and the licence stack on line D. Fills the
+     space under the heading without adding a new vertical line. */
   html body.page-story .story-facts {
-    grid-column: 4;
-    grid-template-columns: minmax(0, 1fr);
-    margin-top: clamp(40px, 5vw, 64px);
-    border-bottom: none;
+    grid-column: 1 / -1;
+    grid-template-columns: 64px 80px minmax(0, 0.9fr) minmax(0, 1.5fr);
+    column-gap: 32px;
+    margin-top: clamp(48px, 6vw, 80px);
+    border-top: 1px solid var(--ed-line);
+    border-bottom: 1px solid var(--ed-line);
   }
   html body.page-story .story-facts > div,
   html body.page-story .story-facts > div + div {
-    padding: 18px 0 20px;
-    border-left: none;
+    padding: 20px 0 22px;
+    border: none;
+  }
+  html body.page-story .story-facts > div:nth-child(2) {
+    grid-column: 1 / 4;
+    grid-row: 1 / span 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 32px;
+    border-right: 1px solid var(--ed-line);
+  }
+  html body.page-story .story-facts > div:nth-child(2) dd {
+    font-size: clamp(1.45rem, 2vw, 1.75rem);
+    line-height: 1.25;
+    max-width: 22em;
+  }
+  html body.page-story .story-facts > div:nth-child(1) {
+    grid-column: 4;
+    grid-row: 1;
     border-bottom: 1px solid var(--ed-line);
   }
+  html body.page-story .story-facts > div:nth-child(3) { grid-column: 4; grid-row: 2; }
   html body.page-story .story-quote { grid-column: 1 / -1; }
   html body.page-story .story .story-quote p { max-width: 22em !important; }
 

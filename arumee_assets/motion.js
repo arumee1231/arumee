@@ -86,11 +86,22 @@
     if (!els || !els.length) return;
     var y = opts.y == null ? 28 : opts.y;
     var stagger = opts.stagger == null ? 0.08 : opts.stagger;
-    gsap.set(els, { opacity: 0, y: y });
+    // opts.clip: drawn in left to right (hairlines, ledger rows) instead of
+    // rising — on-screen movement, so a strong ease-in-out.
+    if (opts.clip) gsap.set(els, { clipPath: 'inset(0% 100% 0% 0%)' });
+    else gsap.set(els, { opacity: 0, y: y });
     var group = { els: els, done: false, run: function () {
       if (group.done) return;
       group.done = true;
-      gsap.to(els, {
+      gsap.to(els, opts.clip ? {
+        clipPath: 'inset(0% 0% 0% 0%)',
+        duration: opts.duration || 1.1,
+        ease: 'power3.inOut',
+        stagger: stagger,
+        delay: opts.delay || 0,
+        overwrite: 'auto',
+        clearProps: 'clipPath'
+      } : {
         opacity: 1, y: 0,
         duration: opts.duration || 1,
         ease: EASE,
@@ -311,6 +322,39 @@
     // #benefits has its own scroll-linked story (editorial.css); no per-row reveal.
     reveal('#faq > .container > h2, #faq > .container > p.lead', { y: 24, stagger: 0.12 });
     reveal(Array.prototype.slice.call(document.querySelectorAll('#faq .faq-item')), { y: 14, stagger: 0.05, duration: 0.8 });
+  } else if (document.querySelector('.page-main.story')) {
+    /* ---- OUR STORY — a page that reads like a printed story ----
+       The heading and lead settle in on load; the facts ledger is written
+       in row by row, its hairlines drawing left to right; each chapter
+       rises as the reader reaches it, and the quote's gold rule draws
+       before its words arrive. The step rail stays the page's one
+       scroll-linked moment (editorial.css). */
+    finish();
+    var open = document.querySelector('.story-open');
+    if (open) {
+      var openTl = gsap.timeline({ defaults: { ease: EASE } });
+      var h1 = open.querySelector('h1');
+      var lead = open.querySelector('.story-lead');
+      var facts = open.querySelectorAll('.story-facts > div');
+      if (h1) openTl.fromTo(h1, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.2, clearProps: 'opacity,transform' }, 0.1);
+      if (lead) openTl.fromTo(lead, { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 1.1, clearProps: 'opacity,transform' }, 0.3);
+      if (facts.length) {
+        openTl.fromTo(facts, { clipPath: 'inset(0% 100% 0% 0%)' },
+          { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.1, ease: 'power3.inOut', stagger: 0.14, clearProps: 'clipPath' }, 0.55);
+      }
+    }
+    reveal('.story-why h2, .story-why .story-prose > p', { y: 26, stagger: 0.12 });
+    reveal('.story-why .story-quote', { clip: true, duration: 1.2 });
+    reveal('.story-why .story-quote p', { y: 18, delay: 0.35, duration: 1.1 });
+    reveal('.story-how h2, .story-how .story-chapter__lead', { y: 26, stagger: 0.12 });
+    // Each step rises on its own, as the gold rail reaches it.
+    Array.prototype.forEach.call(document.querySelectorAll('.story-step'), function (step) {
+      reveal([step], { y: 20, duration: 0.9 });
+    });
+    reveal('.story-never h2', { y: 26 });
+    reveal('.story-never__list li', { y: 16, stagger: 0.09, duration: 0.9 });
+    reveal('.story-never__close', { y: 14, delay: 0.3 });
+    reveal('.story-close h2, .story-close .action-row', { y: 24, stagger: 0.14 });
   } else {
     /* ---- SUBPAGES — gentle reveals on the existing blocks ---- */
     finish();
