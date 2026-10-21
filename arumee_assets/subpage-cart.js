@@ -37,7 +37,7 @@
   }
 
   function formatCurrency(amount) {
-    return 'Rs ' + Number(amount || 0).toLocaleString('en-IN');
+    return '\u20B9' + Number(amount || 0).toLocaleString('en-IN');
   }
 
   function readCart() {

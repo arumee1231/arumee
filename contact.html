@@ -20,9 +20,9 @@
   <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yygg_vb.woff2" crossorigin />
   <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtK.woff2" crossorigin />
   <link href="cormorant-fonts.css?v=5" rel="stylesheet"/>
-  <link rel="stylesheet" href="arumee_assets/cart.css?v=2" />
+  <link rel="stylesheet" href="arumee_assets/cart.css?v=3" />
   <link rel="stylesheet" href="arumee_assets/premium-subpages.css?v=4" />
-  <link rel="stylesheet" href="arumee_assets/editorial.css?v=51" />
+  <link rel="stylesheet" href="arumee_assets/editorial.css?v=56" />
 </head>
 <body class="subpage page-contact" data-active-nav="contact">
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -30,7 +30,7 @@
   <nav class="sticky-nav" id="stickyNav">
     <div class="nav-content">
       <a class="nav-brand" href="index.html" aria-label="Go to Arumee home">
-        <img src="arumee_assets/logo.webp" alt="Arumee" width="40" height="40" />
+        <img class="nav-brand__mark" src="arumee_assets/logo-mark.webp" alt="" width="30" height="40" decoding="async" />
         <span>ARUMEE</span>
       </a>
       <div class="nav-actions">
@@ -56,7 +56,7 @@
     <div class="mmo-inner">
       <div class="mmo-header">
         <div class="mmo-brand-row">
-          <img src="arumee_assets/arumee-logo.png" alt="Arumee" class="mmo-logo" width="36" height="36">
+          <img src="arumee_assets/logo-mark.webp" alt="" class="mmo-logo" width="27" height="36" decoding="async">
           <div class="mmo-brand-name-row">
             <span class="mmo-brand-name">Arumee</span>
             <span class="mmo-brand-tag">Pure Ancestral Oils</span>
@@ -65,14 +65,18 @@
         <button class="mmo-close" onclick="closeMobileMenu()" aria-label="Close menu">&#x2715;</button>
       </div>
       <nav class="mmo-nav">
-        <a class="mmo-link" href="index.html" onclick="sessionStorage.setItem('arumee_scrolltop','1');closeMobileMenu()"><span class="mmo-link-icon">ðŸ </span>Home</a>
-        <a class="mmo-link" href="index.html#oilsGrid" onclick="closeMobileMenu()"><span class="mmo-link-icon">ðŸ›</span>Shop</a>
-        <a class="mmo-link" href="benefits.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">🌿</span>Benefits</a>
-        <a class="mmo-link" href="index.html#faq" onclick="closeMobileMenu()"><span class="mmo-link-icon">💬</span>FAQ</a>
-        <a class="mmo-link" href="about.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">📖</span>Our Story</a>
-        <a class="mmo-link" href="contact.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">✉</span>Contact</a>
+        <a class="mmo-link" href="index.html" onclick="sessionStorage.setItem('arumee_scrolltop','1');closeMobileMenu()">Home</a>
+        <a class="mmo-link" href="index.html#oilsGrid" onclick="closeMobileMenu()">Shop</a>
+        <a class="mmo-link" href="benefits.html" onclick="closeMobileMenu()">Benefits</a>
+        <a class="mmo-link" href="index.html#faq" onclick="closeMobileMenu()">FAQ</a>
+        <a class="mmo-link" href="about.html" onclick="closeMobileMenu()">Our Story</a>
+        <a class="mmo-link" href="contact.html" onclick="closeMobileMenu()">Contact</a>
       </nav>
       <div class="mmo-footer">
+        <div class="mmo-quick">
+          <a class="mmo-quick__btn" href="https://wa.me/918925295844" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 19.5l1.2-3.6A7.5 7.5 0 1 1 8.6 18.6z"/><path d="M9.2 9.6c.2 1.9 1.4 3.6 3.6 4.6l1.1-1 1.6.7"/></svg><span>WhatsApp</span></a>
+          <a class="mmo-quick__btn" href="tel:+919751425598"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4.5h3l1.5 4-2 1.3a10 10 0 0 0 6.7 6.7l1.3-2 4 1.5v3a1.5 1.5 0 0 1-1.6 1.5A16 16 0 0 1 3.5 6.1 1.5 1.5 0 0 1 5 4.5z"/></svg><span>Call</span></a>
+        </div>
         <a class="mmo-cta-btn" href="index.html#oilsGrid" onclick="closeMobileMenu()">Order Now</a>
         <span class="mmo-footer-sub">Namakkal, Tamil Nadu</span>
       </div>
@@ -86,20 +90,25 @@
 
   <div id="cartDropdown" class="cart-dropdown" role="dialog" aria-modal="true" aria-labelledby="cartHeader" tabindex="-1">
     <div class="cart-header">
-      <h2 id="cartHeader"><span>🛒</span> Your Cart</h2>
-      <button class="cart-close" type="button" aria-label="Close cart" onclick="toggleCart()">x</button>
+      <h2 id="cartHeader">Your cart <small class="cart-header__count" data-cart-count></small></h2>
+      <button class="cart-close" type="button" aria-label="Close cart" onclick="toggleCart()"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     </div>
     <div class="cart-content" id="cartContent">
       <p class="empty-cart">Your cart is empty</p>
     </div>
     <div class="cart-footer" id="cartFooter" style="display:none;">
+      <dl class="cart-summary">
+        <div class="cart-summary__row cart-summary__row--save" data-cart-savings hidden><dt>You save</dt><dd data-cart-savings-amount>&#8377;0</dd></div>
+        <div class="cart-summary__row"><dt>Delivery</dt><dd>Free in Tamil Nadu</dd></div>
+      </dl>
       <div class="cart-total-section">
-        <span class="cart-total-label">Total Amount</span>
-        <span class="cart-total-amount" id="cartTotal">Rs 0</span>
+        <span class="cart-total-label">Total</span>
+        <span class="cart-total-amount" id="cartTotal">&#8377;0</span>
       </div>
-      <div class="cart-actions">
-        <button class="cart-clear-btn" type="button" onclick="clearSubCart()">Clear Cart</button>
-        <button class="cart-proceed-btn" type="button" onclick="proceedToOrder()">Proceed to Order</button>
+      <button class="cart-proceed-btn" type="button" onclick="proceedToOrder()"><span>Proceed to Checkout</span><span aria-hidden="true">&rarr;</span></button>
+      <div class="cart-secondary">
+        <button class="cart-continue" type="button" data-cart-continue>Continue shopping</button>
+        <button class="cart-clear-btn" type="button" data-cart-clear="clearSubCart">Clear cart</button>
       </div>
     </div>
   </div>
@@ -196,7 +205,9 @@
 
   <div class="page-toast" id="pageToast" role="status" aria-live="polite"></div>
 
-  <script src="arumee_assets/subpage-cart.js?v=3"></script>
+  <script src="arumee_assets/subpage-cart.js?v=4"></script>
+  <script src="arumee_assets/cart-drawer.js?v=1"></script>
+  <script src="arumee_assets/site-menu.js?v=1"></script>
   <script src="arumee_assets/premium-subpages.js"></script>
   <script src="arumee_assets/vendor/gsap.min.js" defer></script>
   <script src="arumee_assets/vendor/ScrollTrigger.min.js" defer></script>

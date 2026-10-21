@@ -50,9 +50,43 @@ h2.section-title[data-eyebrow]::before {
   transform-origin: 0 50%;
   pointer-events: none;
 }
-.sticky-nav .nav-brand span {
-  letter-spacing: 0.22em !important;
-  font-weight: 500 !important;
+/* Brand lockup — one spec for the header and the phone menu: the leaf
+   mark alone (no tiny baked-in name) beside the wordmark in Cormorant 700,
+   close to the sturdy serif of the logo artwork; optically centred. */
+.sticky-nav .nav-brand,
+.mobile-menu-overlay .mmo-brand-row {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  line-height: 1 !important;
+}
+.sticky-nav .nav-brand .nav-brand__mark,
+.mobile-menu-overlay .mmo-logo {
+  width: auto !important;
+  height: 30px !important;
+  border-radius: 0 !important;
+  object-fit: contain !important;
+  background: none !important;
+  flex: 0 0 auto;
+}
+.sticky-nav .nav-brand span,
+.mobile-menu-overlay .mmo-brand-name {
+  font-family: var(--ed-serif) !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase;
+  line-height: 1 !important;
+  color: var(--ed-forest) !important;
+  padding-top: 2px; /* caps sit optically centred on the mark */
+}
+@media (max-width: 768px) {
+  .sticky-nav .nav-brand,
+  .mobile-menu-overlay .mmo-brand-row { gap: 8px !important; }
+  .sticky-nav .nav-brand .nav-brand__mark,
+  .mobile-menu-overlay .mmo-logo { height: 26px !important; }
+  .sticky-nav .nav-brand span,
+  .mobile-menu-overlay .mmo-brand-name { font-size: 19px !important; letter-spacing: 0.11em !important; }
 }
 .desktop-nav-link {
   letter-spacing: 0.16em !important;
@@ -3163,4 +3197,234 @@ body.page-our-oils .ed-curtain-cols .front { background: var(--ed-gold-pale); }
 html body.page-our-oils #oilsGrid { scroll-margin-top: 72px !important; }
 @media (max-width: 768px) {
   html body.page-our-oils #oilsGrid { scroll-margin-top: -20px !important; }
+}
+
+/* =====================================================================
+   SHOWCASE — quantity on the card
+   The stepper was in the markup (and wired to Add) but hidden by a
+   legacy inline rule. Shown as one pill beside Add; the price above
+   updates live (index.html) using the cart's own pricing rule.
+   ===================================================================== */
+html body.page-our-oils #oils #oilsGrid .product-card__qty {
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+}
+html body.page-our-oils #oils #oilsGrid .product-card__qty .quantity-selector {
+  display: flex !important;
+  align-items: center;
+  margin: 0 !important;
+}
+html body.page-our-oils #oils #oilsGrid .quantity-stepper {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0;
+  padding: 2px !important;
+  border: 1px solid var(--ed-line) !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.7) !important;
+  box-shadow: none !important;
+}
+html body.page-our-oils #oils #oilsGrid .qty-btn {
+  width: 40px !important;
+  height: 40px !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  color: var(--ed-forest) !important;
+  font-size: 18px !important;
+  line-height: 1 !important;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.12s var(--ed-ease-out) !important;
+}
+html body.page-our-oils #oils #oilsGrid .qty-btn:active { transform: scale(0.92); }
+@media (hover: hover) and (pointer: fine) {
+  html body.page-our-oils #oils #oilsGrid .qty-btn:hover { background: rgba(26, 51, 40, 0.07) !important; }
+}
+html body.page-our-oils #oils #oilsGrid .qty-value {
+  display: inline-block !important;
+  min-width: 26px;
+  text-align: center;
+  font-family: var(--ed-sans);
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: var(--ed-ink) !important;
+  font-variant-numeric: tabular-nums;
+}
+html body.page-our-oils #oils #oilsGrid .product-card__qty .add-to-order { flex: 1 1 auto; }
+/* Live total: struck-through total, total, "for 2 × 1L", then the saving. */
+html body.page-our-oils #oils #oilsGrid .product-card__price .card-save {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--ed-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--ed-forest);
+}
+html body.page-our-oils #oils #oilsGrid .product-card__price .old-price {
+  width: auto !important;
+  margin-right: 6px !important;
+  font-family: var(--ed-sans);
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: var(--ed-muted) !important;
+}
+@media (max-width: 720px) {
+  /* Phones: price on its own row, then stepper + Add sharing the next. */
+  html body.page-our-oils #oils #oilsGrid > .product-card .product-card__footer {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  html body.page-our-oils #oils #oilsGrid .product-card__qty { width: 100%; }
+}
+html body.page-our-oils #oils #oilsGrid .product-card__price { flex-wrap: wrap; }
+html body.page-our-oils #oils #oilsGrid .product-card__price .card-save { flex-basis: 100%; }
+/* Phones: the nav already shows the cart with its count; the floating
+   cart button duplicated it and sat on top of the card's price and Add. */
+@media (max-width: 768px) {
+  html body.page-our-oils #heroCartFab { display: none !important; }
+}
+
+/* =====================================================================
+   PHONE MENU
+   A light cream panel from the right, the same surface as the cart drawer
+   (every page is light; a dark panel was the odd one out). Same brand
+   lockup as the header. Large serif links on hairlines, the current page
+   in forest italic with a gold dot, WhatsApp / Call pills, and the dark
+   forest primary button (matches the cart's Checkout).
+   Motion: links settle in 40ms apart on open; reduced motion: no movement.
+   ===================================================================== */
+.mobile-menu-overlay .mmo-backdrop { background: rgba(14, 31, 22, 0.42) !important; }
+.mobile-menu-overlay .mmo-inner {
+  width: min(86vw, 340px) !important;
+  background: var(--ed-cream) !important;
+  box-shadow: -32px 0 64px -32px rgba(14, 31, 22, 0.35) !important;
+}
+.mobile-menu-overlay .mmo-header {
+  padding: calc(env(safe-area-inset-top, 0px) + 14px) 18px 14px 24px !important;
+  border-bottom: 1px solid var(--ed-line) !important;
+}
+.mobile-menu-overlay .mmo-brand-tag { display: none !important; }
+.mobile-menu-overlay .mmo-close {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  border: 1px solid var(--ed-line) !important;
+  color: var(--ed-forest) !important;
+}
+.mobile-menu-overlay .mmo-nav {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  padding: 8px 24px !important;
+  overflow-y: auto;
+}
+.mobile-menu-overlay .mmo-link {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between;
+  gap: 12px !important;
+  min-height: 56px;
+  padding: 12px 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  border-bottom: 1px solid var(--ed-line-soft) !important;
+  border-radius: 0 !important;
+  background: none !important;
+  font-family: var(--ed-serif) !important;
+  font-size: 26px !important;
+  font-weight: 500 !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.01em !important;
+  color: var(--ed-forest) !important;
+  text-decoration: none !important;
+  transition: color 0.15s ease !important;
+}
+.mobile-menu-overlay .mmo-link:last-child { border-bottom: none !important; }
+.mobile-menu-overlay .mmo-link::after {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ed-gold);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.mobile-menu-overlay .mmo-link[aria-current="page"] { font-style: italic; }
+.mobile-menu-overlay .mmo-link[aria-current="page"]::after { opacity: 1; }
+.mobile-menu-overlay .mmo-link:active { color: var(--ed-forest-ink) !important; background: rgba(26, 51, 40, 0.04) !important; }
+.mobile-menu-overlay .mmo-link:focus-visible { outline: 2px solid var(--ed-gold); outline-offset: 2px; border-radius: 6px !important; }
+
+.mobile-menu-overlay .mmo-footer {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  padding: 18px 24px calc(env(safe-area-inset-bottom, 0px) + 18px) !important;
+  border-top: 1px solid var(--ed-line) !important;
+  background: #fff !important;
+}
+.mmo-quick { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mmo-quick__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  border-radius: 999px;
+  border: 1px solid var(--ed-line);
+  color: var(--ed-forest);
+  font-family: var(--ed-sans);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.15s ease, transform 0.12s var(--ed-ease-out);
+}
+.mmo-quick__btn:active { transform: scale(0.97); background: rgba(26, 51, 40, 0.05); }
+.mmo-quick__btn svg { color: var(--ed-gold); }
+.mobile-menu-overlay .mmo-cta-btn {
+  min-height: 52px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 999px !important;
+  background: var(--ed-forest-deep) !important;
+  color: var(--ed-cream) !important;
+  box-shadow: 0 14px 28px -18px rgba(14, 31, 22, 0.7) !important;
+  font-family: var(--ed-sans) !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase !important;
+  transition: transform 0.12s var(--ed-ease-out) !important;
+}
+.mobile-menu-overlay .mmo-cta-btn:active { transform: scale(0.98); }
+.mobile-menu-overlay .mmo-footer-sub {
+  text-align: center;
+  font-family: var(--ed-serif) !important;
+  font-style: italic;
+  font-size: 14px !important;
+  letter-spacing: 0 !important;
+  color: var(--ed-muted) !important;
+}
+
+/* Links settle in as the panel opens. */
+@media (prefers-reduced-motion: no-preference) {
+  .mobile-menu-overlay.open .mmo-link,
+  .mobile-menu-overlay.open .mmo-footer {
+    animation: ed-mmo-in 0.5s var(--ed-ease-out) both;
+  }
+  .mobile-menu-overlay.open .mmo-link:nth-child(1) { animation-delay: 0.10s; }
+  .mobile-menu-overlay.open .mmo-link:nth-child(2) { animation-delay: 0.14s; }
+  .mobile-menu-overlay.open .mmo-link:nth-child(3) { animation-delay: 0.18s; }
+  .mobile-menu-overlay.open .mmo-link:nth-child(4) { animation-delay: 0.22s; }
+  .mobile-menu-overlay.open .mmo-link:nth-child(5) { animation-delay: 0.26s; }
+  .mobile-menu-overlay.open .mmo-link:nth-child(6) { animation-delay: 0.30s; }
+  .mobile-menu-overlay.open .mmo-footer { animation-delay: 0.34s; }
+}
+@keyframes ed-mmo-in {
+  from { opacity: 0; transform: translateX(14px); }
+  to   { opacity: 1; transform: none; }
 }

@@ -10,7 +10,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yygg_vb.woff2">
 <!-- Inline critical Latin @font-face so browser can use preloaded fonts immediately -->
 <style id="critical-fonts">@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:500 700;font-display:swap;src:url(https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtK.woff2) format('woff2');unicode-range:U+0-FF,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:300 600;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yygg_vb.woff2) format('woff2');unicode-range:U+0-FF,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}</style>
-<script>(function(){ document.documentElement.style.background='#FDFBF6'; if('scrollRestoration' in history){ history.scrollRestoration='manual'; } var forceTop=sessionStorage.getItem('arumee_scrolltop'); if(forceTop){ sessionStorage.removeItem('arumee_scrolltop'); sessionStorage.removeItem('showClearToast'); sessionStorage.removeItem('scrollToOrder'); window.__arumeeForceTop=true; window.scrollTo(0,0); var guard=function(){window.scrollTo(0,0);}; window.addEventListener('scroll',guard,true); setTimeout(function(){window.removeEventListener('scroll',guard,true);},1500); document.addEventListener('DOMContentLoaded',guard); window.addEventListener('load',guard); return; } var h=window.location.hash; if(!h||h==='#'){ window.scrollTo(0,0); var guard=function(){window.scrollTo(0,0);}; window.addEventListener('scroll',guard,true); document.addEventListener('DOMContentLoaded',function(){ window.scrollTo(0,0); }); window.addEventListener('load',function(){ window.scrollTo(0,0); setTimeout(function(){ window.scrollTo(0,0); window.removeEventListener('scroll',guard,true); },500); }); return; } function scrollToHash(){ var el=document.getElementById(h.slice(1)); if(el) el.scrollIntoView({behavior:'instant',block:'start'}); } if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded',scrollToHash); } else { scrollToHash(); } })();</script>
+<script>(function(){ document.documentElement.style.background='#FDFBF6'; if('scrollRestoration' in history){ history.scrollRestoration='manual'; } var forceTop=sessionStorage.getItem('arumee_scrolltop'); if(forceTop){ sessionStorage.removeItem('arumee_scrolltop'); sessionStorage.removeItem('showClearToast'); sessionStorage.removeItem('scrollToOrder'); window.__arumeeForceTop=true; window.scrollTo(0,0); var guard=function(){window.scrollTo(0,0);}; var fReleased=false; var fRelease=function(){ if(fReleased)return; fReleased=true; window.removeEventListener('scroll',guard,true); }; ['pointerdown','touchstart','wheel','keydown'].forEach(function(t){ window.addEventListener(t,fRelease,{capture:true,once:true,passive:true}); }); window.addEventListener('scroll',guard,true); setTimeout(fRelease,1500); document.addEventListener('DOMContentLoaded',function(){ if(!fReleased) guard(); }); window.addEventListener('load',function(){ if(!fReleased) guard(); }); return; } var h=window.location.hash; if(!h||h==='#'){ window.scrollTo(0,0); var guard=function(){window.scrollTo(0,0);}; var released=false; var release=function(){ if(released)return; released=true; window.removeEventListener('scroll',guard,true); }; /* The guard only stops restored scroll jumps during load. Drop it the moment the visitor acts, or a tap on Shop Oils before load finishes is snapped back to the top. */ ['pointerdown','touchstart','wheel','keydown'].forEach(function(t){ window.addEventListener(t,release,{capture:true,once:true,passive:true}); }); window.addEventListener('scroll',guard,true); document.addEventListener('DOMContentLoaded',function(){ if(!released) window.scrollTo(0,0); }); window.addEventListener('load',function(){ if(released) return; window.scrollTo(0,0); setTimeout(function(){ if(!released) window.scrollTo(0,0); release(); },500); }); return; } function scrollToHash(){ var el=document.getElementById(h.slice(1)); if(el) el.scrollIntoView({behavior:'instant',block:'start'}); } if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded',scrollToHash); } else { scrollToHash(); } })();</script>
 <link rel="stylesheet" href="arumee_assets/main.css"/>
 <link rel="stylesheet" href="cormorant-fonts.css?v=5"/>
 <meta content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" name="viewport"/>
@@ -36,9 +36,9 @@
 <meta name="geo.region" content="IN"/>
 <link href="arumee_assets/logo.webp" rel="icon" type="image/webp"/>
 <!-- Logo preload: low priority so it doesn't compete with LCP font (Cormorant Garamond for h1) -->
-<link as="image" fetchpriority="low" href="arumee_assets/logo.webp" rel="preload" type="image/webp"/>
+<link as="image" fetchpriority="low" href="arumee_assets/logo-mark.webp" rel="preload" type="image/webp"/>
 <!-- Shared unified cart styles -->
-<link rel="stylesheet" href="arumee_assets/cart.css"/>
+<link rel="stylesheet" href="arumee_assets/cart.css?v=3"/>
 
 <!-- Honeypot bot protection — no third-party scripts needed -->
 <!-- Removed inline Our Oils cart overrides — unified in arumee_assets/cart.css -->
@@ -388,7 +388,7 @@ header.hero{background-color:#1a2a1a;min-height:100svh}
 #oils .grid .product-card .product-card__price,#oils .grid .product-card .product-card__price .new-price{font-size:22px !important}
 }</style>
 
-<link rel="stylesheet" href="arumee_assets/editorial.css?v=51"/>
+<link rel="stylesheet" href="arumee_assets/editorial.css?v=56"/>
 <script>(function(){try{if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){var h=document.documentElement;h.classList.add('ed-motion');setTimeout(function(){h.classList.add('ed-motion-fallback');},2500);/* Hero curtain: first home visit per session, landing at the top only. Cover before first paint; motion.js lifts it. Self-removes if motion.js never runs. */var seen=false;try{seen=sessionStorage.getItem('arumee_curtain')==='1';sessionStorage.setItem('arumee_curtain','1');}catch(e){}if(!seen&&!location.hash){h.classList.add('ed-curtain');setTimeout(function(){h.classList.remove('ed-curtain');},2600);}}}catch(e){}})();</script>
 </head>
 <body class="page-our-oils">
@@ -396,7 +396,7 @@ header.hero{background-color:#1a2a1a;min-height:100svh}
 <nav class="sticky-nav visible" id="stickyNav">
 <div class="nav-content">
 <div class="nav-brand">
-<img alt="Arumee" decoding="async" fetchpriority="low" height="40" src="arumee_assets/logo.webp" width="40"/>
+<img class="nav-brand__mark" src="arumee_assets/logo-mark.webp" alt="" width="30" height="40" decoding="async" />
 <span>ARUMEE</span>
 </div>
 <div class="nav-actions">
@@ -425,7 +425,7 @@ header.hero{background-color:#1a2a1a;min-height:100svh}
   <div class="mmo-inner">
     <div class="mmo-header">
       <div class="mmo-brand-row">
-          <img src="arumee_assets/logo.webp" alt="Arumee" class="mmo-logo" width="36" height="36">
+          <img src="arumee_assets/logo-mark.webp" alt="" class="mmo-logo" width="27" height="36" decoding="async">
         <div class="mmo-brand-name-row">
           <span class="mmo-brand-name">Arumee</span>
           <span class="mmo-brand-tag">Pure Ancestral Oils</span>
@@ -434,14 +434,18 @@ header.hero{background-color:#1a2a1a;min-height:100svh}
       <button class="mmo-close" onclick="closeMobileMenu()" aria-label="Close menu">&#x2715;</button>
     </div>
     <nav class="mmo-nav">
-      <a class="mmo-link" href="#" onclick="if(window.location.hash){history.replaceState(null,'',window.location.pathname + window.location.search);window.dispatchEvent(new Event('hashchange'));}window.scrollTo({top:0,behavior:'smooth'});closeMobileMenu();return false;"><span class="mmo-link-icon">🏠</span>Home</a>
-      <a class="mmo-link" href="#oilsGrid" onclick="closeMobileMenu()"><span class="mmo-link-icon">🛍</span>Shop</a>
-      <a class="mmo-link" href="#benefits" onclick="closeMobileMenu()"><span class="mmo-link-icon">🌿</span>Benefits</a>
-      <a class="mmo-link" href="#faq" onclick="closeMobileMenu()"><span class="mmo-link-icon">💬</span>FAQ</a>
-      <a class="mmo-link" href="about.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">📖</span>Our Story</a>
-      <a class="mmo-link" href="contact.html" onclick="closeMobileMenu()"><span class="mmo-link-icon">✉</span>Contact</a>
+      <a class="mmo-link" href="#" onclick="if(window.location.hash){history.replaceState(null,'',window.location.pathname + window.location.search);window.dispatchEvent(new Event('hashchange'));}window.scrollTo({top:0,behavior:'smooth'});closeMobileMenu();return false;">Home</a>
+      <a class="mmo-link" href="#oilsGrid" onclick="closeMobileMenu()">Shop</a>
+      <a class="mmo-link" href="#benefits" onclick="closeMobileMenu()">Benefits</a>
+      <a class="mmo-link" href="#faq" onclick="closeMobileMenu()">FAQ</a>
+      <a class="mmo-link" href="about.html" onclick="closeMobileMenu()">Our Story</a>
+      <a class="mmo-link" href="contact.html" onclick="closeMobileMenu()">Contact</a>
     </nav>
     <div class="mmo-footer">
+      <div class="mmo-quick">
+        <a class="mmo-quick__btn" href="https://wa.me/918925295844" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 19.5l1.2-3.6A7.5 7.5 0 1 1 8.6 18.6z"/><path d="M9.2 9.6c.2 1.9 1.4 3.6 3.6 4.6l1.1-1 1.6.7"/></svg><span>WhatsApp</span></a>
+        <a class="mmo-quick__btn" href="tel:+919751425598"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4.5h3l1.5 4-2 1.3a10 10 0 0 0 6.7 6.7l1.3-2 4 1.5v3a1.5 1.5 0 0 1-1.6 1.5A16 16 0 0 1 3.5 6.1 1.5 1.5 0 0 1 5 4.5z"/></svg><span>Call</span></a>
+      </div>
       <a class="mmo-cta-btn" href="#oilsGrid" onclick="closeMobileMenu()">Order Now</a>
       <span class="mmo-footer-sub">Namakkal, Tamil Nadu</span>
     </div>
@@ -506,27 +510,26 @@ header.hero{background-color:#1a2a1a;min-height:100svh}
 <!-- Cart Slide-in Panel -->
 <div aria-labelledby="cartHeader" aria-modal="true" class="cart-dropdown" id="cartDropdown" role="dialog" tabindex="-1">
 <div class="cart-header">
-<h2 id="cartHeader"><span>🛒</span> Your Cart</h2>
-<button aria-label="Close cart" class="cart-close" onclick="toggleCart()">×</button>
+  <h2 id="cartHeader">Your cart <small class="cart-header__count" data-cart-count></small></h2>
+  <button class="cart-close" type="button" aria-label="Close cart" onclick="toggleCart()"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
 </div>
 <div class="cart-content" id="cartContent">
 <p class="empty-cart">Your cart is empty</p>
 </div>
-<div class="cart-footer" id="cartFooter" style="display: none;">
-<div class="cart-total-section">
-<span class="cart-total-label">Total Amount</span>
-<span class="cart-total-amount" id="cartTotal">₹0</span>
-</div>
-<div class="cart-actions">
-<button class="cart-clear-btn" onclick="clearOrder()">
-<span>🗑️</span>
-<span>Clear All</span>
-</button>
-<button class="cart-proceed-btn" onclick="proceedToOrder()">
-<span>Proceed to Checkout</span>
-<span>→</span>
-</button>
-</div>
+<div class="cart-footer" id="cartFooter" style="display:none;">
+  <dl class="cart-summary">
+    <div class="cart-summary__row cart-summary__row--save" data-cart-savings hidden><dt>You save</dt><dd data-cart-savings-amount>&#8377;0</dd></div>
+    <div class="cart-summary__row"><dt>Delivery</dt><dd>Free in Tamil Nadu</dd></div>
+  </dl>
+  <div class="cart-total-section">
+    <span class="cart-total-label">Total</span>
+    <span class="cart-total-amount" id="cartTotal">&#8377;0</span>
+  </div>
+  <button class="cart-proceed-btn" type="button" onclick="proceedToOrder()"><span>Proceed to Checkout</span><span aria-hidden="true">&rarr;</span></button>
+  <div class="cart-secondary">
+    <button class="cart-continue" type="button" data-cart-continue>Continue shopping</button>
+    <button class="cart-clear-btn" type="button" data-cart-clear="clearOrder">Clear cart</button>
+  </div>
 </div>
 </div>
 <div class="cart-backdrop" id="cartBackdrop" onclick="toggleCart()"></div>
@@ -912,6 +915,8 @@ header.hero{background-color:#1a2a1a;min-height:100svh}
 
 <script>(function(){var ORDER_ENDPOINT='https://script.google.com/macros/s/AKfycbyVXRfITudWEyii7rQxbNakPJ-TmK3Tq-0-RGjoqcHtjKTRNEXEJ_Xn-fUQ199VKJsE3w/exec';var LEGACY_ORDER_ENDPOINT='https://script.google.com/macros/s/AKfycbzUPnEWOz5ToHLwlSd-MGsEGw2_K7mmw9vKzrrl1pEv_n1FExmsNrCqYzkEADS_6BWbvQ/exec';var originalFetch=window.fetch;if(typeof originalFetch!=='function')return;window.fetch=function(resource,options){var url=typeof resource==='string'?resource:(resource&&resource.url)||'';if((url===ORDER_ENDPOINT||url===LEGACY_ORDER_ENDPOINT)&&options&&String(options.method||'GET').toUpperCase()==='POST'){var nextOptions=Object.assign({},options,{keepalive:true});return originalFetch.call(this,ORDER_ENDPOINT,nextOptions);}return originalFetch.call(this,resource,options);};})();</script>
 <script src="arumee_assets/app.js?v=20261018b" defer></script>
+<script src="arumee_assets/cart-drawer.js?v=1" defer></script>
+<script src="arumee_assets/site-menu.js?v=1" defer></script>
 <script src="arumee_assets/vendor/gsap.min.js" defer></script>
 <script src="arumee_assets/vendor/ScrollTrigger.min.js" defer></script>
 <script src="arumee_assets/vendor/lenis.min.js" defer></script>
@@ -947,6 +952,10 @@ window.addEventListener('load', function () {
       var p = cfg[oil] && cfg[oil].prices && cfg[oil].prices[sz];
       if (!p) return;
       el.dataset.price = p;
+      // A 1L bottle has no discount: keep its "original" price equal to the
+      // live price, or the cart shows a fake "You save" against the old
+      // hard-coded figure (e.g. ₹329 vs a live ₹328).
+      if (sz === '1L') el.dataset.originalPrice = p;
       if (el.classList.contains('active')) {
         var priceEl = document.getElementById(oil + '-price');
         if (priceEl) priceEl.innerHTML = '&#8377;' + p + ' <span class="unit product-card__unit">/ ' + sz + '</span>';
@@ -986,6 +995,45 @@ window.addEventListener('load', function () {
 <!-- chat-widget: lazy-loaded on first user interaction to avoid unused-JS penalty -->
 <script>(function(){ var loaded=false; function loadChat(){ if(loaded)return;loaded=true; var s=document.createElement('script'); s.src='arumee_assets/chat-widget.js?v=9'; document.body.appendChild(s); } ['scroll','click','touchstart','keydown'].forEach(function(e){ window.addEventListener(e,loadChat,{once:true,passive:true}); }); if('requestIdleCallback' in window){ requestIdleCallback(loadChat,{timeout:8000}); } else { setTimeout(loadChat,8000); } })();</script>
 <script>if ('serviceWorker' in navigator) { navigator.serviceWorker.getRegistrations().then(function(regs) { var unregAll = regs.map(function(r) { return r.unregister(); }); return Promise.all(unregAll); }).then(function() { return navigator.serviceWorker.register('/service-worker.js'); }).then(function(reg) { if (reg.waiting) { reg.waiting.postMessage({type:'SKIP_WAITING'}); } reg.addEventListener('updatefound', function() { var newSW = reg.installing; if (newSW) { newSW.addEventListener('statechange', function() { if (newSW.state === 'installed' && navigator.serviceWorker.controller) { newSW.postMessage({type:'SKIP_WAITING'}); } }); } }); }); }</script>
+<script>
+/* Product card quantity: live total on the card.
+   Uses the same rule and price list (oilOptions) as the home cart, so the
+   card and the cart always show the same number: two 1L bottles are
+   charged at the 2L price when that is cheaper; otherwise price x qty
+   against any original price. Quantity 1 keeps the plain unit price. */
+(function(){
+  var grid=document.getElementById('oilsGrid');
+  if(!grid)return;
+  function money(v){return '\u20B9'+Number(v).toLocaleString('en-IN');}
+  function opt(id){try{return (typeof oilOptions!=='undefined'&&oilOptions.find(function(o){return o.id===id;}))||null;}catch(e){return null;}}
+  function render(product){
+    var priceEl=document.getElementById(product+'-price');
+    var qtyEl=document.getElementById('qty-'+product);
+    var size=grid.querySelector('.size-option.active[data-product="'+product+'"]');
+    if(!priceEl||!qtyEl||!size)return;
+    var q=Math.max(1,parseInt(qtyEl.value,10)||1);
+    var unit=parseInt(size.dataset.price,10)||0;
+    var orig=parseInt(size.dataset.originalPrice,10)||0;
+    var sz=size.dataset.size;
+    var now=unit*q, was=orig>unit?orig*q:0;
+    var two=sz==='1L'?opt(product+'-2L'):null, twoP=two?parseInt(two.price,10):0;
+    if(two&&twoP&&twoP<2*unit&&q>=2){now=Math.floor(q/2)*twoP+(q%2)*unit;was=q*unit;}
+    if(q===1&&!was){priceEl.innerHTML=money(unit)+' <span class="unit product-card__unit">/ '+sz+'</span>';priceEl.removeAttribute('data-multi');return;}
+    priceEl.setAttribute('data-multi','');
+    priceEl.innerHTML=(was>now?'<span class="old-price">'+money(was)+'</span> ':'')+
+      '<span class="new-price">'+money(now)+'</span> <span class="unit product-card__unit">'+(q===1?'/ '+sz:'for '+q+' &times; '+sz)+'</span>'+
+      (was>now?'<span class="card-save">You save '+money(was-now)+'</span>':'');
+  }
+  function later(product){setTimeout(function(){render(product);},0);}
+  // Capture phase: app.js stops propagation on the stepper buttons.
+  document.addEventListener('click',function(e){
+    var t=e.target.closest&&e.target.closest('#oilsGrid .qty-btn, #oilsGrid .size-option');
+    if(t&&t.dataset.product)later(t.dataset.product);
+  },true);
+  grid.addEventListener('change',function(e){var m=(e.target.id||'').match(/^qty-(\w+)$/);if(m)later(m[1]);});
+  window.addEventListener('load',function(){setTimeout(function(){['coconut','groundnut','gingelly'].forEach(render);},1500);});
+})();
+</script>
 <script>
 /* FAQ: accordion + category filter */
 (function(){

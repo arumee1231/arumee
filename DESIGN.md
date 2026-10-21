@@ -123,6 +123,29 @@ lines on desktop (spans are `nowrap` ≥1100px); section title
 - **Product card:** 28px radius with a double bezel (1px hairline ring plus a
   7px tinted tray ring), warm radial stage behind the bottle, drop shadow on
   the bottle, lifts 6px on hover.
+- **Cart drawer:** desktop = full-height drawer from the right (440px),
+  phones = bottom sheet; same structure everywhere: header "Your cart ·
+  N items" with a 44px close, a scrolling list (hairline rows, pill
+  stepper, Remove as a text link), and a fixed footer (You save, Delivery,
+  Total in serif, full-width Checkout, then Continue shopping / Clear cart
+  as quiet links; Clear needs a second tap within 3s). In 320ms / out
+  220ms on `cubic-bezier(0.32, 0.72, 0, 1)`, transform only; fade for
+  reduced motion. Styles in `cart.css` (CART DRAWER v3), behaviour in
+  `cart-drawer.js` (reads what app.js / subpage-cart.js render).
+- **Card quantity:** a pill stepper beside Add; the price above shows the
+  live total for the quantity ("₹969 for 2 × 1L · You save ₹29") using the
+  cart's own pricing rule, so card and cart always agree.
+- **Phone menu:** light cream panel from the right (min(86vw, 340px)),
+  the same surface as the cart drawer, over a forest-tinted backdrop.
+  Header = the brand lockup. Large serif links (26px, forest) on
+  hairlines, no icon boxes; the current page is italic with a gold dot
+  (`aria-current`, set by site-menu.js). White footer: WhatsApp and Call
+  pills, then the dark forest Order Now button. Links settle in 40ms apart
+  on open; Escape closes; focus goes to the first link and back to the
+  menu button.
+- **Brand lockup:** one spec for the header and the phone menu: the leaf
+  mark alone (`logo-mark.webp`, 30px tall / 26px on phones) beside
+  ARUMEE in Cormorant 700, 22px / 19px, tracking 0.12em, forest.
 - **Icons:** no emoji anywhere in the chrome. Cart, home, FAQ, menu and the
   delivery truck are 1.5px line icons drawn as CSS masks (`--ico-*` tokens).
 - **Notice:** one-line inline note on a gold tint, serif italic "i" badge.
