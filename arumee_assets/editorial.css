@@ -3113,7 +3113,8 @@ html body.page-contact .cf-note a { color: var(--ed-forest); text-underline-offs
 html body.page-combo .combo-price .was { color: var(--ed-muted) !important; }
 
 /* Cart line: "You save ₹58" under the discounted total. */
-.order-price .line-save {
+.order-price .line-save,
+.cart-item-price .line-save {
   display: block;
   margin-top: 2px;
   font-family: var(--ed-sans);

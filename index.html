@@ -38,7 +38,7 @@
 <!-- Logo preload: low priority so it doesn't compete with LCP font (Cormorant Garamond for h1) -->
 <link as="image" fetchpriority="low" href="arumee_assets/logo-mark.webp" rel="preload" type="image/webp"/>
 <!-- Shared unified cart styles -->
-<link rel="stylesheet" href="arumee_assets/cart.css?v=3"/>
+<link rel="stylesheet" href="arumee_assets/cart.css?v=4"/>
 
 <!-- Honeypot bot protection — no third-party scripts needed -->
 <!-- Removed inline Our Oils cart overrides — unified in arumee_assets/cart.css -->
@@ -388,7 +388,7 @@ header.hero{background-color:#1a2a1a;min-height:100svh}
 #oils .grid .product-card .product-card__price,#oils .grid .product-card .product-card__price .new-price{font-size:22px !important}
 }</style>
 
-<link rel="stylesheet" href="arumee_assets/editorial.css?v=56"/>
+<link rel="stylesheet" href="arumee_assets/editorial.css?v=57"/>
 <script>(function(){try{if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){var h=document.documentElement;h.classList.add('ed-motion');setTimeout(function(){h.classList.add('ed-motion-fallback');},2500);/* Hero curtain: first home visit per session, landing at the top only. Cover before first paint; motion.js lifts it. Self-removes if motion.js never runs. */var seen=false;try{seen=sessionStorage.getItem('arumee_curtain')==='1';sessionStorage.setItem('arumee_curtain','1');}catch(e){}if(!seen&&!location.hash){h.classList.add('ed-curtain');setTimeout(function(){h.classList.remove('ed-curtain');},2600);}}}catch(e){}})();</script>
 </head>
 <body class="page-our-oils">
@@ -914,7 +914,8 @@ header.hero{background-color:#1a2a1a;min-height:100svh}
 
 
 <script>(function(){var ORDER_ENDPOINT='https://script.google.com/macros/s/AKfycbyVXRfITudWEyii7rQxbNakPJ-TmK3Tq-0-RGjoqcHtjKTRNEXEJ_Xn-fUQ199VKJsE3w/exec';var LEGACY_ORDER_ENDPOINT='https://script.google.com/macros/s/AKfycbzUPnEWOz5ToHLwlSd-MGsEGw2_K7mmw9vKzrrl1pEv_n1FExmsNrCqYzkEADS_6BWbvQ/exec';var originalFetch=window.fetch;if(typeof originalFetch!=='function')return;window.fetch=function(resource,options){var url=typeof resource==='string'?resource:(resource&&resource.url)||'';if((url===ORDER_ENDPOINT||url===LEGACY_ORDER_ENDPOINT)&&options&&String(options.method||'GET').toUpperCase()==='POST'){var nextOptions=Object.assign({},options,{keepalive:true});return originalFetch.call(this,ORDER_ENDPOINT,nextOptions);}return originalFetch.call(this,resource,options);};})();</script>
-<script src="arumee_assets/app.js?v=20261018b" defer></script>
+<script src="arumee_assets/pricing.js?v=1"></script>
+<script src="arumee_assets/app.js?v=20261022" defer></script>
 <script src="arumee_assets/cart-drawer.js?v=1" defer></script>
 <script src="arumee_assets/site-menu.js?v=1" defer></script>
 <script src="arumee_assets/vendor/gsap.min.js" defer></script>
@@ -996,16 +997,13 @@ window.addEventListener('load', function () {
 <script>(function(){ var loaded=false; function loadChat(){ if(loaded)return;loaded=true; var s=document.createElement('script'); s.src='arumee_assets/chat-widget.js?v=9'; document.body.appendChild(s); } ['scroll','click','touchstart','keydown'].forEach(function(e){ window.addEventListener(e,loadChat,{once:true,passive:true}); }); if('requestIdleCallback' in window){ requestIdleCallback(loadChat,{timeout:8000}); } else { setTimeout(loadChat,8000); } })();</script>
 <script>if ('serviceWorker' in navigator) { navigator.serviceWorker.getRegistrations().then(function(regs) { var unregAll = regs.map(function(r) { return r.unregister(); }); return Promise.all(unregAll); }).then(function() { return navigator.serviceWorker.register('/service-worker.js'); }).then(function(reg) { if (reg.waiting) { reg.waiting.postMessage({type:'SKIP_WAITING'}); } reg.addEventListener('updatefound', function() { var newSW = reg.installing; if (newSW) { newSW.addEventListener('statechange', function() { if (newSW.state === 'installed' && navigator.serviceWorker.controller) { newSW.postMessage({type:'SKIP_WAITING'}); } }); } }); }); }</script>
 <script>
-/* Product card quantity: live total on the card.
-   Uses the same rule and price list (oilOptions) as the home cart, so the
-   card and the cart always show the same number: two 1L bottles are
-   charged at the 2L price when that is cheaper; otherwise price x qty
-   against any original price. Quantity 1 keeps the plain unit price. */
+/* Product card quantity: live total on the card, from ArumeePricing
+   (pricing.js) — the same rule the carts, checkout and WhatsApp use.
+   Quantity 1 keeps the plain unit price. */
 (function(){
   var grid=document.getElementById('oilsGrid');
   if(!grid)return;
   function money(v){return '\u20B9'+Number(v).toLocaleString('en-IN');}
-  function opt(id){try{return (typeof oilOptions!=='undefined'&&oilOptions.find(function(o){return o.id===id;}))||null;}catch(e){return null;}}
   function render(product){
     var priceEl=document.getElementById(product+'-price');
     var qtyEl=document.getElementById('qty-'+product);
@@ -1015,9 +1013,8 @@ window.addEventListener('load', function () {
     var unit=parseInt(size.dataset.price,10)||0;
     var orig=parseInt(size.dataset.originalPrice,10)||0;
     var sz=size.dataset.size;
-    var now=unit*q, was=orig>unit?orig*q:0;
-    var two=sz==='1L'?opt(product+'-2L'):null, twoP=two?parseInt(two.price,10):0;
-    if(two&&twoP&&twoP<2*unit&&q>=2){now=Math.floor(q/2)*twoP+(q%2)*unit;was=q*unit;}
+    var L=ArumeePricing.line({itemKey:product+'-'+sz,size:sz,price:unit,originalPrice:orig,qty:q});
+    var now=L.now, was=L.was>now?L.was:0;
     if(q===1&&!was){priceEl.innerHTML=money(unit)+' <span class="unit product-card__unit">/ '+sz+'</span>';priceEl.removeAttribute('data-multi');return;}
     priceEl.setAttribute('data-multi','');
     priceEl.innerHTML=(was>now?'<span class="old-price">'+money(was)+'</span> ':'')+

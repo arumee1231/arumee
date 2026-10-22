@@ -20,7 +20,7 @@
   <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yygg_vb.woff2" crossorigin />
   <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtK.woff2" crossorigin />
   <link href="cormorant-fonts.css?v=5" rel="stylesheet"/>
-  <link rel="stylesheet" href="arumee_assets/cart.css?v=3" />
+  <link rel="stylesheet" href="arumee_assets/cart.css?v=4" />
   <link rel="stylesheet" href="arumee_assets/premium-subpages.css" />
 
   <style>
@@ -139,7 +139,7 @@
       .checkout-submit-row .btn{width:100%;min-width:0}
     }
   </style>
-  <link rel="stylesheet" href="arumee_assets/editorial.css?v=56" />
+  <link rel="stylesheet" href="arumee_assets/editorial.css?v=57" />
 </head>
 <body class="subpage" data-active-nav="checkout">
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -354,7 +354,8 @@
 
   <div class="page-toast" id="pageToast" role="status" aria-live="polite"></div>
 
-  <script src="arumee_assets/subpage-cart.js?v=4"></script>
+  <script src="arumee_assets/pricing.js?v=1"></script>
+  <script src="arumee_assets/subpage-cart.js?v=5"></script>
   <script src="arumee_assets/cart-drawer.js?v=1"></script>
   <script src="arumee_assets/site-menu.js?v=1"></script>
   <script src="arumee_assets/premium-subpages.js"></script>
@@ -454,7 +455,8 @@
       var detailsText = '';
 
       orderItems.forEach(function (item, idx) {
-        var lineTotal = (item.price || 0) * (item.qty || 1);
+        var line = ArumeePricing.line(item);
+        var lineTotal = line.now;
         var qty = item.qty || 1;
         total += lineTotal;
         html += '<div class="ocp-line">';
@@ -464,7 +466,7 @@
         html += '<span class="ocp-price">₹' + lineTotal.toLocaleString('en-IN') + '</span>';
         html += '<button class="ocp-remove" type="button" onclick="removeCheckoutItem(' + idx + ')" title="Remove" aria-label="Remove ' + escapeHtml(item.productName) + '">×</button>';
         html += '</div>';
-        detailsText += (idx + 1) + '. ' + item.productName + ' = ₹' + item.price + ' × ' + qty + ' = ₹' + lineTotal + '\n';
+        detailsText += (idx + 1) + '. ' + item.productName + ' = ₹' + item.price + ' × ' + qty + ' = ₹' + lineTotal + (line.saved ? ' (you save ₹' + line.saved + ')' : '') + '\n';
       });
 
       html += '</div>';
@@ -500,11 +502,11 @@
         if (summaryEl) {
           var html = '';
           if (orderItems.length) {
-            var grandTotal = orderItems.reduce(function (s, i) { return s + (i.price || 0) * (i.qty || 1); }, 0);
+            var grandTotal = ArumeePricing.total(orderItems).now;
             html += '<div style="font-size:13px;background:#f4efe7;border:1px solid rgba(27,38,32,0.08);border-radius:8px;padding:12px 14px;margin-bottom:4px;">';
             html += '<div style="font-weight:700;color:#1b2620;margin-bottom:8px;">🛒 Your Order</div>';
             orderItems.forEach(function (item) {
-              var lt = (item.price || 0) * (item.qty || 1);
+              var lt = ArumeePricing.line(item).now;
               html += '<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #ded3c7;">';
               html += '<span style="color:#374151;">' + escapeHtml(item.productName) + (item.qty > 1 ? ' &times; ' + item.qty : '') + '</span>';
               html += '<span style="font-weight:600;color:#1b2620;">&#8377;' + lt.toLocaleString('en-IN') + '</span>';
@@ -702,7 +704,7 @@
             var totalVal = fd.get('totalAmount') || '0';
             var fullAddr = addressVal + (pincodeVal ? ', ' + pincodeVal : '') + (district ? ' (' + district + ', TN)' : '');
 
-            var waText = 'Hi, I want to order:\n\n' + itemsSummary + '\n\nTotal: ₹' + totalVal + '\nDelivery: Free\n\nName: ' + nameVal + '\nPhone: ' + phoneVal + '\nAddress: ' + fullAddr;
+            var waText = 'Hi, I want to order:\n\n' + itemsSummary + '\n\nTotal: ₹' + totalVal + (ArumeePricing.total(orderItems).saved ? '\nYou save: ₹' + ArumeePricing.total(orderItems).saved : '') + '\nDelivery: Free\n\nName: ' + nameVal + '\nPhone: ' + phoneVal + '\nAddress: ' + fullAddr;
             if (notesVal && notesVal !== 'None') waText += '\nNotes: ' + notesVal;
 
             showSuccessModal('https://wa.me/918925295844?text=' + encodeURIComponent(waText));

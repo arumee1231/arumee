@@ -133,8 +133,11 @@ lines on desktop (spans are `nowrap` ≥1100px); section title
   reduced motion. Styles in `cart.css` (CART DRAWER v3), behaviour in
   `cart-drawer.js` (reads what app.js / subpage-cart.js render).
 - **Card quantity:** a pill stepper beside Add; the price above shows the
-  live total for the quantity ("₹969 for 2 × 1L · You save ₹29") using the
-  cart's own pricing rule, so card and cart always agree.
+  live total for the quantity ("₹969 for 2 × 1L · You save ₹29").
+- **Pricing:** one rule in `arumee_assets/pricing.js` (`ArumeePricing.line`
+  / `.total`), used by the card, both carts, checkout and the WhatsApp
+  message: 1L bottles of one oil go in pairs at the 2L price when that is
+  cheaper, an odd bottle pays 1L. Never total `price × qty` anywhere else.
 - **Phone menu:** light cream panel from the right (min(86vw, 340px)),
   the same surface as the cart drawer, over a forest-tinted backdrop.
   Header = the brand lockup. Large serif links (26px, forest) on

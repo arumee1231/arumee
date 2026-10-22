@@ -62,12 +62,14 @@
           var price = Math.max(0, Number(item.price) || 0);
 
           return {
+            id: item.id || '',
             itemKey: item.itemKey || '',
             productName: item.productName || item.originalName || 'Arumee Oil',
             originalName: item.originalName || item.productName || 'Arumee Oil',
             size: item.size || '',
             qty: qty,
             price: price,
+            originalPrice: Number(item.originalPrice) || 0,
             total: price * qty,
             isFixedBundle: Boolean(item.isFixedBundle)
           };
@@ -79,6 +81,7 @@
   }
 
   function writeCart() {
+    if (window.ArumeePricing) orderItems.forEach(function (item) { item.total = ArumeePricing.line(item).now; });
     localStorage.setItem(STORAGE_KEY, JSON.stringify(orderItems));
   }
 
@@ -134,16 +137,20 @@
 
     var html = orderItems
       .map(function (item, index) {
-        var lineTotal = item.price * item.qty;
+        var line = window.ArumeePricing ? ArumeePricing.line(item) : { now: item.price * item.qty, was: item.price * item.qty };
+        var lineTotal = line.now;
         grandTotal += lineTotal;
         var details = item.size ? item.size + ' @ ' + formatCurrency(item.price) : formatCurrency(item.price);
+        var priceHtml = line.was > line.now
+          ? '<span class="old-price">' + formatCurrency(line.was) + '</span> <span class="new-price">' + formatCurrency(lineTotal) + '</span> <span class="line-save">You save ' + formatCurrency(line.was - lineTotal) + '</span>'
+          : '<span class="new-price">' + formatCurrency(lineTotal) + '</span>';
 
         return [
           '<div class="cart-item">',
           '<div class="cart-item-info">',
           '<div class="cart-item-name">' + escapeHtml(item.productName) + '</div>',
           '<div class="cart-item-details">' + escapeHtml(details) + '</div>',
-          '<div class="cart-item-price">' + formatCurrency(lineTotal) + '</div>',
+          '<div class="cart-item-price">' + priceHtml + '</div>',
           '</div>',
           '<div class="cart-item-controls">',
           '<div class="cart-stepper">',

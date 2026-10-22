@@ -704,6 +704,7 @@ html.cart-drawer-open { overflow: hidden; }
   font-variant-numeric: tabular-nums;
 }
 .cart-dropdown .order-price .old-price,
+.cart-dropdown .cart-item-price .old-price,
 .cart-dropdown .cart-item-details .old-price {
   width: auto !important;
   margin: 0 6px 0 0 !important;
