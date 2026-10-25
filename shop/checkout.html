@@ -140,7 +140,7 @@
     }
   </style>
   <link rel="stylesheet" href="/arumee_assets/editorial.css?v=57" />
-</head>
+<script src="/analytics.js" defer></script></head>
 <body class="subpage" data-active-nav="checkout">
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
@@ -708,6 +708,7 @@
             var waText = 'Hi, I want to order:\n\n' + itemsSummary + '\n\nTotal: ₹' + totalVal + (ArumeePricing.total(orderItems).saved ? '\nYou save: ₹' + ArumeePricing.total(orderItems).saved : '') + '\nDelivery: Free\n\nName: ' + nameVal + '\nPhone: ' + phoneVal + '\nAddress: ' + fullAddr;
             if (notesVal && notesVal !== 'None') waText += '\nNotes: ' + notesVal;
 
+            if (window.arumeeTrack) window.arumeeTrack('order-submitted');
             showSuccessModal('https://wa.me/918925295844?text=' + encodeURIComponent(waText));
 
             setTimeout(function () {

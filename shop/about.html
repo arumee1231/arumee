@@ -26,7 +26,7 @@
   <!-- Motion hook: hide the opening until motion.js settles it in (no flash);
        self-clears at 2.5s if the script never runs. Skipped for reduced motion. -->
   <script>(function(){try{if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){var h=document.documentElement;h.classList.add('ed-motion');setTimeout(function(){h.classList.add('ed-motion-fallback');},2500);}}catch(e){}})();</script>
-</head>
+<script src="/analytics.js" defer></script></head>
 <body class="subpage page-story" data-active-nav="story">
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
