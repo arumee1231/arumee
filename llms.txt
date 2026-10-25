@@ -1,0 +1,16 @@
+# Arumee
+
+> Arumee has two parts: a shop for traditional cold-pressed cooking oils from a family mill in Namakkal, Tamil Nadu, India, and Market Scout, a free daily market letter on listed companies in India, Singapore, China mainland, Hong Kong and the US.
+
+## Market Scout (https://arumee.co.in/markets/)
+
+- [Market Scout home](https://arumee.co.in/markets/): the latest edition, published for each trading day by about 8:00 am Singapore time (SGT). For each company: the latest verified price with its date, the news, the negatives, the main risk, what to watch, and a link to the original source.
+- [Our approach](https://arumee.co.in/markets/approach/): start with the source, give every price a date, keep the risk visible, leave the decision to the reader.
+- Markets and exchanges covered: India (NSE, BSE), Singapore (SGX), China mainland (SSE, SZSE), Hong Kong (HKEX), US (NYSE, Nasdaq).
+- Market Scout is educational news context, not investment advice. Prices are not live quotes.
+- Readers can request a company from the official exchange listings; if it can be covered, it usually appears from the next edition.
+
+## Oils shop (https://arumee.co.in/shop/)
+
+- [Shop](https://arumee.co.in/shop/): cold-pressed coconut oil, and wooden cold-pressed groundnut and gingelly (sesame) oil, made the traditional way.
+- [Combos](https://arumee.co.in/shop/combo.html), [Benefits](https://arumee.co.in/shop/benefits.html), [Our story](https://arumee.co.in/shop/about.html), [Contact](https://arumee.co.in/shop/contact.html)
