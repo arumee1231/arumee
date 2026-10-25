@@ -627,7 +627,7 @@
   <!-- Fixed chat panel -->
   <div aria-label="Arumee Chat Assistant" aria-modal="true" id="waChatPanel" role="dialog">
     <div class="wa-head">
-      <img alt="Arumee" class="wa-head-logo" src="arumee_assets/logo.webp"/>
+      <img alt="Arumee" class="wa-head-logo" src="/arumee_assets/logo.webp"/>
       <div class="wa-head-info">
         <span class="wa-head-name">Arumee Oils</span>
         <span class="wa-head-sub">&#x25CF; Online &middot; Replies instantly</span>

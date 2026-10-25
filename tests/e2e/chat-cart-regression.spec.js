@@ -131,7 +131,7 @@ async function seedCheckoutCart(page) {
 
 async function openCheckoutWithCart(page) {
   await seedCheckoutCart(page);
-  await page.goto('/checkout.html');
+  await page.goto('/shop/checkout.html');
   await expect(page.locator('#order-cart-preview')).toContainText('Wooden Cold-Pressed Groundnut Oil (1L)');
 }
 
@@ -152,7 +152,7 @@ async function fillCheckoutForm(page, {
 //  EXISTING TESTS (updated selectors / honeypot field name) 
 
 test('refresh modal clear removes cart + chat storage', async ({ page }) => {
-  await page.goto('/index.html');
+  await page.goto('/shop/index.html');
 
   await page.evaluate(() => {
     localStorage.setItem('arumeeCart', JSON.stringify([
@@ -187,7 +187,7 @@ test('refresh modal clear removes cart + chat storage', async ({ page }) => {
 });
 
 test('opening cart closes chat panel', async ({ page }) => {
-  await page.goto('/index.html');
+  await page.goto('/shop/index.html');
   await openChat(page, { acceptDisclaimer: true });
 
   await page.locator('#cartTab').click();
@@ -202,7 +202,7 @@ test('opening cart closes chat panel', async ({ page }) => {
 test('chat-added coconut line uses normalized product name in cart', async ({ page }) => {
   await page.addInitScript(() => { localStorage.setItem('arumee_disclaimer', '1'); });
 
-  await page.goto('/index.html');
+  await page.goto('/shop/index.html');
   await openChat(page, { acceptDisclaimer: false });
 
   await page.locator('#waChips .wa-chip', { hasText: /Order Now/i }).first().click();
@@ -217,7 +217,7 @@ test('chat-added coconut line uses normalized product name in cart', async ({ pa
 test('full chat header X exits full-chat page', async ({ page }) => {
   await page.addInitScript(() => { localStorage.setItem('arumee_disclaimer', '1'); });
 
-  await page.goto('/chat.html');
+  await page.goto('/shop/chat.html');
   await expect(page.locator('#waChatPanel')).toHaveClass(/wa-open/);
 
   await page.locator('#waChatPanel .wa-head-close').click();
@@ -232,7 +232,7 @@ test('full chat header X exits full-chat page', async ({ page }) => {
 test('clear chat button resets visible conversation', async ({ page }) => {
   await page.addInitScript(() => { localStorage.setItem('arumee_disclaimer', '1'); });
 
-  await page.goto('/index.html');
+  await page.goto('/shop/index.html');
   await openChat(page, { acceptDisclaimer: false });
 
   await page.locator('#waChips .wa-chip', { hasText: /Order Now/i }).first().click();
@@ -244,7 +244,7 @@ test('clear chat button resets visible conversation', async ({ page }) => {
 });
 
 test('card add-to-order items appear in cart and order form summary', async ({ page }) => {
-  await page.goto('/index.html');
+  await page.goto('/shop/index.html');
 
   await page.locator('.add-to-order[data-product="coconut"]').click();
 
@@ -272,7 +272,7 @@ test('card add-to-order items appear in cart and order form summary', async ({ p
 });
 
 test('mixed size selection is preserved in cart and order summary', async ({ page }) => {
-  await page.goto('/index.html');
+  await page.goto('/shop/index.html');
 
   await page.locator('.size-option[data-product="coconut"][data-size="5L"]').click();
   await page.locator('#qty-coconut').fill('1');
@@ -305,7 +305,7 @@ test('mixed size selection is preserved in cart and order summary', async ({ pag
 //  HONEYPOT TESTS 
 
 test('formHoneypot (url_confirm) is hidden and blank on page load', async ({ page }) => {
-  await page.goto('/index.html');
+  await page.goto('/shop/index.html');
 
   const hp = page.locator('#formHoneypot');
   await expect(hp).toHaveValue('');
@@ -315,7 +315,7 @@ test('formHoneypot (url_confirm) is hidden and blank on page load', async ({ pag
 });
 
 test('waHoneypot (url_confirm) inside chat widget is hidden and blank', async ({ page }) => {
-  await page.goto('/index.html');
+  await page.goto('/shop/index.html');
 
   const hp = page.locator('#waHoneypot');
   await expect(hp).toHaveValue('');
@@ -325,7 +325,7 @@ test('waHoneypot (url_confirm) inside chat widget is hidden and blank', async ({
 });
 
 test('honeypot url_confirm blocks website form submission when filled by bot', async ({ page }) => {
-  await page.goto('/index.html');
+  await page.goto('/shop/index.html');
   await page.locator('.add-to-order[data-product="coconut"]').click();
 
   await page.locator('form.card input[name="name"]').fill('Ravi Kumar');
@@ -353,7 +353,7 @@ test('honeypot url_confirm blocks website form submission when filled by bot', a
 //  WEBSITE FORM VALIDATION 
 
 test('website form validation rejects name shorter than 2 characters', async ({ page }) => {
-  await page.goto('/index.html');
+  await page.goto('/shop/index.html');
   await page.locator('.add-to-order[data-product="coconut"]').click();
   await page.waitForTimeout(2600);
 
@@ -367,7 +367,7 @@ test('website form validation rejects name shorter than 2 characters', async ({ 
 });
 
 test('website form validation rejects phone number too short', async ({ page }) => {
-  await page.goto('/index.html');
+  await page.goto('/shop/index.html');
   await page.locator('.add-to-order[data-product="coconut"]').click();
   await page.waitForTimeout(2600);
 
@@ -385,7 +385,7 @@ test('website form validation rejects phone number too short', async ({ page }) 
 });
 
 test('website form validation rejects delivery address too short', async ({ page }) => {
-  await page.goto('/index.html');
+  await page.goto('/shop/index.html');
   await page.locator('.add-to-order[data-product="coconut"]').click();
   await page.waitForTimeout(2600);
 
@@ -407,7 +407,7 @@ test('website form validation rejects a non-Tamil-Nadu pincode', async ({ page }
     route.fulfill({ contentType: 'application/json', body: MOCK_TN_PINS }),
   );
 
-  await page.goto('/index.html');
+  await page.goto('/shop/index.html');
   await page.locator('.add-to-order[data-product="coconut"]').click();
 
   await page.locator('form.card input[name="name"]').fill('Ravi Kumar');
@@ -440,7 +440,7 @@ test('website submit button enters loading state on valid submission', async ({ 
     route.fulfill({ contentType: 'application/json', body: MOCK_TN_PINS }),
   );
 
-  await page.goto('/index.html');
+  await page.goto('/shop/index.html');
   await page.locator('.add-to-order[data-product="coconut"]').click();
 
   await page.locator('form.card input[name="name"]').fill('Ravi Kumar');
@@ -533,7 +533,7 @@ test('chat "Place My Order" fires Google Sheets fetch and shows Confirm on Whats
     route.fulfill({ contentType: 'application/json', body: MOCK_TN_PINS }),
   );
 
-  await page.goto('/index.html');
+  await page.goto('/shop/index.html');
   await openChat(page, { acceptDisclaimer: false });
   await addChatItem(page);
   await openAndFillAddressPanel(page);
@@ -569,7 +569,7 @@ test('chat "Confirm on WhatsApp" chip (step 2) opens WhatsApp URL', async ({ pag
     route.fulfill({ contentType: 'application/json', body: MOCK_TN_PINS }),
   );
 
-  await page.goto('/index.html');
+  await page.goto('/shop/index.html');
   await openChat(page, { acceptDisclaimer: false });
   await addChatItem(page);
   await openAndFillAddressPanel(page);
@@ -598,7 +598,7 @@ test('chat "Edit Details" chip re-opens address panel and clears saved values', 
     route.fulfill({ contentType: 'application/json', body: MOCK_TN_PINS }),
   );
 
-  await page.goto('/index.html');
+  await page.goto('/shop/index.html');
   await openChat(page, { acceptDisclaimer: false });
   await addChatItem(page);
   await openAndFillAddressPanel(page); // fills name "Ravi Kumar"
@@ -627,7 +627,7 @@ test('chat "Edit Details" chip re-opens address panel and clears saved values', 
 test('chat "Start over" chip resets chat to welcome state', async ({ page }) => {
   await page.addInitScript(() => { localStorage.setItem('arumee_disclaimer', '1'); });
 
-  await page.goto('/index.html');
+  await page.goto('/shop/index.html');
   await openChat(page, { acceptDisclaimer: false });
   await addChatItem(page);
 
