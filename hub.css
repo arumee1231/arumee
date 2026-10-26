@@ -11,3 +11,4 @@
 .footer-brand .brand-mark{height:24px}
 .footer-brand .brand-name{font-size:17px;letter-spacing:.12em;padding-top:2px;color:#3b4a40}
 @media(max-width:700px){.brand{gap:9px}.brand-mark{height:32px}.brand-name{font-size:24px;letter-spacing:.11em}}
+.footer-contact{color:#555b4e;text-decoration:underline;text-underline-offset:3px}.footer-contact:hover{color:#2c3029}
